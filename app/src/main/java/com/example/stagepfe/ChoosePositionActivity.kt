@@ -18,7 +18,6 @@ open class ChoosePositionActivity : AppCompatActivity(), AdapterView.OnItemSelec
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_choose_position)
-        println("hello")
         initView()
 
         ButtonNext!!.setOnClickListener {
