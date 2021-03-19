@@ -67,8 +67,6 @@
                 android:textSize="16dp"
                 android:layout_gravity="center"
                 />
-
-
                 <EditText
                     android:id="@+id/NewPassword"
                     android:layout_width="233dp"
