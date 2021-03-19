@@ -1,4 +1,17 @@
 <resources>
     <string name="app_name">stage pfe</string>
+    <string-array name="User_Position">
+        <item>Choisir</item>
+        <item>Médecin</item>
+        <item>Patient</item>
+        <item>Pharmacien</item>
+        <item>Labo</item>
+    </string-array>
+    <string-array name="Condition">
+        <item>Diabéte</item>
+        <item>Cancer</item>
+        <item>Asthma</item>
+    </string-array>
+
     <string name="underline"><u>mot de passe oubleé ?    </u></string>
 </resources>

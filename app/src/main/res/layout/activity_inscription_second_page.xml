@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/first_page">
+
+    <RelativeLayout
+        android:id="@+id/myRectangleView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        android:background="@drawable/rectangle">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_centerInParent="true">
+
+
+
+            <EditText
+                android:id="@+id/InscriptionAdresseSecondPage"
+                android:layout_width="233dp"
+                android:layout_height="40dp"
+                android:hint="Adresse"
+                android:inputType="textPostalAddress"
+                android:textSize="15dp"
+                android:paddingLeft="20dp"
+                android:textColorHint="#888282"
+                android:layout_centerInParent="true"
+                android:background="@drawable/edit_text_style"
+                android:layout_gravity="center"
+                android:layout_marginTop="90dp"
+                android:drawableRight="@drawable/position"
+                android:paddingRight="10dp"
+                android:textColor="@color/black"
+
+                />
+
+
+            <EditText
+                android:id="@+id/InscriptionDateSecondPage"
+                android:layout_width="233dp"
+                android:layout_height="40dp"
+                android:hint="JJ / MM / AAAA"
+                android:inputType="date"
+                android:paddingLeft="20dp"
+                android:textSize="15dp"
+                android:textColorHint="#888282"
+                android:layout_centerInParent="true"
+                android:background="@drawable/edit_text_style"
+                android:layout_gravity="center"
+                android:layout_marginTop="25dp"
+                android:drawableRight="@drawable/date"
+                android:paddingRight="10dp"
+                android:textColor="@color/black"
+                />
+
+            <EditText
+                android:id="@+id/InscriptionPhoneNumberSecondPage"
+                android:layout_width="233dp"
+                android:layout_height="40dp"
+                android:hint="Numero de Téléphone"
+                android:digits="0123456789"
+                android:inputType="phone"
+                android:paddingLeft="20dp"
+                android:textSize="15dp"
+                android:textColorHint="#888282"
+                android:layout_centerInParent="true"
+                android:background="@drawable/edit_text_style"
+                android:layout_gravity="center"
+                android:drawableRight="@drawable/telephon"
+                android:paddingRight="10dp"
+                android:layout_marginTop="25dp"
+                android:textColor="@color/black"
+            />
+
+            <TextView
+                android:layout_width="164dp"
+                android:layout_height="22dp"
+                android:text="Quel est votre sexe?"
+                android:layout_marginTop="30dp"
+                android:layout_gravity="center"
+                android:textSize="17dp"
+                android:textColor="@color/black"
+                />
+
+
+            <RadioGroup
+                android:id="@+id/InscriptionSexeSecondPage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+<!--                <LinearLayout-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:orientation="horizontal"-->
+<!--                    android:layout_marginTop="20dp"-->
+<!--                    android:layout_gravity="center">-->
+                <RadioButton
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Homme"
+                android:textSize="17dp"
+                android:textColor="@color/black"
+                android:gravity="left"
+                />
+<!--                <ImageView-->
+<!--                    android:layout_width="22dp"-->
+<!--                    android:layout_height="26dp"-->
+<!--                    android:src="@drawable/male"/>-->
+<!--            </LinearLayout>-->
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:layout_marginTop="10dp">-->
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Femme"
+                    android:textColor="@color/black"
+                    android:textSize="17dp"
+                    />
+
+<!--                <ImageView-->
+<!--                    android:layout_width="22dp"-->
+<!--                    android:layout_height="26dp"-->
+<!--                    android:src="@drawable/female"/>-->
+<!--            </LinearLayout>-->
+<!--            <LinearLayout-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:layout_marginTop="10dp">-->
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ne pas précise"
+                    android:textSize="17dp"
+                    android:textColor="@color/black"
+
+                    />
+
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="26dp"
+                    android:src="@drawable/both"/>
+
+
+<!--            </LinearLayout>-->
+            </RadioGroup>
+
+
+            <EditText
+                android:id="@+id/InscriptionBloodSecondPage"
+                android:layout_width="233dp"
+                android:layout_height="40dp"
+                android:hint="Groupe sqnguins"
+                android:paddingLeft="20dp"
+                android:textSize="15dp"
+                android:textColorHint="#888282"
+                android:textColor="@color/black"
+                android:layout_centerInParent="true"
+                android:background="@drawable/edit_text_style"
+                android:layout_gravity="center"
+                android:paddingRight="10dp"
+                android:layout_marginTop="25dp"
+                />
+            <LinearLayout
+                android:layout_width="233dp"
+                android:layout_height="33dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="25dp"
+                >
+                <Button
+                    android:id="@+id/ReurnbuttonSecondePage"
+                    android:layout_width="101dp"
+                    android:layout_height="33dp"
+                    android:text="Annuler"
+                    android:background="@drawable/button_style_smaller"
+                    android:textSize="10dp"
+                    android:textColor="@color/white"
+
+                    />
+
+                <Button
+                    android:id="@+id/NextButtonSecondePage"
+                    android:layout_width="101dp"
+                    android:layout_height="33dp"
+                    android:text="Suivant"
+                    android:layout_marginLeft="31dp"
+                    android:background="@drawable/button_style_smaller"
+                    android:textSize="10dp"
+                    android:textColor="@color/white"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="630dp"
+                >
+                <View
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/fill_ellipse"
+                    />
+                <View
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/fill_ellipse"
+                    />
+                <View
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/empty_ellipse"
+                    />
+                <View
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/empty_ellipse"
+                    />
+
+            </LinearLayout>
+
+
+    </RelativeLayout>
+
+</RelativeLayout>
