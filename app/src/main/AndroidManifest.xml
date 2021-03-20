@@ -11,6 +11,7 @@
         android:theme="@style/Theme.AppCompat.NoActionBar">
 <!--        <activity android:name=".ContainFragmentActivity"></activity>-->
         <activity android:name=".NewPasswrodActivity" />
+
         <activity android:name=".TapTheCodeActivity" />
         <activity android:name=".ForgotPasswordActivity" />
         <activity android:name=".PatientInscriptionActivity" />

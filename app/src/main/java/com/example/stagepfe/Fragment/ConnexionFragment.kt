@@ -1,4 +1,4 @@
-package com.example.stagepfe
+package com.example.stagepfe.Fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,17 +7,18 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.example.stagepfe.R
 
-class ScrollingFragment : Fragment(), View.OnClickListener {
-    var InscriptionButton: Button? = null
-    var ForgotPassWord: TextView? = null
+class ConnexionFragment : Fragment(), View.OnClickListener {
+    private var InscriptionButton: Button? = null
+    private var ForgotPassWord: TextView? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_scrolling, container, false)
+        return inflater.inflate(R.layout.fragment_connexion, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -33,8 +34,8 @@ class ScrollingFragment : Fragment(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         InscriptionButton!!.setOnClickListener{
-            var FirstInscriptioFr = InscriptionFirstPagFragmnt()
-            fragmentManager!!.beginTransaction().replace(R.id.ContainerFragmentLayout,FirstInscriptioFr).commit()
+            var FirstInscriptionFr = FragmentInscriptionFirstPage()
+            fragmentManager!!.beginTransaction()!!.replace(R.id.ContainerFragmentLayout,FirstInscriptionFr)!!.commit()
         }
     }
 }

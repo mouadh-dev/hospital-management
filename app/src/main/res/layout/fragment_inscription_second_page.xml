@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragment.InscriptionSecondPageFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+
+        <EditText
+            android:id="@+id/InscriptionAdresseSecondPage"
+            android:layout_width="233dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="90dp"
+            android:background="@drawable/edit_text_style"
+            android:drawableRight="@drawable/position"
+            android:hint="Adresse"
+            android:inputType="textPostalAddress"
+            android:paddingLeft="20dp"
+            android:paddingRight="10dp"
+            android:textColor="@color/black"
+            android:textColorHint="#888282"
+            android:textSize="15dp" />
+
+
+        <EditText
+            android:id="@+id/InscriptionDateSecondPage"
+            android:layout_width="233dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/edit_text_style"
+            android:drawableRight="@drawable/date"
+            android:hint="JJ / MM / AAAA"
+            android:inputType="date"
+            android:paddingLeft="20dp"
+            android:paddingRight="10dp"
+            android:textColor="@color/black"
+            android:textColorHint="#888282"
+            android:textSize="15dp" />
+
+        <EditText
+            android:id="@+id/InscriptionPhoneNumberSecondPage"
+            android:layout_width="233dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/edit_text_style"
+            android:digits="0123456789"
+            android:drawableRight="@drawable/telephon"
+            android:hint="Numero de Téléphone"
+            android:inputType="phone"
+            android:paddingLeft="20dp"
+            android:paddingRight="10dp"
+            android:textColor="@color/black"
+            android:textColorHint="#888282"
+            android:textSize="15dp" />
+
+        <TextView
+            android:layout_width="164dp"
+            android:layout_height="22dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:text="Quel est votre sexe?"
+            android:textColor="@color/black"
+            android:textSize="17dp" />
+
+
+        <RadioGroup
+            android:id="@+id/InscriptionSexeSecondPage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="left">
+
+                <RadioButton
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="Homme"
+                    android:textColor="@color/black"
+                    android:textSize="17dp" />
+
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="26dp"
+                    android:src="@drawable/male" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Femme"
+                    android:textColor="@color/black"
+                    android:textSize="17dp" />
+
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="26dp"
+                    android:src="@drawable/female" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ne pas précise"
+                    android:textColor="@color/black"
+                    android:textSize="17dp"
+
+                    />
+
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="26dp"
+                    android:src="@drawable/both" />
+
+
+            </LinearLayout>
+        </RadioGroup>
+
+
+        <EditText
+            android:id="@+id/InscriptionBloodSecondPage"
+            android:layout_width="233dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/edit_text_style"
+            android:hint="Groupe sqnguins"
+            android:paddingLeft="20dp"
+            android:paddingRight="10dp"
+            android:textColor="@color/black"
+            android:textColorHint="#888282"
+            android:textSize="15dp" />
+
+        <LinearLayout
+            android:layout_width="233dp"
+            android:layout_height="33dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="25dp">
+
+            <Button
+                android:id="@+id/ReurnbuttonSecondePage"
+                android:layout_width="101dp"
+                android:layout_height="33dp"
+                android:background="@drawable/button_style_smaller"
+                android:text="Annuler"
+                android:textColor="@color/white"
+                android:textSize="10dp"
+
+                />
+
+            <Button
+                android:id="@+id/NextButtonSecondePage"
+                android:layout_width="101dp"
+                android:layout_height="33dp"
+                android:layout_marginLeft="31dp"
+                android:background="@drawable/button_style_smaller"
+                android:text="Suivant"
+                android:textColor="@color/white"
+                android:textSize="10dp" />
+        </LinearLayout>
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="50dp"
+        android:gravity="bottom">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="630dp"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/fill_ellipse" />
+
+            <View
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/empty_ellipse" />
+
+            <View
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/empty_ellipse" />
+
+            <View
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/empty_ellipse" />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+</FrameLayout>
