@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".NewPasswrodActivity"></activity>
+<!--        <activity android:name=".ContainFragmentActivity"></activity>-->
+        <activity android:name=".NewPasswrodActivity" />
         <activity android:name=".TapTheCodeActivity" />
         <activity android:name=".ForgotPasswordActivity" />
         <activity android:name=".PatientInscriptionActivity" />
@@ -17,7 +18,7 @@
         <activity android:name=".InscriptionSecondPageActivity" />
         <activity android:name=".InscriptionFirstPageActivity" />
         <activity android:name=".ConnexionActivity" />
-        <activity android:name=".MainPageActivity">
+        <activity android:name=".AuthenticationFragmentContainerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
