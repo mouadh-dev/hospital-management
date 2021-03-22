@@ -16,10 +16,14 @@ class FragmentInscriptionFirstPage : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_inscription_first_page, container, false)
+        var view= inflater.inflate(R.layout.fragment_inscription_first_page, container, false)
+        initView(view)
+        return  view
     }
 
+    private fun initView(view: View?) {
 
+    }
 
 
 }
