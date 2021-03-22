@@ -1,10 +1,15 @@
 package com.example.stagepfe.Fragment
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageView
+import com.example.stagepfe.AuthenticationFragmentContainerActivity
 import com.example.stagepfe.R
 
 // TODO: Rename parameter arguments, choose names that match
@@ -18,16 +23,13 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class ForgotPasswordFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    var BackIcon: ImageView? = null
+    var NextButton: Button? = null
+    var MailForgotPassword: EditText? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
@@ -35,7 +37,29 @@ class ForgotPasswordFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_forgot_password, container, false)
+        var view= inflater.inflate(R.layout.fragment_forgot_password, container, false)
+        initView(view)
+        return view
+    }
+
+    private fun initView(view: View) {
+        BackIcon = view.findViewById<ImageView>(R.id.IconReturnBack)
+        NextButton = view.findViewById<Button>(R.id.NextForgotPassword)
+        MailForgotPassword = view.findViewById(R.id.MailForgotPassword)
+
+        NextButton!!.setOnClickListener {
+            //var FirstInscriptionFr = FragmentInscriptionFirstPage()
+            fragmentManager!!.beginTransaction()!!
+                .replace(R.id.ContainerFragmentLayout, FragmentTapTheCode())!!.commit()
+        }
+                BackIcon!!.setOnClickListener {
+            requireActivity().run {
+                var intent= Intent(this, AuthenticationFragmentContainerActivity::class.java)
+                startActivity(intent)
+                finish() // If activity no more needed in back stack
+            }
+        }
+
     }
 
     companion object {
