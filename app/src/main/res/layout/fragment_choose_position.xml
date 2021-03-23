@@ -43,6 +43,7 @@
                 android:layout_gravity="center"
                 android:background="@drawable/spinner_style"
                 android:entries="@array/User_Position"
+                android:popupBackground="@color/white"
 
                 />
         </RelativeLayout>
@@ -149,13 +150,13 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginLeft="10dp"
-                android:background="@drawable/empty_ellipse" />
+                android:background="@drawable/fill_ellipse" />
 
             <View
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginLeft="10dp"
-                android:background="@drawable/empty_ellipse" />
+                android:background="@drawable/fill_ellipse" />
 
             <View
                 android:layout_width="20dp"

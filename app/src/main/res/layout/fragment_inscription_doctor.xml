@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragment.InscriptionDoctorFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="100dp"
+        android:orientation="vertical"
+        >
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            >
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="200dp"
+            android:layout_marginTop="12dp"
+            android:src="@drawable/triangle" />
+        <Spinner
+            android:id="@+id/Specialité"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:entries="@array/Specialités"
+            android:background="@drawable/spinner_style"
+
+            />
+        </RelativeLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="BIO"
+            android:textColor="@color/black"
+            android:textSize="35dp"
+            >
+        </TextView>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="120dp"
+            android:textColor="@color/black"
+            android:padding="15dp"
+            android:background="@drawable/edit_text_style"
+            />
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="80dp"
+            >
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:text="Précednt"
+                android:textSize="10dp"
+                android:background="@drawable/button_style"
+                android:textColor="@color/white"
+                android:layout_gravity="right"
+
+                />
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:text="Terminer "
+
+                android:textColor="@color/white"
+                android:textSize="10dp"
+                android:layout_gravity="left"
+                android:layout_marginLeft="80dp"
+                android:background="@drawable/button_style"
+                />
+        </LinearLayout>
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="50dp"
+        android:gravity="bottom">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="630dp"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/fill_ellipse" />
+
+            <View
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/fill_ellipse" />
+
+            <View
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/fill_ellipse" />
+
+            <View
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/fill_ellipse" />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+</FrameLayout>

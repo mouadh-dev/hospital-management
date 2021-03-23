@@ -37,8 +37,7 @@ class ConnexionFragment : Fragment(), View.OnClickListener {
 
         InscriptionButton!!.setOnClickListener {
             var FirstInscriptionFr = FragmentInscriptionFirstPage()
-            fragmentManager!!.beginTransaction()!!
-                .replace(R.id.ContainerFragmentLayout, FirstInscriptionFr)!!.commit()
+            fragmentManager!!.beginTransaction().replace(R.id.ContainerFragmentLayout, FirstInscriptionFr).commit()
         }
         ForgotPassWord!!.setOnClickListener {
             requireActivity().run {

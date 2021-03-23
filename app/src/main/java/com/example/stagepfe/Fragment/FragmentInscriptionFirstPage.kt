@@ -13,7 +13,7 @@ import com.example.stagepfe.R
 class FragmentInscriptionFirstPage : Fragment() {
 
        private var ButtonReturn: Button? = null
-       private var ButtonNext: Button? = null
+      lateinit var ButtonNext: Button
        private var FirstName: EditText? = null
        private var LastName: EditText? = null
        private var Mail: EditText? = null
@@ -40,14 +40,17 @@ class FragmentInscriptionFirstPage : Fragment() {
         ConfirmPass = view.findViewById(R.id.InscriptionConfirmPassFirstPage)
 
         ButtonReturn!!.setOnClickListener {
-            var ConnexionFragment = ConnexionFragment()
-            fragmentManager!!.beginTransaction()!!.replace(R.id.ContainerFragmentLayout, ConnexionFragment)!!.commit()
+            val connexionFragment = ConnexionFragment()
+            fragmentManager!!.beginTransaction()
+                .replace(R.id.ContainerFragmentLayout, connexionFragment)
+                .commit()
         }
         ButtonNext!!.setOnClickListener {
 
-            var secondePage = InscriptionSecondPageFragment()
-            fragmentManager!!.beginTransaction()!!
-                .replace(R.id.ContainerFragmentLayout, secondePage)!!.commit()
+            val secondPage = InscriptionSecondPageFragment()
+            fragmentManager!!.beginTransaction()
+                .replace(R.id.ContainerFragmentLayout, secondPage)
+                .commit()
         }
     }
 

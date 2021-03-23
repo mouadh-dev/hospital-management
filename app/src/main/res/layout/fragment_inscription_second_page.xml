@@ -95,7 +95,9 @@
                     android:gravity="left"
                     android:text="Homme"
                     android:textColor="@color/black"
-                    android:textSize="17dp" />
+                    android:textSize="17dp"
+                    android:buttonTint="@color/bluetitle"
+                    />
 
                 <ImageView
                     android:layout_width="22dp"
@@ -115,7 +117,9 @@
                     android:layout_height="wrap_content"
                     android:text="Femme"
                     android:textColor="@color/black"
-                    android:textSize="17dp" />
+                    android:textSize="17dp"
+                    android:buttonTint="@color/bluetitle"
+                    />
 
                 <ImageView
                     android:layout_width="22dp"
@@ -136,7 +140,7 @@
                     android:text="Ne pas précise"
                     android:textColor="@color/black"
                     android:textSize="17dp"
-
+                    android:buttonTint="@color/bluetitle"
                     />
 
                 <ImageView
@@ -215,7 +219,7 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginLeft="10dp"
-                android:background="@drawable/empty_ellipse" />
+                android:background="@drawable/fill_ellipse" />
 
             <View
                 android:layout_width="20dp"

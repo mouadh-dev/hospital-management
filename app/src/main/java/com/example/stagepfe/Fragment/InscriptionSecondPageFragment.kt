@@ -34,21 +34,26 @@ class InscriptionSecondPageFragment : Fragment() {
     }
     private fun initView(view: View){
         ButtonReturn = view.findViewById<Button>(R.id.ReurnbuttonSecondePage)
-        ButtonNext = view.findViewById<Button>(R.id.NextButtonFirstPage)
+        ButtonNext = view.findViewById<Button>(R.id.NextButtonSecondePage)
         Adresse= view.findViewById(R.id.InscriptionAdresseSecondPage)
         DateNaiss= view.findViewById(R.id.InscriptionDateSecondPage)
         PhoneNumber= view.findViewById(R.id.InscriptionPhoneNumberSecondPage)
         BloodGroup= view.findViewById(R.id.InscriptionBloodSecondPage)
         Sexe= view.findViewById(R.id.InscriptionSexeSecondPage)
+
+
         ButtonReturn!!.setOnClickListener {
-            var FirstPage = FragmentInscriptionFirstPage()
+            var firstPage = FragmentInscriptionFirstPage()
             fragmentManager!!.beginTransaction()!!
-                .replace(R.id.ContainerFragmentLayout, FirstPage)!!.commit()
+                .replace(R.id.ContainerFragmentLayout, firstPage)
+                .commit()
         }
+
         ButtonNext!!.setOnClickListener {
-            var ChoosePosition= ChoosePositionFragment()
-            fragmentManager!!.beginTransaction()!!
-                .replace(R.id.ContainerFragmentLayout, ChoosePosition)!!.commit()
+            var choosePosition = ChoosePositionFragment()
+            fragmentManager!!.beginTransaction()
+                .replace(R.id.ContainerFragmentLayout, choosePosition)
+                .commit()
         }
     }
 
