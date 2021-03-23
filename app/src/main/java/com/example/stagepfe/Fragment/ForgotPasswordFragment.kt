@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import com.example.stagepfe.AuthenticationFragmentContainerActivity
+import com.example.stagepfe.ContainerFragmentPasswordActivity
 import com.example.stagepfe.R
 
 // TODO: Rename parameter arguments, choose names that match
@@ -47,30 +48,16 @@ class ForgotPasswordFragment : Fragment() {
         BackIcon = view.findViewById<ImageView>(R.id.IconReturnBack)
         NextButton = view.findViewById<Button>(R.id.NextForgotPassword)
         MailForgotPassword = view.findViewById(R.id.MailForgotPassword)
-
+        NextButton!!.setOnClickListener {
+            var TapTheCode = FragmentTapTheCode()
+            fragmentManager!!.beginTransaction()!!
+                .replace(R.id.ContainerForgotPassword, TapTheCode)!!.commit()
+        }
 
 
 
 
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ForgotPasswordFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ForgotPasswordFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
+
 }

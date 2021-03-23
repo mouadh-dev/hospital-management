@@ -43,7 +43,7 @@ class FragmentTapTheCode : Fragment() {
 
             var NewPasswordPage = FragmentNewPassword()
             fragmentManager!!.beginTransaction()!!
-                .replace(R.id.ContainerFragmentLayout, NewPasswordPage)!!.commit()
+                .replace(R.id.ContainerForgotPassword, NewPasswordPage)!!.commit()
         }
 
     }

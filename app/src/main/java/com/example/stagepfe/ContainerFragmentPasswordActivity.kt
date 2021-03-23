@@ -13,15 +13,13 @@ class ContainerFragmentPasswordActivity : AppCompatActivity() {
         setContentView(R.layout.activity_container_fragment_password)
         init()
 
-//        BackIcon!!.setOnClickListener{
-//            supportFragmentManager.beginTransaction()
-//                .replace(R.id.ContainerForgotPassword, firstTutorialFragment).commit()
-//        }
+var Password = ForgotPasswordFragment()
+        supportFragmentManager.beginTransaction().replace(R.id.ContainerForgotPassword,Password).commit()
 
 
     }
 
     private fun init() {
-        BackIcon = findViewById<ImageView>(R.id.IconReturnBack)
+
     }
 }
