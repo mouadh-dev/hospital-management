@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import com.example.stagepfe.AuthenticationFragmentContainerActivity
 import com.example.stagepfe.R
 
@@ -36,16 +37,23 @@ class FragmentPatientInscription : Fragment() {
         Medicament = view.findViewById(R.id.Medicament)
 
         ReturnButton!!.setOnClickListener {
+
             var ChoosePosition = ChoosePositionFragment()
             fragmentManager!!.beginTransaction()!!
                 .replace(R.id.ContainerFragmentLayout, ChoosePosition)!!.commit()
         }
+
         FinishButton!!.setOnClickListener {
+        if (Condition!!.text.isEmpty() ||  Medicament!!.text.isEmpty()) {
+            Toast.makeText(context, "le champ est obligatoire", Toast.LENGTH_SHORT).show()
+
+        } else {
             requireActivity().run {
                 var intent = Intent(this, AuthenticationFragmentContainerActivity::class.java)
                 startActivity(intent)
                 finish()
             }
+        }
         }
     }
 

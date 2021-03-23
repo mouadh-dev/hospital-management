@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import com.example.stagepfe.R
 
 
@@ -46,11 +47,17 @@ class FragmentInscriptionFirstPage : Fragment() {
                 .commit()
         }
         ButtonNext!!.setOnClickListener {
+            if (LastName!!.text.isEmpty() || FirstName!!.text.isEmpty() || Mail!!.text.isEmpty() || Password!!.text.isEmpty() || ConfirmPass!!.text.isEmpty()) {
+                Toast.makeText(context, "le champ est obligatoire", Toast.LENGTH_SHORT)
+                .show()
 
-            val secondPage = InscriptionSecondPageFragment()
-            fragmentManager!!.beginTransaction()
-                .replace(R.id.ContainerFragmentLayout, secondPage)
-                .commit()
+            } else {
+
+                val secondPage = InscriptionSecondPageFragment()
+                fragmentManager!!.beginTransaction()
+                    .replace(R.id.ContainerFragmentLayout, secondPage)
+                    .commit()
+            }
         }
     }
 

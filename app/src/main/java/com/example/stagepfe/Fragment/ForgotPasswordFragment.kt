@@ -9,20 +9,11 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Toast
 import com.example.stagepfe.AuthenticationFragmentContainerActivity
 import com.example.stagepfe.ContainerFragmentPasswordActivity
 import com.example.stagepfe.R
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ForgotPasswordFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ForgotPasswordFragment : Fragment() {
     var BackIcon: ImageView? = null
     var NextButton: Button? = null
@@ -49,15 +40,14 @@ class ForgotPasswordFragment : Fragment() {
         NextButton = view.findViewById<Button>(R.id.NextForgotPassword)
         MailForgotPassword = view.findViewById(R.id.MailForgotPassword)
         NextButton!!.setOnClickListener {
-            var TapTheCode = FragmentTapTheCode()
-            fragmentManager!!.beginTransaction()!!
-                .replace(R.id.ContainerForgotPassword, TapTheCode)!!.commit()
+            if (MailForgotPassword!!.text.isEmpty()) {
+                Toast.makeText(context, "le champ est obligatoire", Toast.LENGTH_SHORT)
+                    .show()
+            } else {
+                var TapTheCode = FragmentTapTheCode()
+                fragmentManager!!.beginTransaction()!!
+                    .replace(R.id.ContainerForgotPassword, TapTheCode)!!.commit()
+            }
         }
-
-
-
-
     }
-
-
 }
