@@ -16,7 +16,7 @@
 //        init()
 //
 //        InscriptionButton!!.setOnClickListener {
-//            val intent = Intent(this, InscriptionFirstPageActivity::class.java)
+//            var intent = Intent(this, InscriptionFirstPageActivity::class.java)
 //            startActivity(intent)
 //            finish()
 //        }

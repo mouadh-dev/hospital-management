@@ -41,13 +41,13 @@ class FragmentInscriptionFirstPage : Fragment() {
 
         ButtonReturn!!.setOnClickListener {
             var ConnexionFragment = ConnexionFragment()
-            fragmentManager!!.beginTransaction()!!
-                .replace(R.id.ContainerFragmentLayout, ConnexionFragment)!!.commit()
+            fragmentManager!!.beginTransaction()!!.replace(R.id.ContainerFragmentLayout, ConnexionFragment)!!.commit()
         }
         ButtonNext!!.setOnClickListener {
-            var SecondPage = InscriptionSecondPageFragment()
+
+            var secondePage = InscriptionSecondPageFragment()
             fragmentManager!!.beginTransaction()!!
-                .replace(R.id.ContainerFragmentLayout, SecondPage)!!.commit()
+                .replace(R.id.ContainerFragmentLayout, secondePage)!!.commit()
         }
     }
 
