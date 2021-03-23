@@ -33,7 +33,8 @@ class ForgotPasswordFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
@@ -47,18 +48,9 @@ class ForgotPasswordFragment : Fragment() {
         NextButton = view.findViewById<Button>(R.id.NextForgotPassword)
         MailForgotPassword = view.findViewById(R.id.MailForgotPassword)
 
-        NextButton!!.setOnClickListener {
-            //var FirstInscriptionFr = FragmentInscriptionFirstPage()
-            fragmentManager!!.beginTransaction()!!
-                .replace(R.id.ContainerFragmentLayout, FragmentTapTheCode())!!.commit()
-        }
-                BackIcon!!.setOnClickListener {
-            requireActivity().run {
-                var intent= Intent(this, AuthenticationFragmentContainerActivity::class.java)
-                startActivity(intent)
-                finish() // If activity no more needed in back stack
-            }
-        }
+
+
+
 
     }
 
