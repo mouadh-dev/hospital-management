@@ -10,7 +10,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="230dp"
             >
             <TextView
                 android:layout_width="wrap_content"
@@ -82,7 +81,7 @@
                     android:background="@drawable/edit_text_style"
                     />
             </LinearLayout>
-        </LinearLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -120,6 +119,7 @@
             />
     </LinearLayout>
     </RelativeLayout>
+        </LinearLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

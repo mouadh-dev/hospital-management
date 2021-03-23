@@ -34,6 +34,7 @@ class ConnexionFragment : Fragment(), View.OnClickListener {
     private fun init(view: View) {
         ForgotPassWord = view.findViewById<TextView>(R.id.Motdepasseoubliee)
         InscriptionButton = view.findViewById<Button>(R.id.InscriptionButton)
+
         InscriptionButton!!.setOnClickListener {
             var FirstInscriptionFr = FragmentInscriptionFirstPage()
             fragmentManager!!.beginTransaction()!!
