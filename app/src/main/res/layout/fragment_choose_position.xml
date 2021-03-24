@@ -44,6 +44,8 @@
                 android:background="@drawable/spinner_style"
                 android:entries="@array/User_Position"
                 android:popupBackground="@color/white"
+                android:spinnerMode="dropdown"
+                android:theme="@style/Spinner"
 
                 />
         </RelativeLayout>
@@ -59,7 +61,8 @@
             android:paddingLeft="20dp"
             android:textColor="@color/black"
             android:textColorHint="@color/gray"
-            android:visibility="gone" />
+            android:visibility="gone"
+            />
 
         <EditText
             android:id="@+id/NumeroCINEditText"
