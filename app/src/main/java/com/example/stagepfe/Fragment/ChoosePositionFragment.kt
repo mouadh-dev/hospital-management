@@ -63,7 +63,6 @@ class ChoosePositionFragment : Fragment() {
 
         return view
 
-
     }
 
 
