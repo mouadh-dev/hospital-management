@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Toast
 import com.example.stagepfe.R
 
 
@@ -34,17 +35,21 @@ class FragmentTapTheCode : Fragment() {
     private fun initView(view: View) {
         SecondIconBack = view.findViewById(R.id.IconReturnBack)
         NextButtonCode = view.findViewById(R.id.NextTapTheCode)
-        CaseOne= view.findViewById(R.id. CaseOne)
-        CaseTwo= view.findViewById(R.id.CaseTwo)
-        CaseThree= view.findViewById(R.id.CaseThree)
-        CaseFour= view.findViewById(R.id. CaseFour)
+        CaseOne = view.findViewById(R.id.CaseOne)
+        CaseTwo = view.findViewById(R.id.CaseTwo)
+        CaseThree = view.findViewById(R.id.CaseThree)
+        CaseFour = view.findViewById(R.id.CaseFour)
 
         NextButtonCode!!.setOnClickListener {
+             if (CaseOne!!.text.isEmpty() || CaseTwo!!.text.isEmpty() || CaseThree!!.text.isEmpty() || CaseFour!!.text.isEmpty()) {
+                 Toast.makeText(context, "le champ est obligatoire", Toast.LENGTH_SHORT)
+                 .show()
+                 } else {
+                var NewPasswordPage = FragmentNewPassword()
+                fragmentManager!!.beginTransaction()!!
+                    .replace(R.id.ContainerForgotPassword, NewPasswordPage)!!.commit()
+             }
 
-            var NewPasswordPage = FragmentNewPassword()
-            fragmentManager!!.beginTransaction()!!
-                .replace(R.id.ContainerForgotPassword, NewPasswordPage)!!.commit()
         }
-
     }
 }

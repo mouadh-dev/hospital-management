@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.RadioGroup
+import android.widget.Toast
 import com.example.stagepfe.AuthenticationFragmentContainerActivity
 import com.example.stagepfe.R
 
@@ -50,10 +51,15 @@ class InscriptionSecondPageFragment : Fragment() {
         }
 
         ButtonNext!!.setOnClickListener {
-            var choosePosition = ChoosePositionFragment()
-            fragmentManager!!.beginTransaction()
-                .replace(R.id.ContainerFragmentLayout, choosePosition)
-                .commit()
+            if (Adresse!!.text.isEmpty() || DateNaiss!!.text.isEmpty() || PhoneNumber!!.text.isEmpty() || BloodGroup!!.text.isEmpty()) {
+                Toast.makeText(context, "le champ est obligatoire", Toast.LENGTH_SHORT)
+                .show()
+            } else {
+                var choosePosition = ChoosePositionFragment()
+                fragmentManager!!.beginTransaction()
+                    .replace(R.id.ContainerFragmentLayout, choosePosition)
+                    .commit()
+            }
         }
     }
 
