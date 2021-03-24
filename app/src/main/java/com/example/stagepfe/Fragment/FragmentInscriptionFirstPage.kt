@@ -1,5 +1,7 @@
 package com.example.stagepfe.Fragment
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -48,8 +50,16 @@ class FragmentInscriptionFirstPage : Fragment() {
         }
         ButtonNext!!.setOnClickListener {
             if (LastName!!.text.isEmpty() || FirstName!!.text.isEmpty() || Mail!!.text.isEmpty() || Password!!.text.isEmpty() || ConfirmPass!!.text.isEmpty()) {
-                Toast.makeText(context, "le champ est obligatoire", Toast.LENGTH_SHORT)
-                .show()
+//                Toast.makeText(context, "", Toast.LENGTH_SHORT)
+//                .show()
+                val builder = AlertDialog.Builder(requireContext())
+                //builder.setTitle("Are you sure!")
+                builder.setMessage("le champ est obligatoire !")
+
+
+                builder.setNegativeButton("d'accord") { dialogInterface: DialogInterface, i: Int -> }
+                builder.show()
+
 
             } else {
 

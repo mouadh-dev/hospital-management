@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragment.DialogFragment">
+<TextView
+    android:id="@+id/TextAlert"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="any text you want to show here"
+    android:textSize="50dp"
+    android:textColor="@color/blue"
+    android:gravity="center"
+    android:layout_centerInParent="true"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_style"
+        android:text="d'accord"
+        android:layout_below="@+id/TextAlert"
+        android:layout_centerHorizontal="true"/>
+
+
+</RelativeLayout>
