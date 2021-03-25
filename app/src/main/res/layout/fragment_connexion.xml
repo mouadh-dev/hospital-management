@@ -28,17 +28,18 @@
             android:layout_marginTop="32dp"
             android:background="@drawable/edit_text_style"
             android:drawableRight="@drawable/nom_util"
-            android:hint="nom d'utilisateur"
+            android:hint="Adresse_Mail"
             android:inputType=""
             android:paddingLeft="20dp"
             android:paddingRight="10dp"
             android:textColor="@color/black"
             android:textColorHint="#888282"
             android:textSize="15dp"
-            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            android:lines="1"
             />
 
         <EditText
+            android:lines="1"
             android:layout_width="233dp"
             android:layout_height="40dp"
             android:layout_centerInParent="true"

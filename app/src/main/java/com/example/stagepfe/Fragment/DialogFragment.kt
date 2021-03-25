@@ -1,5 +1,8 @@
 package com.example.stagepfe.Fragment
 
+import android.app.AlertDialog
+import android.app.Dialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,18 +13,20 @@ import com.example.stagepfe.R
 
 class DialogFragment : Fragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    fun onCreateDialog(savedInstanceState: Bundle): AlertDialog.Builder? {
+        return activity?.let {
 
+            val builder: AlertDialog.Builder? = activity?.let {
+                AlertDialog.Builder(it)
+            }
+            builder?.setMessage("hello")!!.setTitle("test")
+            builder.apply {
+                setPositiveButton("ok",
+                    DialogInterface.OnClickListener { dialog, id ->
+                        // User clicked OK button
+                    })
+            val dialog: AlertDialog? = builder?.create()
+        }
     }
+}}
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_dialog, container, false)
-    }
-
-
-}

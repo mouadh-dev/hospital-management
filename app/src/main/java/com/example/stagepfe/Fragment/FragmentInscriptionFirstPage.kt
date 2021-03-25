@@ -52,12 +52,9 @@ class FragmentInscriptionFirstPage : Fragment() {
             if (LastName!!.text.isEmpty() || FirstName!!.text.isEmpty() || Mail!!.text.isEmpty() || Password!!.text.isEmpty() || ConfirmPass!!.text.isEmpty()) {
 //                Toast.makeText(context, "", Toast.LENGTH_SHORT)
 //                .show()
+
                 val builder = AlertDialog.Builder(requireContext())
-                //builder.setTitle("Are you sure!")
-                builder.setMessage("le champ est obligatoire !")
 
-
-                builder.setNegativeButton("d'accord") { dialogInterface: DialogInterface, i: Int -> }
                 builder.show()
 
 

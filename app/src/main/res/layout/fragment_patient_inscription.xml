@@ -25,12 +25,13 @@
         <EditText
             android:id="@+id/ConditionPatient"
             android:layout_width="233dp"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:background="@drawable/edit_text_style"
             android:hint="Lesquels"
             android:textColorHint="@color/gray"
             android:paddingLeft="20dp"
+            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
             android:textColor="@color/black" />
 
 
@@ -62,7 +63,7 @@
             <EditText
                 android:id="@+id/Medicament"
                 android:layout_width="233dp"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/edit_text_style"
                 android:hint="Lesquels"

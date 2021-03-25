@@ -69,7 +69,7 @@
             android:textColor="@color/black"
             android:textColorHint="#888282"
             android:textSize="15dp"
-
+            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
             />
 
         <EditText
