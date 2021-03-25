@@ -26,12 +26,14 @@
             android:layout_marginTop="12dp"
             android:src="@drawable/triangle" />
         <Spinner
-            android:id="@+id/Specialité"
+            android:id="@+id/Speciality_Doctor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:entries="@array/Specialités"
             android:background="@drawable/spinner_style"
+            android:theme="@style/Spinner"
+            android:spinnerMode="dropdown"
 
             />
         </RelativeLayout>
@@ -48,6 +50,7 @@
         </TextView>
 
         <EditText
+            android:id="@+id/Bio_Doctor"
             android:layout_width="wrap_content"
             android:layout_height="120dp"
             android:textColor="@color/black"

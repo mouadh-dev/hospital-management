@@ -1,15 +1,16 @@
 package com.example.stagepfe.Fragment
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.fragment.app.Fragment
 import com.example.stagepfe.AuthenticationFragmentContainerActivity
 import com.example.stagepfe.R
-    private var Specialité: Spinner? = null
+    private var Speciality: Spinner? = null
     private var BioDoctor: EditText? = null
     private var ButtonReturn: Button? = null
     private var ButtonFinish: Button? = null
@@ -23,31 +24,18 @@ class InscriptionDoctorFragment : Fragment() {
         // Inflate the layout for this fragment
         var view= inflater.inflate(R.layout.fragment_inscription_doctor, container, false)
         initView(view)
-        Specialité!!.setSelection(0)
-        Specialité!!.adapter = ArrayAdapter(
+        Speciality!!.setSelection(0)
+        Speciality!!.adapter = ArrayAdapter(
             requireContext(),
             R.layout.support_simple_spinner_dropdown_item,
             resources.getStringArray(R.array.Specialités)
         ) as SpinnerAdapter
-        Specialité?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                TODO("Not yet implemented")
-            }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                println("erreur")
-            }
-        }
         return  view
     }
     private fun initView(view: View) {
-        Specialité = view.findViewById(R.id.Specialité)
-        BioDoctor = view.findViewById(R.id.BioDoctor)
+        Speciality = view.findViewById<Spinner>(R.id.Speciality_Doctor)
+        BioDoctor = view.findViewById<EditText>(R.id.Bio_Doctor)
         ButtonReturn = view.findViewById<Button>(R.id.ReturnButtonDoctorInscription)
         ButtonFinish = view.findViewById<Button>(R.id.FinishInscriptionDoctor)
 
@@ -62,10 +50,28 @@ class InscriptionDoctorFragment : Fragment() {
                 Toast.makeText(context, "le champ est obligatoire", Toast.LENGTH_SHORT)
                     .show()
             } else {
-                requireActivity().run {
-                    var intent = Intent(this, AuthenticationFragmentContainerActivity::class.java)
-                    startActivity(intent)
-                    finish()
+
+
+                    var congratView = View.inflate(
+                        requireContext(),
+                        R.layout.fragment_dalog_congart_frament,
+                        null
+                    )
+                    var builder = AlertDialog.Builder(requireContext())
+                    builder.setView(congratView)
+
+                    var dialogcongrat = builder.create()
+                    dialogcongrat.show()
+                    dialogcongrat.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+                    dialogcongrat.findViewById<Button>(R.id.Congrats_Button)
+                        .setOnClickListener {
+                            dialogcongrat.dismiss()
+                            requireActivity().run {
+                                var intent = Intent(this, AuthenticationFragmentContainerActivity::class.java)
+                                startActivity(intent)
+                                finish()
+                        }
                 }
             }
         }

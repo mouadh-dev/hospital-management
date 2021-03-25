@@ -21,42 +21,32 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
+            android:layout_marginBottom="76dp"
             android:gravity="center_horizontal"
-            android:text="champ est vide"
+            android:text="votre compte a été créé avec succès"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="50dp"
-            android:gravity="center_horizontal"
-            android:text="remplir le champ"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+
+
 
     </LinearLayout>
 
     <ImageView
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:background="@drawable/ellipse_red"
+        android:background="@drawable/ellipse_green"
         android:padding="8dp"
-        android:src="@drawable/close"
+        android:src="@drawable/check"
         app:layout_constraintBottom_toTopOf="@id/ll"
         app:layout_constraintTop_toTopOf="@id/ll"
         app:layout_constraintStart_toStartOf="@id/ll"
         app:layout_constraintEnd_toEndOf="@id/ll"/>
 
     <Button
-        android:id="@+id/btn_confirm"
+        android:id="@+id/Congrats_Button"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:text="Confirmar"

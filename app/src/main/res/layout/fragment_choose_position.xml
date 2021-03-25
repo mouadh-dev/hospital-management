@@ -59,6 +59,7 @@
             android:background="@drawable/edit_text_style"
             android:hint="Matricule"
             android:digits="0123456789"
+            android:maxLength="5"
             android:lines="1"
             android:paddingLeft="20dp"
             android:textColor="@color/black"
@@ -75,6 +76,7 @@
             android:background="@drawable/edit_text_style"
             android:hint="Num CIN"
             android:digits="0123456789"
+            android:maxLength="8"
             android:lines="1"
             android:paddingLeft="20dp"
             android:textColor="@color/black"
@@ -168,10 +170,12 @@
                 android:background="@drawable/fill_ellipse" />
 
             <View
+                android:id="@+id/ForthEllipse"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginLeft="10dp"
-                android:background="@drawable/empty_ellipse" />
+                android:background="@drawable/empty_ellipse"
+                android:visibility="visible"/>
 
         </LinearLayout>
 
