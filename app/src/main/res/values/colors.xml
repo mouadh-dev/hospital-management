@@ -10,4 +10,5 @@
     <color name="blue">#0D6495</color>
     <color name="gray">#B3B5B6</color>
     <color name="bluetitle">#00A8FF</color>
+    <color name="transparent">#ffffff00</color>
 </resources>

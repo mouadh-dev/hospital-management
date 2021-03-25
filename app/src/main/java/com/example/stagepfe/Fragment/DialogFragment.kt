@@ -10,7 +10,7 @@ import com.example.stagepfe.R
 
 
 class DialogFragment : Fragment() {
-var btn: Button?= null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -27,9 +27,6 @@ var btn: Button?= null
     }
 
     private fun init(view: View) {
-        btn = view.findViewById<Button>(R.id.btn_confirm)
-        btn!!.setOnClickListener{
-        }
 
 
     }

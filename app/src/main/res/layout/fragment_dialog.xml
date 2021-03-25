@@ -49,6 +49,7 @@
         android:layout_height="60dp"
         android:background="@drawable/bg_iv"
         android:padding="8dp"
+        android:src="@drawable/close"
         app:layout_constraintBottom_toTopOf="@id/ll"
         app:layout_constraintTop_toTopOf="@id/ll"
         app:layout_constraintStart_toStartOf="@id/ll"
@@ -59,7 +60,7 @@
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:text="Confirmar"
-        android:background="@color/blue"
+        android:background="@drawable/button_style"
         android:textColor="@color/white"
         android:textAllCaps="false"
         android:layout_marginStart="16dp"
@@ -68,7 +69,8 @@
         app:layout_constraintStart_toStartOf="@id/ll"
         app:layout_constraintEnd_toEndOf="@id/ll"
         app:layout_constraintTop_toBottomOf="@id/ll"
-        app:layout_constraintBottom_toBottomOf="@id/ll"/>
+        app:layout_constraintBottom_toBottomOf="@id/ll"
+        />
 
 
 
