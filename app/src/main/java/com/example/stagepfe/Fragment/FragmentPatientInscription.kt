@@ -46,7 +46,17 @@ class FragmentPatientInscription : Fragment() {
 
         FinishButton!!.setOnClickListener {
         if (Condition!!.text.isEmpty() ||  Medicament!!.text.isEmpty()) {
-            Toast.makeText(context, "le champ est obligatoire", Toast.LENGTH_SHORT).show()
+            var v = View.inflate(requireContext(), R.layout.fragment_dialog, null)
+            var builder = AlertDialog.Builder(requireContext())
+            builder.setView(v)
+
+            var dialog = builder.create()
+            dialog.show()
+            dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+            dialog.findViewById<Button>(R.id.btn_confirm).setOnClickListener {
+                dialog.dismiss()
+            }
 
         } else {
             requireActivity().run {

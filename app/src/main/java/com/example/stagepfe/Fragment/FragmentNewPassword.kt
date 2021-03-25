@@ -1,5 +1,6 @@
 package com.example.stagepfe.Fragment
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -41,8 +42,17 @@ class FragmentNewPassword : Fragment() {
 
         FinishButton!!.setOnClickListener {
             if (NewPassword!!.text.isEmpty() || ConfirmNewPassword!!.text.isEmpty()) {
-                Toast.makeText(context, "le champ est obligatoire", Toast.LENGTH_SHORT)
-                    .show()
+                var v = View.inflate(requireContext(), R.layout.fragment_dialog, null)
+                var builder = AlertDialog.Builder(requireContext())
+                builder.setView(v)
+
+                var dialog = builder.create()
+                dialog.show()
+                dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+                dialog.findViewById<Button>(R.id.btn_confirm).setOnClickListener {
+                    dialog.dismiss()
+                }
             } else {
                 requireActivity().run {
                     var intent =

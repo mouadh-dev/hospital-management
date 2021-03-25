@@ -59,7 +59,7 @@
         android:id="@+id/btn_confirm"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        android:text="Confirmar"
+        android:text="Confirmer"
         android:background="@drawable/button_style"
         android:textColor="@color/white"
         android:textAllCaps="false"
