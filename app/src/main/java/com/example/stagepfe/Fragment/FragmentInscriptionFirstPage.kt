@@ -11,6 +11,12 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.example.stagepfe.R
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.shape.ShapeAppearanceModel.builder
+import java.util.stream.DoubleStream.builder
+import java.util.stream.IntStream.builder
+import java.util.stream.LongStream.builder
+
 
 
 class FragmentInscriptionFirstPage : Fragment() {
@@ -52,13 +58,24 @@ class FragmentInscriptionFirstPage : Fragment() {
             if (LastName!!.text.isEmpty() || FirstName!!.text.isEmpty() || Mail!!.text.isEmpty() || Password!!.text.isEmpty() || ConfirmPass!!.text.isEmpty()) {
 //                Toast.makeText(context, "", Toast.LENGTH_SHORT)
 //                .show()
+//                val builder = AlertDialog.Builder(requireContext())
+//                //builder.setTitle("Are you sure!")
+//                builder.setMessage("le champ est obligatoire !")
+//
+//
+//                builder.setNegativeButton("d'accord") { dialogInterface: DialogInterface, i: Int -> }
+//                builder.show()
+
+                val v = View.inflate(requireContext(), R.layout.fragment_dialog, null)
                 val builder = AlertDialog.Builder(requireContext())
-                //builder.setTitle("Are you sure!")
-                builder.setMessage("le champ est obligatoire !")
+                builder.setView(v)
+                val dialog = builder.create()
+                dialog.show()
+                dialog.window?.setBackgroundDrawableResource(android.R.color.white)
 
 
-                builder.setNegativeButton("d'accord") { dialogInterface: DialogInterface, i: Int -> }
-                builder.show()
+
+
 
 
             } else {

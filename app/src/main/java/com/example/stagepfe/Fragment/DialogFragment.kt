@@ -4,12 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import com.example.stagepfe.R
 
 
 class DialogFragment : Fragment() {
-
+var btn: Button?= null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -20,7 +21,17 @@ class DialogFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_dialog, container, false)
+        var view = inflater.inflate(R.layout.fragment_dialog, container, false)
+        init(view)
+        return view
+    }
+
+    private fun init(view: View) {
+        btn = view.findViewById<Button>(R.id.btn_confirm)
+        btn!!.setOnClickListener{
+        }
+
+
     }
 
 
