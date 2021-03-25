@@ -15,7 +15,7 @@ class ChoosePositionFragment : Fragment() {
     private var DossierMed: EditText? = null
     private var ButtonReturn: Button? = null
     private var ButtonNext: Button? = null
-    var option = arrayOf("choisir", "Médecin", "Patient", "Pharmacien", "Labo")
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -80,6 +80,7 @@ class ChoosePositionFragment : Fragment() {
                 .replace(R.id.ContainerFragmentLayout, SecondPage).commit()
         }
         ButtonNext!!.setOnClickListener {
+
             if (DossierMed!!.text.isEmpty() || CIN!!.text.isEmpty() || Matricule!!.text.isEmpty()) {
                 Toast.makeText(context, "le champ est obligatoire", Toast.LENGTH_SHORT)
                     .show()
