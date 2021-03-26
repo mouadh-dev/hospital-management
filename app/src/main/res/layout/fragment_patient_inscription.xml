@@ -46,12 +46,15 @@
 
 
         <RadioGroup
+            android:id="@+id/Radio_Group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="30dp">
+            android:layout_gravity="left"
+            android:layout_marginTop="30dp"
+            >
 
             <RadioButton
+                android:id="@+id/YesMedicament"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Oui"
@@ -69,9 +72,11 @@
                 android:hint="Lesquels"
                 android:textColorHint="@color/gray"
                 android:paddingLeft="15dp"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:visibility="gone"/>
 
             <RadioButton
+                android:id="@+id/NoMedicament"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
