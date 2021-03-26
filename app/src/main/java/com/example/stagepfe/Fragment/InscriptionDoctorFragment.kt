@@ -63,7 +63,7 @@ class InscriptionDoctorFragment : Fragment() {
 
                     var congratView = View.inflate(
                         requireContext(),
-                        R.layout.fragment_dalog_congart_frament,
+                        R.layout.fragment_dialog,
                         null
                     )
                     var builder = AlertDialog.Builder(requireContext())
@@ -73,7 +73,7 @@ class InscriptionDoctorFragment : Fragment() {
                     dialogcongrat.show()
                     dialogcongrat.window?.setBackgroundDrawableResource(android.R.color.transparent)
 
-                    dialogcongrat.findViewById<Button>(R.id.Congrats_Button)
+                    dialogcongrat.findViewById<Button>(R.id.btn_confirm)
                         .setOnClickListener {
                             dialogcongrat.dismiss()
                             requireActivity().run {

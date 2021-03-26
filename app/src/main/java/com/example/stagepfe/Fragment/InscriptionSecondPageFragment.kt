@@ -65,13 +65,11 @@ class InscriptionSecondPageFragment : Fragment() {
                 dialog.findViewById<Button>(R.id.btn_confirm).setOnClickListener {
                     dialog.dismiss()
                 }
-//            }else if (PhoneNumber!!.length() < 8){
-//
             }
             else {
                 var choosePosition = ChoosePositionFragment()
                 fragmentManager!!.beginTransaction()
-                    .replace(R.id.ContainerFragmentLayout, choosePosition)
+                    .replace(R.id.ContainerFragmentLayout, choosePosition).addToBackStack(null)
                     .commit()
             }
         }
