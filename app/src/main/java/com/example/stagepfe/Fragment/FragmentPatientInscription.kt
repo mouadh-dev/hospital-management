@@ -17,7 +17,7 @@ import com.example.stagepfe.R
 
 class FragmentPatientInscription : Fragment() {
 
-    var ReturnButton: Button? = null
+    private var ReturnButton: Button? = null
     var Condition: EditText? = null
     var FinishButton: Button? = null
     var Medicament: EditText? = null
@@ -30,17 +30,21 @@ class FragmentPatientInscription : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        var view= inflater.inflate(R.layout.fragment_patient_inscription, container, false)
+        var view = inflater.inflate(R.layout.fragment_patient_inscription, container, false)
         initView(view)
-        return  view
+
+        return view
     }
+
+
     private fun initView(view: View) {
         Condition = view.findViewById(R.id.ConditionPatient)
         ReturnButton = view.findViewById<Button>(R.id.ReturnButtonPatientInscription)
         FinishButton = view.findViewById<Button>(R.id.FinishButtonPatientInscription)
         YesMedicament = view.findViewById<RadioButton>(R.id.YesMedicament)
-       NoMedicament = view.findViewById<RadioButton>(R.id.NoMedicament)
+        NoMedicament = view.findViewById<RadioButton>(R.id.NoMedicament)
         Medicament = view.findViewById(R.id.Medicament)
+
 
         ReturnButton!!.setOnClickListener {
 
@@ -48,7 +52,8 @@ class FragmentPatientInscription : Fragment() {
             fragmentManager!!.beginTransaction()!!
                 .replace(R.id.ContainerFragmentLayout, ChoosePosition)!!.commit()
         }
-        fun onRadioButtonClicked(view: View) {
+
+         fun onRadioButtonClicked(view: View?) {
             if (view is RadioButton) {
                 // Is the button now checked?
                 val checked = view.isChecked
@@ -58,8 +63,9 @@ class FragmentPatientInscription : Fragment() {
                     R.id.YesMedicament ->
                         if (checked) {
                             Medicament!!.visibility = View.VISIBLE
+
                             FinishButton!!.setOnClickListener {
-                                if (Condition!!.text.isEmpty() || Medicament!!.text.isEmpty()) {
+                                if (Condition!!.text.isEmpty() || Medicament!!.text.isEmpty() ) {
                                     var v = View.inflate(
                                         requireContext(),
                                         R.layout.fragment_dialog,
@@ -82,28 +88,29 @@ class FragmentPatientInscription : Fragment() {
                                     fragmentManager!!.beginTransaction()
                                         .replace(R.id.ContainerFragmentLayout, Connexion).commit()
 
-                                        var congratView = View.inflate(
-                                            requireContext(),
-                                            R.layout.fragment_dalog_congart_frament,
-                                            null
-                                        )
-                                        var builder = AlertDialog.Builder(requireContext())
-                                        builder.setView(congratView)
+                                    var congratView = View.inflate(
+                                        requireContext(),
+                                        R.layout.fragment_dalog_congart_frament,
+                                        null
+                                    )
+                                    var builder = AlertDialog.Builder(requireContext())
+                                    builder.setView(congratView)
 
-                                        var dialogcongrat = builder.create()
-                                        dialogcongrat.show()
-                                        dialogcongrat.window?.setBackgroundDrawableResource(android.R.color.transparent)
+                                    var dialogcongrat = builder.create()
+                                    dialogcongrat.show()
+                                    dialogcongrat.window?.setBackgroundDrawableResource(android.R.color.transparent)
 
-                                        dialogcongrat.findViewById<Button>(R.id.Congrats_Button)
-                                            .setOnClickListener {
-                                                dialogcongrat.dismiss()
-                                            }
+                                    dialogcongrat.findViewById<Button>(R.id.Congrats_Button)
+                                        .setOnClickListener {
+                                            dialogcongrat.dismiss()
+                                        }
 
                                 }
                             } }
+
+
                     R.id.NoMedicament ->
                         if (checked) {
-                            Medicament!!.visibility = View.GONE
                             FinishButton!!.setOnClickListener {
                                 if (Condition!!.text.isEmpty()) {
                                     var v = View.inflate(requireContext(), R.layout.fragment_dialog, null)
@@ -123,32 +130,30 @@ class FragmentPatientInscription : Fragment() {
                                     fragmentManager!!.beginTransaction()
                                         .replace(R.id.ContainerFragmentLayout, Connexion).commit()
 
-                                        var congratView = View.inflate(
-                                            requireContext(),
-                                            R.layout.fragment_dalog_congart_frament,
-                                            null
-                                        )
-                                        var builder = AlertDialog.Builder(requireContext())
-                                        builder.setView(congratView)
+                                    var congratView = View.inflate(
+                                        requireContext(),
+                                        R.layout.fragment_dalog_congart_frament,
+                                        null
+                                    )
+                                    var builder = AlertDialog.Builder(requireContext())
+                                    builder.setView(congratView)
 
-                                        var dialogcongrat = builder.create()
-                                        dialogcongrat.show()
-                                        dialogcongrat.window?.setBackgroundDrawableResource(android.R.color.transparent)
+                                    var dialogcongrat = builder.create()
+                                    dialogcongrat.show()
+                                    dialogcongrat.window?.setBackgroundDrawableResource(android.R.color.transparent)
 
-                                        dialogcongrat.findViewById<Button>(R.id.Congrats_Button)
-                                            .setOnClickListener {
-                                                dialogcongrat.dismiss()
-                                            }
+                                    dialogcongrat.findViewById<Button>(R.id.Congrats_Button)
+                                        .setOnClickListener {
+                                            dialogcongrat.dismiss()
+                                        }
 
                                 }
                             }
                         }
                 }
             }
+
         }
 
-
-
-
-}
+    }
 }

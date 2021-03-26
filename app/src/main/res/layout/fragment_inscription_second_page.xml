@@ -140,7 +140,7 @@
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Ne pas précise"
+                    android:text="Ne pas préciser"
                     android:textColor="@color/black"
                     android:textSize="17dp"
                     android:buttonTint="@color/bluetitle"
