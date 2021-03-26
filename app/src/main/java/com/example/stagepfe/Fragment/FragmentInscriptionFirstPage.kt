@@ -2,6 +2,8 @@ package com.example.stagepfe.Fragment
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -63,6 +65,9 @@ class FragmentInscriptionFirstPage : Fragment() {
                     dialog.dismiss()
                 }
 
+            }else if (!ConfirmPass!!.text.equals(Password!!.text)){
+
+                ConfirmPass!!.setError("le mot de passe ne correspond pas")
 
             } else {
 
@@ -72,6 +77,27 @@ class FragmentInscriptionFirstPage : Fragment() {
                     .commit()
             }
         }
+        Mail!!.addTextChangedListener(object :  TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (android.util.Patterns.EMAIL_ADDRESS.matcher(Mail!!.text.toString()).matches())
+                    ButtonNext.isEnabled = true
+                else{
+                    ButtonNext.isEnabled = false
+                    Mail!!.setError("invalide Email")
+                }
+            }
+
+        })
+
     }
+
+
 
 }
