@@ -2,6 +2,8 @@ package com.example.stagepfe.Fragment
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,7 +41,6 @@ class InscriptionSecondPageFragment : Fragment() {
         DateNaiss = view.findViewById(R.id.InscriptionDateSecondPage)
         PhoneNumber = view.findViewById(R.id.InscriptionPhoneNumberSecondPage)
         BloodGroup = view.findViewById(R.id.InscriptionBloodSecondPage)
-        Sexe = view.findViewById(R.id.InscriptionSexeSecondPage)
 
 
         ButtonReturn!!.setOnClickListener {
@@ -64,13 +65,37 @@ class InscriptionSecondPageFragment : Fragment() {
                 dialog.findViewById<Button>(R.id.btn_confirm).setOnClickListener {
                     dialog.dismiss()
                 }
-            } else {
+//            }else if (PhoneNumber!!.length() < 8){
+//
+            }
+            else {
                 var choosePosition = ChoosePositionFragment()
                 fragmentManager!!.beginTransaction()
                     .replace(R.id.ContainerFragmentLayout, choosePosition)
                     .commit()
             }
         }
+
+
+        // phone number case
+
+        PhoneNumber!!.addTextChangedListener(object : TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (PhoneNumber!!.length() < 8 || PhoneNumber!!.length() > 8){
+                    ButtonNext!!.isEnabled = false
+                    PhoneNumber!!.error = "le numero n'existe pas"
+                }else{
+                    ButtonNext!!.isEnabled = true
+                }
+            }
+
+        })
     }
 
 }

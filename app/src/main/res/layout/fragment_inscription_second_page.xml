@@ -17,13 +17,13 @@
             android:layout_width="233dp"
             android:layout_height="40dp"
             android:layout_centerInParent="true"
-            android:lines="1"
             android:layout_gravity="center"
             android:layout_marginTop="90dp"
             android:background="@drawable/edit_text_style"
             android:drawableRight="@drawable/position"
             android:hint="Adresse"
             android:inputType="textPostalAddress"
+            android:lines="1"
             android:paddingLeft="20dp"
             android:paddingRight="10dp"
             android:textColor="@color/black"
@@ -36,13 +36,13 @@
             android:layout_width="233dp"
             android:layout_height="40dp"
             android:layout_centerInParent="true"
-            android:lines="1"
             android:layout_gravity="center"
             android:layout_marginTop="25dp"
             android:background="@drawable/edit_text_style"
             android:drawableRight="@drawable/date"
             android:hint="JJ / MM / AAAA"
             android:inputType="date"
+            android:lines="1"
             android:paddingLeft="20dp"
             android:paddingRight="10dp"
             android:textColor="@color/black"
@@ -56,12 +56,12 @@
             android:layout_centerInParent="true"
             android:layout_gravity="center"
             android:layout_marginTop="25dp"
-            android:lines="1"
             android:background="@drawable/edit_text_style"
             android:digits="0123456789"
             android:drawableRight="@drawable/telephon"
             android:hint="Numero de Téléphone"
             android:inputType="phone"
+            android:lines="1"
             android:paddingLeft="20dp"
             android:paddingRight="10dp"
             android:textColor="@color/black"
@@ -78,82 +78,72 @@
             android:textSize="17dp" />
 
 
-        <RadioGroup
-            android:id="@+id/InscriptionSexeSecondPage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center">
 
 
-            <LinearLayout
+            <RadioGroup
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="left">
+                android:layout_gravity="center"
+                >
+
 
                 <RadioButton
-
+                    android:id="@+id/FirstRadioButtonSecondeInscription"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:buttonTint="@color/bluetitle"
                     android:gravity="left"
+                    android:pointerIcon="all_scroll"
                     android:text="Homme"
                     android:textColor="@color/black"
-                    android:textSize="17dp"
-                    android:buttonTint="@color/bluetitle"
-                    />
+                    android:textSize="17dp" />
 
-                <ImageView
-                    android:layout_width="22dp"
-                    android:layout_height="26dp"
-                    android:src="@drawable/male" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
+<!--                <ImageView-->
+<!--                    android:id="@+id/MaleIMg"-->
+<!--                    android:layout_width="22dp"-->
+<!--                    android:layout_height="26dp"-->
+<!--                    android:src="@drawable/male"-->
+<!--                    android:layout_toRightOf="@+id/FirstRadioButtonSecondeInscription"-->
+<!--                    />-->
 
                 <RadioButton
+                    android:id="@+id/SecondeRadioButtonSecondeInscription"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:buttonTint="@color/bluetitle"
                     android:text="Femme"
                     android:textColor="@color/black"
                     android:textSize="17dp"
-                    android:buttonTint="@color/bluetitle"
-                    />
+                    android:layout_below="@+id/FirstRadioButtonSecondeInscription"/>
 
-                <ImageView
-                    android:layout_width="22dp"
-                    android:layout_height="26dp"
-                    android:src="@drawable/female" />
-            </LinearLayout>
+<!--                <ImageView-->
+<!--                    android:layout_width="22dp"-->
+<!--                    android:layout_height="26dp"-->
+<!--                    android:src="@drawable/female"-->
+<!--                    android:layout_toRightOf="@+id/SecondeRadioButtonSecondeInscription"-->
+<!--                    android:layout_below="@id/FirstRadioButtonSecondeInscription"/>-->
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
 
                 <RadioButton
+                    android:id="@+id/ThirdRadioButtonSecondeInscription"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:buttonTint="@color/bluetitle"
                     android:text="Ne pas préciser"
                     android:textColor="@color/black"
                     android:textSize="17dp"
-                    android:buttonTint="@color/bluetitle"
-                    />
+                    android:layout_below="@+id/SecondeRadioButtonSecondeInscription"/>
 
-                <ImageView
-                    android:layout_width="22dp"
-                    android:layout_height="26dp"
-                    android:src="@drawable/both" />
+<!--                <ImageView-->
+<!--                    android:layout_width="22dp"-->
+<!--                    android:layout_height="26dp"-->
+<!--                    android:src="@drawable/both"-->
+<!--                    android:layout_toRightOf="@+id/ThirdRadioButtonSecondeInscription"-->
+<!--                    android:layout_below="@+id/SecondeRadioButtonSecondeInscription"/>-->
 
 
-            </LinearLayout>
-        </RadioGroup>
+            </RadioGroup>
+
 
 
         <EditText
@@ -161,11 +151,11 @@
             android:layout_width="233dp"
             android:layout_height="40dp"
             android:layout_centerInParent="true"
-            android:lines="1"
             android:layout_gravity="center"
             android:layout_marginTop="25dp"
             android:background="@drawable/edit_text_style"
             android:hint="Groupe sqnguins"
+            android:lines="1"
             android:paddingLeft="20dp"
             android:paddingRight="10dp"
             android:textColor="@color/black"
@@ -200,6 +190,7 @@
                 android:textSize="10dp" />
         </LinearLayout>
     </LinearLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
