@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.RadioButton
 import android.widget.RadioGroup
 import androidx.fragment.app.Fragment
 import com.example.stagepfe.R
@@ -22,6 +23,9 @@ class InscriptionSecondPageFragment : Fragment() {
     private var DateNaiss: EditText? = null
     private var PhoneNumber: EditText? = null
     private var BloodGroup: EditText? = null
+    private var Male: RadioButton? = null
+    private var Female: RadioButton? = null
+    private var NoChoice: RadioButton? = null
     private var Sexe: RadioGroup? = null
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,6 +45,9 @@ class InscriptionSecondPageFragment : Fragment() {
         DateNaiss = view.findViewById(R.id.InscriptionDateSecondPage)
         PhoneNumber = view.findViewById(R.id.InscriptionPhoneNumberSecondPage)
         BloodGroup = view.findViewById(R.id.InscriptionBloodSecondPage)
+        Male = view.findViewById<RadioButton>(R.id.FirstRadioButtonSecondeInscription)
+        Female = view.findViewById<RadioButton>(R.id.SecondeRadioButtonSecondeInscription)
+        NoChoice = view.findViewById<RadioButton>(R.id.ThirdRadioButtonSecondeInscription)
 
 
         ButtonReturn!!.setOnClickListener {
@@ -65,8 +72,20 @@ class InscriptionSecondPageFragment : Fragment() {
                 dialog.findViewById<Button>(R.id.btn_confirm).setOnClickListener {
                     dialog.dismiss()
                 }
-            }
-            else {
+            }else if (!Male!!.isChecked && !Female!!.isChecked && !NoChoice!!.isChecked){
+                var v = View.inflate(requireContext(), R.layout.fragment_dialog, null)
+                var builder = AlertDialog.Builder(requireContext())
+                builder.setView(v)
+
+                var dialog = builder.create()
+                dialog.show()
+                dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+                dialog.findViewById<Button>(R.id.btn_confirm).setOnClickListener {
+                    dialog.dismiss()
+                }
+
+            }else {
                 var choosePosition = ChoosePositionFragment()
                 fragmentManager!!.beginTransaction()
                     .replace(R.id.ContainerFragmentLayout, choosePosition).addToBackStack(null)

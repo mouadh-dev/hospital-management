@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="70dp"
-            android:text="Verifier les conditions qui s’appliquent à vous "
+            android:text="Souffrez-vous d'une maladie chronique?"
             android:textColor="@color/black"
             android:textSize="20dp" />
 
@@ -116,7 +116,6 @@
                 android:text="Précednt"
                 android:textColor="@color/white"
                 android:textSize="10dp"
-
                 />
 
             <Button

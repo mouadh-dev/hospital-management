@@ -48,6 +48,9 @@
                 android:layout_marginTop="20dp"
                 >
                 <EditText
+                   android:maxLength="1"
+                    android:textSize="30dp"
+                    android:textStyle="bold"
                     android:id="@+id/CaseOne"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
@@ -61,6 +64,9 @@
                     android:background="@drawable/edit_text_style"
                     />
                 <EditText
+                    android:textSize="30dp"
+                    android:maxLength="1"
+                    android:textStyle="bold"
                     android:id="@+id/CaseTwo"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
@@ -73,6 +79,9 @@
                     android:background="@drawable/edit_text_style"
                     />
                 <EditText
+                    android:textSize="30dp"
+                    android:maxLength="1"
+                    android:textStyle="bold"
                     android:id="@+id/CaseThree"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
@@ -85,6 +94,9 @@
                     android:background="@drawable/edit_text_style"
                     />
                 <EditText
+                    android:textSize="30dp"
+                    android:maxLength="1"
+                    android:textStyle="bold"
                     android:id="@+id/CaseFour"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
