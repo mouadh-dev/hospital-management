@@ -2,6 +2,8 @@ package com.example.stagepfe.Fragment
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -94,6 +96,7 @@ class ChoosePositionFragment : Fragment() {
                             dialog.findViewById<Button>(R.id.btn_confirm).setOnClickListener {
                                 dialog.dismiss()
                             }
+
                         } else {
                             var DoctorPage = InscriptionDoctorFragment()
                             fragmentManager!!.beginTransaction()
@@ -148,28 +151,12 @@ class ChoosePositionFragment : Fragment() {
                             dialog.findViewById<Button>(R.id.btn_confirm).setOnClickListener {
                                 dialog.dismiss()
                             }
-                        } else {
+                        }
+                        else {
+
                             var Connexion = ConnexionFragment()
                             fragmentManager!!.beginTransaction()
                                 .replace(R.id.ContainerFragmentLayout, Connexion).commit()
-
-                            var congratView = View.inflate(
-                                requireContext(),
-                                R.layout.fragment_dialog,
-                                null
-                            )
-                            var builder = AlertDialog.Builder(requireContext())
-                            builder.setView(congratView)
-
-                            var dialogcongrat = builder.create()
-                            dialogcongrat.show()
-                            dialogcongrat.window?.setBackgroundDrawableResource(android.R.color.transparent)
-
-                            dialogcongrat.findViewById<Button>(R.id.btn_confirm)
-                                .setOnClickListener {
-                                    dialogcongrat.dismiss()
-
-                                }
 
                         }
                     }
@@ -179,6 +166,34 @@ class ChoosePositionFragment : Fragment() {
             }
 
         }
+
+
+        Matricule!!.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(
+                s: CharSequence?,
+                start: Int,
+                count: Int,
+                after: Int
+            ) {}
+
+            override fun onTextChanged(
+                s: CharSequence?,
+                start: Int,
+                before: Int,
+                count: Int
+            ) {}
+
+            override fun afterTextChanged(s: Editable?) {
+                if (Matricule!!.length() != 5) {
+
+                    Matricule!!.error = "se compose de 5 chiffre"
+                    ButtonNext!!.isEnabled = false
+                } else {
+                    ButtonNext!!.isEnabled = true
+                }
+            }
+
+        })
 
         fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
 

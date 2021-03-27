@@ -122,6 +122,8 @@ class FragmentInscriptionFirstPage : Fragment() {
                 if (notequal()){
                     ButtonNext.isEnabled = false
                     ConfirmPass!!.error = "le mot de passe ne correspond pas"
+                }else{
+                    ButtonNext.isEnabled = true
                 }
             }
 

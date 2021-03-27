@@ -34,6 +34,7 @@
             android:background="@drawable/spinner_style"
             android:theme="@style/Spinner"
             android:spinnerMode="dropdown"
+            android:popupBackground="@color/white"
 
             />
         </RelativeLayout>
@@ -51,7 +52,7 @@
 
         <EditText
             android:id="@+id/Bio_Doctor"
-            android:layout_width="wrap_content"
+            android:layout_width="233dp"
             android:layout_height="120dp"
             android:textColor="@color/black"
             android:padding="15dp"
@@ -67,25 +68,22 @@
             >
             <Button
                 android:id="@+id/ReturnButtonDoctorInscription"
-                android:layout_width="100dp"
-                android:layout_height="40dp"
+                android:layout_width="101dp"
+                android:layout_height="33dp"
                 android:text="Précednt"
                 android:textSize="10dp"
                 android:background="@drawable/button_style"
                 android:textColor="@color/white"
-                android:layout_gravity="right"
 
                 />
             <Button
                 android:id="@+id/FinishInscriptionDoctor"
-                android:layout_width="100dp"
-                android:layout_height="40dp"
-                android:text="Terminer "
-
+                android:layout_width="101dp"
+                android:layout_height="33dp"
+                android:text="Terminer"
                 android:textColor="@color/white"
                 android:textSize="10dp"
-                android:layout_gravity="left"
-                android:layout_marginLeft="80dp"
+                android:layout_marginLeft="25dp"
                 android:background="@drawable/button_style"
                 />
         </LinearLayout>

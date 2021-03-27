@@ -57,6 +57,7 @@ class FragmentPatientInscription : Fragment() {
 
 
 //********************************Radio Button**************************************
+
         radiogroup!!.setOnCheckedChangeListener { radioGroup: RadioGroup, i: Int ->
             if (YesMedicament!!.isChecked) {
                 Medicament!!.visibility = View.VISIBLE
@@ -100,7 +101,7 @@ class FragmentPatientInscription : Fragment() {
                 var dialog = builder.create()
                 dialog.show()
                 dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-                dialog.findViewById<TextView>(R.id.TitleDialog).setText("button radio est obligatoire")
+                dialog.findViewById<TextView>(R.id.TitleDialog).setText("veuiller selectionner oui ou non")
                 dialog.findViewById<Button>(R.id.btn_confirm)
                     .setOnClickListener {
                         dialog.dismiss()

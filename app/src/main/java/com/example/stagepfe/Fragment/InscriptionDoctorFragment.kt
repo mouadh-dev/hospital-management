@@ -10,10 +10,11 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import com.example.stagepfe.AuthenticationFragmentContainerActivity
 import com.example.stagepfe.R
-    private var Speciality: Spinner? = null
-    private var BioDoctor: EditText? = null
-    private var ButtonReturn: Button? = null
-    private var ButtonFinish: Button? = null
+
+private var Speciality: Spinner? = null
+private var BioDoctor: EditText? = null
+private var ButtonReturn: Button? = null
+private var ButtonFinish: Button? = null
 
 class InscriptionDoctorFragment : Fragment() {
 
@@ -22,7 +23,7 @@ class InscriptionDoctorFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        var view= inflater.inflate(R.layout.fragment_inscription_doctor, container, false)
+        var view = inflater.inflate(R.layout.fragment_inscription_doctor, container, false)
         initView(view)
         Speciality!!.setSelection(0)
         Speciality!!.adapter = ArrayAdapter(
@@ -31,8 +32,9 @@ class InscriptionDoctorFragment : Fragment() {
             resources.getStringArray(R.array.Specialités)
         ) as SpinnerAdapter
 
-        return  view
+        return view
     }
+
     private fun initView(view: View) {
         Speciality = view.findViewById<Spinner>(R.id.Speciality_Doctor)
         BioDoctor = view.findViewById<EditText>(R.id.Bio_Doctor)
@@ -44,6 +46,24 @@ class InscriptionDoctorFragment : Fragment() {
             fragmentManager!!.beginTransaction()!!
                 .replace(R.id.ContainerFragmentLayout, ChoosePosition)!!.commit()
         }
+
+
+//        Speciality!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//            override fun onNothingSelected(parent: AdapterView<*>?) {
+//                println("erreur")
+//            }
+//
+//            override fun onItemSelected(
+//                parent: AdapterView<*>?,
+//                view: View?,
+//                position: Int,
+//                id: Long
+//            ) {
+//                if (position == 0) {
+//                    ButtonFinish!!.isEnabled = false
+//                } else {
+
+///********************************button finish**********************************************
         ButtonFinish!!.setOnClickListener {
 
             if (BioDoctor!!.text.isEmpty()) {
@@ -61,29 +81,33 @@ class InscriptionDoctorFragment : Fragment() {
             } else {
 
 
-                    var congratView = View.inflate(
-                        requireContext(),
-                        R.layout.fragment_dialog,
-                        null
-                    )
-                    var builder = AlertDialog.Builder(requireContext())
-                    builder.setView(congratView)
+                var View = View.inflate(
+                    requireContext(),
+                    R.layout.fragment_dialog,
+                    null
+                )
+                var builder = AlertDialog.Builder(requireContext())
+                builder.setView(View)
 
-                    var dialogcongrat = builder.create()
-                    dialogcongrat.show()
-                    dialogcongrat.window?.setBackgroundDrawableResource(android.R.color.transparent)
-
-                    dialogcongrat.findViewById<Button>(R.id.btn_confirm)
-                        .setOnClickListener {
-                            dialogcongrat.dismiss()
-                            requireActivity().run {
-                                var intent = Intent(this, AuthenticationFragmentContainerActivity::class.java)
-                                startActivity(intent)
-                                finish()
+                var dialog = builder.create()
+                dialog.show()
+                dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+                dialog.findViewById<TextView>(R.id.TitleDialog)
+                    .setText("votre compte a été créé avec succès")
+                dialog.findViewById<Button>(R.id.btn_confirm)
+                    .setOnClickListener {
+                        dialog.dismiss()
+                        requireActivity().run {
+                            var intent = Intent(
+                                this,
+                                AuthenticationFragmentContainerActivity::class.java
+                            )
+                            startActivity(intent)
+                            finish()
                         }
-                }
+                    }
             }
         }
-
     }
+
 }

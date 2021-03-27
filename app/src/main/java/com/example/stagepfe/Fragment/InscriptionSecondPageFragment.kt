@@ -7,10 +7,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.RadioButton
-import android.widget.RadioGroup
+import android.widget.*
 import androidx.fragment.app.Fragment
 import com.example.stagepfe.R
 
@@ -80,7 +77,7 @@ class InscriptionSecondPageFragment : Fragment() {
                 var dialog = builder.create()
                 dialog.show()
                 dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-
+dialog.findViewById<TextView>(R.id.TitleDialog).setText("definissez votre sexe")
                 dialog.findViewById<Button>(R.id.btn_confirm).setOnClickListener {
                     dialog.dismiss()
                 }
