@@ -1,6 +1,8 @@
 package com.example.stagepfe.Fragment
 
 import android.app.AlertDialog
+import android.app.DatePickerDialog
+import android.icu.util.Calendar
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -10,7 +12,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
 import com.example.stagepfe.R
-
+import java.time.Year
 
 class InscriptionSecondPageFragment : Fragment() {
 
@@ -24,6 +26,8 @@ class InscriptionSecondPageFragment : Fragment() {
     private var Female: RadioButton? = null
     private var NoChoice: RadioButton? = null
     private var Sexe: RadioGroup? = null
+    private var PickerDate: DatePicker? =null
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -33,6 +37,7 @@ class InscriptionSecondPageFragment : Fragment() {
         var view = inflater.inflate(R.layout.fragment_inscription_second_page, container, false)
         initView(view)
         return view
+
     }
 
     private fun initView(view: View) {
@@ -45,6 +50,8 @@ class InscriptionSecondPageFragment : Fragment() {
         Male = view.findViewById<RadioButton>(R.id.FirstRadioButtonSecondeInscription)
         Female = view.findViewById<RadioButton>(R.id.SecondeRadioButtonSecondeInscription)
         NoChoice = view.findViewById<RadioButton>(R.id.ThirdRadioButtonSecondeInscription)
+        PickerDate= view.findViewById<DatePicker>(R.id.date_Picker)
+
 
 
         ButtonReturn!!.setOnClickListener {
@@ -110,7 +117,23 @@ dialog.findViewById<TextView>(R.id.TitleDialog).setText("definissez votre sexe")
             }
 
         })
+
+        DateNaiss!!.setOnClickListener{
+            DatePicker!!.visibility = View.VISIBLE
+            val today = Calendar.getInstance()
+            PickerDate.init(today.get(Calendar.YEAR), today.get(Calendar.MONTH),
+                today.get(Calendar.DAY_OF_MONTH)
+
+            ) { view, year, month, day ->
+                val month = month + 1
+                val msg: String = "You Selected: $day/$month/$year"
+                DateNaiss?.text=msg
+            }
+
+        }
+
     }
+
 
 }
 
