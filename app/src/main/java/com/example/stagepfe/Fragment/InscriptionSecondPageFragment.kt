@@ -35,6 +35,7 @@ class InscriptionSecondPageFragment : Fragment() {
     private var Female: RadioButton? = null
     private var NoChoice: RadioButton? = null
     private var Sexe: RadioGroup? = null
+    private var PickerDate: DatePicker? = null
 
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     val PERMISSION_ID = 1010
@@ -49,11 +50,12 @@ class InscriptionSecondPageFragment : Fragment() {
         // Inflate the layout for this fragment
         var view = inflater.inflate(R.layout.fragment_inscription_second_page, container, false)
         initView(view)
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
+        fusedLocationProviderClient =
+            LocationServices.getFusedLocationProviderClient(requireContext())
 
         Adresse!!.setOnClickListener {
-            Log.d("Debug:",CheckPermission().toString())
-            Log.d("Debug:",isLocationEnabled(requireContext()).toString())
+            Log.d("Debug:", CheckPermission().toString())
+            Log.d("Debug:", isLocationEnabled(requireContext()).toString())
             RequestPermission()
             /* fusedLocationProviderClient.lastLocation.addOnSuccessListener{location: Location? ->
                  textView.text = location?.latitude.toString() + "," + location?.longitude.toString()
@@ -74,6 +76,7 @@ class InscriptionSecondPageFragment : Fragment() {
         Male = view.findViewById<RadioButton>(R.id.FirstRadioButtonSecondeInscription)
         Female = view.findViewById<RadioButton>(R.id.SecondeRadioButtonSecondeInscription)
         NoChoice = view.findViewById<RadioButton>(R.id.ThirdRadioButtonSecondeInscription)
+        PickerDate = view.findViewById<DatePicker>(R.id.date_Picker)
 
 
         ButtonReturn!!.setOnClickListener {
@@ -120,6 +123,26 @@ class InscriptionSecondPageFragment : Fragment() {
         }
 
 
+
+        DateNaiss!!.setOnClickListener{
+            PickerDate!!.visibility = View.VISIBLE
+            val today = Calendar.getInstance()
+            PickerDate!!.init(today.get(Calendar.YEAR), today.get(Calendar.MONTH),
+                today.get(Calendar.DAY_OF_MONTH)
+
+            ) { view, year, month, day ->
+                val month = month + 1
+                val msg: String = "$day/$month/$year"
+                DateNaiss!!.setText(msg)
+            }
+
+        }
+
+
+
+
+
+
         // phone number case
 
         PhoneNumber!!.addTextChangedListener(object : TextWatcher {
@@ -139,9 +162,6 @@ class InscriptionSecondPageFragment : Fragment() {
             }
 
         })
-
-
-
 
 
     }
@@ -181,7 +201,11 @@ class InscriptionSecondPageFragment : Fragment() {
                     }
                 }
             } else {
-                Toast.makeText(requireContext(), "Please Turn on Your device Location", Toast.LENGTH_SHORT)
+                Toast.makeText(
+                    requireContext(),
+                    "Please Turn on Your device Location",
+                    Toast.LENGTH_SHORT
+                )
                     .show()
             }
         } else {
@@ -196,7 +220,8 @@ class InscriptionSecondPageFragment : Fragment() {
         locationRequest.interval = 0
         locationRequest.fastestInterval = 0
         locationRequest.numUpdates = 1
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
+        fusedLocationProviderClient =
+            LocationServices.getFusedLocationProviderClient(requireContext())
         if (ActivityCompat.checkSelfPermission(
                 requireContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION
@@ -224,10 +249,12 @@ class InscriptionSecondPageFragment : Fragment() {
         override fun onLocationResult(locationResult: LocationResult) {
             var lastLocation: Location = locationResult.lastLocation
             Log.d("Debug:", lastLocation.longitude.toString())
-            Adresse!!.setText(getCityName(
-                lastLocation.latitude,
-                lastLocation.longitude
-            ))
+            Adresse!!.setText(
+                getCityName(
+                    lastLocation.latitude,
+                    lastLocation.longitude
+                )
+            )
 
         }
     }
@@ -242,12 +269,10 @@ class InscriptionSecondPageFragment : Fragment() {
         var geoCoder = Geocoder(requireContext(), Locale.getDefault())
         var Adress = geoCoder.getFromLocation(lat, long, 3)
 
-        address = Adress.get(0).getAddressLine(0)
-        knownName = Adress.get(0).featureName
         cityName = Adress.get(0).locality
         countryName = Adress.get(0).countryName
         Log.d("Debug:", cityName + " ; your Country " + countryName)
-        return  knownName
+        return cityName + "," + countryName
     }
 
 
@@ -283,13 +308,15 @@ class InscriptionSecondPageFragment : Fragment() {
         )
     }
 
-    fun isLocationEnabled(mContext: Context):Boolean{
+    fun isLocationEnabled(mContext: Context): Boolean {
         //this function will return to us the state of the location service
         //if the gps or the network provider is enabled then it will return true otherwise it will return false
 //        var locationManager = getSystemService(requireContext(),Context.LOCATION_SERVICE) as LocationManager
-                var locationManager = mContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        var locationManager = mContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
-        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
+            LocationManager.NETWORK_PROVIDER
+        )
     }
 
     override fun onRequestPermissionsResult(
@@ -304,6 +331,9 @@ class InscriptionSecondPageFragment : Fragment() {
         }
     }
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+//*****************************************calender***********************************************
+
 
 }
 
