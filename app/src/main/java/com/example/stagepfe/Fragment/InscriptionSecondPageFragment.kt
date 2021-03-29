@@ -36,6 +36,7 @@ class InscriptionSecondPageFragment : Fragment() {
     private var NoChoice: RadioButton? = null
     private var Sexe: RadioGroup? = null
     private var PickerDate: DatePicker? = null
+    private var msg: String? =null
 
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     val PERMISSION_ID = 1010
@@ -77,6 +78,8 @@ class InscriptionSecondPageFragment : Fragment() {
         Female = view.findViewById<RadioButton>(R.id.SecondeRadioButtonSecondeInscription)
         NoChoice = view.findViewById<RadioButton>(R.id.ThirdRadioButtonSecondeInscription)
         PickerDate = view.findViewById<DatePicker>(R.id.date_Picker)
+
+
 
 
         ButtonReturn!!.setOnClickListener {
@@ -122,26 +125,43 @@ class InscriptionSecondPageFragment : Fragment() {
             }
         }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+//*****************************************calender***********************************************
 
 
         DateNaiss!!.setOnClickListener{
-            PickerDate!!.visibility = View.VISIBLE
+
+            var v = View.inflate(requireContext(), R.layout.fragment_calender, null)
+            var builder = AlertDialog.Builder(requireContext())
+            builder.setView(v)
+
+            var dialog = builder.create()
+            dialog.show()
+            dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
             val today = Calendar.getInstance()
             PickerDate!!.init(today.get(Calendar.YEAR), today.get(Calendar.MONTH),
                 today.get(Calendar.DAY_OF_MONTH)
 
             ) { view, year, month, day ->
                 val month = month + 1
-                val msg: String = "$day/$month/$year"
+                msg = "$day/$month/$year"
                 DateNaiss!!.setText(msg)
+
+
             }
+
+            dialog.findViewById<Button>(R.id.btn_confirm_calnder)!!.setOnClickListener {
+                dialog.dismiss()
+            }
+
 
         }
 
 
 
 
-
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
         // phone number case
 
@@ -330,9 +350,6 @@ class InscriptionSecondPageFragment : Fragment() {
             }
         }
     }
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
-//*****************************************calender***********************************************
 
 
 }
