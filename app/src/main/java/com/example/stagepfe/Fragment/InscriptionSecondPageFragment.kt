@@ -234,15 +234,20 @@ class InscriptionSecondPageFragment : Fragment() {
 
 
     private fun getCityName(lat: Double, long: Double): String {
+        var address: String = ""
         var cityName: String = ""
         var countryName = ""
+        var knownName = ""
+
         var geoCoder = Geocoder(requireContext(), Locale.getDefault())
         var Adress = geoCoder.getFromLocation(lat, long, 3)
 
+        address = Adress.get(0).getAddressLine(0)
+        knownName = Adress.get(0).featureName
         cityName = Adress.get(0).locality
         countryName = Adress.get(0).countryName
         Log.d("Debug:", cityName + " ; your Country " + countryName)
-        return countryName + "," + cityName
+        return  knownName
     }
 
 
