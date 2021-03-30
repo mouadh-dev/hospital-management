@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.example.stagepfe.FireBase.dao.UserItem
 import com.example.stagepfe.R
 
 
@@ -24,6 +25,11 @@ class FragmentInscriptionFirstPage : Fragment() {
     private var Password: EditText? = null
     private var ConfirmPass: EditText? = null
     private var Title: TextView? = null
+
+//    var nom = FirstName!!.text.toString()
+//    var prenom = LastName!!.text.toString()
+//    var mail = Mail!!.text.toString()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -32,7 +38,15 @@ class FragmentInscriptionFirstPage : Fragment() {
         // Inflate the layout for this fragment
         var view = inflater.inflate(R.layout.fragment_inscription_first_page, container, false)
         initView(view)
+
+
+
+
+
         return view
+
+
+
     }
 
     private fun initView(view: View) {
@@ -68,29 +82,26 @@ class FragmentInscriptionFirstPage : Fragment() {
                     dialog.dismiss()
                 }
 
-            }
-//            else if (notequal()){
-//
-//                var v = View.inflate(requireContext(), R.layout.fragment_dialog, null)
-//                var builder = AlertDialog.Builder(requireContext())
-//                builder.setMessage("la la")
-//                builder.setView(v)
-//
-//                var dialog = builder.create()
-//                dialog.show()
-//                dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-//
-//                dialog.findViewById<Button>(R.id.btn_confirm).setOnClickListener {
-//                    dialog.dismiss()
-//                }
-//
-//            }
-            else {
+            } else {
 
-                val secondPage = InscriptionSecondPageFragment()
+
+
+                var secondPage =
+                    InscriptionSecondPageFragment()
+                var bundle= Bundle()
+                var user:UserItem= UserItem()
+                user.nom=FirstName!!.text.trim().toString()
+                user.prenom=LastName!!.text.trim().toString()
+                user.mail=Mail!!.text.trim().toString()
+                user.password=Password!!.text.toString()
+                user.confirmpassword= ConfirmPass!!.text.toString()
+                bundle.putParcelable("datafirstpage", user)
+                secondPage.arguments=bundle
+//             var user1=   arguments!!.get("data1")
+                println("mouadh "+ user.toString())
                 fragmentManager!!.beginTransaction()
-                    .replace(R.id.ContainerFragmentLayout, secondPage)
-                    .commit()
+                    .replace(R.id.ContainerFragmentLayout, secondPage).commit()
+
             }
         }
         Mail!!.addTextChangedListener(object :  TextWatcher {

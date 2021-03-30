@@ -1,6 +1,5 @@
 package com.example.stagepfe.Fragment
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -19,6 +18,7 @@ class ChoosePositionFragment : Fragment() {
     private var ButtonReturn: Button? = null
     private var ButtonNext: Button? = null
     private var Ellipse: View? = null
+    private var role: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,7 +30,6 @@ class ChoosePositionFragment : Fragment() {
         initView(view)
 
 
-        spinner!!.setSelection(0)
         spinner!!.adapter = ArrayAdapter(
             requireContext(),
             R.layout.support_simple_spinner_dropdown_item,
@@ -57,11 +56,15 @@ class ChoosePositionFragment : Fragment() {
             fragmentManager!!.beginTransaction()
                 .replace(R.id.ContainerFragmentLayout, SecondPage).commit()
         }
+        spinner!!.setSelection(1)
+
 
         spinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 println("erreur")
             }
+
 
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -69,104 +72,24 @@ class ChoosePositionFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                if (position == 0) {
-                    Matricule!!.visibility = View.GONE
-                    CIN!!.visibility = View.GONE
-                    DossierMed!!.visibility = View.GONE
-                }
 
-
-//*******************************************Medecin*********************************************
-                else if (position == 1) {
-                    CIN!!.visibility = View.GONE
-                    DossierMed!!.visibility = View.GONE
-                    Matricule!!.visibility = View.VISIBLE
-
-                    ButtonNext!!.setOnClickListener {
-
-                        if (Matricule!!.text.isEmpty()) {
-                            var v = View.inflate(requireContext(), R.layout.fragment_dialog, null)
-                            var builder = AlertDialog.Builder(requireContext())
-                            builder.setView(v)
-
-                            var dialog = builder.create()
-                            dialog.show()
-                            dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-
-                            dialog.findViewById<Button>(R.id.btn_confirm).setOnClickListener {
-                                dialog.dismiss()
-                            }
-
-                        } else {
-                            var DoctorPage = InscriptionDoctorFragment()
-                            fragmentManager!!.beginTransaction()
-                                .replace(R.id.ContainerFragmentLayout, DoctorPage).commit()
-                        }
-                    }
-
-//**************************************Patient***********************************************
-                } else if (position == 2) {
-                    CIN!!.visibility = View.VISIBLE
-                    DossierMed!!.visibility = View.VISIBLE
-                    Matricule!!.visibility = View.GONE
-                    ButtonNext!!.setOnClickListener {
-
-                        if (DossierMed!!.text.isEmpty() || CIN!!.text.isEmpty()) {
-                            var v = View.inflate(requireContext(), R.layout.fragment_dialog, null)
-                            var builder = AlertDialog.Builder(requireContext())
-                            builder.setView(v)
-
-                            var dialog = builder.create()
-                            dialog.show()
-                            dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-
-                            dialog.findViewById<Button>(R.id.btn_confirm).setOnClickListener {
-                                dialog.dismiss()
-                            }
-                        } else {
-                            var PatientPage = FragmentPatientInscription()
-                            fragmentManager!!.beginTransaction()
-                                .replace(R.id.ContainerFragmentLayout, PatientPage).commit()
-                        }
-                    }
-
-                }
-//*********************************Pharmacien et labo************************************************
-                else {
-                    CIN!!.visibility = View.GONE
-                    DossierMed!!.visibility = View.GONE
-                    Matricule!!.visibility = View.VISIBLE
-                    Ellipse!!.visibility = View.GONE
-                    ButtonNext!!.setOnClickListener {
-
-                        if (Matricule!!.text.isEmpty()) {
-                            var v = View.inflate(requireContext(), R.layout.fragment_dialog, null)
-                            var builder = AlertDialog.Builder(requireContext())
-                            builder.setView(v)
-
-                            var dialog = builder.create()
-                            dialog.show()
-                            dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-
-                            dialog.findViewById<Button>(R.id.btn_confirm).setOnClickListener {
-                                dialog.dismiss()
-                            }
-                        }
-                        else {
-
-                            var Connexion = ConnexionFragment()
-                            fragmentManager!!.beginTransaction()
-                                .replace(R.id.ContainerFragmentLayout, Connexion).commit()
-
-                        }
-                    }
-
-                }
+                role = spinner!!.selectedItem.toString()
+                UpdateView(role)
 
             }
+/////////////////////////////////////////////////////////////////////////////////////////////////
+        }
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
+        ButtonNext!!.setOnClickListener {
+            when (role){
+                "choisir" ->{
+
+                }
+            }
         }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
         Matricule!!.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(
@@ -174,14 +97,16 @@ class ChoosePositionFragment : Fragment() {
                 start: Int,
                 count: Int,
                 after: Int
-            ) {}
+            ) {
+            }
 
             override fun onTextChanged(
                 s: CharSequence?,
                 start: Int,
                 before: Int,
                 count: Int
-            ) {}
+            ) {
+            }
 
             override fun afterTextChanged(s: Editable?) {
                 if (Matricule!!.length() != 5) {
@@ -202,5 +127,45 @@ class ChoosePositionFragment : Fragment() {
         // fun onNothingSelected(parent: AdapterView<*>?) {
         // TODO("Not yet implemented")
         // }
+    }
+
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+    //******************************************spinner************************************************
+
+    private fun onItemSelected() {
+
+    }
+
+    private fun UpdateView(role: String?) {
+        when (role) {
+            "Choisir" -> {
+                Matricule!!.visibility = View.GONE
+                CIN!!.visibility = View.GONE
+                DossierMed!!.visibility = View.GONE
+                Ellipse!!.visibility = View.VISIBLE
+            }
+            "Médecin" ->{
+                CIN!!.visibility = View.GONE
+                DossierMed!!.visibility = View.GONE
+                Matricule!!.visibility = View.VISIBLE
+                Ellipse!!.visibility = View.VISIBLE
+            }
+            "Patient"->{
+                CIN!!.visibility = View.VISIBLE
+                DossierMed!!.visibility = View.VISIBLE
+                Matricule!!.visibility = View.GONE
+                Ellipse!!.visibility = View.VISIBLE
+            }
+            else ->{
+                CIN!!.visibility = View.GONE
+                DossierMed!!.visibility = View.GONE
+                Matricule!!.visibility = View.VISIBLE
+                Ellipse!!.visibility = View.GONE
+            }
+        }
+
     }
 }

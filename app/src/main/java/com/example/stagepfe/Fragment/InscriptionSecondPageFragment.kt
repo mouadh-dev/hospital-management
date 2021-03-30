@@ -1,6 +1,8 @@
 package com.example.stagepfe.Fragment
 
 import android.Manifest
+import android.app.DatePickerDialog
+import android.app.DatePickerDialog.OnDateSetListener
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Geocoder
@@ -18,8 +20,10 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import com.example.stagepfe.FireBase.dao.UserItem
 import com.example.stagepfe.R
 import com.google.android.gms.location.*
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -30,13 +34,14 @@ class InscriptionSecondPageFragment : Fragment() {
     private var Adresse: EditText? = null
     private var DateNaiss: EditText? = null
     private var PhoneNumber: EditText? = null
-    private var BloodGroup: EditText? = null
+    private var BloodGroup: Spinner? = null
     private var Male: RadioButton? = null
     private var Female: RadioButton? = null
     private var NoChoice: RadioButton? = null
     private var Sexe: RadioGroup? = null
     private var PickerDate: DatePicker? = null
-    private var msg: String? =null
+    private var msg: String? = null
+    val myCalendar = Calendar.getInstance()
 
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     val PERMISSION_ID = 1010
@@ -64,6 +69,12 @@ class InscriptionSecondPageFragment : Fragment() {
             getLastLocation()
         }
 
+        BloodGroup!!.adapter = ArrayAdapter(
+            requireContext(),
+            R.layout.support_simple_spinner_dropdown_item,
+            resources.getStringArray(R.array.Group_Sanguin)
+        ) as SpinnerAdapter
+
         return view
     }
 
@@ -78,8 +89,10 @@ class InscriptionSecondPageFragment : Fragment() {
         Female = view.findViewById<RadioButton>(R.id.SecondeRadioButtonSecondeInscription)
         NoChoice = view.findViewById<RadioButton>(R.id.ThirdRadioButtonSecondeInscription)
         PickerDate = view.findViewById<DatePicker>(R.id.date_Picker)
+        Sexe = view.findViewById<RadioGroup>(R.id.Radio_Group_secondPage)
 
-
+        Adresse!!.isFocusable = false
+        DateNaiss!!.isFocusable = false
 
 
         ButtonReturn!!.setOnClickListener {
@@ -90,7 +103,7 @@ class InscriptionSecondPageFragment : Fragment() {
         }
 
         ButtonNext!!.setOnClickListener {
-            if (Adresse!!.text.isEmpty() || DateNaiss!!.text.isEmpty() || PhoneNumber!!.text.isEmpty() || BloodGroup!!.text.isEmpty()) {
+            if (Adresse!!.text.isEmpty() || DateNaiss!!.text.isEmpty() || PhoneNumber!!.text.isEmpty() ) {
 
 
                 var v = View.inflate(requireContext(), R.layout.fragment_dialog, null)
@@ -104,7 +117,8 @@ class InscriptionSecondPageFragment : Fragment() {
                 dialog.findViewById<Button>(R.id.btn_confirm)!!.setOnClickListener {
                     dialog.dismiss()
                 }
-            } else if (!Male!!.isChecked && !Female!!.isChecked && !NoChoice!!.isChecked) {
+            }
+            else if (!Male!!.isChecked && !Female!!.isChecked && !NoChoice!!.isChecked) {
                 var v = View.inflate(requireContext(), R.layout.fragment_dialog, null)
                 var builder = AlertDialog.Builder(requireContext())
                 builder.setView(v)
@@ -119,9 +133,21 @@ class InscriptionSecondPageFragment : Fragment() {
 
             } else {
                 var choosePosition = ChoosePositionFragment()
+                var bundle= Bundle()
+                var user: UserItem = UserItem()
+
+                user.adresse =Adresse!!.text.trim().toString()
+                user.datenaiss=DateNaiss!!.text.trim().toString()
+                user.phonenumber=PhoneNumber!!.text.trim().toString()
+                user.sexe=Sexe!!.checkedRadioButtonId.toString()
+                user.groupesanguin= BloodGroup!!.selectedItem.toString()
+
+                bundle.putParcelable("datasecondpage", user)
+                choosePosition.arguments=bundle
+                var usersecondpage = arguments!!.get("datafirstpage")
+                println("mouadh "+ bundle +  usersecondpage.toString())
                 fragmentManager!!.beginTransaction()
-                    .replace(R.id.ContainerFragmentLayout, choosePosition).addToBackStack(null)
-                    .commit()
+                    .replace(R.id.ContainerFragmentLayout, choosePosition).commit()
             }
         }
 
@@ -130,40 +156,31 @@ class InscriptionSecondPageFragment : Fragment() {
 //*****************************************calender***********************************************
 
 
-        DateNaiss!!.setOnClickListener{
-
-            var v = View.inflate(requireContext(), R.layout.fragment_calender, null)
-            var builder = AlertDialog.Builder(requireContext())
-            builder.setView(v)
-
-            var dialog = builder.create()
-            dialog.show()
-            dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-            val today = Calendar.getInstance()
-            PickerDate!!.init(today.get(Calendar.YEAR), today.get(Calendar.MONTH),
-                today.get(Calendar.DAY_OF_MONTH)
-
-            ) { view, year, month, day ->
-                val month = month + 1
-                msg = "$day/$month/$year"
-                DateNaiss!!.setText(msg)
 
 
+
+        val date =
+            OnDateSetListener { view, year, monthOfYear, dayOfMonth -> // TODO Auto-generated method stub
+                myCalendar[Calendar.YEAR] = year
+                myCalendar[Calendar.MONTH] = monthOfYear
+                myCalendar[Calendar.DAY_OF_MONTH] = dayOfMonth
+                updateLabel()
             }
-
-            dialog.findViewById<Button>(R.id.btn_confirm_calnder)!!.setOnClickListener {
-                dialog.dismiss()
+        DateNaiss!!.setOnClickListener( object : View.OnClickListener {
+            override fun onClick(v: View?) {
+                // TODO Auto-generated method stub
+                DatePickerDialog(
+                    requireContext(), date, myCalendar[Calendar.YEAR], myCalendar[Calendar.MONTH],
+                    myCalendar[Calendar.DAY_OF_MONTH]
+                ).show()
             }
-
-
-        }
-
+        })
 
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-        // phone number case
+//*************************************phone number case*****************************************
 
         PhoneNumber!!.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -186,7 +203,18 @@ class InscriptionSecondPageFragment : Fragment() {
 
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//*****************************************calender function*******************************************
+
+    private fun updateLabel() {
+        val myFormat = "MM/dd/yy" //In which you need put here
+
+        val sdf = SimpleDateFormat(myFormat, Locale.US)
+
+        DateNaiss!!.setText(sdf.format(myCalendar.time))    }
 
 
 //*****************************************location map*********************************************
@@ -268,7 +296,9 @@ class InscriptionSecondPageFragment : Fragment() {
     private val locationCallback = object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult) {
             var lastLocation: Location = locationResult.lastLocation
+
             Log.d("Debug:", lastLocation.longitude.toString())
+
             Adresse!!.setText(
                 getCityName(
                     lastLocation.latitude,
@@ -350,7 +380,7 @@ class InscriptionSecondPageFragment : Fragment() {
             }
         }
     }
-
+/////////////////////////////////////////////////////////////////////////////////////////////////
 
 }
 

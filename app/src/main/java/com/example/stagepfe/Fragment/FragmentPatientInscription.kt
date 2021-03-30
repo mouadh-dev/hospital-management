@@ -30,7 +30,6 @@ class FragmentPatientInscription : Fragment() {
         // Inflate the layout for this fragment
         var view = inflater.inflate(R.layout.fragment_patient_inscription, container, false)
         initView(view)
-
         return view
     }
 

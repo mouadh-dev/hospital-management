@@ -31,7 +31,6 @@
             android:textSize="15dp" />
 
 
-
         <EditText
             android:id="@+id/InscriptionDateSecondPage"
             android:layout_width="233dp"
@@ -79,91 +78,108 @@
             android:textSize="17dp" />
 
 
+        <RadioGroup
+            android:id="@+id/Radio_Group_secondPage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
 
 
-            <RadioGroup
+            <RadioButton
+                android:id="@+id/FirstRadioButtonSecondeInscription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                >
+                android:buttonTint="@color/bluetitle"
+                android:gravity="left"
+                android:pointerIcon="all_scroll"
+                android:text="Homme"
+                android:textColor="@color/black"
+                android:textSize="17dp" />
+
+            <!--                <ImageView-->
+            <!--                    android:id="@+id/MaleIMg"-->
+            <!--                    android:layout_width="22dp"-->
+            <!--                    android:layout_height="26dp"-->
+            <!--                    android:src="@drawable/male"-->
+            <!--                    android:layout_toRightOf="@+id/FirstRadioButtonSecondeInscription"-->
+            <!--                    />-->
+
+            <RadioButton
+                android:id="@+id/SecondeRadioButtonSecondeInscription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/FirstRadioButtonSecondeInscription"
+                android:buttonTint="@color/bluetitle"
+                android:text="Femme"
+                android:textColor="@color/black"
+                android:textSize="17dp" />
+
+            <!--                <ImageView-->
+            <!--                    android:layout_width="22dp"-->
+            <!--                    android:layout_height="26dp"-->
+            <!--                    android:src="@drawable/female"-->
+            <!--                    android:layout_toRightOf="@+id/SecondeRadioButtonSecondeInscription"-->
+            <!--                    android:layout_below="@id/FirstRadioButtonSecondeInscription"/>-->
 
 
-                <RadioButton
-                    android:id="@+id/FirstRadioButtonSecondeInscription"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:buttonTint="@color/bluetitle"
-                    android:gravity="left"
-                    android:pointerIcon="all_scroll"
-                    android:text="Homme"
-                    android:textColor="@color/black"
-                    android:textSize="17dp" />
+            <RadioButton
+                android:id="@+id/ThirdRadioButtonSecondeInscription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/SecondeRadioButtonSecondeInscription"
+                android:buttonTint="@color/bluetitle"
+                android:text="Ne pas préciser"
+                android:textColor="@color/black"
+                android:textSize="17dp" />
 
-<!--                <ImageView-->
-<!--                    android:id="@+id/MaleIMg"-->
-<!--                    android:layout_width="22dp"-->
-<!--                    android:layout_height="26dp"-->
-<!--                    android:src="@drawable/male"-->
-<!--                    android:layout_toRightOf="@+id/FirstRadioButtonSecondeInscription"-->
-<!--                    />-->
-
-                <RadioButton
-                    android:id="@+id/SecondeRadioButtonSecondeInscription"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:buttonTint="@color/bluetitle"
-                    android:text="Femme"
-                    android:textColor="@color/black"
-                    android:textSize="17dp"
-                    android:layout_below="@+id/FirstRadioButtonSecondeInscription"/>
-
-<!--                <ImageView-->
-<!--                    android:layout_width="22dp"-->
-<!--                    android:layout_height="26dp"-->
-<!--                    android:src="@drawable/female"-->
-<!--                    android:layout_toRightOf="@+id/SecondeRadioButtonSecondeInscription"-->
-<!--                    android:layout_below="@id/FirstRadioButtonSecondeInscription"/>-->
+            <!--                <ImageView-->
+            <!--                    android:layout_width="22dp"-->
+            <!--                    android:layout_height="26dp"-->
+            <!--                    android:src="@drawable/both"-->
+            <!--                    android:layout_toRightOf="@+id/ThirdRadioButtonSecondeInscription"-->
+            <!--                    android:layout_below="@+id/SecondeRadioButtonSecondeInscription"/>-->
 
 
-                <RadioButton
-                    android:id="@+id/ThirdRadioButtonSecondeInscription"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:buttonTint="@color/bluetitle"
-                    android:text="Ne pas préciser"
-                    android:textColor="@color/black"
-                    android:textSize="17dp"
-                    android:layout_below="@+id/SecondeRadioButtonSecondeInscription"/>
+        </RadioGroup>
 
-<!--                <ImageView-->
-<!--                    android:layout_width="22dp"-->
-<!--                    android:layout_height="26dp"-->
-<!--                    android:src="@drawable/both"-->
-<!--                    android:layout_toRightOf="@+id/ThirdRadioButtonSecondeInscription"-->
-<!--                    android:layout_below="@+id/SecondeRadioButtonSecondeInscription"/>-->
-
-
-            </RadioGroup>
-
-
-
-        <EditText
-            android:id="@+id/InscriptionBloodSecondPage"
-            android:layout_width="233dp"
-            android:layout_height="40dp"
-            android:layout_centerInParent="true"
-            android:digits="ABO+-"
-            android:maxLength="3"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="25dp"
-            android:background="@drawable/edit_text_style"
-            android:hint="Groupe sqnguins"
-            android:lines="1"
-            android:paddingLeft="20dp"
-            android:paddingRight="10dp"
+            android:layout_marginTop="20dp"
+            android:text="Groupe sanguin"
             android:textColor="@color/black"
-            android:textColorHint="#888282"
-            android:textSize="15dp" />
+            android:textSize="20dp" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="200dp"
+                android:layout_marginTop="12dp"
+                android:src="@drawable/triangle" />
+
+            <Spinner
+                android:id="@+id/InscriptionBloodSecondPage"
+                android:layout_width="233dp"
+                android:layout_height="40dp"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:background="@drawable/spinner_style"
+                android:entries="@array/Group_Sanguin"
+                android:paddingLeft="20dp"
+                android:paddingRight="10dp"
+                android:popupBackground="@color/white"
+                android:spinnerMode="dropdown"
+                android:textSize="15dp"
+                android:theme="@style/Spinner"
+                />
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="233dp"
