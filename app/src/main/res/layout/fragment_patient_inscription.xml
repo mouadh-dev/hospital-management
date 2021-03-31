@@ -9,31 +9,59 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_gravity="center"
-        android:layout_marginBottom="50dp"
+        android:layout_gravity="center_horizontal"
         android:orientation="vertical">
 
         <TextView
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="20dp"
             android:text="Souffrez-vous d'une maladie chronique?"
             android:textColor="@color/black"
             android:textSize="20dp" />
 
-        <EditText
-            android:id="@+id/ConditionPatient"
-            android:layout_width="233dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/edit_text_style"
-            android:hint="Lesquels"
-            android:textColorHint="@color/gray"
-            android:paddingLeft="20dp"
-            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-            android:textColor="@color/black" />
 
+        <RadioGroup
+            android:id="@+id/First_Radio_Group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginTop="30dp">
+
+            <RadioButton
+                android:id="@+id/Yes_Maladi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/bluetitle"
+                android:text="Oui"
+                android:textColor="@color/black"
+                android:textSize="20dp" />
+
+            <EditText
+                android:id="@+id/Maladi_Patient"
+                android:layout_width="233dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/edit_text_style"
+                android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                android:hint="Lesquels"
+                android:paddingLeft="20dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/gray"
+                android:visibility="gone"/>
+
+            <RadioButton
+                android:id="@+id/No_Maladi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:buttonTint="@color/bluetitle"
+                android:text="Non"
+                android:textColor="@color/black"
+                android:textSize="20dp" />
+
+        </RadioGroup>
 
         <TextView
             android:layout_width="250dp"
@@ -46,22 +74,20 @@
 
 
         <RadioGroup
-            android:id="@+id/Radio_Group"
+            android:id="@+id/Second_Radio_Group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:layout_marginTop="30dp"
-            >
+            android:layout_marginTop="30dp">
 
             <RadioButton
                 android:id="@+id/YesMedicament"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:buttonTint="@color/bluetitle"
                 android:text="Oui"
                 android:textColor="@color/black"
-                android:textSize="20dp"
-                android:buttonTint="@color/bluetitle"
-                />
+                android:textSize="20dp" />
 
             <EditText
                 android:id="@+id/Medicament"
@@ -70,21 +96,20 @@
                 android:layout_marginTop="20dp"
                 android:background="@drawable/edit_text_style"
                 android:hint="Lesquels"
-                android:textColorHint="@color/gray"
                 android:paddingLeft="15dp"
                 android:textColor="@color/black"
-                android:visibility="gone"/>
+                android:textColorHint="@color/gray"
+                android:visibility="gone" />
 
             <RadioButton
                 android:id="@+id/NoMedicament"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:buttonTint="@color/bluetitle"
                 android:text="Non"
                 android:textColor="@color/black"
-                android:textSize="20dp"
-                android:buttonTint="@color/bluetitle"
-                />
+                android:textSize="20dp" />
 
         </RadioGroup>
     </LinearLayout>
@@ -115,8 +140,7 @@
                 android:background="@drawable/button_style_smaller"
                 android:text="Précednt"
                 android:textColor="@color/white"
-                android:textSize="10dp"
-                />
+                android:textSize="10dp" />
 
             <Button
                 android:id="@+id/FinishButtonPatientInscription"

@@ -9,12 +9,15 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
 import com.example.stagepfe.AuthenticationFragmentContainerActivity
+import com.example.stagepfe.FireBase.dao.UserItem
 import com.example.stagepfe.R
 
 private var Speciality: Spinner? = null
 private var BioDoctor: EditText? = null
 private var ButtonReturn: Button? = null
 private var ButtonFinish: Button? = null
+private var role: String? = null
+
 
 class InscriptionDoctorFragment : Fragment() {
 
@@ -48,22 +51,8 @@ class InscriptionDoctorFragment : Fragment() {
         }
 
 
-//        Speciality!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-//            override fun onNothingSelected(parent: AdapterView<*>?) {
-//                println("erreur")
-//            }
-//
-//            override fun onItemSelected(
-//                parent: AdapterView<*>?,
-//                view: View?,
-//                position: Int,
-//                id: Long
-//            ) {
-//                if (position == 0) {
-//                    ButtonFinish!!.isEnabled = false
-//                } else {
-
 ///********************************button finish**********************************************
+
         ButtonFinish!!.setOnClickListener {
 
             if (BioDoctor!!.text.isEmpty()) {
@@ -94,20 +83,41 @@ class InscriptionDoctorFragment : Fragment() {
                 dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
                 dialog.findViewById<TextView>(R.id.TitleDialog)
                     .setText("votre compte a été créé avec succès")
-                dialog.findViewById<Button>(R.id.btn_confirm)
-                    .setOnClickListener {
-                        dialog.dismiss()
-                        requireActivity().run {
-                            var intent = Intent(
-                                this,
-                                AuthenticationFragmentContainerActivity::class.java
-                            )
-                            startActivity(intent)
-                            finish()
-                        }
-                    }
+                dialog.findViewById<TextView>(R.id.msgdialog).equals("")
+                dialog.findViewById<Button>(R.id.btn_confirm).setOnClickListener {
+                    dialog.dismiss()
+                    finishDo()
+                }
             }
         }
     }
+
+    private fun finishDo() {
+        requireActivity().run {
+            var intent = Intent(
+                this,
+                AuthenticationFragmentContainerActivity::class.java
+            )
+            startActivity(intent)
+            finish()
+        }
+        var connexionpage =
+            ConnexionFragment()
+        var bundle = Bundle()
+        var user: UserItem = arguments!!.get("datachooseposition") as UserItem
+
+
+
+        user.speciality = Speciality!!.selectedItem.toString()
+        user.bio = BioDoctor!!.text.toString()
+
+        bundle.putParcelable("finalData", user)
+        connexionpage.arguments = bundle
+
+        println("mouadh" + user)
+        fragmentManager!!.beginTransaction()
+            .replace(R.id.ContainerFragmentLayout, connexionpage).commit()
+    }
+
 
 }

@@ -16,6 +16,12 @@ data class UserItem constructor(
     var groupesanguin: String? = "",
     var position: String? = "",
     var role: ArrayList<String>? = ArrayList(),
+    var matricule: String? = "",
+    var numCIN: String? = "",
+    var maladi: String? = "",
+    var medicament: String? = "",
+    var speciality: String? = "",
+    var bio: String? = ""
 
 
 ) : Parcelable {
@@ -47,6 +53,13 @@ data class UserItem constructor(
         parcel.writeString(sexe)
         parcel.writeString(groupesanguin)
         parcel.writeString(position)
+        parcel.writeString(matricule)
+        parcel.writeString(numCIN)
+
+        parcel.writeString(maladi)
+        parcel.writeString(medicament)
+        parcel.writeString(speciality)
+        parcel.writeString(bio)
     }
 
     override fun describeContents(): Int {
@@ -62,10 +75,5 @@ data class UserItem constructor(
             return arrayOfNulls(size)
         }
     }
-    fun testin(){
-        this.role!!.add("Medecin")
-        this.role!!.add("user")
-    }
-
-
 }
+

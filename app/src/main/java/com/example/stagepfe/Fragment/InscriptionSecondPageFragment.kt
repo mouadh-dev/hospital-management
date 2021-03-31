@@ -29,17 +29,17 @@ import java.util.*
 
 class InscriptionSecondPageFragment : Fragment() {
 
-    private var ButtonReturn: Button? = null
-    private var ButtonNext: Button? = null
-    private var Adresse: EditText? = null
-    private var DateNaiss: EditText? = null
-    private var PhoneNumber: EditText? = null
-    private var BloodGroup: Spinner? = null
-    private var Male: RadioButton? = null
-    private var Female: RadioButton? = null
-    private var NoChoice: RadioButton? = null
-    private var Sexe: RadioGroup? = null
-    private var PickerDate: DatePicker? = null
+    private var buttonReturn: Button? = null
+    private var buttonNext: Button? = null
+    private var adresseET: EditText? = null
+    private var dateNaiss: EditText? = null
+    private var phoneNumber: EditText? = null
+    private var bloodGroup: Spinner? = null
+    private var male: RadioButton? = null
+    private var female: RadioButton? = null
+    private var noChoice: RadioButton? = null
+    private var sexeGroup: RadioGroup? = null
+    private var pickerDate: DatePicker? = null
     private var msg: String? = null
     val myCalendar = Calendar.getInstance()
 
@@ -59,8 +59,8 @@ class InscriptionSecondPageFragment : Fragment() {
         fusedLocationProviderClient =
             LocationServices.getFusedLocationProviderClient(requireContext())
 
-        Adresse!!.setOnClickListener {
-            Log.d("Debug:", CheckPermission().toString())
+        adresseET!!.setOnClickListener {
+            Log.d("Debug:", checkPermission().toString())
             Log.d("Debug:", isLocationEnabled(requireContext()).toString())
             RequestPermission()
             /* fusedLocationProviderClient.lastLocation.addOnSuccessListener{location: Location? ->
@@ -69,7 +69,7 @@ class InscriptionSecondPageFragment : Fragment() {
             getLastLocation()
         }
 
-        BloodGroup!!.adapter = ArrayAdapter(
+        bloodGroup!!.adapter = ArrayAdapter(
             requireContext(),
             R.layout.support_simple_spinner_dropdown_item,
             resources.getStringArray(R.array.Group_Sanguin)
@@ -79,31 +79,31 @@ class InscriptionSecondPageFragment : Fragment() {
     }
 
     private fun initView(view: View) {
-        ButtonReturn = view.findViewById<Button>(R.id.ReurnbuttonSecondePage)
-        ButtonNext = view.findViewById<Button>(R.id.NextButtonSecondePage)
-        Adresse = view.findViewById(R.id.InscriptionAdresseSecondPage)
-        DateNaiss = view.findViewById(R.id.InscriptionDateSecondPage)
-        PhoneNumber = view.findViewById(R.id.InscriptionPhoneNumberSecondPage)
-        BloodGroup = view.findViewById(R.id.InscriptionBloodSecondPage)
-        Male = view.findViewById<RadioButton>(R.id.FirstRadioButtonSecondeInscription)
-        Female = view.findViewById<RadioButton>(R.id.SecondeRadioButtonSecondeInscription)
-        NoChoice = view.findViewById<RadioButton>(R.id.ThirdRadioButtonSecondeInscription)
-        PickerDate = view.findViewById<DatePicker>(R.id.date_Picker)
-        Sexe = view.findViewById<RadioGroup>(R.id.Radio_Group_secondPage)
+        buttonReturn = view.findViewById<Button>(R.id.ReurnbuttonSecondePage)
+        buttonNext = view.findViewById<Button>(R.id.NextButtonSecondePage)
+        adresseET = view.findViewById(R.id.InscriptionAdresseSecondPage)
+        dateNaiss = view.findViewById(R.id.InscriptionDateSecondPage)
+        phoneNumber = view.findViewById(R.id.InscriptionPhoneNumberSecondPage)
+        bloodGroup = view.findViewById(R.id.InscriptionBloodSecondPage)
+        male = view.findViewById<RadioButton>(R.id.FirstRadioButtonSecondeInscription)
+        female = view.findViewById<RadioButton>(R.id.SecondeRadioButtonSecondeInscription)
+        noChoice = view.findViewById<RadioButton>(R.id.ThirdRadioButtonSecondeInscription)
+        pickerDate = view.findViewById<DatePicker>(R.id.date_Picker)
+        sexeGroup = view.findViewById<RadioGroup>(R.id.Radio_Group_secondPage)
 
-        Adresse!!.isFocusable = false
-        DateNaiss!!.isFocusable = false
+        adresseET!!.isFocusable = false
+        dateNaiss!!.isFocusable = false
 
 
-        ButtonReturn!!.setOnClickListener {
+        buttonReturn!!.setOnClickListener {
             var firstPage = FragmentInscriptionFirstPage()
             fragmentManager!!.beginTransaction()
                 .replace(R.id.ContainerFragmentLayout, firstPage)
                 .commit()
         }
 
-        ButtonNext!!.setOnClickListener {
-            if (Adresse!!.text.isEmpty() || DateNaiss!!.text.isEmpty() || PhoneNumber!!.text.isEmpty() ) {
+        buttonNext!!.setOnClickListener {
+            if (adresseET!!.text.isEmpty() || dateNaiss!!.text.isEmpty() || phoneNumber!!.text.isEmpty() ) {
 
 
                 var v = View.inflate(requireContext(), R.layout.fragment_dialog, null)
@@ -118,7 +118,7 @@ class InscriptionSecondPageFragment : Fragment() {
                     dialog.dismiss()
                 }
             }
-            else if (!Male!!.isChecked && !Female!!.isChecked && !NoChoice!!.isChecked) {
+            else if (!male!!.isChecked && !female!!.isChecked && !noChoice!!.isChecked) {
                 var v = View.inflate(requireContext(), R.layout.fragment_dialog, null)
                 var builder = AlertDialog.Builder(requireContext())
                 builder.setView(v)
@@ -134,18 +134,19 @@ class InscriptionSecondPageFragment : Fragment() {
             } else {
                 var choosePosition = ChoosePositionFragment()
                 var bundle= Bundle()
-                var user: UserItem = UserItem()
+                var user: UserItem = arguments!!.get("datafirstpage") as UserItem
 
-                user.adresse =Adresse!!.text.trim().toString()
-                user.datenaiss=DateNaiss!!.text.trim().toString()
-                user.phonenumber=PhoneNumber!!.text.trim().toString()
-                user.sexe=Sexe!!.checkedRadioButtonId.toString()
-                user.groupesanguin= BloodGroup!!.selectedItem.toString()
+                user.adresse =adresseET!!.text.trim().toString()
+                user.datenaiss=dateNaiss!!.text.trim().toString()
+                user.phonenumber=phoneNumber!!.text.trim().toString()
+                user.sexe= sexeChoose(sexeGroup)
+                user.groupesanguin= bloodGroup!!.selectedItem.toString()
+
 
                 bundle.putParcelable("datasecondpage", user)
-                choosePosition.arguments=bundle
-                var usersecondpage = arguments!!.get("datafirstpage")
-                println("mouadh "+ bundle +  usersecondpage.toString())
+                choosePosition.arguments = bundle
+
+                println("mouadh" + user.toString())
                 fragmentManager!!.beginTransaction()
                     .replace(R.id.ContainerFragmentLayout, choosePosition).commit()
             }
@@ -166,7 +167,7 @@ class InscriptionSecondPageFragment : Fragment() {
                 myCalendar[Calendar.DAY_OF_MONTH] = dayOfMonth
                 updateLabel()
             }
-        DateNaiss!!.setOnClickListener( object : View.OnClickListener {
+        dateNaiss!!.setOnClickListener( object : View.OnClickListener {
             override fun onClick(v: View?) {
                 // TODO Auto-generated method stub
                 DatePickerDialog(
@@ -182,7 +183,7 @@ class InscriptionSecondPageFragment : Fragment() {
 
 //*************************************phone number case*****************************************
 
-        PhoneNumber!!.addTextChangedListener(object : TextWatcher {
+        phoneNumber!!.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
@@ -190,11 +191,11 @@ class InscriptionSecondPageFragment : Fragment() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                if (PhoneNumber!!.length() < 8 || PhoneNumber!!.length() > 8) {
-                    ButtonNext!!.isEnabled = false
-                    PhoneNumber!!.error = "le numero n'existe pas"
+                if (phoneNumber!!.length() < 8 || phoneNumber!!.length() > 8) {
+                    buttonNext!!.isEnabled = false
+                    phoneNumber!!.error = "le numero n'existe pas"
                 } else {
-                    ButtonNext!!.isEnabled = true
+                    buttonNext!!.isEnabled = true
                 }
             }
 
@@ -203,6 +204,16 @@ class InscriptionSecondPageFragment : Fragment() {
 
     }
 
+    private fun sexeChoose(sexeGroup: RadioGroup?): String? {
+        if (male!!.isChecked){
+            return male!!.text.toString()
+        }else if (female!!.isChecked){
+            return female!!.text.toString()
+        }else{
+            return noChoice!!.text.toString()
+        }
+
+    }
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -214,13 +225,13 @@ class InscriptionSecondPageFragment : Fragment() {
 
         val sdf = SimpleDateFormat(myFormat, Locale.US)
 
-        DateNaiss!!.setText(sdf.format(myCalendar.time))    }
+        dateNaiss!!.setText(sdf.format(myCalendar.time))    }
 
 
 //*****************************************location map*********************************************
 
     fun getLastLocation() {
-        if (CheckPermission()) {
+        if (checkPermission()) {
             if (isLocationEnabled(requireContext())) {
                 if (ActivityCompat.checkSelfPermission(
                         requireContext(),
@@ -245,7 +256,7 @@ class InscriptionSecondPageFragment : Fragment() {
                         NewLocationData()
                     } else {
                         Log.d("Debug:", "Your Location:" + location.longitude)
-                        Adresse!!.setText(getCityName(location.latitude, location.longitude))
+                        adresseET!!.setText(getCityName(location.latitude, location.longitude))
                     }
                 }
             } else {
@@ -299,7 +310,7 @@ class InscriptionSecondPageFragment : Fragment() {
 
             Log.d("Debug:", lastLocation.longitude.toString())
 
-            Adresse!!.setText(
+            adresseET!!.setText(
                 getCityName(
                     lastLocation.latitude,
                     lastLocation.longitude
@@ -317,16 +328,16 @@ class InscriptionSecondPageFragment : Fragment() {
         var knownName = ""
 
         var geoCoder = Geocoder(requireContext(), Locale.getDefault())
-        var Adress = geoCoder.getFromLocation(lat, long, 3)
+        var adress = geoCoder.getFromLocation(lat, long, 3)
 
-        cityName = Adress.get(0).locality
-        countryName = Adress.get(0).countryName
-        Log.d("Debug:", cityName + " ; your Country " + countryName)
-        return cityName + "," + countryName
+        cityName = adress[0].locality
+        countryName = adress[0].countryName
+        Log.d("Debug:", "$cityName ; your Country $countryName")
+        return "$cityName,$countryName"
     }
 
 
-    fun CheckPermission(): Boolean {
+    fun checkPermission(): Boolean {
         //this function will return a boolean
         //true: if we have permission
         //false if not
