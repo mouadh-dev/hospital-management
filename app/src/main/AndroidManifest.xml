@@ -15,9 +15,9 @@
         android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity android:name=".FireBaseActivity"></activity>
         <!-- <activity android:name=".ContainFragmentActivity"></activity> -->
-        <activity android:name=".ContainerFragmentPasswordActivity" />
-        <activity android:name=".AuthenticationFragmentContainerActivity" />
-        <activity android:name=".MainPageActivity">
+        <activity android:name=".Authentication.Activity.ContainerFragmentPasswordActivity" />
+        <activity android:name=".Authentication.Activity.AuthenticationFragmentContainerActivity" />
+        <activity android:name=".Authentication.Activity.MainPageActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

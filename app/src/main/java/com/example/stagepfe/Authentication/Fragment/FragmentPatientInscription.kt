@@ -1,4 +1,4 @@
-package com.example.stagepfe.Fragment
+package com.example.stagepfe.Authentication.Fragment
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog

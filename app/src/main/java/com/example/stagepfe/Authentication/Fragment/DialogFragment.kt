@@ -1,4 +1,4 @@
-package com.example.stagepfe.Fragment
+package com.example.stagepfe.Authentication.Fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -1,9 +1,9 @@
-package com.example.stagepfe
+package com.example.stagepfe.Authentication.Activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.stagepfe.Fragment.ConnexionFragment
+import com.example.stagepfe.R
 import java.util.*
 
 class MainPageActivity : AppCompatActivity() {

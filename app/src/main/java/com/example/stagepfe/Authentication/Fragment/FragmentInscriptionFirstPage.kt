@@ -1,4 +1,4 @@
-package com.example.stagepfe.Fragment
+package com.example.stagepfe.Authentication.Fragment
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -13,7 +13,6 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.stagepfe.entite.UserItem
 import com.example.stagepfe.R
-import com.example.stagepfe.dao.SendToFireBase
 
 
 class FragmentInscriptionFirstPage : Fragment() {

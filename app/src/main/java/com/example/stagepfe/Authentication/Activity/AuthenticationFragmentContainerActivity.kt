@@ -1,10 +1,9 @@
-package com.example.stagepfe
+package com.example.stagepfe.Authentication.Activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.stagepfe.Fragment.ChoosePositionFragment
-import com.example.stagepfe.Fragment.ConnexionFragment
-import com.example.stagepfe.Fragment.FragmentPatientInscription
+import com.example.stagepfe.Authentication.Fragment.ConnexionFragment
+import com.example.stagepfe.R
 
 class AuthenticationFragmentContainerActivity : AppCompatActivity() {
 

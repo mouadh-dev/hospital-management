@@ -1,15 +1,10 @@
-package com.example.stagepfe
+package com.example.stagepfe.Authentication.Activity
 
-import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.View
 import android.widget.ImageView
-import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
-import com.example.stagepfe.Fragment.ForgotPasswordFragment
-import kotlin.concurrent.fixedRateTimer
+import com.example.stagepfe.Authentication.Fragment.ForgotPasswordFragment
+import com.example.stagepfe.R
 
 class ContainerFragmentPasswordActivity : AppCompatActivity() {
     var BackIcon: ImageView? = null
