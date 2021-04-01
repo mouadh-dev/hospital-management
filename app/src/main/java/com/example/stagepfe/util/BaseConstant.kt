@@ -4,6 +4,9 @@ package com.example.stagepfe.util
 class BaseConstant {
 
 
+    val userRef: String = ""
+
+
     companion object {
         private var self: BaseConstant? = null
 

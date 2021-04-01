@@ -13,6 +13,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.stagepfe.entite.UserItem
 import com.example.stagepfe.R
+import com.example.stagepfe.dao.SendToFireBase
 
 
 class FragmentInscriptionFirstPage : Fragment() {
@@ -38,6 +39,11 @@ class FragmentInscriptionFirstPage : Fragment() {
         // Inflate the layout for this fragment
         var view = inflater.inflate(R.layout.fragment_inscription_first_page, container, false)
         initView(view)
+        var userDao= SendToFireBase()
+        var userItem= UserItem()
+        userItem.nom= "firas"
+        userItem.prenom="chebbah"
+        userDao.insertUser(userItem)
         return view
     }
 

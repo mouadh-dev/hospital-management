@@ -20,7 +20,8 @@ data class UserItem constructor(
     var maladi: String? = "",
     var medicament: String? = "",
     var speciality: String? = "",
-    var bio: String? = ""
+    var bio: String? = "",
+    var id: String? = ""
 
 
 ) : Parcelable {
