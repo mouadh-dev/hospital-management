@@ -17,7 +17,7 @@ class FragmentPatientInscription : Fragment() {
 
     private var ReturnButton: Button? = null
     var maladiPatient: EditText? = null
-    var FinishButton: Button? = null
+    var finishButton: Button? = null
     var Medicament: EditText? = null
     var YesMaladi: RadioButton? = null
     var NoMaladi: RadioButton? = null
@@ -44,7 +44,7 @@ class FragmentPatientInscription : Fragment() {
     private fun initView(view: View) {
         maladiPatient = view.findViewById(R.id.Maladi_Patient)
         ReturnButton = view.findViewById<Button>(R.id.ReturnButtonPatientInscription)
-        FinishButton = view.findViewById<Button>(R.id.FinishButtonPatientInscription)
+        finishButton = view.findViewById<Button>(R.id.FinishButtonPatientInscription)
         YesMaladi = view.findViewById(R.id.Yes_Maladi)
         NoMaladi = view.findViewById(R.id.No_Maladi)
         YesMedicament = view.findViewById<RadioButton>(R.id.YesMedicament)
@@ -86,7 +86,7 @@ class FragmentPatientInscription : Fragment() {
 
 
 //********************************Finish button****************************************
-        FinishButton!!.setOnClickListener {
+        finishButton!!.setOnClickListener {
 
             if (!YesMaladi!!.isChecked && !NoMaladi!!.isChecked || !YesMedicament!!.isChecked && !NoMedicament!!.isChecked) {
                 var v = View.inflate(
@@ -164,7 +164,8 @@ class FragmentPatientInscription : Fragment() {
                 }
 
 
-            } else if (YesMedicament!!.isChecked && !NoMedicament!!.isChecked) {
+            }
+            if (YesMedicament!!.isChecked && !NoMedicament!!.isChecked) {
                 if (Medicament!!.text.isEmpty()) {
                     var v = View.inflate(
                         requireContext(),
@@ -200,17 +201,17 @@ class FragmentPatientInscription : Fragment() {
                     dialog.findViewById<Button>(R.id.btn_confirm)
                         .setOnClickListener {
                             dialog.dismiss()
-
-                            var Connexionpage = ConnexionFragment()
-                            var bundle = Bundle()
-                            var user: UserItem = arguments!!.get("datachooseposition") as UserItem
-                            user.medicament = Medicament!!.text.toString()
-                            bundle.putParcelable("dataPatient", user)
-                            Connexionpage.arguments = bundle
-                            println("mouadh" + user.toString())
-                            fragmentManager!!.beginTransaction()
-                                .replace(R.id.ContainerFragmentLayout, Connexionpage).commit()
                         }
+                    var Connexionpage = ConnexionFragment()
+                    var bundle = Bundle()
+                    var user: UserItem = arguments!!.get("datachooseposition") as UserItem
+
+                    user.medicament = Medicament!!.text.toString()
+                    bundle.putParcelable("dataPatient", user)
+                    Connexionpage.arguments = bundle
+                    println("mouadh" + user.toString())
+                    fragmentManager!!.beginTransaction()
+                        .replace(R.id.ContainerFragmentLayout, Connexionpage).commit()
 
 
                 }

@@ -42,11 +42,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="@drawable/spinner_style"
                 android:entries="@array/User_Position"
                 android:popupBackground="@color/white"
                 android:spinnerMode="dropdown"
                 android:theme="@style/Spinner"
+                android:background="@drawable/spinner_style"
 
                 />
         </RelativeLayout>
