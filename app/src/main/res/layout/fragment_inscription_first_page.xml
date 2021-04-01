@@ -143,7 +143,7 @@
                 android:id="@+id/ReturnbuttonFirstPage"
                 android:layout_width="101dp"
                 android:layout_height="33dp"
-                android:background="@drawable/button_style_smaller"
+                android:background="@drawable/cancel_button_style"
                 android:text="Précédent"
                 android:textColor="@color/white"
                 android:textSize="10dp"
@@ -178,26 +178,26 @@
             android:orientation="horizontal">
 
             <View
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
                 android:layout_marginLeft="10dp"
                 android:background="@drawable/fill_ellipse" />
 
             <View
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
                 android:layout_marginLeft="10dp"
                 android:background="@drawable/empty_ellipse" />
 
             <View
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
                 android:layout_marginLeft="10dp"
                 android:background="@drawable/empty_ellipse" />
 
             <View
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
                 android:layout_marginLeft="10dp"
                 android:background="@drawable/empty_ellipse" />
 

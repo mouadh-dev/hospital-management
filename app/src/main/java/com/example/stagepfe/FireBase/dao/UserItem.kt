@@ -14,7 +14,6 @@ data class UserItem constructor(
     var phonenumber: String? = "",
     var sexe: String? = "",
     var groupesanguin: String? = "",
-    var position: String? = "",
     var role: ArrayList<String>? = ArrayList(),
     var matricule: String? = "",
     var numCIN: String? = "",
@@ -36,8 +35,13 @@ data class UserItem constructor(
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
+        TODO("role"),
         parcel.readString(),
-        TODO("identifiant")
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString()
     ) {
     }
 
@@ -52,10 +56,8 @@ data class UserItem constructor(
         parcel.writeString(phonenumber)
         parcel.writeString(sexe)
         parcel.writeString(groupesanguin)
-        parcel.writeString(position)
         parcel.writeString(matricule)
         parcel.writeString(numCIN)
-
         parcel.writeString(maladi)
         parcel.writeString(medicament)
         parcel.writeString(speciality)
@@ -75,5 +77,6 @@ data class UserItem constructor(
             return arrayOfNulls(size)
         }
     }
+
 }
 

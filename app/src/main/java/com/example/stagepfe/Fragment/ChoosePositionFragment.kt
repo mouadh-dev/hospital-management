@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import com.example.stagepfe.FireBase.dao.UserItem
 import com.example.stagepfe.R
 
+
 class ChoosePositionFragment : Fragment() {
     private var spinner: Spinner? = null
     private var Matricule: EditText? = null
@@ -22,6 +23,7 @@ class ChoosePositionFragment : Fragment() {
     private var Ellipse: View? = null
     private var role: String? = null
     private var user: UserItem? = null
+    private  var messageDialog: TextView? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -169,7 +171,7 @@ class ChoosePositionFragment : Fragment() {
             var bundle = Bundle()
             var user: UserItem = arguments!!.get("datasecondpage") as UserItem
 
-            if (role == "Patient") {
+            if (role == "Labo") {
                 var mRole = ArrayList<String>()
                 mRole.add(spinner!!.selectedItem.toString())
                 mRole.add("patient")
@@ -181,8 +183,27 @@ class ChoosePositionFragment : Fragment() {
             Connexion.arguments = bundle
 
             println("mouadh " + user.toString())
-            fragmentManager!!.beginTransaction()
-                .replace(R.id.ContainerFragmentLayout, Connexion).commit()
+            var v = View.inflate(
+                requireContext(),
+                R.layout.fragment_dialog,
+                null
+            )
+            var builder = AlertDialog.Builder(requireContext())
+            builder.setView(v)
+
+            var dialog = builder.create()
+            dialog.show()
+            dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+            dialog.findViewById<TextView>(R.id.TitleDialog)
+                .setText("votre compte a été créé avec succès")
+            dialog.findViewById<Button>(R.id.btn_confirm)
+                .setOnClickListener {
+                    dialog.dismiss()
+                    fragmentManager!!.beginTransaction()
+                        .replace(R.id.ContainerFragmentLayout, Connexion).commit()
+                }
+
+
 
         }    }
 
@@ -207,7 +228,7 @@ class ChoosePositionFragment : Fragment() {
             var bundle = Bundle()
             var user: UserItem = arguments!!.get("datasecondpage") as UserItem
 
-            if (role == "Patient") {
+            if (role == "Pharmacien") {
                 var mRole = ArrayList<String>()
                 mRole.add(spinner!!.selectedItem.toString())
                 mRole.add("patient")
@@ -215,12 +236,31 @@ class ChoosePositionFragment : Fragment() {
             }
             user.matricule = Matricule!!.text.toString()
 
-            bundle.putParcelable("datachooseposition", user)
-            Connexion.arguments = bundle
+//            bundle.putParcelable("datachooseposition", user)
+//            Connexion.arguments = bundle
 
-            println("mouadh " + user.toString())
-            fragmentManager!!.beginTransaction()
-                .replace(R.id.ContainerFragmentLayout, Connexion).commit()
+            println("mouadh" + user.toString())
+
+            var v = View.inflate(
+                requireContext(),
+                R.layout.fragment_dialog,
+                null
+            )
+            var builder = AlertDialog.Builder(requireContext())
+            builder.setView(v)
+
+            var dialog = builder.create()
+            dialog.show()
+            dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+            dialog.findViewById<TextView>(R.id.TitleDialog)
+                .setText("votre compte a été créé avec succès")
+            dialog.findViewById<Button>(R.id.btn_confirm)
+                .setOnClickListener {
+                    dialog.dismiss()
+                    fragmentManager!!.beginTransaction()
+                        .replace(R.id.ContainerFragmentLayout, Connexion).commit()
+                }
+
 
         }    }
 
@@ -243,11 +283,10 @@ class ChoosePositionFragment : Fragment() {
             var patientPage = FragmentPatientInscription()
             var bundle = Bundle()
             var user: UserItem = arguments!!.get("datasecondpage") as UserItem
-            user.position = spinner!!.selectedItem.toString()
+
             if (role == "Patient") {
                 var mRole = ArrayList<String>()
                 mRole.add(spinner!!.selectedItem.toString())
-
                 user.role = mRole
             }
             user.numCIN = CIN!!.text.toString()

@@ -88,7 +88,7 @@ class InscriptionSecondPageFragment : Fragment() {
         male = view.findViewById<RadioButton>(R.id.FirstRadioButtonSecondeInscription)
         female = view.findViewById<RadioButton>(R.id.SecondeRadioButtonSecondeInscription)
         noChoice = view.findViewById<RadioButton>(R.id.ThirdRadioButtonSecondeInscription)
-        pickerDate = view.findViewById<DatePicker>(R.id.date_Picker)
+//        pickerDate = view.findViewById<DatePicker>(R.id.date_Picker)
         sexeGroup = view.findViewById<RadioGroup>(R.id.Radio_Group_secondPage)
 
         adresseET!!.isFocusable = false

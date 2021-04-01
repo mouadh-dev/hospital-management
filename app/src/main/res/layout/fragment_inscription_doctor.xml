@@ -72,7 +72,7 @@
                 android:layout_height="33dp"
                 android:text="Précednt"
                 android:textSize="10dp"
-                android:background="@drawable/button_style"
+                android:background="@drawable/cancel_button_style"
                 android:textColor="@color/white"
 
                 />
@@ -102,26 +102,26 @@
             android:orientation="horizontal">
 
             <View
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
                 android:layout_marginLeft="10dp"
                 android:background="@drawable/fill_ellipse" />
 
             <View
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
                 android:layout_marginLeft="10dp"
                 android:background="@drawable/fill_ellipse" />
 
             <View
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
                 android:layout_marginLeft="10dp"
                 android:background="@drawable/fill_ellipse" />
 
             <View
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
                 android:layout_marginLeft="10dp"
                 android:background="@drawable/fill_ellipse" />
 

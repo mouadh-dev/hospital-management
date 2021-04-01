@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
+import com.example.stagepfe.FireBase.dao.UserItem
 import com.example.stagepfe.R
 
 
@@ -25,6 +26,7 @@ class FragmentPatientInscription : Fragment() {
     var dialog: Dialog? = null
     var firstRadiogroup: RadioGroup? = null
     var secondRadiogroup: RadioGroup? = null
+    var testingMsg: String? = null
 
 
     override fun onCreateView(
@@ -105,6 +107,9 @@ class FragmentPatientInscription : Fragment() {
                         dialog.dismiss()
                     }
             } else if (YesMaladi!!.isChecked && !NoMaladi!!.isChecked) {
+
+
+
                 if (maladiPatient!!.text.isEmpty()) {
                     var v = View.inflate(
                         requireContext(),
@@ -213,6 +218,15 @@ class FragmentPatientInscription : Fragment() {
                     .setOnClickListener {
                         dialog.dismiss()
                         var Connexionpage = ConnexionFragment()
+                        var bundle = Bundle()
+                        var user: UserItem = arguments!!.get("datasecondpage") as UserItem
+                        user.maladi = maladiPatient!!.text.toString()
+                        user.medicament = Medicament!!.text.toString()
+
+                        bundle.putParcelable("dataPatient", user)
+                        Connexionpage.arguments = bundle
+
+                        println("mouadh" + user.toString())
                         fragmentManager!!.beginTransaction()
                             .replace(R.id.ContainerFragmentLayout, Connexionpage).commit()
                     }
