@@ -1,16 +1,15 @@
 package com.example.stagepfe.Fragment
 
 import android.app.AlertDialog
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
-import com.example.stagepfe.AuthenticationFragmentContainerActivity
-import com.example.stagepfe.entite.UserItem
 import com.example.stagepfe.R
+import com.example.stagepfe.dao.SendToFireBase
+import com.example.stagepfe.entite.UserItem
 
 private var speciality: Spinner? = null
 private var bioDoctor: EditText? = null
@@ -28,7 +27,6 @@ class InscriptionDoctorFragment : Fragment() {
         // Inflate the layout for this fragment
         var view = inflater.inflate(R.layout.fragment_inscription_doctor, container, false)
         initView(view)
-        speciality!!.setSelection(0)
         speciality!!.adapter = ArrayAdapter(
             requireContext(),
             R.layout.support_simple_spinner_dropdown_item,
@@ -86,38 +84,31 @@ class InscriptionDoctorFragment : Fragment() {
                 dialog.findViewById<TextView>(R.id.msgdialog).equals("")
                 dialog.findViewById<Button>(R.id.btn_confirm).setOnClickListener {
                     dialog.dismiss()
-                    finishDo()
+                    var connexionpage = ConnexionFragment()
+                    var bundle = Bundle()
+                    connexionpage.arguments = bundle
+
+                    var user: UserItem = arguments!!.get("datachooseposition") as UserItem
+
+
+                    var userDao= SendToFireBase()
+                    user.speciality = speciality!!.selectedItem.toString()
+                    user.bio = bioDoctor!!.text.toString()
+
+                    bundle.putParcelable("dataDoctor", user)
+
+                    println("mouadh" + user.toString())
+
+                    userDao.insertUser(user)
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+                    fragmentManager!!.beginTransaction()
+                        .replace(R.id.ContainerFragmentLayout, connexionpage).commit()
                 }
             }
         }
     }
 
-    private fun finishDo() {
-        requireActivity().run {
-            var intent = Intent(
-                this,
-                AuthenticationFragmentContainerActivity::class.java
-            )
-            startActivity(intent)
-            finish()
-        }
-        var connexionpage =
-            ConnexionFragment()
-        var bundle = Bundle()
-        var user: UserItem = arguments!!.get("datachooseposition") as UserItem
-
-
-
-        user.speciality = speciality!!.selectedItem.toString()
-        user.bio = bioDoctor!!.text.toString()
-
-        bundle.putParcelable("finalData", user)
-        connexionpage.arguments = bundle
-
-        println("mouadh" + user)
-        fragmentManager!!.beginTransaction()
-            .replace(R.id.ContainerFragmentLayout, connexionpage).commit()
-    }
 
 
 }

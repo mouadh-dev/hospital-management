@@ -30,7 +30,6 @@ class SendToFireBase : IGestionUser {
                     if (task.isSuccessful()) {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d("FragmentActivity", "createUserWithEmail:success")
-//                        val id: String = mAuth!!.getCurrentUser().uid
                         userItem.id = mAuth!!.getCurrentUser().uid
                         myRef.child(userItem.id!!).setValue(userItem)
                         responseCallback.success(true)
@@ -43,10 +42,7 @@ class SendToFireBase : IGestionUser {
                             task.getException()
                         )
                         responseCallback.failure(userItem)
-//                        Toast.makeText(
-//                            this@FirebaseActivity, "Authentication failed.",
-//                            Toast.LENGTH_SHORT
-//                        ).show()
+
                     }
 
                     // ...

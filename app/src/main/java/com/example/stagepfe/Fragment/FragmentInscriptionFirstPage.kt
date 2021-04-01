@@ -27,9 +27,7 @@ class FragmentInscriptionFirstPage : Fragment() {
     private var confirmPass: EditText? = null
     private var title: TextView? = null
 
-//    var nom = FirstName!!.text.toString()
-//    var prenom = LastName!!.text.toString()
-//    var mail = Mail!!.text.toString()
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,11 +37,6 @@ class FragmentInscriptionFirstPage : Fragment() {
         // Inflate the layout for this fragment
         var view = inflater.inflate(R.layout.fragment_inscription_first_page, container, false)
         initView(view)
-        var userDao= SendToFireBase()
-        var userItem= UserItem()
-        userItem.nom= "firas"
-        userItem.prenom="chebbah"
-        userDao.insertUser(userItem)
         return view
     }
 
@@ -95,7 +88,6 @@ class FragmentInscriptionFirstPage : Fragment() {
                 user.confirmpassword= confirmPass!!.text.toString()
                 bundle.putParcelable("datafirstpage", user)
                 secondPage.arguments=bundle
-//             var user1=   arguments!!.get("data1")
                 println("mouadh "+ user.toString())
                 fragmentManager!!.beginTransaction()
                     .replace(R.id.ContainerFragmentLayout, secondPage).commit()

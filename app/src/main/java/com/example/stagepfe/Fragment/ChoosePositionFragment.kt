@@ -9,8 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
-import com.example.stagepfe.entite.UserItem
 import com.example.stagepfe.R
+import com.example.stagepfe.dao.SendToFireBase
+import com.example.stagepfe.entite.UserItem
 
 
 class ChoosePositionFragment : Fragment() {
@@ -22,7 +23,7 @@ class ChoosePositionFragment : Fragment() {
     private var ellipse: View? = null
     private var role: String? = null
     private var user: UserItem? = null
-    private  var messageDialog: TextView? = null
+    private var messageDialog: TextView? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -105,6 +106,7 @@ class ChoosePositionFragment : Fragment() {
                 }
                 "Labo" -> {
                     navigatetoConnexionLabo()
+
                 }
 
             }
@@ -144,7 +146,10 @@ class ChoosePositionFragment : Fragment() {
             }
 
         })
-        cin!!.addTextChangedListener(object : TextWatcher{
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        cin!!.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
@@ -170,11 +175,12 @@ class ChoosePositionFragment : Fragment() {
     }
 
 
-
-
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //***************************************navigation***********************************************
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////Labo//////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private fun navigatetoConnexionLabo() {
         if (matricule!!.text.isEmpty()) {
@@ -192,9 +198,11 @@ class ChoosePositionFragment : Fragment() {
         }
         else {
 
-            var Connexion = ConnexionFragment()
+///////////////////////////////Send Data //////////////////////////////////////////////////////////
+
             var bundle = Bundle()
             var user: UserItem = arguments!!.get("datasecondpage") as UserItem
+            var userDao = SendToFireBase()
 
             if (role == "Labo") {
                 var mRole = ArrayList<String>()
@@ -203,11 +211,16 @@ class ChoosePositionFragment : Fragment() {
                 user.role = mRole
             }
             user.matricule = matricule!!.text.toString()
-
             bundle.putParcelable("datachooseposition", user)
-            Connexion.arguments = bundle
-
             println("mouadh " + user.toString())
+
+////////////////////////Send  to  Fire Base /////////////////////////////////////////////////////
+
+            userDao.insertUser(user)
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+            var connexion = ConnexionFragment()
+            connexion.arguments = bundle
             var v = View.inflate(
                 requireContext(),
                 R.layout.fragment_dialog,
@@ -225,13 +238,16 @@ class ChoosePositionFragment : Fragment() {
                 .setOnClickListener {
                     dialog.dismiss()
                     fragmentManager!!.beginTransaction()
-                        .replace(R.id.ContainerFragmentLayout, Connexion).commit()
+                        .replace(R.id.ContainerFragmentLayout, connexion).commit()
                 }
 
 
+        }
+    }
 
-        }    }
-
+////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////Pharmacien //////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private fun navigatetoConnexionPharmacien() {
         if (matricule!!.text.isEmpty()) {
@@ -249,10 +265,12 @@ class ChoosePositionFragment : Fragment() {
         }
         else {
 
-            var Connexion = ConnexionFragment()
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
             var bundle = Bundle()
             var user: UserItem = arguments!!.get("datasecondpage") as UserItem
-
+            var userDao = SendToFireBase()
+///////////////////////////////////////////////////////////////////////////////////////////////////
             if (role == "Pharmacien") {
                 var mRole = ArrayList<String>()
                 mRole.add(spinner!!.selectedItem.toString())
@@ -261,11 +279,15 @@ class ChoosePositionFragment : Fragment() {
             }
             user.matricule = matricule!!.text.toString()
 
-//            bundle.putParcelable("datachooseposition", user)
-//            Connexion.arguments = bundle
+            bundle.putParcelable("datachooseposition", user)
+            println("mouadh " + user.toString())
 
-            println("mouadh" + user.toString())
 
+            userDao.insertUser(user)
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+            var Connexion = ConnexionFragment()
+            Connexion.arguments = bundle
             var v = View.inflate(
                 requireContext(),
                 R.layout.fragment_dialog,
@@ -287,13 +309,16 @@ class ChoosePositionFragment : Fragment() {
                 }
 
 
-        }    }
+        }
+    }
+///////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////Patient ////////////////////////////////////////////////
 
     private fun navigatToPatient() {
         buttonNext!!.isEnabled = true
         buttonNext!!.setBackgroundResource(R.drawable.button_style_smaller)
 
-        if ( cin!!.text.isEmpty()) {
+        if (cin!!.text.isEmpty()) {
             var v = View.inflate(requireContext(), R.layout.fragment_dialog, null)
             var builder = AlertDialog.Builder(requireContext())
             builder.setView(v)
@@ -332,7 +357,7 @@ class ChoosePositionFragment : Fragment() {
         buttonNext!!.isEnabled = true
         buttonNext!!.setBackgroundResource(R.drawable.button_style_smaller)
 
-        if (matricule!!.text.isEmpty() || cin!!.text.isEmpty())  {
+        if (matricule!!.text.isEmpty() || cin!!.text.isEmpty()) {
             var v = View.inflate(requireContext(), R.layout.fragment_dialog, null)
             var builder = AlertDialog.Builder(requireContext())
             builder.setView(v)
@@ -360,7 +385,7 @@ class ChoosePositionFragment : Fragment() {
                 user.role = mRole
             }
             user.matricule = matricule!!.text.toString()
-            user.numCIN =   cin!!.text.toString()
+            user.numCIN = cin!!.text.toString()
 
 
 
