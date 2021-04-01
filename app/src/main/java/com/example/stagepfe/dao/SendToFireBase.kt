@@ -1,4 +1,4 @@
-/*package com.example.stagepfe.dao
+package com.example.stagepfe.dao
 
 import android.app.Activity
 import android.util.Log
@@ -12,9 +12,9 @@ import com.google.firebase.database.FirebaseDatabase
 
 class SendToFireBase : IGestionUser {
 
-    val database = FirebaseDatabase.getInstance()
-    val myRef = database.getReference(BaseConstant.instance().userRef)
-    val mAuth = FirebaseAuth.getInstance();
+   private val database = FirebaseDatabase.getInstance()
+   private val myRef = database.getReference(BaseConstant.instance().userRef)
+   private val mAuth = FirebaseAuth.getInstance();
 
 
     override fun insertUser(userItem: UserItem) {
@@ -58,4 +58,3 @@ class SendToFireBase : IGestionUser {
         // TODO("Not yet implemented")
     }
 }
-*/
