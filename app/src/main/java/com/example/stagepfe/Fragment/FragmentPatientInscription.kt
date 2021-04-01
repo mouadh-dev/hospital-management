@@ -87,7 +87,7 @@ class FragmentPatientInscription : Fragment() {
 
 //********************************Finish button****************************************
         finishButton!!.setOnClickListener {
-
+//all are not checked
             if (!yesMaladi!!.isChecked && !noMaladi!!.isChecked || !yesMedicament!!.isChecked && !noMedicament!!.isChecked) {
                 var v = View.inflate(
                     requireContext(),
@@ -106,10 +106,11 @@ class FragmentPatientInscription : Fragment() {
                     .setOnClickListener {
                         dialog.dismiss()
                     }
-            } else if (yesMaladi!!.isChecked) {
+                /// all yes are checked
+            } else if (yesMaladi!!.isChecked && yesMedicament!!.isChecked) {
 
 
-                if (maladiPatient!!.text.isEmpty()) {
+                if (maladiPatient!!.text.isEmpty()||medicament!!.text.isEmpty()) {
                     var v = View.inflate(
                         requireContext(),
                         R.layout.fragment_dialog,
@@ -162,7 +163,97 @@ class FragmentPatientInscription : Fragment() {
 
 
                 }
-            } else if (yesMedicament!!.isChecked) {
+                //// all no are checked
+            } else if (!noMedicament!!.isChecked && !noMaladi!!.isChecked) {
+
+                    var v = View.inflate(
+                        requireContext(),
+                        R.layout.fragment_dialog,
+                        null
+                    )
+                    var builder = AlertDialog.Builder(requireContext())
+                    builder.setView(v)
+
+                    var dialog = builder.create()
+                    dialog.show()
+                    dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+                    dialog.findViewById<TextView>(R.id.TitleDialog)
+                        .setText("votre compte a été créé avec succès")
+                    dialog.findViewById<ImageView>(R.id.CheckDialog)
+                        .setBackgroundResource(R.drawable.ellipse_green)
+                    dialog.findViewById<Button>(R.id.btn_confirm)
+                        .setOnClickListener {
+                            dialog.dismiss()
+
+                            var Connexionpage = ConnexionFragment()
+                            var bundle = Bundle()
+                            var user: UserItem = arguments!!.get("datachooseposition") as UserItem
+                            user.medicament = medicament!!.text.toString()
+                            bundle.putParcelable("dataPatient", user)
+                            Connexionpage.arguments = bundle
+                            println("mouadh" + user.toString())
+                            fragmentManager!!.beginTransaction()
+                                .replace(R.id.ContainerFragmentLayout, Connexionpage).commit()
+                        }
+                }/// yes maladi checked and nomedicament checcked
+              else if (yesMaladi!!.isChecked && noMedicament!!.isChecked) {
+
+
+                if (maladiPatient!!.text.isEmpty()) {
+                    var v = View.inflate(
+                        requireContext(),
+                        R.layout.fragment_dialog,
+                        null
+                    )
+                    var builder = AlertDialog.Builder(requireContext())
+                    builder.setView(v)
+
+                    var dialog = builder.create()
+                    dialog.show()
+                    dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+                    dialog.findViewById<Button>(R.id.btn_confirm)
+                        .setOnClickListener {
+                            dialog.dismiss()
+                        }
+
+
+                } else {
+                    var v = View.inflate(
+                        requireContext(),
+                        R.layout.fragment_dialog,
+                        null
+                    )
+                    var builder = AlertDialog.Builder(requireContext())
+                    builder.setView(v)
+
+                    var dialog = builder.create()
+                    dialog.show()
+                    dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+                    dialog.findViewById<TextView>(R.id.TitleDialog)
+                        .setText("votre compte a été créé avec succès")
+
+                    dialog.findViewById<Button>(R.id.btn_confirm)
+                        .setOnClickListener {
+                            dialog.dismiss()
+                        }
+                    var Connexionpage = ConnexionFragment()
+                    var bundle = Bundle()
+                    var user: UserItem = arguments!!.get("datachooseposition") as UserItem
+
+                    user.maladi = maladiPatient!!.text.toString()
+                    bundle.putParcelable("dataPatient", user)
+                    Connexionpage.arguments = bundle
+                    println("mouadh" + user.toString())
+                    fragmentManager!!.beginTransaction()
+                        .replace(R.id.ContainerFragmentLayout, Connexionpage).commit()
+
+
+                }
+                //// no maladi checked and yesmedicament checcked
+            }  else if (noMaladi!!.isChecked && yesMedicament!!.isChecked) {
+
+
                 if (medicament!!.text.isEmpty()) {
                     var v = View.inflate(
                         requireContext(),
@@ -181,6 +272,7 @@ class FragmentPatientInscription : Fragment() {
                             dialog.dismiss()
                         }
 
+
                 } else {
                     var v = View.inflate(
                         requireContext(),
@@ -195,61 +287,25 @@ class FragmentPatientInscription : Fragment() {
                     dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
                     dialog.findViewById<TextView>(R.id.TitleDialog)
                         .setText("votre compte a été créé avec succès")
-                    dialog.findViewById<ImageView>(R.id.CheckDialog)
-                        .setBackgroundResource(R.drawable.ellipse_green)
 
                     dialog.findViewById<Button>(R.id.btn_confirm)
                         .setOnClickListener {
                             dialog.dismiss()
-
-                            var Connexionpage = ConnexionFragment()
-                            var bundle = Bundle()
-                            var user: UserItem = arguments!!.get("datachooseposition") as UserItem
-                            user.medicament = medicament!!.text.toString()
-                            bundle.putParcelable("dataPatient", user)
-                            Connexionpage.arguments = bundle
-                            println("mouadh" + user.toString())
-                            fragmentManager!!.beginTransaction()
-                                .replace(R.id.ContainerFragmentLayout, Connexionpage).commit()
                         }
+                    var Connexionpage = ConnexionFragment()
+                    var bundle = Bundle()
+                    var user: UserItem = arguments!!.get("datachooseposition") as UserItem
+
+                    user.maladi = maladiPatient!!.text.toString()
+                    bundle.putParcelable("dataPatient", user)
+                    Connexionpage.arguments = bundle
+                    println("mouadh" + user.toString())
+                    fragmentManager!!.beginTransaction()
+                        .replace(R.id.ContainerFragmentLayout, Connexionpage).commit()
+
+
                 }
-
-
-            } else {
-                var v = View.inflate(
-                    requireContext(),
-                    R.layout.fragment_dialog,
-                    null
-                )
-                var builder = AlertDialog.Builder(requireContext())
-                builder.setView(v)
-
-                var dialog = builder.create()
-                dialog.show()
-                dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-                dialog.findViewById<TextView>(R.id.TitleDialog)
-                    .setText("votre compte a été créé avec succès")
-
-                dialog.findViewById<Button>(R.id.btn_confirm)
-                    .setOnClickListener {
-                        dialog.dismiss()
-                    }
-                var Connexionpage = ConnexionFragment()
-                var bundle = Bundle()
-                var user: UserItem = arguments!!.get("datachooseposition") as UserItem
-
-                user.maladi = maladiPatient!!.text.toString()
-                bundle.putParcelable("dataPatient", user)
-                Connexionpage.arguments = bundle
-                println("mouadh" + user.toString())
-                fragmentManager!!.beginTransaction()
-                    .replace(R.id.ContainerFragmentLayout, Connexionpage).commit()
-
-
             }
-//////////////////////////////////////////////////////////////////////////////////////////////////
-            /////////////////////////////////////////////////////////////////////////////////////////////////
-
 
         }
 
