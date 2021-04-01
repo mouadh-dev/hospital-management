@@ -58,6 +58,7 @@
             android:layout_marginTop="25dp"
             android:background="@drawable/edit_text_style"
             android:digits="0123456789"
+            android:maxLength="8"
             android:drawableRight="@drawable/telephon"
             android:hint="Numero de Téléphone"
             android:inputType="phone"
@@ -192,7 +193,7 @@
                 android:layout_width="101dp"
                 android:layout_height="33dp"
                 android:background="@drawable/cancel_button_style"
-                android:text="Annuler"
+                android:text="Précédent"
                 android:textColor="@color/white"
                 android:textSize="10dp"
 

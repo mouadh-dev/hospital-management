@@ -12,8 +12,8 @@ import com.example.stagepfe.ContainerFragmentPasswordActivity
 import com.example.stagepfe.R
 
 class ConnexionFragment : Fragment(), View.OnClickListener {
-    private var InscriptionButton: Button? = null
-    private var ForgotPassWord: TextView? = null
+    private var inscriptionButton: Button? = null
+    private var forgotPassWord: TextView? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,14 +32,14 @@ class ConnexionFragment : Fragment(), View.OnClickListener {
     }
 
     private fun init(view: View) {
-        ForgotPassWord = view.findViewById<TextView>(R.id.Motdepasseoubliee)
-        InscriptionButton = view.findViewById<Button>(R.id.InscriptionButton)
+        forgotPassWord = view.findViewById<TextView>(R.id.Motdepasseoubliee)
+        inscriptionButton = view.findViewById<Button>(R.id.InscriptionButton)
 
-        InscriptionButton!!.setOnClickListener {
+        inscriptionButton!!.setOnClickListener {
             var FirstInscriptionFr = FragmentInscriptionFirstPage()
             fragmentManager!!.beginTransaction().replace(R.id.ContainerFragmentLayout, FirstInscriptionFr).commit()
         }
-        ForgotPassWord!!.setOnClickListener {
+        forgotPassWord!!.setOnClickListener {
             requireActivity().run {
                 startActivity(Intent(this, ContainerFragmentPasswordActivity::class.java))
                 finish() // If activity no more needed in back stack

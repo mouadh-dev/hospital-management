@@ -15,12 +15,11 @@ import com.example.stagepfe.R
 
 class ChoosePositionFragment : Fragment() {
     private var spinner: Spinner? = null
-    private var Matricule: EditText? = null
-    private var CIN: EditText? = null
-    private var DossierMed: EditText? = null
-    private var ButtonReturn: Button? = null
-    private var ButtonNext: Button? = null
-    private var Ellipse: View? = null
+    private var matricule: EditText? = null
+    private var cin: EditText? = null
+    private var buttonReturn: Button? = null
+    private var buttonNext: Button? = null
+    private var ellipse: View? = null
     private var role: String? = null
     private var user: UserItem? = null
     private  var messageDialog: TextView? = null
@@ -53,14 +52,13 @@ class ChoosePositionFragment : Fragment() {
 
     private fun initView(view: View) {
         spinner = view.findViewById(R.id.PositionSpinner)
-        Matricule = view.findViewById(R.id.MatriculeEditText)
-        CIN = view.findViewById(R.id.NumeroCINEditText)
-        DossierMed = view.findViewById(R.id.NumeroDossierEditText)
-        ButtonReturn = view.findViewById<Button>(R.id.ReturnButtonChoosePosition)
-        ButtonNext = view.findViewById<Button>(R.id.NextButtonChoosePosition)
-        Ellipse = view.findViewById<View>(R.id.ForthEllipse)
+        matricule = view.findViewById(R.id.MatriculeEditText)
+        cin = view.findViewById(R.id.NumeroCINEditText)
+        buttonReturn = view.findViewById<Button>(R.id.ReturnButtonChoosePosition)
+        buttonNext = view.findViewById<Button>(R.id.NextButtonChoosePosition)
+        ellipse = view.findViewById<View>(R.id.ForthEllipse)
 
-        ButtonReturn!!.setOnClickListener {
+        buttonReturn!!.setOnClickListener {
             var SecondPage = InscriptionSecondPageFragment()
             fragmentManager!!.beginTransaction()
                 .replace(R.id.ContainerFragmentLayout, SecondPage).commit()
@@ -89,10 +87,10 @@ class ChoosePositionFragment : Fragment() {
         }
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-        ButtonNext!!.setOnClickListener {
+        buttonNext!!.setOnClickListener {
             when (role) {
                 "choisir" -> {
-                    ButtonNext!!.isEnabled = false
+                    buttonNext!!.isEnabled = false
                     var userchooseposition = arguments!!.get("datasecondpage")
 
                 }
@@ -114,7 +112,7 @@ class ChoosePositionFragment : Fragment() {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        Matricule!!.addTextChangedListener(object : TextWatcher {
+        matricule!!.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(
                 s: CharSequence?,
                 start: Int,
@@ -132,19 +130,46 @@ class ChoosePositionFragment : Fragment() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                if (Matricule!!.length() != 5) {
+                if (matricule!!.length() != 5) {
+                    matricule!!.error = "se compose de 5 chiffre"
+                    buttonNext!!.isEnabled = false
+                    buttonNext!!.setBackgroundResource(R.drawable.gray_button)
 
-                    Matricule!!.error = "se compose de 5 chiffre"
-                    ButtonNext!!.isEnabled = false
                 } else {
-                    ButtonNext!!.isEnabled = true
+                    buttonNext!!.isEnabled = true
+                    buttonNext!!.setBackgroundResource(R.drawable.button_style_smaller)
+
+
                 }
             }
 
         })
+        cin!!.addTextChangedListener(object : TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (cin!!.length() != 8) {
+                    cin!!.error = "se compose de 8 chiffre"
+                    buttonNext!!.isEnabled = false
+                    buttonNext!!.setBackgroundResource(R.drawable.gray_button)
+
+                } else {
+                    buttonNext!!.isEnabled = true
+                    buttonNext!!.setBackgroundResource(R.drawable.button_style_smaller)
+
+
+                }
+            }
+        })
 
     }
+
+
 
 
 
@@ -152,7 +177,7 @@ class ChoosePositionFragment : Fragment() {
 //***************************************navigation***********************************************
 
     private fun navigatetoConnexionLabo() {
-        if (Matricule!!.text.isEmpty()) {
+        if (matricule!!.text.isEmpty()) {
             var v = View.inflate(requireContext(), R.layout.fragment_dialog, null)
             var builder = AlertDialog.Builder(requireContext())
             builder.setView(v)
@@ -177,7 +202,7 @@ class ChoosePositionFragment : Fragment() {
                 mRole.add("patient")
                 user.role = mRole
             }
-            user.matricule = Matricule!!.text.toString()
+            user.matricule = matricule!!.text.toString()
 
             bundle.putParcelable("datachooseposition", user)
             Connexion.arguments = bundle
@@ -209,7 +234,7 @@ class ChoosePositionFragment : Fragment() {
 
 
     private fun navigatetoConnexionPharmacien() {
-        if (Matricule!!.text.isEmpty()) {
+        if (matricule!!.text.isEmpty()) {
             var v = View.inflate(requireContext(), R.layout.fragment_dialog, null)
             var builder = AlertDialog.Builder(requireContext())
             builder.setView(v)
@@ -234,7 +259,7 @@ class ChoosePositionFragment : Fragment() {
                 mRole.add("patient")
                 user.role = mRole
             }
-            user.matricule = Matricule!!.text.toString()
+            user.matricule = matricule!!.text.toString()
 
 //            bundle.putParcelable("datachooseposition", user)
 //            Connexion.arguments = bundle
@@ -265,9 +290,10 @@ class ChoosePositionFragment : Fragment() {
         }    }
 
     private fun navigatToPatient() {
-        ButtonNext!!.isEnabled = true
+        buttonNext!!.isEnabled = true
+        buttonNext!!.setBackgroundResource(R.drawable.button_style_smaller)
 
-        if (DossierMed!!.text.isEmpty() || CIN!!.text.isEmpty()) {
+        if ( cin!!.text.isEmpty()) {
             var v = View.inflate(requireContext(), R.layout.fragment_dialog, null)
             var builder = AlertDialog.Builder(requireContext())
             builder.setView(v)
@@ -289,7 +315,7 @@ class ChoosePositionFragment : Fragment() {
                 mRole.add(spinner!!.selectedItem.toString())
                 user.role = mRole
             }
-            user.numCIN = CIN!!.text.toString()
+            user.numCIN = cin!!.text.toString()
 
             bundle.putParcelable("datachooseposition", user)
             patientPage.arguments = bundle
@@ -303,9 +329,10 @@ class ChoosePositionFragment : Fragment() {
 
 
     private fun navigateToMedecin() {
-        ButtonNext!!.isEnabled = true
+        buttonNext!!.isEnabled = true
+        buttonNext!!.setBackgroundResource(R.drawable.button_style_smaller)
 
-        if (Matricule!!.text.isEmpty()) {
+        if (matricule!!.text.isEmpty() || cin!!.text.isEmpty())  {
             var v = View.inflate(requireContext(), R.layout.fragment_dialog, null)
             var builder = AlertDialog.Builder(requireContext())
             builder.setView(v)
@@ -332,9 +359,8 @@ class ChoosePositionFragment : Fragment() {
                 mRole.add("patient")
                 user.role = mRole
             }
-            user.matricule = Matricule!!.text.toString()
-
-
+            user.matricule = matricule!!.text.toString()
+            user.numCIN =   cin!!.text.toString()
 
 
 
@@ -357,28 +383,28 @@ class ChoosePositionFragment : Fragment() {
     private fun UpdateView(role: String?) {
         when (role) {
             "Choisir" -> {
-                Matricule!!.visibility = View.GONE
-                CIN!!.visibility = View.GONE
-                DossierMed!!.visibility = View.GONE
-                Ellipse!!.visibility = View.VISIBLE
+                buttonNext!!.setBackgroundResource(R.drawable.gray_button)
+                matricule!!.visibility = View.GONE
+                cin!!.visibility = View.GONE
+                ellipse!!.visibility = View.VISIBLE
             }
             "Médecin" -> {
-                CIN!!.visibility = View.GONE
-                DossierMed!!.visibility = View.GONE
-                Matricule!!.visibility = View.VISIBLE
-                Ellipse!!.visibility = View.VISIBLE
+                buttonNext!!.setBackgroundResource(R.drawable.button_style_smaller)
+                cin!!.visibility = View.VISIBLE
+                matricule!!.visibility = View.VISIBLE
+                ellipse!!.visibility = View.VISIBLE
             }
             "Patient" -> {
-                CIN!!.visibility = View.VISIBLE
-                DossierMed!!.visibility = View.VISIBLE
-                Matricule!!.visibility = View.GONE
-                Ellipse!!.visibility = View.VISIBLE
+                buttonNext!!.setBackgroundResource(R.drawable.button_style_smaller)
+                cin!!.visibility = View.VISIBLE
+                matricule!!.visibility = View.GONE
+                ellipse!!.visibility = View.VISIBLE
             }
             else -> {
-                CIN!!.visibility = View.GONE
-                DossierMed!!.visibility = View.GONE
-                Matricule!!.visibility = View.VISIBLE
-                Ellipse!!.visibility = View.GONE
+                buttonNext!!.setBackgroundResource(R.drawable.button_style_smaller)
+                cin!!.visibility = View.GONE
+                matricule!!.visibility = View.VISIBLE
+                ellipse!!.visibility = View.GONE
             }
         }
 

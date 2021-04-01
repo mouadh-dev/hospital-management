@@ -15,14 +15,14 @@ import com.example.stagepfe.R
 
 class FragmentPatientInscription : Fragment() {
 
-    private var ReturnButton: Button? = null
+    private var returnButton: Button? = null
     var maladiPatient: EditText? = null
-    var FinishButton: Button? = null
-    var Medicament: EditText? = null
-    var YesMaladi: RadioButton? = null
-    var NoMaladi: RadioButton? = null
-    var YesMedicament: RadioButton? = null
-    var NoMedicament: RadioButton? = null
+    var finishButton: Button? = null
+    var medicament: EditText? = null
+    var yesMaladi: RadioButton? = null
+    var noMaladi: RadioButton? = null
+    var yesMedicament: RadioButton? = null
+    var noMedicament: RadioButton? = null
     var dialog: Dialog? = null
     var firstRadiogroup: RadioGroup? = null
     var secondRadiogroup: RadioGroup? = null
@@ -43,19 +43,19 @@ class FragmentPatientInscription : Fragment() {
     @SuppressLint("ResourceType")
     private fun initView(view: View) {
         maladiPatient = view.findViewById(R.id.Maladi_Patient)
-        ReturnButton = view.findViewById<Button>(R.id.ReturnButtonPatientInscription)
-        FinishButton = view.findViewById<Button>(R.id.FinishButtonPatientInscription)
-        YesMaladi = view.findViewById(R.id.Yes_Maladi)
-        NoMaladi = view.findViewById(R.id.No_Maladi)
-        YesMedicament = view.findViewById<RadioButton>(R.id.YesMedicament)
-        NoMedicament = view.findViewById<RadioButton>(R.id.NoMedicament)
-        Medicament = view.findViewById(R.id.Medicament)
+        returnButton = view.findViewById<Button>(R.id.ReturnButtonPatientInscription)
+        finishButton = view.findViewById<Button>(R.id.FinishButtonPatientInscription)
+        yesMaladi = view.findViewById(R.id.Yes_Maladi)
+        noMaladi = view.findViewById(R.id.No_Maladi)
+        yesMedicament = view.findViewById<RadioButton>(R.id.YesMedicament)
+        noMedicament = view.findViewById<RadioButton>(R.id.NoMedicament)
+        medicament = view.findViewById(R.id.Medicament)
         secondRadiogroup = view.findViewById<RadioGroup>(R.id.Second_Radio_Group)
         firstRadiogroup = view.findViewById<RadioGroup>(R.id.First_Radio_Group)
 
 
 //******************************return button**************************************
-        ReturnButton!!.setOnClickListener {
+        returnButton!!.setOnClickListener {
 
             var choosePosition = ChoosePositionFragment()
             fragmentManager!!.beginTransaction()!!
@@ -65,10 +65,10 @@ class FragmentPatientInscription : Fragment() {
 //********************************Second Radio Button**************************************
 
         firstRadiogroup!!.setOnCheckedChangeListener { radioGroup: RadioGroup, i: Int ->
-            if (YesMaladi!!.isChecked) {
+            if (yesMaladi!!.isChecked) {
                 maladiPatient!!.visibility = View.VISIBLE
 
-            } else if (NoMaladi!!.isChecked) {
+            } else if (noMaladi!!.isChecked) {
                 maladiPatient!!.visibility = View.GONE
             }
         }
@@ -76,19 +76,19 @@ class FragmentPatientInscription : Fragment() {
 //********************************Second Radio Button**************************************
 
         secondRadiogroup!!.setOnCheckedChangeListener { radioGroup: RadioGroup, i: Int ->
-            if (YesMedicament!!.isChecked) {
-                Medicament!!.visibility = View.VISIBLE
+            if (yesMedicament!!.isChecked) {
+                medicament!!.visibility = View.VISIBLE
 
-            } else if (NoMedicament!!.isChecked) {
-                Medicament!!.visibility = View.GONE
+            } else if (noMedicament!!.isChecked) {
+                medicament!!.visibility = View.GONE
             }
         }
 
 
 //********************************Finish button****************************************
-        FinishButton!!.setOnClickListener {
+        finishButton!!.setOnClickListener {
 
-            if (!YesMaladi!!.isChecked && !NoMaladi!!.isChecked || !YesMedicament!!.isChecked && !NoMedicament!!.isChecked) {
+            if (!yesMaladi!!.isChecked && !noMaladi!!.isChecked || !yesMedicament!!.isChecked && !noMedicament!!.isChecked) {
                 var v = View.inflate(
                     requireContext(),
                     R.layout.fragment_dialog,
@@ -106,7 +106,7 @@ class FragmentPatientInscription : Fragment() {
                     .setOnClickListener {
                         dialog.dismiss()
                     }
-            } else if (YesMaladi!!.isChecked && !NoMaladi!!.isChecked) {
+            } else if (yesMaladi!!.isChecked && !noMaladi!!.isChecked) {
 
 
                 if (maladiPatient!!.text.isEmpty()) {
@@ -164,8 +164,8 @@ class FragmentPatientInscription : Fragment() {
                 }
 
 
-            } else if (YesMedicament!!.isChecked && !NoMedicament!!.isChecked) {
-                if (Medicament!!.text.isEmpty()) {
+            } else if (yesMedicament!!.isChecked && !noMedicament!!.isChecked) {
+                if (medicament!!.text.isEmpty()) {
                     var v = View.inflate(
                         requireContext(),
                         R.layout.fragment_dialog,
@@ -196,6 +196,8 @@ class FragmentPatientInscription : Fragment() {
                     dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
                     dialog.findViewById<TextView>(R.id.TitleDialog)
                         .setText("votre compte a été créé avec succès")
+                    dialog.findViewById<ImageView>(R.id.CheckDialog)
+                        .setBackgroundResource(R.drawable.ellipse_green)
 
                     dialog.findViewById<Button>(R.id.btn_confirm)
                         .setOnClickListener {
@@ -204,7 +206,7 @@ class FragmentPatientInscription : Fragment() {
                             var Connexionpage = ConnexionFragment()
                             var bundle = Bundle()
                             var user: UserItem = arguments!!.get("datachooseposition") as UserItem
-                            user.medicament = Medicament!!.text.toString()
+                            user.medicament = medicament!!.text.toString()
                             bundle.putParcelable("dataPatient", user)
                             Connexionpage.arguments = bundle
                             println("mouadh" + user.toString())

@@ -9,18 +9,17 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
-import android.widget.Toast
 import com.example.stagepfe.R
 
 
 class FragmentTapTheCode : Fragment() {
 
-    var SecondIconBack: ImageView? = null
-    var NextButtonCode: Button? = null
-    var CaseOne: EditText? = null
-    var CaseTwo: EditText? = null
-    var CaseThree: EditText? = null
-    var CaseFour: EditText? = null
+    var secondIconBack: ImageView? = null
+    var nextButtonCode: Button? = null
+    var caseOne: EditText? = null
+    var caseTwo: EditText? = null
+    var caseThree: EditText? = null
+    var caseFour: EditText? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,15 +33,15 @@ class FragmentTapTheCode : Fragment() {
     }
 
     private fun initView(view: View) {
-        SecondIconBack = view.findViewById(R.id.IconReturnBack)
-        NextButtonCode = view.findViewById(R.id.NextTapTheCode)
-        CaseOne = view.findViewById(R.id.CaseOne)
-        CaseTwo = view.findViewById(R.id.CaseTwo)
-        CaseThree = view.findViewById(R.id.CaseThree)
-        CaseFour = view.findViewById(R.id.CaseFour)
+        secondIconBack = view.findViewById(R.id.IconReturnBack)
+        nextButtonCode = view.findViewById(R.id.NextTapTheCode)
+        caseOne = view.findViewById(R.id.CaseOne)
+        caseTwo = view.findViewById(R.id.CaseTwo)
+        caseThree = view.findViewById(R.id.CaseThree)
+        caseFour = view.findViewById(R.id.CaseFour)
 
-        NextButtonCode!!.setOnClickListener {
-             if (CaseOne!!.text.isEmpty() || CaseTwo!!.text.isEmpty() || CaseThree!!.text.isEmpty() || CaseFour!!.text.isEmpty()) {
+        nextButtonCode!!.setOnClickListener {
+             if (caseOne!!.text.isEmpty() || caseTwo!!.text.isEmpty() || caseThree!!.text.isEmpty() || caseFour!!.text.isEmpty()) {
                  var v = View.inflate(requireContext(), R.layout.fragment_dialog, null)
                  var builder = AlertDialog.Builder(requireContext())
                  builder.setView(v)

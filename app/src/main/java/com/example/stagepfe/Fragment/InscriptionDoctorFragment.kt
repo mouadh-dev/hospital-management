@@ -12,10 +12,10 @@ import com.example.stagepfe.AuthenticationFragmentContainerActivity
 import com.example.stagepfe.entite.UserItem
 import com.example.stagepfe.R
 
-private var Speciality: Spinner? = null
-private var BioDoctor: EditText? = null
-private var ButtonReturn: Button? = null
-private var ButtonFinish: Button? = null
+private var speciality: Spinner? = null
+private var bioDoctor: EditText? = null
+private var buttonReturn: Button? = null
+private var buttonFinish: Button? = null
 private var role: String? = null
 
 
@@ -28,8 +28,8 @@ class InscriptionDoctorFragment : Fragment() {
         // Inflate the layout for this fragment
         var view = inflater.inflate(R.layout.fragment_inscription_doctor, container, false)
         initView(view)
-        Speciality!!.setSelection(0)
-        Speciality!!.adapter = ArrayAdapter(
+        speciality!!.setSelection(0)
+        speciality!!.adapter = ArrayAdapter(
             requireContext(),
             R.layout.support_simple_spinner_dropdown_item,
             resources.getStringArray(R.array.Specialités)
@@ -39,12 +39,12 @@ class InscriptionDoctorFragment : Fragment() {
     }
 
     private fun initView(view: View) {
-        Speciality = view.findViewById<Spinner>(R.id.Speciality_Doctor)
-        BioDoctor = view.findViewById<EditText>(R.id.Bio_Doctor)
-        ButtonReturn = view.findViewById<Button>(R.id.ReturnButtonDoctorInscription)
-        ButtonFinish = view.findViewById<Button>(R.id.FinishInscriptionDoctor)
+        speciality = view.findViewById<Spinner>(R.id.Speciality_Doctor)
+        bioDoctor = view.findViewById<EditText>(R.id.Bio_Doctor)
+        buttonReturn = view.findViewById<Button>(R.id.ReturnButtonDoctorInscription)
+        buttonFinish = view.findViewById<Button>(R.id.FinishInscriptionDoctor)
 
-        ButtonReturn!!.setOnClickListener {
+        buttonReturn!!.setOnClickListener {
             var ChoosePosition = ChoosePositionFragment()
             fragmentManager!!.beginTransaction()!!
                 .replace(R.id.ContainerFragmentLayout, ChoosePosition)!!.commit()
@@ -53,9 +53,9 @@ class InscriptionDoctorFragment : Fragment() {
 
 ///********************************button finish**********************************************
 
-        ButtonFinish!!.setOnClickListener {
+        buttonFinish!!.setOnClickListener {
 
-            if (BioDoctor!!.text.isEmpty()) {
+            if (bioDoctor!!.text.isEmpty()) {
                 var v = View.inflate(requireContext(), R.layout.fragment_dialog, null)
                 var builder = AlertDialog.Builder(requireContext())
                 builder.setView(v)
@@ -108,8 +108,8 @@ class InscriptionDoctorFragment : Fragment() {
 
 
 
-        user.speciality = Speciality!!.selectedItem.toString()
-        user.bio = BioDoctor!!.text.toString()
+        user.speciality = speciality!!.selectedItem.toString()
+        user.bio = bioDoctor!!.text.toString()
 
         bundle.putParcelable("finalData", user)
         connexionpage.arguments = bundle

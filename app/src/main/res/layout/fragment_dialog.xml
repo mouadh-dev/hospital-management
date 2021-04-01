@@ -49,6 +49,7 @@
 
 
     <ImageView
+        android:id="@+id/CheckDialog"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:background="@drawable/ellipse_red"

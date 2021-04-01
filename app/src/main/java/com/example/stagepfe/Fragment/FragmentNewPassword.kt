@@ -17,9 +17,9 @@ import com.example.stagepfe.R
 
 class FragmentNewPassword : Fragment() {
 
-    private var FinishButton: Button? = null
-    private var NewPassword: EditText? = null
-    private var  ConfirmNewPassword: EditText? = null
+    private var finishButton: Button? = null
+    private var newPassword: EditText? = null
+    private var  confirmNewPassword: EditText? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,12 +37,12 @@ class FragmentNewPassword : Fragment() {
     }
 
     private fun initView(view: View) {
-        FinishButton = view.findViewById<Button>(R.id.FinishButtonNewPassword)
-        NewPassword = view.findViewById(R.id.NewPassword)
-        ConfirmNewPassword = view.findViewById(R.id.ConfirmNewPassword)
+        finishButton = view.findViewById<Button>(R.id.FinishButtonNewPassword)
+        newPassword = view.findViewById(R.id.NewPassword)
+        confirmNewPassword = view.findViewById(R.id.ConfirmNewPassword)
 
-        FinishButton!!.setOnClickListener {
-            if (NewPassword!!.text.isEmpty() || ConfirmNewPassword!!.text.isEmpty()) {
+        finishButton!!.setOnClickListener {
+            if (newPassword!!.text.isEmpty() || confirmNewPassword!!.text.isEmpty()) {
                 var v = View.inflate(requireContext(), R.layout.fragment_dialog, null)
                 var builder = AlertDialog.Builder(requireContext())
                 builder.setView(v)
@@ -63,7 +63,7 @@ class FragmentNewPassword : Fragment() {
                 }
             }
         }
-        ConfirmNewPassword!!.addTextChangedListener(object : TextWatcher {
+        confirmNewPassword!!.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
@@ -72,16 +72,16 @@ class FragmentNewPassword : Fragment() {
 
             override fun afterTextChanged(s: Editable?) {
                 if (notequal()){
-                    FinishButton!!.isEnabled = false
-                    ConfirmNewPassword!!.error = "le mot de passe ne correspond pas"
+                    finishButton!!.isEnabled = false
+                    confirmNewPassword!!.error = "le mot de passe ne correspond pas"
                 }else{
-                    FinishButton!!.isEnabled = true
+                    finishButton!!.isEnabled = true
                 }
             }
 
         })
     }
     private fun notequal(): Boolean {
-        return  ConfirmNewPassword!!.text.toString() != NewPassword!!.text.toString()
+        return  confirmNewPassword!!.text.toString() != newPassword!!.text.toString()
     }
 }

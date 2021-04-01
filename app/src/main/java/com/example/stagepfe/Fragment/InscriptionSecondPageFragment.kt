@@ -193,9 +193,13 @@ class InscriptionSecondPageFragment : Fragment() {
             override fun afterTextChanged(s: Editable?) {
                 if (phoneNumber!!.length() < 8 || phoneNumber!!.length() > 8) {
                     buttonNext!!.isEnabled = false
+                    buttonNext!!.setBackgroundResource(R.drawable.gray_button)
+
                     phoneNumber!!.error = "le numero n'existe pas"
                 } else {
                     buttonNext!!.isEnabled = true
+                    buttonNext!!.setBackgroundResource(R.drawable.button_style_smaller)
+
                 }
             }
 
