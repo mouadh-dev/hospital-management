@@ -1,4 +1,4 @@
-package com.example.stagepfe.dao
+/*package com.example.stagepfe.dao
 
 import android.app.Activity
 import android.util.Log
@@ -58,3 +58,4 @@ class SendToFireBase : IGestionUser {
         // TODO("Not yet implemented")
     }
 }
+*/

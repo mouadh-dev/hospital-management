@@ -14,7 +14,7 @@ class AuthenticationFragmentContainerActivity : AppCompatActivity() {
         setContentView(R.layout.activity_authenticatio_fragment_container)
 
 
-        var firstFragment = FragmentPatientInscription()
+        var firstFragment = ConnexionFragment()
         supportFragmentManager.beginTransaction().replace(R.id.ContainerFragmentLayout, firstFragment).commit()
 
 
