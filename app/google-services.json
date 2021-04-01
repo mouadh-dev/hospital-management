@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1068571405181",
+    "firebase_url": "https://stage-pfe-d3eeb-default-rtdb.firebaseio.com",
+    "project_id": "stage-pfe-d3eeb",
+    "storage_bucket": "stage-pfe-d3eeb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1068571405181:android:a62d3227f15f20c40afa14",
+        "android_client_info": {
+          "package_name": "com.example.stagepfe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1068571405181-h1e506h22p5dtsbncv0e5imr4ishskjh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCOXIjVnkg1qFg1GqiuO-4q_yU8sGKizDw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1068571405181-h1e506h22p5dtsbncv0e5imr4ishskjh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
