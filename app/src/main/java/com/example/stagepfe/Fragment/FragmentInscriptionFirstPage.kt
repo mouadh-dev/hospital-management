@@ -11,7 +11,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.example.stagepfe.FireBase.dao.UserItem
+import com.example.stagepfe.entite.UserItem
 import com.example.stagepfe.R
 
 
@@ -89,7 +89,7 @@ class FragmentInscriptionFirstPage : Fragment() {
                 var secondPage =
                     InscriptionSecondPageFragment()
                 var bundle= Bundle()
-                var user:UserItem= UserItem()
+                var user: UserItem = UserItem()
                 user.nom=FirstName!!.text.trim().toString()
                 user.prenom=LastName!!.text.trim().toString()
                 user.mail=Mail!!.text.trim().toString()

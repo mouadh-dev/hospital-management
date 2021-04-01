@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
 import com.example.stagepfe.AuthenticationFragmentContainerActivity
-import com.example.stagepfe.FireBase.dao.UserItem
+import com.example.stagepfe.entite.UserItem
 import com.example.stagepfe.R
 
 private var Speciality: Spinner? = null

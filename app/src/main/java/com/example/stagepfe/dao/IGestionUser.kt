@@ -1,4 +1,6 @@
-package com.example.stagepfe.FireBase.dao
+package com.example.stagepfe.dao
+
+import com.example.stagepfe.entite.UserItem
 
 interface IGestionUser{
 

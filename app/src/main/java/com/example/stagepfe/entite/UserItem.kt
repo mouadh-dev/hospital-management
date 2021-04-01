@@ -1,4 +1,4 @@
-package com.example.stagepfe.FireBase.dao
+package com.example.stagepfe.entite
 
 import android.os.Parcel
 import android.os.Parcelable

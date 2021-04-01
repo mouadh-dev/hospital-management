@@ -5,9 +5,9 @@
 //import android.widget.Button
 //import android.widget.Toast
 //import androidx.appcompat.app.AppCompatActivity
-//import com.example.fragmentfirebase.firebase.dao.ResponseCallback
-//import com.example.stagepfe.FireBase.dao.IGestionUser
-//import com.example.stagepfe.FireBase.dao.UserItem
+//import com.example.stagepfe.dao.ResponseCallback
+//import com.example.stagepfe.dao.IGestionUser
+//import com.example.stagepfe.entite.UserItem
 //import com.google.android.gms.tasks.OnCompleteListener
 //import com.google.android.gms.tasks.Task
 //import com.google.firebase.auth.AuthResult

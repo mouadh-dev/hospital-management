@@ -1,6 +1,6 @@
-package com.example.fragmentfirebase.firebase.dao
+package com.example.stagepfe.dao
 
-import com.example.stagepfe.FireBase.dao.UserItem
+import com.example.stagepfe.entite.UserItem
 
 interface ResponseCallback {
     fun success( success:Boolean)

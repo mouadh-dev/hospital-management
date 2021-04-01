@@ -20,7 +20,7 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
-import com.example.stagepfe.FireBase.dao.UserItem
+import com.example.stagepfe.entite.UserItem
 import com.example.stagepfe.R
 import com.google.android.gms.location.*
 import java.text.SimpleDateFormat
