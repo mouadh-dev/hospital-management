@@ -109,7 +109,6 @@ class FragmentPatientInscription : Fragment() {
             } else if (YesMaladi!!.isChecked && !NoMaladi!!.isChecked) {
 
 
-
                 if (maladiPatient!!.text.isEmpty()) {
                     var v = View.inflate(
                         requireContext(),
@@ -129,7 +128,7 @@ class FragmentPatientInscription : Fragment() {
                         }
 
 
-                }else{
+                } else {
                     var v = View.inflate(
                         requireContext(),
                         R.layout.fragment_dialog,
@@ -147,15 +146,26 @@ class FragmentPatientInscription : Fragment() {
                     dialog.findViewById<Button>(R.id.btn_confirm)
                         .setOnClickListener {
                             dialog.dismiss()
-                            var Connexionpage = ConnexionFragment()
-                            fragmentManager!!.beginTransaction()
-                                .replace(R.id.ContainerFragmentLayout, Connexionpage).commit()
+
                         }
+
+                    var Connexionpage = ConnexionFragment()
+                    var bundle = Bundle()
+                    var user: UserItem = arguments!!.get("datachooseposition") as UserItem
+
+                    user.maladi = maladiPatient!!.text.toString()
+                    bundle.putParcelable("dataPatient", user)
+                    Connexionpage.arguments = bundle
+                    println("mouadh" + user.toString())
+                    fragmentManager!!.beginTransaction()
+                        .replace(R.id.ContainerFragmentLayout, Connexionpage).commit()
+
+
                 }
 
 
-            } else if (YesMedicament!!.isChecked && !NoMedicament!!.isChecked){
-                if (Medicament!!.text.isEmpty()){
+            } else if (YesMedicament!!.isChecked && !NoMedicament!!.isChecked) {
+                if (Medicament!!.text.isEmpty()) {
                     var v = View.inflate(
                         requireContext(),
                         R.layout.fragment_dialog,
@@ -172,7 +182,7 @@ class FragmentPatientInscription : Fragment() {
                         .setOnClickListener {
                             dialog.dismiss()
                         }
-                }else{
+                } else {
                     var v = View.inflate(
                         requireContext(),
                         R.layout.fragment_dialog,
@@ -190,49 +200,57 @@ class FragmentPatientInscription : Fragment() {
                     dialog.findViewById<Button>(R.id.btn_confirm)
                         .setOnClickListener {
                             dialog.dismiss()
+
                             var Connexionpage = ConnexionFragment()
+                            var bundle = Bundle()
+                            var user: UserItem = arguments!!.get("datachooseposition") as UserItem
+                            user.medicament = Medicament!!.text.toString()
+                            bundle.putParcelable("dataPatient", user)
+                            Connexionpage.arguments = bundle
+                            println("mouadh" + user.toString())
                             fragmentManager!!.beginTransaction()
                                 .replace(R.id.ContainerFragmentLayout, Connexionpage).commit()
                         }
 
 
                 }
-
-
-            }else{
-                var v = View.inflate(
-                    requireContext(),
-                    R.layout.fragment_dialog,
-                    null
-                )
-                var builder = AlertDialog.Builder(requireContext())
-                builder.setView(v)
-
-                var dialog = builder.create()
-                dialog.show()
-                dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-                dialog.findViewById<TextView>(R.id.TitleDialog)
-                    .setText("votre compte a été créé avec succès")
-
-                dialog.findViewById<Button>(R.id.btn_confirm)
-                    .setOnClickListener {
-                        dialog.dismiss()
-                        var Connexionpage = ConnexionFragment()
-                        var bundle = Bundle()
-                        var user: UserItem = arguments!!.get("datasecondpage") as UserItem
-                        user.maladi = maladiPatient!!.text.toString()
-                        user.medicament = Medicament!!.text.toString()
-
-                        bundle.putParcelable("dataPatient", user)
-                        Connexionpage.arguments = bundle
-
-                        println("mouadh" + user.toString())
-                        fragmentManager!!.beginTransaction()
-                            .replace(R.id.ContainerFragmentLayout, Connexionpage).commit()
-                    }
 
 
             }
+//            else{
+//                var v = View.inflate(
+//                    requireContext(),
+//                    R.layout.fragment_dialog,
+//                    null
+//                )
+//                var builder = AlertDialog.Builder(requireContext())
+//                builder.setView(v)
+//
+//                var dialog = builder.create()
+//                dialog.show()
+//                dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+//                dialog.findViewById<TextView>(R.id.TitleDialog)
+//                    .setText("votre compte a été créé avec succès")
+//
+//                dialog.findViewById<Button>(R.id.btn_confirm)
+//                    .setOnClickListener {
+//                        dialog.dismiss()
+//
+//
+//
+//
+//
+//
+//                        bundle.putParcelable("dataPatient", user)
+//                        Connexionpage.arguments = bundle
+//
+//
+//                        fragmentManager!!.beginTransaction()
+//                            .replace(R.id.ContainerFragmentLayout, Connexionpage).commit()
+//                    }
+//
+//
+//            }
 //////////////////////////////////////////////////////////////////////////////////////////////////
             /////////////////////////////////////////////////////////////////////////////////////////////////
 
