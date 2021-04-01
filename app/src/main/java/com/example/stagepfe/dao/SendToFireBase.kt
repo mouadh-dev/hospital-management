@@ -20,7 +20,7 @@ class SendToFireBase : IGestionUser {
     override fun insertUser(userItem: UserItem) {
 
         userItem.id = myRef.push().key.toString()
-        myRef.child(userItem.id).setValue(userItem)
+        myRef.child(userItem.id!!).setValue(userItem)
     }
 
     fun signUpUser(activity: Activity, userItem: UserItem, responseCallback: ResponseCallback) {
@@ -32,8 +32,7 @@ class SendToFireBase : IGestionUser {
                         Log.d("FragmentActivity", "createUserWithEmail:success")
 //                        val id: String = mAuth!!.getCurrentUser().uid
                         userItem.id = mAuth!!.getCurrentUser().uid
-                        userItem.firas = "mouadh@yopmail.com"
-                        myRef.child(userItem.id).setValue(userItem)
+                        myRef.child(userItem.id!!).setValue(userItem)
                         responseCallback.success(true)
 
                     } else {
