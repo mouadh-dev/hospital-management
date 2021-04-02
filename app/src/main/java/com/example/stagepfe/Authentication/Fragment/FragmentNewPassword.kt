@@ -26,6 +26,7 @@ class FragmentNewPassword : Fragment() {
     private var newPassword: EditText? = null
     private var  confirmNewPassword: EditText? = null
      private var eyeShowNewPassword: ImageView? = null
+    private var eyeShowNewPasswordRepeat: ImageView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +48,8 @@ class FragmentNewPassword : Fragment() {
         newPassword = view.findViewById(R.id.New_Password)
         confirmNewPassword = view.findViewById(R.id.Confirm_NewPassword)
         eyeShowNewPassword= view.findViewById<ImageView>(R.id.eyeShowPassword)
+        eyeShowNewPasswordRepeat= view.findViewById<ImageView>(R.id.eye_Show_Password_Repeat)
+
 
         finishButton!!.setOnClickListener {
             if (newPassword!!.text.isEmpty() || confirmNewPassword!!.text.isEmpty()) {
@@ -149,7 +152,15 @@ class FragmentNewPassword : Fragment() {
         }
         }
 
+        eyeShowNewPasswordRepeat!!.setOnClickListener {
 
+            if(confirmNewPassword!!.getTransformationMethod().equals(PasswordTransformationMethod.getInstance()))
+            {
+                confirmNewPassword!!.transformationMethod = HideReturnsTransformationMethod.getInstance()
+            }else {
+                confirmNewPassword!!.transformationMethod = PasswordTransformationMethod.getInstance()
+            }
+        }
 
 //        public void ShowHidePass(View view){
 //

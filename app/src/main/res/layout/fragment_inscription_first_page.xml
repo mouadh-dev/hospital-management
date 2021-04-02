@@ -93,15 +93,18 @@
 
             />
 
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="25dp">
         <EditText
             android:id="@+id/InscriptionPasswordFirstPage"
             android:layout_width="233dp"
             android:layout_height="40dp"
             android:layout_centerInParent="true"
             android:layout_gravity="center"
-            android:layout_marginTop="25dp"
             android:background="@drawable/edit_text_style"
-            android:drawableRight="@drawable/cle"
             android:hint="*************"
             android:inputType="textPassword"
             android:paddingLeft="20dp"
@@ -111,6 +114,20 @@
             android:textSize="15dp"
 
             />
+
+        <ImageView
+                android:id="@+id/Eye_Show_Inscription"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/cle"
+                android:layout_marginLeft="200dp"
+                android:layout_marginTop="10dp"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp">
 
         <EditText
             android:id="@+id/InscriptionConfirmPassFirstPage"
@@ -118,9 +135,7 @@
             android:layout_height="40dp"
             android:layout_centerInParent="true"
             android:layout_gravity="center"
-            android:layout_marginTop="25dp"
             android:background="@drawable/edit_text_style"
-            android:drawableRight="@drawable/cle"
             android:hint="*************"
             android:inputType="textPassword"
             android:paddingLeft="20dp"
@@ -130,6 +145,14 @@
             android:textSize="15dp"
 
             />
+        <ImageView
+                android:id="@+id/eye_Show_Repeat_Inscription"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/cle"
+                android:layout_marginLeft="200dp"
+                android:layout_marginTop="10dp"/>
+        </RelativeLayout>
 
 
         <!--            Buttons Layouts-->

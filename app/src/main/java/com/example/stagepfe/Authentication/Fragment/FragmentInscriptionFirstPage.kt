@@ -4,11 +4,14 @@ import android.app.AlertDialog
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.stagepfe.entite.UserItem
@@ -25,6 +28,8 @@ class FragmentInscriptionFirstPage : Fragment() {
     private var password: EditText? = null
     private var confirmPass: EditText? = null
     private var title: TextView? = null
+    private var showPasswordIV: ImageView? = null
+    private var showPasswordRpeatIV: ImageView? = null
 
 
 
@@ -48,6 +53,8 @@ class FragmentInscriptionFirstPage : Fragment() {
         password = view.findViewById(R.id.InscriptionPasswordFirstPage)
         confirmPass = view.findViewById(R.id.InscriptionConfirmPassFirstPage)
         title = view.findViewById(R.id.TitleDialog)
+        showPasswordIV = view.findViewById(R.id.Eye_Show_Inscription)
+        showPasswordRpeatIV = view.findViewById(R.id.eye_Show_Repeat_Inscription)
 
 
         buttonReturn!!.setOnClickListener {
@@ -103,10 +110,10 @@ class FragmentInscriptionFirstPage : Fragment() {
 
             override fun afterTextChanged(s: Editable?) {
                 if (android.util.Patterns.EMAIL_ADDRESS.matcher(mail!!.text.toString()).matches()) {
-                    buttonNext.isEnabled = true
+                    buttonNext!!.isEnabled = true
                     buttonNext!!.setBackgroundResource(R.drawable.button_style_smaller)
                 } else{
-                    buttonNext.isEnabled = false
+                    buttonNext!!.isEnabled = false
                     buttonNext!!.setBackgroundResource(R.drawable.gray_button)
                     mail!!.error = "invalide Email"
                 }
@@ -122,11 +129,11 @@ class FragmentInscriptionFirstPage : Fragment() {
 
             override fun afterTextChanged(s: Editable?) {
                     if (password!!.length() <= 8){
-                        buttonNext.isEnabled = false
+                        buttonNext!!.isEnabled = false
                         buttonNext!!.setBackgroundResource(R.drawable.gray_button)
                         password!!.error = "le mot de passe est faible "
                     }else{
-                        buttonNext.isEnabled = true
+                        buttonNext!!.isEnabled = true
                         buttonNext!!.setBackgroundResource(R.drawable.button_style_smaller)
 
                     }
@@ -143,11 +150,11 @@ class FragmentInscriptionFirstPage : Fragment() {
 
             override fun afterTextChanged(s: Editable?) {
                 if (notequal()){
-                    buttonNext.isEnabled = false
+                    buttonNext!!.isEnabled = false
                     buttonNext!!.setBackgroundResource(R.drawable.gray_button)
                     confirmPass!!.error = "le mot de passe ne correspond pas"
                 }else{
-                    buttonNext.isEnabled = true
+                    buttonNext!!.isEnabled = true
                     buttonNext!!.setBackgroundResource(R.drawable.button_style_smaller)
 
                 }
@@ -155,6 +162,24 @@ class FragmentInscriptionFirstPage : Fragment() {
 
 
         })
+
+        showPasswordRpeatIV!!.setOnClickListener{
+            if(confirmPass!!.getTransformationMethod().equals(PasswordTransformationMethod.getInstance()))
+            {
+                confirmPass!!.transformationMethod = HideReturnsTransformationMethod.getInstance()
+            }else {
+                confirmPass!!.transformationMethod = PasswordTransformationMethod.getInstance()
+            }
+        }
+        showPasswordIV!!.setOnClickListener {
+            if (password!!.getTransformationMethod()
+                    .equals(PasswordTransformationMethod.getInstance())
+            ) {
+                password!!.transformationMethod = HideReturnsTransformationMethod.getInstance()
+            } else {
+                password!!.transformationMethod = PasswordTransformationMethod.getInstance()
+            }
+        }
 
     }
 
