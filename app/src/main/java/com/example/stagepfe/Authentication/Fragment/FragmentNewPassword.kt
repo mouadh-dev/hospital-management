@@ -4,7 +4,10 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
+import android.text.InputType
 import android.text.TextWatcher
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +25,7 @@ class FragmentNewPassword : Fragment() {
     private var finishButton: Button? = null
     private var newPassword: EditText? = null
     private var  confirmNewPassword: EditText? = null
+   // private var eyeShowNewPassword: ImageView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +46,7 @@ class FragmentNewPassword : Fragment() {
         finishButton = view.findViewById<Button>(R.id.FinishButtonNewPassword)
         newPassword = view.findViewById(R.id.New_Password)
         confirmNewPassword = view.findViewById(R.id.Confirm_NewPassword)
+        //eyeShowNewPassword= view.findViewById<ImageView>(R.id.eyeShowPassword)
 
         finishButton!!.setOnClickListener {
             if (newPassword!!.text.isEmpty() || confirmNewPassword!!.text.isEmpty()) {
@@ -134,7 +139,17 @@ class FragmentNewPassword : Fragment() {
                 }
 
             })
-        }
+        //eyeShowNewPassword!!.setOnClickListener {
+          //  val c= true
+            //        if(c==false)
+            //{
+              //  newPassword!!.transformationMethod = HideReturnsTransformationMethod.getInstance()
+            //}else {
+              //  newPassword!!.transformationMethod = PasswordTransformationMethod.getInstance()
+            //}
+        //}
+
+    }
 
     private fun notequal(): Boolean {
         return  confirmNewPassword!!.text.toString() != newPassword!!.text.toString()
