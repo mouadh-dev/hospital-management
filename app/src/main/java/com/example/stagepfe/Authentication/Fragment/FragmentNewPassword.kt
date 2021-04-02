@@ -25,7 +25,7 @@ class FragmentNewPassword : Fragment() {
     private var finishButton: Button? = null
     private var newPassword: EditText? = null
     private var  confirmNewPassword: EditText? = null
-    // private var eyeShowNewPassword: ImageView? = null
+     private var eyeShowNewPassword: ImageView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +46,7 @@ class FragmentNewPassword : Fragment() {
         finishButton = view.findViewById<Button>(R.id.FinishButtonNewPassword)
         newPassword = view.findViewById(R.id.New_Password)
         confirmNewPassword = view.findViewById(R.id.Confirm_NewPassword)
-        //eyeShowNewPassword= view.findViewById<ImageView>(R.id.eyeShowPassword)
+        eyeShowNewPassword= view.findViewById<ImageView>(R.id.eyeShowPassword)
 
         finishButton!!.setOnClickListener {
             if (newPassword!!.text.isEmpty() || confirmNewPassword!!.text.isEmpty()) {
@@ -139,19 +139,43 @@ class FragmentNewPassword : Fragment() {
             }
 
         })
-        //eyeShowNewPassword!!.setOnClickListener {
-        //  val c= true
-        //        if(c==false)
-        //{
-        //  newPassword!!.transformationMethod = HideReturnsTransformationMethod.getInstance()
-        //}else {
-        //  newPassword!!.transformationMethod = PasswordTransformationMethod.getInstance()
-        //}
-        //}
+        eyeShowNewPassword!!.setOnClickListener {
+
+                if(newPassword!!.getTransformationMethod().equals(PasswordTransformationMethod.getInstance()))
+        {
+          newPassword!!.transformationMethod = HideReturnsTransformationMethod.getInstance()
+        }else {
+          newPassword!!.transformationMethod = PasswordTransformationMethod.getInstance()
+        }
+        }
+
+
+
+//        public void ShowHidePass(View view){
+//
+//            if(eye){
+//
+//                if(edit_password.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())){
+//                    ((ImageView(view)).setImageResource(R.drawable.hide_password);
+//
+//                    //Show Password
+//                    edit_password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+//                }
+//                else{
+//                    ((ImageView)(view)).setImageResource(R.drawable.show_password);
+//
+//                    //Hide Password
+//                    edit_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+//
+//                }
+//            }
+//        }
 
     }
 
     private fun notequal(): Boolean {
         return  confirmNewPassword!!.text.toString() != newPassword!!.text.toString()
     }
+
+
 }
