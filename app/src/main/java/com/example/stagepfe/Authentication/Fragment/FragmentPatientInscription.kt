@@ -3,6 +3,7 @@ package com.example.stagepfe.Authentication.Fragment
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
 import com.example.stagepfe.R
+import com.example.stagepfe.dao.ResponseCallback
 import com.example.stagepfe.dao.SendToFireBase
 import com.example.stagepfe.entite.UserItem
 
@@ -28,6 +30,7 @@ class FragmentPatientInscription : Fragment() {
     var firstRadiogroup: RadioGroup? = null
     var secondRadiogroup: RadioGroup? = null
     var testingMsg: String? = null
+    var mContext: Context? = null
 
 
     override fun onCreateView(
@@ -37,7 +40,12 @@ class FragmentPatientInscription : Fragment() {
         // Inflate the layout for this fragment
         var view = inflater.inflate(R.layout.fragment_patient_inscription, container, false)
         initView(view)
+        initdata()
         return view
+    }
+
+    private fun initdata() {
+        mContext = requireContext()
     }
 
 
@@ -108,8 +116,7 @@ class FragmentPatientInscription : Fragment() {
                         dialog.dismiss()
                     }
                 /// all yes are checked
-            }
-            else if (yesMaladi!!.isChecked && maladiPatient!!.text.isEmpty() || yesMedicament!!.isChecked && medicamentPatient!!.text.isEmpty()){
+            } else if (yesMaladi!!.isChecked && maladiPatient!!.text.isEmpty() || yesMedicament!!.isChecked && medicamentPatient!!.text.isEmpty()) {
                 var v = View.inflate(
                     requireContext(),
                     R.layout.fragment_dialog,
@@ -126,51 +133,94 @@ class FragmentPatientInscription : Fragment() {
                     .setOnClickListener {
                         dialog.dismiss()
                     }
-            }
-            else {
+            } else {
+                var connexionpage = ConnexionFragment()
+                var bundle = Bundle()
+                connexionpage.arguments = bundle
+
+                var user: UserItem = arguments!!.get("datachooseposition") as UserItem
+
+
+                var userDao = SendToFireBase()
+                user.medicament = medicamentPatient!!.text.toString()
+                user.maladi = maladiPatient!!.text.toString()
+
+                bundle.putParcelable("dataPatient", user)
+
+                println("mouadh" + user.toString())
+
+                userDao.insertUser(user)
+
+/////////////////////////////////////////Progress dialog////////////////////////////////////////////
+
                 var v = View.inflate(
-                    requireContext(),
-                    R.layout.fragment_dialog,
+                    mContext,
+                    R.layout.progress_dialog,
                     null
                 )
-                var builder = AlertDialog.Builder(requireContext())
+                var builder = AlertDialog.Builder(mContext)
                 builder.setView(v)
 
-                var dialog = builder.create()
-                dialog.show()
-                dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-                dialog.findViewById<TextView>(R.id.TitleDialog)
-                    .setText("votre compte a été créé avec succès")
-                dialog.findViewById<ImageView>(R.id.CheckDialog).setBackgroundResource(R.drawable.ellipse_green)
-                dialog.findViewById<ImageView>(R.id.CheckDialog).setImageResource(R.drawable.check)
-                dialog.findViewById<TextView>(R.id.msgdialog).visibility = View.GONE
-
-                dialog.findViewById<Button>(R.id.btn_confirm)
-                    .setOnClickListener {
-                        dialog.dismiss()
+                var progressdialog = builder.create()
+                progressdialog.show()
+                progressdialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+                progressdialog.setCancelable(false)
 
 
-                        var connexionpage = ConnexionFragment()
-                        var bundle = Bundle()
-                        connexionpage.arguments = bundle
-
-                        var user: UserItem = arguments!!.get("datachooseposition") as UserItem
-
-
-                        var userDao= SendToFireBase()
-                        user.medicament = medicamentPatient!!.text.toString()
-                        user.maladi = maladiPatient!!.text.toString()
-
-                        bundle.putParcelable("dataPatient", user)
-
-                        println("mouadh" + user.toString())
-
-                        userDao.insertUser(user)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-                        fragmentManager!!.beginTransaction()
-                            .replace(R.id.ContainerFragmentLayout, connexionpage).commit()
+                userDao.signUpUser(requireActivity(), user, object : ResponseCallback {
+                    override fun success() {
+                        progressdialog.dismiss()
+
+                        var v = View.inflate(
+                            mContext,
+                            R.layout.fragment_dialog,
+                            null
+                        )
+                        var builder = AlertDialog.Builder(requireContext())
+                        builder.setView(v)
+
+                        var dialog = builder.create()
+                        dialog.show()
+                        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+                        dialog.findViewById<TextView>(R.id.TitleDialog).text =
+                            "votre compte a été créé avec succès"
+
+                        dialog.findViewById<Button>(R.id.btn_confirm)
+                            .setOnClickListener {
+                                fragmentManager!!.beginTransaction()
+                                    .replace(R.id.ContainerFragmentLayout, connexionpage).commit()
+                                dialog.dismiss()
+                            }
                     }
+
+                    override fun failure() {
+                        progressdialog.dismiss()
+                        var v = View.inflate(
+                            mContext,
+                            R.layout.fragment_dialog,
+                            null
+                        )
+                        var builder = AlertDialog.Builder(requireContext())
+                        builder.setView(v)
+
+                        var dialog = builder.create()
+                        dialog.show()
+                        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+                        dialog.findViewById<TextView>(R.id.TitleDialog).text =
+                            "il y a une faute réessayez"
+
+                        dialog.findViewById<Button>(R.id.btn_confirm)
+                            .setOnClickListener {
+                                dialog.dismiss()
+                            }
+
+                    }
+                })
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
             }
 
         }

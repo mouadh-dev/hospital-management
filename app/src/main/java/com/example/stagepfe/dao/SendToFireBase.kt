@@ -24,7 +24,7 @@ class SendToFireBase : IGestionUser {
     }
 
     fun signUpUser(activity: Activity, userItem: UserItem, responseCallback: ResponseCallback) {
-        mAuth.createUserWithEmailAndPassword("mouadh@yopmail.com", "password")
+        mAuth.createUserWithEmailAndPassword(userItem.mail, userItem.password)
             .addOnCompleteListener(activity, object : OnCompleteListener<AuthResult?> {
                 override fun onComplete(task: Task<AuthResult?>) {
                     if (task.isSuccessful()) {
@@ -32,7 +32,7 @@ class SendToFireBase : IGestionUser {
                         Log.d("FragmentActivity", "createUserWithEmail:success")
                         userItem.id = mAuth!!.getCurrentUser().uid
                         myRef.child(userItem.id!!).setValue(userItem)
-                        responseCallback.success(true)
+                        responseCallback.success()
 
                     } else {
                         // If sign in fails, display a message to the user.
@@ -41,7 +41,7 @@ class SendToFireBase : IGestionUser {
                             "createUserWithEmail:failure",
                             task.getException()
                         )
-                        responseCallback.failure(userItem)
+                        responseCallback.failure()
 
                     }
 
