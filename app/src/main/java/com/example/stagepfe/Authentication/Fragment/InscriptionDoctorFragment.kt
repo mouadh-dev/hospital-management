@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
 import com.example.stagepfe.R
-import com.example.stagepfe.dao.SendToFireBase
+import com.example.stagepfe.dao.UserDao
 import com.example.stagepfe.entite.UserItem
 
 private var speciality: Spinner? = null
@@ -93,7 +93,7 @@ class InscriptionDoctorFragment : Fragment() {
                     var user: UserItem = arguments!!.get("datachooseposition") as UserItem
 
 
-                    var userDao= SendToFireBase()
+                    var userDao= UserDao()
                     user.speciality = speciality!!.selectedItem.toString()
                     user.bio = bioDoctor!!.text.toString()
 

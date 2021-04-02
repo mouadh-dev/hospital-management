@@ -12,7 +12,7 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import com.example.stagepfe.R
 import com.example.stagepfe.dao.ResponseCallback
-import com.example.stagepfe.dao.SendToFireBase
+import com.example.stagepfe.dao.UserDao
 import com.example.stagepfe.entite.UserItem
 
 
@@ -207,7 +207,7 @@ class ChoosePositionFragment : Fragment() {
             var connexionpage = ConnexionFragment()
             var bundle = Bundle()
             var user: UserItem = arguments!!.get("datasecondpage") as UserItem
-            var userDao = SendToFireBase()
+            var userDao = UserDao()
 
             if (role == "Labo") {
                 var mRole = ArrayList<String>()
@@ -313,7 +313,7 @@ class ChoosePositionFragment : Fragment() {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
             var bundle = Bundle()
             var user: UserItem = arguments!!.get("datasecondpage") as UserItem
-            var userDao = SendToFireBase()
+            var userDao = UserDao()
 ///////////////////////////////////////////////////////////////////////////////////////////////////
             if (role == "Pharmacien") {
                 var mRole = ArrayList<String>()

@@ -21,6 +21,7 @@
 
 
         <EditText
+            android:id="@+id/Mail_Connexion"
             android:layout_width="233dp"
             android:layout_height="40dp"
             android:layout_centerInParent="true"
@@ -44,7 +45,7 @@
             android:layout_marginTop="20dp">
 
         <EditText
-            android:id="@+id/connexion_Password"
+            android:id="@+id/Password_Connexion"
             android:lines="1"
             android:layout_width="233dp"
             android:layout_height="40dp"
@@ -80,6 +81,7 @@
 
 
         <Button
+            android:id="@+id/Connect_Button"
             android:layout_width="233dp"
             android:layout_height="40dp"
             android:layout_gravity="center"

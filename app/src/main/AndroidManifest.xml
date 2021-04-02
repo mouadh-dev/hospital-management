@@ -13,8 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".FireBaseActivity"></activity>
-        <!-- <activity android:name=".ContainFragmentActivity"></activity> -->
+        <activity android:name=".AccountActivity"></activity>
+        <activity android:name=".FireBaseActivity" /> <!-- <activity android:name=".ContainFragmentActivity"></activity> -->
         <activity android:name=".Authentication.Activity.ContainerFragmentPasswordActivity" />
         <activity android:name=".Authentication.Activity.AuthenticationFragmentContainerActivity" />
         <activity android:name=".Authentication.Activity.MainPageActivity">

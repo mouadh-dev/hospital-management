@@ -6,5 +6,5 @@ interface IGestionUser{
 
 
     fun insertUser(userItem: UserItem)
-    fun insertUser1(userItem: UserItem)
+
 }
