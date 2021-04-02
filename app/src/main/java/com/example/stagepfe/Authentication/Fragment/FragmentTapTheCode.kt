@@ -16,10 +16,8 @@ class FragmentTapTheCode : Fragment() {
 
     var secondIconBack: ImageView? = null
     var nextButtonCode: Button? = null
-    var caseOne: EditText? = null
-    var caseTwo: EditText? = null
-    var caseThree: EditText? = null
-    var caseFour: EditText? = null
+    var code: EditText? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,13 +33,10 @@ class FragmentTapTheCode : Fragment() {
     private fun initView(view: View) {
         secondIconBack = view.findViewById(R.id.IconReturnBack)
         nextButtonCode = view.findViewById(R.id.NextTapTheCode)
-        caseOne = view.findViewById(R.id.CaseOne)
-        caseTwo = view.findViewById(R.id.CaseTwo)
-        caseThree = view.findViewById(R.id.CaseThree)
-        caseFour = view.findViewById(R.id.CaseFour)
+       code = view.findViewById(R.id.CodeEditText)
 
         nextButtonCode!!.setOnClickListener {
-             if (caseOne!!.text.isEmpty() || caseTwo!!.text.isEmpty() || caseThree!!.text.isEmpty() || caseFour!!.text.isEmpty()) {
+             if (code!!.text.isEmpty()) {
                  var v = View.inflate(requireContext(), R.layout.fragment_dialog, null)
                  var builder = AlertDialog.Builder(requireContext())
                  builder.setView(v)

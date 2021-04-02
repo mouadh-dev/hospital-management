@@ -81,7 +81,9 @@ class InscriptionDoctorFragment : Fragment() {
                 dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
                 dialog.findViewById<TextView>(R.id.TitleDialog)
                     .setText("votre compte a été créé avec succès")
-                dialog.findViewById<TextView>(R.id.msgdialog).equals("")
+                dialog.findViewById<ImageView>(R.id.CheckDialog).setBackgroundResource(R.drawable.ellipse_green)
+                dialog.findViewById<ImageView>(R.id.CheckDialog).setImageResource(R.drawable.check)
+                dialog.findViewById<TextView>(R.id.msgdialog).visibility = android.view.View.GONE
                 dialog.findViewById<Button>(R.id.btn_confirm).setOnClickListener {
                     dialog.dismiss()
                     var connexionpage = ConnexionFragment()

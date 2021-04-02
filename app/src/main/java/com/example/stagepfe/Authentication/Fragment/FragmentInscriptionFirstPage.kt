@@ -121,15 +121,15 @@ class FragmentInscriptionFirstPage : Fragment() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                if (password!!.length() <= 8){
-                    buttonNext.isEnabled = false
-                    buttonNext!!.setBackgroundResource(R.drawable.gray_button)
-                    password!!.error = "le mot de passe est faible "
-                }else{
-                    buttonNext.isEnabled = true
-                    buttonNext!!.setBackgroundResource(R.drawable.button_style_smaller)
+                    if (password!!.length() <= 8){
+                        buttonNext.isEnabled = false
+                        buttonNext!!.setBackgroundResource(R.drawable.gray_button)
+                        password!!.error = "le mot de passe est faible "
+                    }else{
+                        buttonNext.isEnabled = true
+                        buttonNext!!.setBackgroundResource(R.drawable.button_style_smaller)
 
-                }
+                    }
             }
 
 

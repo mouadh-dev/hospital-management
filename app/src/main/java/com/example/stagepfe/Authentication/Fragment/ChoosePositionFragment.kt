@@ -216,6 +216,7 @@ class ChoosePositionFragment : Fragment() {
                 user.role = mRole
             }
             user.matricule = matricule!!.text.toString()
+            user.numCIN = cin!!.text.toString()
             bundle.putParcelable("datachooseposition", user)
             println("mouadh " + user.toString())
 
@@ -321,6 +322,7 @@ class ChoosePositionFragment : Fragment() {
                 user.role = mRole
             }
             user.matricule = matricule!!.text.toString()
+            user.numCIN = cin!!.text.toString()
 
             bundle.putParcelable("datachooseposition", user)
             println("mouadh " + user.toString())
@@ -344,6 +346,9 @@ class ChoosePositionFragment : Fragment() {
             dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
             dialog.findViewById<TextView>(R.id.TitleDialog)
                 .setText("votre compte a été créé avec succès")
+            dialog.findViewById<ImageView>(R.id.CheckDialog).setBackgroundResource(R.drawable.ellipse_green)
+            dialog.findViewById<ImageView>(R.id.CheckDialog).setImageResource(R.drawable.check)
+            dialog.findViewById<TextView>(R.id.msgdialog).visibility = View.GONE
             dialog.findViewById<Button>(R.id.btn_confirm)
                 .setOnClickListener {
                     dialog.dismiss()
@@ -470,7 +475,7 @@ class ChoosePositionFragment : Fragment() {
             }
             else -> {
                 buttonNext!!.setBackgroundResource(R.drawable.button_style_smaller)
-                cin!!.visibility = View.GONE
+                cin!!.visibility = View.VISIBLE
                 matricule!!.visibility = View.VISIBLE
                 ellipse!!.visibility = View.GONE
             }
