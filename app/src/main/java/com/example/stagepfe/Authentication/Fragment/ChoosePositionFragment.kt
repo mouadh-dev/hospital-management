@@ -1,6 +1,7 @@
 package com.example.stagepfe.Authentication.Fragment
 
 import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -10,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
 import com.example.stagepfe.R
+import com.example.stagepfe.dao.ResponseCallback
 import com.example.stagepfe.dao.SendToFireBase
 import com.example.stagepfe.entite.UserItem
 
@@ -24,6 +26,8 @@ class ChoosePositionFragment : Fragment() {
     private var role: String? = null
     private var user: UserItem? = null
     private var messageDialog: TextView? = null
+    var mContext: Context? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,7 +37,7 @@ class ChoosePositionFragment : Fragment() {
         // Inflate the layout for this fragment
         var view = inflater.inflate(R.layout.fragment_choose_position, container, false)
         initView(view)
-        initData()
+        initdata()
 
         spinner!!.adapter = ArrayAdapter(
             requireContext(),
@@ -46,9 +50,10 @@ class ChoosePositionFragment : Fragment() {
 
     }
 
-    private fun initData() {
-
+    private fun initdata() {
+        mContext = requireContext()
     }
+
 
 
     private fun initView(view: View) {
@@ -199,7 +204,7 @@ class ChoosePositionFragment : Fragment() {
         else {
 
 ///////////////////////////////Send Data //////////////////////////////////////////////////////////
-
+            var connexionpage = ConnexionFragment()
             var bundle = Bundle()
             var user: UserItem = arguments!!.get("datasecondpage") as UserItem
             var userDao = SendToFireBase()
@@ -216,30 +221,68 @@ class ChoosePositionFragment : Fragment() {
 
 ////////////////////////Send  to  Fire Base /////////////////////////////////////////////////////
 
-            userDao.insertUser(user)
-//////////////////////////////////////////////////////////////////////////////////////////////////
-
-            var connexion = ConnexionFragment()
-            connexion.arguments = bundle
             var v = View.inflate(
-                requireContext(),
-                R.layout.fragment_dialog,
+                mContext,
+                R.layout.progress_dialog,
                 null
             )
-            var builder = AlertDialog.Builder(requireContext())
+            var builder = AlertDialog.Builder(mContext)
             builder.setView(v)
 
-            var dialog = builder.create()
-            dialog.show()
-            dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-            dialog.findViewById<TextView>(R.id.TitleDialog)
-                .setText("votre compte a été créé avec succès")
-            dialog.findViewById<Button>(R.id.btn_confirm)
-                .setOnClickListener {
-                    dialog.dismiss()
-                    fragmentManager!!.beginTransaction()
-                        .replace(R.id.ContainerFragmentLayout, connexion).commit()
+            var progressdialog = builder.create()
+            progressdialog.show()
+            progressdialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+            progressdialog.setCancelable(false)
+
+            userDao.signUpUser(requireActivity(), user, object : ResponseCallback {
+                override fun success() {
+                    progressdialog.dismiss()
+
+                    var v = View.inflate(
+                        mContext,
+                        R.layout.fragment_dialog,
+                        null
+                    )
+                    var builder = AlertDialog.Builder(requireContext())
+                    builder.setView(v)
+
+                    var dialog = builder.create()
+                    dialog.show()
+                    dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+                    dialog.findViewById<TextView>(R.id.TitleDialog).text =
+                        "votre compte a été créé avec succès"
+
+                    dialog.findViewById<Button>(R.id.btn_confirm)
+                        .setOnClickListener {
+                            fragmentManager!!.beginTransaction()
+                                .replace(R.id.ContainerFragmentLayout, connexionpage).commit()
+                            dialog.dismiss()
+                        }
                 }
+
+                override fun failure() {
+                    progressdialog.dismiss()
+                    var v = View.inflate(
+                        mContext,
+                        R.layout.fragment_dialog,
+                        null
+                    )
+                    var builder = AlertDialog.Builder(requireContext())
+                    builder.setView(v)
+
+                    var dialog = builder.create()
+                    dialog.show()
+                    dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+                    dialog.findViewById<TextView>(R.id.TitleDialog).text =
+                        "il y a une faute réessayez"
+
+                    dialog.findViewById<Button>(R.id.btn_confirm)
+                        .setOnClickListener {
+                            dialog.dismiss()
+                        }
+
+                }
+            })
 
 
         }
