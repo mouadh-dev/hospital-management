@@ -3,6 +3,7 @@ package com.example.stagepfe.Authentication.Activity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.stagepfe.Authentication.Fragment.ConnexionFragment
+import com.example.stagepfe.Authentication.Fragment.FragmentPatientInscription
 import com.example.stagepfe.R
 
 class AuthenticationFragmentContainerActivity : AppCompatActivity() {

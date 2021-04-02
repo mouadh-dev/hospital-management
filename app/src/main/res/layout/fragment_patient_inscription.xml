@@ -95,11 +95,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/edit_text_style"
+                android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
                 android:hint="Lesquels"
-                android:paddingLeft="15dp"
+                android:paddingLeft="20dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/gray"
-                android:visibility="gone" />
+                android:visibility="gone"/>
 
             <RadioButton
                 android:id="@+id/NoMedicament"
