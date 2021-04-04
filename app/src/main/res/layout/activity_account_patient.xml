@@ -4,38 +4,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/blue"
-    tools:context=".AccountPatientActivity">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="150dp"
-        android:background="@color/white"
-        android:orientation="vertical">
+    tools:context=".Patient.AccountPatientActivity">
 
 
-        <EditText
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/rectangle"
+    android:layout_marginTop="150dp">
+
+        <FrameLayout
+            android:id="@+id/ContainerFramentPatient"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/edit_text_style"
-            android:drawableLeft="@drawable/search"
-            android:paddingLeft="10dp"
-            android:hint="Rechercher"
-            android:textColorHint="@color/gray"/>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:background="@drawable/vector_backgroung"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="50dp">
+            android:layout_height="match_parent"
+            android:background="@drawable/rectangle_account"/>
 
 
-        </View>
-
-    </LinearLayout>
+</RelativeLayout>
 
 
 </RelativeLayout>

@@ -11,12 +11,12 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.example.stagepfe.AccountPatientActivity
+import com.example.stagepfe.Patient.AccountPatientActivity
 import com.example.stagepfe.Authentication.Activity.ContainerFragmentPasswordActivity
 import com.example.stagepfe.R
-import com.example.stagepfe.dao.ResponseCallback
-import com.example.stagepfe.dao.UserDao
-import com.example.stagepfe.entite.UserItem
+import com.example.stagepfe.Authentication.dao.ResponseCallback
+import com.example.stagepfe.Authentication.dao.UserDao
+import com.example.stagepfe.Authentication.entite.UserItem
 import com.google.firebase.auth.FirebaseAuth
 
  class ConnexionFragment : Fragment(), View.OnClickListener {

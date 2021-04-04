@@ -11,9 +11,9 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
 import com.example.stagepfe.R
-import com.example.stagepfe.dao.ResponseCallback
-import com.example.stagepfe.dao.UserDao
-import com.example.stagepfe.entite.UserItem
+import com.example.stagepfe.Authentication.dao.ResponseCallback
+import com.example.stagepfe.Authentication.dao.UserDao
+import com.example.stagepfe.Authentication.entite.UserItem
 
 
 class ChoosePositionFragment : Fragment() {
@@ -297,6 +297,7 @@ class ChoosePositionFragment : Fragment() {
         if (matricule!!.text.isEmpty()) {
             var v = View.inflate(requireContext(), R.layout.fragment_dialog, null)
             var builder = AlertDialog.Builder(requireContext())
+
             builder.setView(v)
 
             var dialog = builder.create()
@@ -328,33 +329,73 @@ class ChoosePositionFragment : Fragment() {
             println("mouadh " + user.toString())
 
 
-            userDao.insertUser(user)
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-            var Connexion = ConnexionFragment()
-            Connexion.arguments = bundle
             var v = View.inflate(
-                requireContext(),
-                R.layout.fragment_dialog,
+                mContext,
+                R.layout.progress_dialog,
                 null
             )
-            var builder = AlertDialog.Builder(requireContext())
+            var builder = AlertDialog.Builder(mContext)
             builder.setView(v)
 
-            var dialog = builder.create()
-            dialog.show()
-            dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-            dialog.findViewById<TextView>(R.id.TitleDialog)
-                .setText("votre compte a été créé avec succès")
-            dialog.findViewById<ImageView>(R.id.CheckDialog).setBackgroundResource(R.drawable.ellipse_green)
-            dialog.findViewById<ImageView>(R.id.CheckDialog).setImageResource(R.drawable.check)
-            dialog.findViewById<TextView>(R.id.msgdialog).visibility = View.GONE
-            dialog.findViewById<Button>(R.id.btn_confirm)
-                .setOnClickListener {
-                    dialog.dismiss()
-                    fragmentManager!!.beginTransaction()
-                        .replace(R.id.ContainerFragmentLayout, Connexion).commit()
+            var progressdialog = builder.create()
+            progressdialog.show()
+            progressdialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+            progressdialog.setCancelable(false)
+
+            userDao.signUpUser(requireActivity(), user, object : ResponseCallback {
+                override fun success() {
+                    progressdialog.dismiss()
+                    var connexionpage = ConnexionFragment()
+
+
+                    var v = View.inflate(
+                        mContext,
+                        R.layout.fragment_dialog,
+                        null
+                    )
+                    var builder = AlertDialog.Builder(requireContext())
+                    builder.setView(v)
+
+                    var dialog = builder.create()
+                    dialog.show()
+                    dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+                    dialog.findViewById<TextView>(R.id.TitleDialog).text =
+                        "votre compte a été créé avec succès"
+
+                    dialog.findViewById<Button>(R.id.btn_confirm)
+                        .setOnClickListener {
+                            fragmentManager!!.beginTransaction()
+                                .replace(R.id.ContainerFragmentLayout, connexionpage).commit()
+                            dialog.dismiss()
+                        }
                 }
+
+                override fun failure() {
+                    progressdialog.dismiss()
+                    var v = View.inflate(
+                        mContext,
+                        R.layout.fragment_dialog,
+                        null
+                    )
+                    var builder = AlertDialog.Builder(requireContext())
+                    builder.setView(v)
+
+                    var dialog = builder.create()
+                    dialog.show()
+                    dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+                    dialog.findViewById<TextView>(R.id.TitleDialog).text =
+                        "il y a une faute réessayez"
+
+                    dialog.findViewById<Button>(R.id.btn_confirm)
+                        .setOnClickListener {
+                            dialog.dismiss()
+                        }
+
+                }
+            })
 
 
         }

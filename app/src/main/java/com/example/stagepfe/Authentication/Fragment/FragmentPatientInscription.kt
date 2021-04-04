@@ -11,9 +11,9 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
 import com.example.stagepfe.R
-import com.example.stagepfe.dao.ResponseCallback
-import com.example.stagepfe.dao.UserDao
-import com.example.stagepfe.entite.UserItem
+import com.example.stagepfe.Authentication.dao.ResponseCallback
+import com.example.stagepfe.Authentication.dao.UserDao
+import com.example.stagepfe.Authentication.entite.UserItem
 
 
 class FragmentPatientInscription : Fragment() {

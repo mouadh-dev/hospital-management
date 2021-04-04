@@ -1,4 +1,4 @@
-package com.example.stagepfe.entite
+package com.example.stagepfe.Authentication.entite
 
 import android.os.Parcel
 import android.os.Parcelable

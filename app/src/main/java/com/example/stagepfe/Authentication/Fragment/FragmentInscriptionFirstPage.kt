@@ -14,7 +14,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.example.stagepfe.entite.UserItem
+import com.example.stagepfe.Authentication.entite.UserItem
 import com.example.stagepfe.R
 
 

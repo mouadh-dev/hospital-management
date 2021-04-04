@@ -1,16 +1,14 @@
-package com.example.stagepfe.dao
+package com.example.stagepfe.Authentication.dao
 
 import android.app.Activity
 import android.content.ContentValues.TAG
 import android.util.Log
-import android.widget.Toast
-import com.example.stagepfe.entite.UserItem
+import com.example.stagepfe.Authentication.entite.UserItem
 import com.example.stagepfe.util.BaseConstant
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.FirebaseDatabase
 
 
