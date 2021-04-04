@@ -4,16 +4,14 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.text.method.HideReturnsTransformationMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.example.stagepfe.AccountActivity
+import com.example.stagepfe.AccountPatientActivity
 import com.example.stagepfe.Authentication.Activity.ContainerFragmentPasswordActivity
 import com.example.stagepfe.R
 import com.example.stagepfe.dao.ResponseCallback
@@ -122,7 +120,7 @@ import com.google.firebase.auth.FirebaseAuth
 
                         progressdialog.dismiss()
                         requireActivity().run {
-                            startActivity(Intent(this, AccountActivity::class.java))
+                            startActivity(Intent(this, AccountPatientActivity::class.java))
                             finish() // If activity no more needed in back stack
                         }
 
