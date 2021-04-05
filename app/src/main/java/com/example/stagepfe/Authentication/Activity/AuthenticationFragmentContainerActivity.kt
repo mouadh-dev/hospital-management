@@ -1,10 +1,13 @@
 package com.example.stagepfe.Authentication.Activity
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.stagepfe.Authentication.Fragment.ConnexionFragment
 import com.example.stagepfe.Authentication.Fragment.FragmentPatientInscription
+import com.example.stagepfe.Patient.AccountPatientActivity
 import com.example.stagepfe.R
+import com.google.firebase.auth.FirebaseAuth
 
 class AuthenticationFragmentContainerActivity : AppCompatActivity() {
 
@@ -19,6 +22,13 @@ class AuthenticationFragmentContainerActivity : AppCompatActivity() {
 
 
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(FirebaseAuth.getInstance().currentUser!=null){
+            startActivity(Intent(this,AccountPatientActivity::class.java))
+        }
     }
 
 }

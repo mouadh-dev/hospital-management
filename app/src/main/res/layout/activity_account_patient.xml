@@ -5,22 +5,60 @@
     android:layout_height="match_parent"
     android:background="@color/blue"
     tools:context=".Patient.AccountPatientActivity">
-
-
-<RelativeLayout
+<LinearLayout
+    android:id="@+id/profilInformation"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/rectangle"
-    android:layout_marginTop="150dp">
+    android:layout_height="wrap_content"
+    android:background="@color/blue"
+    >
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/logopatient"/>
+</LinearLayout>
 
         <FrameLayout
-            android:id="@+id/ContainerFramentPatient"
+            android:id="@+id/ContainerFragmentPatient"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rectangle_account"
+            android:layout_below="@id/profilInformation"
+            />
+
+    <np.com.susanthapa.curved_bottom_navigation.CurvedBottomNavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+
+
+
+
+
+
+    <com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:sothree="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/sliding_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        sothree:umanoPanelHeight="68dp"
+        sothree:umanoShadowHeight="4dp"
+        >
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/rectangle_account"/>
+            android:gravity="center"
+            android:text="Main Content"
+            android:textSize="16sp" />
 
-
-</RelativeLayout>
-
-
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/gray_specific"
+            android:gravity="center|top"
+            android:text="The Awesome Sliding Up Panel"
+            android:textSize="16sp" />
+    </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 </RelativeLayout>

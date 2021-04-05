@@ -12,7 +12,7 @@ class AccountPatientActivity : AppCompatActivity() {
         setContentView(R.layout.activity_account_patient)
 
         var home = PatientAccountFragment()
-        supportFragmentManager.beginTransaction().replace(R.id.ContainerFramentPatient, home).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.ContainerFragmentPatient, home).commit()
 
 
     }
