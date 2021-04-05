@@ -3,11 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Patient.top_doctors">
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="try the child fragment"
-    android:textColor="@color/black"
-    android:textSize="40dp"/>
+    tools:context=".Patient.top_doctors"
+    android:background="@color/gray_specific">
+
+
     </androidx.core.widget.NestedScrollView>
