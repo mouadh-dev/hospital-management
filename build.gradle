@@ -22,8 +22,9 @@ allprojects {
         maven {
             url  "https://dl.bintray.com/susonthapa/curved-bottom-navigation"
         }
+        }
     }
-}
+
 
 task clean(type: Delete) {
     delete rootProject.buildDir
