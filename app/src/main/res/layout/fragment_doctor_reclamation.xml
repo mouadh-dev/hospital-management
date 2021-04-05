@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Doctor.Fragment.DoctorReclamationFragment">>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:layout_centerVertical="true"
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="60dp">
+
+        <TextView
+            android:id="@+id/bienvenue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="Si vous avez une réclamation merci de remplir ce formulaire"
+            android:textColor="@color/black"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:textSize="25dp" />
+
+        <EditText
+            android:id="@+id/ReclamationFullName"
+            android:layout_width="290dp"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/edit_text_style"
+            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            android:drawableRight="@drawable/nom_util"
+            android:hint="nom et prenom"
+            android:paddingLeft="20dp"
+            android:paddingRight="10dp"
+            android:textColor="@color/black"
+            android:textColorHint="#888282"
+            android:textSize="15dp"
+            android:inputType="textPersonName"/>
+
+        <EditText
+            android:id="@+id/ReclamationPhoneNumber"
+            android:layout_width="290dp"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/edit_text_style"
+            android:digits="0123456789"
+            android:maxLength="8"
+            android:drawableRight="@drawable/telephon"
+            android:hint="Numero de Téléphone"
+            android:inputType="phone"
+            android:lines="1"
+            android:paddingLeft="20dp"
+            android:paddingRight="10dp"
+            android:textColor="@color/black"
+            android:textColorHint="#888282"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/BioDoctor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Description"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="50dp"
+            />
+        <EditText
+            android:id="@+id/DescriptionReclamation"
+            android:layout_width="290dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:layout_marginTop="10dp"
+            android:padding="15dp"
+            android:background="@drawable/edit_text_style"
+          android:layout_gravity="center"
+            />
+            <Button
+                android:id="@+id/SendbuttonReclamtion"
+                android:layout_width="290dp"
+                android:layout_height="40dp"
+                android:background="@drawable/button_style_smaller"
+                android:text="Envoyer"
+                android:layout_marginTop="30dp"
+                android:textColor="@color/white"
+                android:textSize="20dp"
+                android:layout_gravity="center"
+                />
+        </LinearLayout>
+</FrameLayout>

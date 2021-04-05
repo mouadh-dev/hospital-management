@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blue"
+    tools:context=".Doctor.Activity.AccountDoctorActivity">
+
+    <LinearLayout
+        android:layout_width="420dp"
+        android:layout_height="150dp"
+        android:orientation="vertical"
+
+        android:gravity="center">
+        <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Bonjour"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+              android:layout_marginRight="30dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Médecin!"
+            android:textSize="40dp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:layout_marginLeft="60dp"
+          />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/rectangle"
+        android:layout_marginTop="150dp">
+
+        <FrameLayout
+            android:id="@+id/ContainerFramentDoctor"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/rectangle_account"/>
+    </RelativeLayout>
+
+
+</RelativeLayout>

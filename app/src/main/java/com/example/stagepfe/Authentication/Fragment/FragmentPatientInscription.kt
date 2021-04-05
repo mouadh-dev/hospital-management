@@ -186,6 +186,10 @@ class FragmentPatientInscription : Fragment() {
                         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
                         dialog.findViewById<TextView>(R.id.TitleDialog).text =
                             "votre compte a été créé avec succès"
+                        dialog.findViewById<ImageView>(R.id.CheckDialog)
+                            .setBackgroundResource(R.drawable.ellipse_green)
+                        dialog.findViewById<ImageView>(R.id.CheckDialog).setImageResource(R.drawable.check)
+                        dialog.findViewById<TextView>(R.id.msgdialog).visibility = View.GONE
 
                         dialog.findViewById<Button>(R.id.btn_confirm)
                             .setOnClickListener {
