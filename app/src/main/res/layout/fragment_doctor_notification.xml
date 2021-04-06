@@ -3,12 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Doctor.DoctorNotificationFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    tools:context=".Doctor.Fragment.DoctorNotificationFragment">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="100dp">
+    <ListView
+        android:id="@+id/listNotificationDocteur"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
-
+        android:layout_weight="1"></ListView>
+</LinearLayout>
 </FrameLayout>
