@@ -15,33 +15,35 @@ import com.example.stagepfe.Doctor.Activity.AccountDoctorActivity
 import com.example.stagepfe.R
 
 
+class OrdonnanceDoctorFragment : Fragment() {
+    private var medicamentDoctorET: EditText? = null
+    private var descriptionMedicamentET: EditText? = null
+    private var confirmMedicamentBT: Button? = null
+    private var moreMedicamentBT: Button? = null
+    private var lessMedicamentBT: Button? = null
+    private var numberMedicamentTV: EditText? = null
 
-class DoctorReclamationFragment : Fragment() {
-    private var fullNameReclamationET: EditText? = null
-    private var phoneNumberReclamationET: EditText? = null
-    private var descriptionReclamationET: EditText? = null
-    private var sendButton: Button? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        var view= inflater.inflate(R.layout.fragment_doctor_reclamation, container, false)
+        var view = inflater.inflate(R.layout.fragment_ordonnance_doctor, container, false)
         initView(view)
-        return  view
+        return view
     }
 
     private fun initView(view: View) {
-        fullNameReclamationET = view.findViewById(R.id.ReclamationFullName)
-        phoneNumberReclamationET = view.findViewById(R.id.ReclamationPhoneNumber)
-        descriptionReclamationET = view.findViewById(R.id.DescriptionReclamation)
-        sendButton = view.findViewById<Button>(R.id.SendbuttonReclamtion)
+        medicamentDoctorET = view.findViewById(R.id.OrdonnanceDoctor)
+        descriptionMedicamentET = view.findViewById(R.id.DescriptionOrdonnanceDoctor)
+        confirmMedicamentBT = view.findViewById<Button>(R.id.ConfirmOrdonnanceDoctorButton)
+        moreMedicamentBT = view.findViewById<Button>(R.id.MoreNumberMedicament)
+        lessMedicamentBT = view.findViewById<Button>(R.id.LessNumberMedicament)
+        numberMedicamentTV = view.findViewById(R.id.NumberMedicamentDoctor)
 
-        sendButton!!.setOnClickListener {
-            if (fullNameReclamationET!!.text.isEmpty() || phoneNumberReclamationET!!.text.isEmpty()
-                || descriptionReclamationET!!.text.isEmpty()) {
+        confirmMedicamentBT!!.setOnClickListener {
+            if (descriptionMedicamentET!!.text.isEmpty() || medicamentDoctorET!!.text.isEmpty() || numberMedicamentTV!!.text.isEmpty()) {
                 var v = View.inflate(requireContext(), R.layout.fragment_dialog, null)
                 var builder = AlertDialog.Builder(requireContext())
                 builder.setView(v)
@@ -53,8 +55,9 @@ class DoctorReclamationFragment : Fragment() {
                 dialog.findViewById<Button>(R.id.btn_confirm).setOnClickListener {
                     dialog.dismiss()
                 }
-            }else{
-                 var v = View.inflate(
+
+            } else {
+                var v = View.inflate(
                     requireContext(),
                     R.layout.fragment_dialog,
                     null
@@ -66,7 +69,7 @@ class DoctorReclamationFragment : Fragment() {
                 dialog.show()
                 dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
                 dialog.findViewById<TextView>(R.id.TitleDialog)
-                    .setText("votre réclamation a été bien envoyée ")
+                    .setText("votre ordonnance a été bien envoyée ")
                 dialog.findViewById<ImageView>(R.id.CheckDialog)
                     .setBackgroundResource(R.drawable.ellipse_green)
                 dialog.findViewById<ImageView>(R.id.CheckDialog).setImageResource(R.drawable.check)
@@ -83,9 +86,9 @@ class DoctorReclamationFragment : Fragment() {
                             finish()
                         }
                     }
-            }
+
             }
         }
-
+    }
 
 }

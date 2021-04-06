@@ -25,7 +25,6 @@ class MyAdapter(var mCtx:Context, var resources:Int, var items:List<Model>): Arr
         nameDoctor.text = mItem.name
         specialityDoctor.text = mItem.speciality
 
-
         return view
     }
 

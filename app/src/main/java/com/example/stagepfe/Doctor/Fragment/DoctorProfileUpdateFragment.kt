@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.location.Location
@@ -17,12 +18,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.DatePicker
-import android.widget.EditText
-import android.widget.Toast
+import android.widget.*
 import androidx.core.app.ActivityCompat
 import androidx.core.location.LocationManagerCompat.isLocationEnabled
+import com.example.stagepfe.Doctor.Activity.AccountDoctorActivity
 import com.example.stagepfe.R
 import com.google.android.gms.location.*
 import java.security.AccessController.checkPermission
@@ -96,8 +95,38 @@ class DoctorProfileUpdateFragment : Fragment() {
                     dialog.dismiss()
                 }
             } else {
+                 var v = View.inflate(
+                    requireContext(),
+                    R.layout.fragment_dialog,
+                    null
+                )
+                var builder = AlertDialog.Builder(requireContext())
+                builder.setView(v)
 
+                var dialog = builder.create()
+                dialog.show()
+                dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+                dialog.findViewById<TextView>(R.id.TitleDialog)
+                    .setText("Modification terminée avec succes")
+                dialog.findViewById<ImageView>(R.id.CheckDialog)
+                    .setBackgroundResource(R.drawable.ellipse_green)
+                dialog.findViewById<ImageView>(R.id.CheckDialog).setImageResource(R.drawable.check)
+                dialog.findViewById<TextView>(R.id.msgdialog).visibility = View.GONE
+
+                dialog.findViewById<Button>(R.id.btn_confirm)
+                    .setOnClickListener {
+                        dialog.dismiss()
+
+                        requireActivity().run {
+                            var intent =
+                                Intent(this, AccountDoctorActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        }
+                    }
             }
+
+
         }
         ///////////////////////////////////////////////////////////////////////////////////////////////////
 
