@@ -1,8 +1,9 @@
 package com.example.stagepfe.Patient
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.example.stagepfe.R
+
 
 class AccountPatientActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -10,6 +11,9 @@ class AccountPatientActivity : AppCompatActivity() {
         setContentView(R.layout.activity_account_patient)
 
         var home = PatientAccountFragment()
-        supportFragmentManager.beginTransaction().replace(R.id.ContainerFragmentPatient, home).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.ContainerFragmentPatient, home)
+            .commit()
+
+
     }
 }
