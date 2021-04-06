@@ -1,64 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blue"
-    tools:context=".Patient.AccountPatientActivity">
-<LinearLayout
-    android:id="@+id/profilInformation"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/blue"
-    >
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/logopatient"/>
-</LinearLayout>
-
-        <FrameLayout
-            android:id="@+id/ContainerFragmentPatient"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/rectangle_account"
-            android:layout_below="@id/profilInformation"
-            />
-
-    <np.com.susanthapa.curved_bottom_navigation.CurvedBottomNavigationView
-        android:id="@+id/nav_view"
+    tools:context=".Patient.AccountPatientActivity"
+    android:background="@color/blue">
+    <LinearLayout
+        android:id="@+id/profilInformation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        />
+        android:background="@color/blue"
+        android:orientation="horizontal"
+        >
+        <ImageView
+            android:layout_width="51dp"
+            android:layout_height="51dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="25dp"
+            android:src="@drawable/logopatient"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="20dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="bonjour"
+                android:textColor="@color/white"
+                android:textSize="25dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="patient !"
+                android:textColor="@color/white"
+                android:textSize="30dp"
+                android:layout_marginTop="10dp"
+                />
+        </LinearLayout>
 
+        <ImageView
+            android:layout_width="48sp"
+            android:layout_height="48sp"
+            android:src="@drawable/reglage"
+            android:layout_marginTop="45dp"
+            android:layout_marginLeft="100dp"
 
-
-
-
-
-
-    <com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:sothree="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/sliding_layout"
+            />
+    </LinearLayout>
+    <FrameLayout
+        android:id="@+id/ContainerFragmentPatient"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="bottom"
-        sothree:umanoPanelHeight="68dp"
-        sothree:umanoShadowHeight="4dp"
-        >
+        android:layout_above="@+id/bottom_nav"
+        android:layout_below="@+id/profilInformation"
+        android:background="@drawable/rectangle_account"
+        />
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_nav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:menu="@menu/bottom_nav_menu"
+        android:background="@color/blue"/>
 
-        <TextView
+        <com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:sothree="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/slid_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="Main Content"
-            android:textSize="16sp" />
+            android:gravity="bottom"
+            sothree:umanoPanelHeight="200dp"
+            >
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</FrameLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/gray_specific"
-            android:gravity="center|top"
-            android:text="The Awesome Sliding Up Panel"
-            android:textSize="16sp" />
-    </com.sothree.slidinguppanel.SlidingUpPanelLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/slide_background"
+                android:gravity="center|top"
+                android:textSize="16sp"
+                />
+        </com.sothree.slidinguppanel.SlidingUpPanelLayout>
+
+
 </RelativeLayout>
