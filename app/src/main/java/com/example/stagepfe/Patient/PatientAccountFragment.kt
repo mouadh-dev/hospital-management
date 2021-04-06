@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ScrollView
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import com.example.stagepfe.R
+import com.sothree.slidinguppanel.ScrollableViewHelper
 
 
 class PatientAccountFragment : Fragment() {
@@ -22,21 +24,28 @@ class PatientAccountFragment : Fragment() {
     }
 
     private fun initView(view: View) {
-        fun getScrollableViewScrollPosition(scrollableView: View?, isSlidingUp: Boolean): Int {
-            return if (scrollableView is NestedScrollView) {
-                if (isSlidingUp) {
-                    scrollableView!!.scrollY
-                } else {
-                    val nsv = scrollableView as NestedScrollView
-                    val child = nsv.getChildAt(0)
-                    child.bottom - (nsv.height + nsv.scrollY)
-                }
-            } else {
-                0
-            }
-        }
-    }
+//        var slidingUpPanelLayout = view.findViewById(R.id.sliding_layout)
+//        slidingUpPanelLayout.setScrollableViewHelper NestedScrollableViewHelper()
 
+    }
+//    class NestedScrollableViewHelper : ScrollableViewHelper() {
+//        override fun getScrollableViewScrollPosition(
+//            scrollableView: View,
+//            isSlidingUp: Boolean
+//        ): Int {
+//            return if (mScrollableView is NestedScrollView) {
+//                if (isSlidingUp) {
+//                    mScrollableView.getScrollY()
+//                } else {
+//                    val nsv = mScrollableView as NestedScrollView
+//                    val child = nsv.getChildAt(0)
+//                    child.bottom - (nsv.height + nsv.scrollY)
+//                }
+//            } else {
+//                0
+//            }
+//        }
+//    }
 }
 
 
