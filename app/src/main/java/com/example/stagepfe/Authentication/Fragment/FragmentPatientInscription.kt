@@ -138,7 +138,7 @@ class FragmentPatientInscription : Fragment() {
                 var bundle = Bundle()
                 connexionpage.arguments = bundle
 
-                var user: UserItem = arguments!!.get("datachooseposition") as UserItem
+                var user: UserItem = requireArguments().get("datachooseposition") as UserItem
 
 
                 var userDao = UserDao()

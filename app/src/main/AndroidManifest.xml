@@ -13,9 +13,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
+        <activity android:name=".Patient.BottomBarActionPatientActivity"></activity>
+        <activity android:name=".Patient.ReclamationActivity" />
         <activity
             android:name=".Patient.AccountPatientActivity"
-            android:label="@string/title_activity_account_patient"></activity>
+            android:label="@string/title_activity_account_patient" />
         <activity android:name=".Doctor.Activity.DoctorProfilActivity" />
         <activity android:name=".Doctor.Activity.AccountDoctorActivity" />
         <activity android:name=".Authentication.Activity.ContainerFragmentPasswordActivity" />

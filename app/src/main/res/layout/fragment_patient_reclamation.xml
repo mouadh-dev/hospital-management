@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Doctor.Fragment.DoctorReclamationFragment">>
+    tools:context=".Patient.PatientReclamationFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,7 +15,7 @@
         android:layout_marginTop="60dp">
 
         <TextView
-            android:id="@+id/bienvenue"
+            android:id="@+id/Patient_Reclamation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -27,7 +27,7 @@
             android:textSize="25dp" />
 
         <EditText
-            android:id="@+id/ReclamationFullName"
+            android:id="@+id/Name_Patien_Reclamation"
             android:layout_width="290dp"
             android:layout_height="50dp"
             android:layout_centerInParent="true"
@@ -45,7 +45,7 @@
             android:inputType="textPersonName"/>
 
         <EditText
-            android:id="@+id/ReclamationPhoneNumber"
+            android:id="@+id/Phone_Patient_Reclamation"
             android:layout_width="290dp"
             android:layout_height="50dp"
             android:layout_centerInParent="true"
@@ -65,7 +65,7 @@
             android:textSize="15dp" />
 
         <TextView
-            android:id="@+id/BioDoctor"
+            android:id="@+id/Description_wrong_Patient"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Description"
@@ -75,25 +75,26 @@
             android:layout_marginLeft="50dp"
             />
         <EditText
-            android:id="@+id/DescriptionReclamation"
+            android:id="@+id/Description_Reclamation_Patient"
             android:layout_width="290dp"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:layout_marginTop="10dp"
             android:padding="15dp"
             android:background="@drawable/edit_text_style"
-          android:layout_gravity="center"
+            android:layout_gravity="center"
             />
-            <Button
-                android:id="@+id/SendbuttonReclamtion"
-                android:layout_width="290dp"
-                android:layout_height="40dp"
-                android:background="@drawable/button_style_smaller"
-                android:text="Envoyer"
-                android:layout_marginTop="30dp"
-                android:textColor="@color/white"
-                android:textSize="20dp"
-                android:layout_gravity="center"
-                />
-        </LinearLayout>
+        <Button
+            android:id="@+id/Send_Reclamtion_Patient"
+            android:layout_width="290dp"
+            android:layout_height="40dp"
+            android:background="@drawable/button_style_smaller"
+            android:text="Envoyer"
+            android:layout_marginTop="30dp"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:layout_gravity="center"
+            />
+    </LinearLayout>
+
 </FrameLayout>

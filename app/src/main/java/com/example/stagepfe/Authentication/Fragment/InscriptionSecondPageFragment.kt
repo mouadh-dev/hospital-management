@@ -96,7 +96,7 @@ class InscriptionSecondPageFragment : Fragment() {
 
         buttonReturn!!.setOnClickListener {
             var firstPage = FragmentInscriptionFirstPage()
-            fragmentManager!!.beginTransaction()
+            requireFragmentManager().beginTransaction()
                 .replace(R.id.ContainerFragmentLayout, firstPage)
                 .commit()
         }
@@ -133,7 +133,7 @@ class InscriptionSecondPageFragment : Fragment() {
             } else {
                 var choosePosition = ChoosePositionFragment()
                 var bundle= Bundle()
-                var user: UserItem = arguments!!.get("datafirstpage") as UserItem
+                var user: UserItem = requireArguments().get("datafirstpage") as UserItem
 
                 user.adresse =adresseET!!.text.trim().toString()
                 user.datenaiss=dateNaiss!!.text.trim().toString()
@@ -146,7 +146,7 @@ class InscriptionSecondPageFragment : Fragment() {
                 choosePosition.arguments = bundle
 
                 println("mouadh" + user.toString())
-                fragmentManager!!.beginTransaction()
+                requireFragmentManager().beginTransaction()
                     .replace(R.id.ContainerFragmentLayout, choosePosition).commit()
             }
         }

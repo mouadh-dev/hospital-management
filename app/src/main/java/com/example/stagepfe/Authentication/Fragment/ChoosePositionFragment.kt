@@ -66,7 +66,7 @@ class ChoosePositionFragment : Fragment() {
 
         buttonReturn!!.setOnClickListener {
             var SecondPage = InscriptionSecondPageFragment()
-            fragmentManager!!.beginTransaction()
+            requireFragmentManager().beginTransaction()
                 .replace(R.id.ContainerFragmentLayout, SecondPage).commit()
         }
 
@@ -97,7 +97,7 @@ class ChoosePositionFragment : Fragment() {
             when (role) {
                 "choisir" -> {
                     buttonNext!!.isEnabled = false
-                    var userchooseposition = arguments!!.get("datasecondpage")
+                    var userchooseposition = requireArguments().get("datasecondpage")
 
                 }
                 "Médecin" -> {
@@ -206,7 +206,7 @@ class ChoosePositionFragment : Fragment() {
 ///////////////////////////////Send Data //////////////////////////////////////////////////////////
             var connexionpage = ConnexionFragment()
             var bundle = Bundle()
-            var user: UserItem = arguments!!.get("datasecondpage") as UserItem
+            var user: UserItem = requireArguments().get("datasecondpage") as UserItem
             var userDao = UserDao()
 
             if (role == "Labo") {
@@ -313,7 +313,7 @@ class ChoosePositionFragment : Fragment() {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
             var bundle = Bundle()
-            var user: UserItem = arguments!!.get("datasecondpage") as UserItem
+            var user: UserItem = requireArguments().get("datasecondpage") as UserItem
             var userDao = UserDao()
 ///////////////////////////////////////////////////////////////////////////////////////////////////
             if (role == "Pharmacien") {
@@ -422,7 +422,7 @@ class ChoosePositionFragment : Fragment() {
         } else {
             var patientPage = FragmentPatientInscription()
             var bundle = Bundle()
-            var user: UserItem = arguments!!.get("datasecondpage") as UserItem
+            var user: UserItem = requireArguments().get("datasecondpage") as UserItem
 
             if (role == "Patient") {
                 var mRole = ArrayList<String>()
@@ -435,7 +435,7 @@ class ChoosePositionFragment : Fragment() {
             patientPage.arguments = bundle
 
             println("mouadh " + user.toString())
-            fragmentManager!!.beginTransaction()
+            requireFragmentManager().beginTransaction()
                 .replace(R.id.ContainerFragmentLayout, patientPage).commit()
         }
 
@@ -465,7 +465,7 @@ class ChoosePositionFragment : Fragment() {
             var doctorpage =
                 InscriptionDoctorFragment()
             var bundle = Bundle()
-            var user: UserItem = arguments!!.get("datasecondpage") as UserItem
+            var user: UserItem = requireArguments().get("datasecondpage") as UserItem
 
             if (role == "Médecin") {
                 var mRole = ArrayList<String>()
@@ -482,7 +482,7 @@ class ChoosePositionFragment : Fragment() {
             doctorpage.arguments = bundle
 
             println("mouadh " + user.toString())
-            fragmentManager!!.beginTransaction()
+            requireFragmentManager().beginTransaction()
                 .replace(R.id.ContainerFragmentLayout, doctorpage).commit()
 
         }

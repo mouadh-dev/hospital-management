@@ -50,7 +50,7 @@ class ForgotPasswordFragment : Fragment() {
                 }
             } else {
                 var TapTheCode = FragmentTapTheCode()
-                fragmentManager!!.beginTransaction()!!
+                requireFragmentManager().beginTransaction()!!
                     .replace(R.id.ContainerForgotPassword, TapTheCode)!!.commit()
             }
         }

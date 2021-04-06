@@ -60,9 +60,8 @@ class DoctorProfileUpdateFragment : Fragment() {
             Log.d("Debug:", checkPermission().toString())
             Log.d("Debug:", isLocationEnabled(requireContext()).toString())
             RequestPermission()
-            /* fusedLocationProviderClient.lastLocation.addOnSuccessListener{location: Location? ->
-                 textView.text = location?.latitude.toString() + "," + location?.longitude.toString()
-             }*/
+//            fusedLocationProviderClient.lastLocation.addOnSuccessListener{location: Location? ->
+//                 textView.text = location?.latitude.toString() + "," + location?.longitude.toString()
             getLastLocation()
         }
 

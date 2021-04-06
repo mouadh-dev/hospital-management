@@ -90,7 +90,7 @@ class InscriptionDoctorFragment : Fragment() {
                     var bundle = Bundle()
                     connexionpage.arguments = bundle
 
-                    var user: UserItem = arguments!!.get("datachooseposition") as UserItem
+                    var user: UserItem = requireArguments().get("datachooseposition") as UserItem
 
 
                     var userDao= UserDao()
@@ -104,7 +104,7 @@ class InscriptionDoctorFragment : Fragment() {
                     userDao.insertUser(user)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-                    fragmentManager!!.beginTransaction()
+                    requireFragmentManager().beginTransaction()
                         .replace(R.id.ContainerFragmentLayout, connexionpage).commit()
                 }
             }

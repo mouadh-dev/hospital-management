@@ -59,7 +59,7 @@ class FragmentInscriptionFirstPage : Fragment() {
 
         buttonReturn!!.setOnClickListener {
             val connexionFragment = ConnexionFragment()
-            fragmentManager!!.beginTransaction()
+            requireFragmentManager().beginTransaction()
                 .replace(R.id.ContainerFragmentLayout, connexionFragment)
                 .commit()
         }
@@ -95,7 +95,7 @@ class FragmentInscriptionFirstPage : Fragment() {
                 bundle.putParcelable("datafirstpage", user)
                 secondPage.arguments=bundle
                 println("mouadh "+ user.toString())
-                fragmentManager!!.beginTransaction()
+                requireFragmentManager().beginTransaction()
                     .replace(R.id.ContainerFragmentLayout, secondPage).commit()
 
             }

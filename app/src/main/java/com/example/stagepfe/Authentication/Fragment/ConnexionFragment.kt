@@ -56,7 +56,7 @@ import com.google.firebase.auth.FirebaseAuth
 
         inscriptionButton!!.setOnClickListener {
             var FirstInscriptionFr = FragmentInscriptionFirstPage()
-            fragmentManager!!.beginTransaction().replace(R.id.ContainerFragmentLayout, FirstInscriptionFr).commit()
+            requireFragmentManager().beginTransaction().replace(R.id.ContainerFragmentLayout, FirstInscriptionFr).commit()
         }
         forgotPassWord!!.setOnClickListener {
             requireActivity().run {

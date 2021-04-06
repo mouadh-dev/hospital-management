@@ -62,36 +62,10 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/bottom_nav"
         android:layout_below="@+id/profilInformation"
-        android:layout_marginBottom="30dp"
-        />
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-android:layout_above="@+id/bottom_nav"
-        android:background="@color/white"
-        android:visibility="visible"
-
-        >
-    <View
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:background="@drawable/fill_ellipse"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="10dp"
-        android:layout_marginRight="10dp"
         />
 
-        <ImageView
-            android:id="@+id/Search_ic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginRight="12dp"
-            android:layout_marginTop="4dp"
-            android:src="@drawable/whitesearch" />
 
-    </RelativeLayout>
+
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav"
@@ -173,6 +147,21 @@ android:layout_above="@+id/bottom_nav"
                 android:layout_weight="1"></ListView>
         </LinearLayout>
     </com.sothree.slidinguppanel.SlidingUpPanelLayout>
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/float_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/blue"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="80dp"
+        app:fab_size="normal"
+        android:elevation="10dp"
+        android:src="@drawable/whitesearch"
+        />
 
 
 </RelativeLayout>
