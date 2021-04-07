@@ -11,44 +11,7 @@
         android:background="@color/blue"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:background="@color/blue"
-            android:orientation="horizontal">
 
-            <RelativeLayout
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp">
-
-                <View
-
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/whiteellipse" />
-
-                <ImageView
-                    android:id="@+id/ReturnBackNotificationPatient"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="3dp"
-                    android:src="@drawable/forward" />
-
-            </RelativeLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="50dp"
-                android:text="Notification"
-                android:textColor="@color/white"
-                android:textSize="30dp"
-                android:textStyle="bold" />
-        </LinearLayout>
 
 
         <FrameLayout

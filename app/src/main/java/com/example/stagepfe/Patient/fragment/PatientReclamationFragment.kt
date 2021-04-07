@@ -33,11 +33,11 @@ class PatientReclamationFragment : Fragment() {
 
     }
 
-    private fun initView(view: View?) {
-        namePatientET = requireView().findViewById(R.id.Name_Patien_Reclamation)
-        phonePatientET = requireView().findViewById(R.id.Phone_Patient_Reclamation)
-        descriptionReclamationET = requireView().findViewById(R.id.Description_Reclamation_Patient)
-        sendButton = requireView().findViewById(R.id.Send_Reclamtion_Patient)
+    private fun initView(view: View) {
+        namePatientET = view.findViewById(R.id.Name_Patien_Reclamation)
+        phonePatientET = view.findViewById(R.id.Phone_Patient_Reclamation)
+        descriptionReclamationET = view.findViewById(R.id.Description_Reclamation_Patient)
+        sendButton = view.findViewById(R.id.Send_Reclamtion_Patient)
 
 
         sendButton!!.setOnClickListener {
@@ -55,9 +55,20 @@ class PatientReclamationFragment : Fragment() {
                     dialog.dismiss()
                 }
             }else{
+                var v = View.inflate(requireContext(), R.layout.fragment_dialog, null)
+                var builder = AlertDialog.Builder(requireContext())
+                builder.setView(v)
 
+                var dialog = builder.create()
+                dialog.show()
+                dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+                dialog.findViewById<Button>(R.id.btn_confirm).setOnClickListener {
+                    dialog.dismiss()
+                }
             }
         }
+
     }
 
 

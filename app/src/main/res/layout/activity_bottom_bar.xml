@@ -4,12 +4,217 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Patient.Activity.BottomBarActivity">
+    tools:context=".Patient.Activity.BottomBarActivity"
+    android:background="@color/blue">
+<LinearLayout
+    android:id="@+id/containertopBar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+<!--    MEssage  -->
+    <LinearLayout
+        android:id="@+id/MessageLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@color/blue"
+        android:visibility="gone">
+        <RelativeLayout
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp">
+
+            <View
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/whiteellipse" />
+            <!--            android:src="@drawable/back"-->
+            <ImageView
+                android:id="@+id/IconReturnBackMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:src="@drawable/forward" />
+
+        </RelativeLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Messages"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:layout_marginLeft="50dp"
+            />
+    </LinearLayout>
+<!--     home   -->
+    <LinearLayout
+        android:id="@+id/profilInformationLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/blue"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <ImageView
+            android:layout_width="51dp"
+            android:layout_height="51dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="25dp"
+            android:src="@drawable/logopatient" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="35dp"
+            android:layout_marginBottom="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="bonjour"
+                android:textColor="@color/white"
+                android:textSize="25dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="patient !"
+                android:textColor="@color/white"
+                android:textSize="30dp" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="48sp"
+            android:layout_height="48sp"
+            android:layout_marginLeft="100dp"
+
+            android:layout_marginTop="45dp"
+            android:src="@drawable/reglage"
+
+            />
+    </LinearLayout>
+
+<!--    Notification-->
+    <LinearLayout
+        android:id="@+id/NotificationLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@color/blue"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp">
+
+            <View
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/whiteellipse" />
+
+            <ImageView
+                android:id="@+id/ReturnBackNotificationPatient"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:src="@drawable/forward" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:text="Notification"
+            android:textColor="@color/white"
+            android:textSize="30dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+<!--    Reclamation-->
+    <LinearLayout
+        android:id="@+id/reclamationLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/blue"
+        android:visibility="gone"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@color/blue">
+            <RelativeLayout
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp">
+
+                <View
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/whiteellipse" />
+                <!--            android:src="@drawable/back"-->
+                <ImageView
+                    android:id="@+id/IconReturnBack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:src="@drawable/forward" />
+
+            </RelativeLayout>
+            <TextView
+                android:id="@+id/TitleActivityBottomnavigation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Réclamer"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:layout_marginLeft="50dp"
+                />
+        </LinearLayout>
+
+
+
+        <FrameLayout
+            android:id="@+id/ContainerFramentPatientMenu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/rectangle_account"
+            />
+
+    </LinearLayout>
+
+
+</LinearLayout>
+
     <FrameLayout
         android:id="@+id/ContainerFragmentPatient"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/bottom_nav"
+        android:layout_below="@+id/containertopBar"
+        android:background="@drawable/rectangle_account"
         />
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav"
