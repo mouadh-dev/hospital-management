@@ -12,6 +12,6 @@ class AccountDoctorActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_account_doctor)
         var home = DoctorMessageFragment()
-        supportFragmentManager.beginTransaction().replace(R.id.ContainerFramentDoctor, home).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.ContainerFragmentDoctor, home).commit()
     }
 }
