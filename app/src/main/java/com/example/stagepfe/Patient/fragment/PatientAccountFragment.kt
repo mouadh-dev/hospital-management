@@ -1,4 +1,4 @@
-package com.example.stagepfe.Patient
+package com.example.stagepfe.Patient.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater

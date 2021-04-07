@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/blue"
-    tools:context=".Patient.AccountPatientActivity">
+    tools:context=".Patient.Activity.AccountPatientActivity">
 
     <LinearLayout
         android:id="@+id/profilInformation"
@@ -128,7 +128,8 @@
                     android:drawableLeft="@drawable/search"
                     android:hint="Rechercher"
                     android:paddingLeft="10dp"
-                    android:textColorHint="@color/gray" />
+                    android:textColorHint="@color/gray"
+                    android:textColor="@color/black"/>
                 <ImageView
                     android:id="@+id/DownIC"
                     android:layout_width="30dp"

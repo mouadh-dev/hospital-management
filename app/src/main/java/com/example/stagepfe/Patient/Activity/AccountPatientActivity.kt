@@ -1,11 +1,15 @@
-package com.example.stagepfe.Patient
+package com.example.stagepfe.Patient.Activity
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.ListView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.stagepfe.Patient.Model
+import com.example.stagepfe.Patient.MyAdapter
+import com.example.stagepfe.Patient.fragment.PatientAccountFragment
 import com.example.stagepfe.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
@@ -18,6 +22,7 @@ class AccountPatientActivity : AppCompatActivity() {
     var slidPanel: SlidingUpPanelLayout? = null
     var downImg: ImageView? = null
     var navigation: BottomNavigationView? =null
+    var titlelTV: TextView? = null
 
 
 
@@ -54,22 +59,32 @@ initView()
         slidPanel = findViewById(R.id.sliding_layout)
         downImg = findViewById(R.id.DownIC)
         navigation = findViewById(R.id.bottom_nav)
+        titlelTV = findViewById(R.id.TitleActivityBottomnavigation)
 
 
         navigation!!.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_reclamation -> {
-                    var intent = Intent(this,BottomBarActionPatientActivity::class.java)
+                    var intent = Intent(this, ReclamationPatientActivity::class.java)
                     startActivity(intent)
                     finish()
 
                     return@OnNavigationItemSelectedListener true
                 }
-                R.id.navigation_dashboard -> {
+                R.id.navigation_notifications -> {
+
+                    var intent = Intent(this, NotificationPatientActivity::class.java)
+                    startActivity(intent)
+                    finish()
+
 
                     return@OnNavigationItemSelectedListener true
                 }
-                R.id.navigation_notifications -> {
+                R.id.navigation_message -> {
+
+                    var intent = Intent(this, MessagePatientActivity::class.java)
+                    startActivity(intent)
+                    finish()
 
                     return@OnNavigationItemSelectedListener true
                 }

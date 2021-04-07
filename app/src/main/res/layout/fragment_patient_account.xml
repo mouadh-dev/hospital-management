@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Patient.PatientAccountFragment"
+    tools:context=".Patient.fragment.PatientAccountFragment"
     android:background="@drawable/rectangle_account"
     >
 
@@ -91,7 +91,12 @@
             </LinearLayout>
 
 
+
         </LinearLayout>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/poop"/>
 
 
     </LinearLayout>

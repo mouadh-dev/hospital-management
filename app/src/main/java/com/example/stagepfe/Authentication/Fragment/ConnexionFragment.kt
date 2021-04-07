@@ -16,7 +16,7 @@ import com.example.stagepfe.R
 import com.example.stagepfe.Authentication.dao.ResponseCallback
 import com.example.stagepfe.Authentication.dao.UserDao
 import com.example.stagepfe.Authentication.entite.UserItem
-import com.example.stagepfe.Patient.AccountPatientActivity
+import com.example.stagepfe.Patient.Activity.AccountPatientActivity
 import com.google.firebase.auth.FirebaseAuth
 
  class ConnexionFragment : Fragment(), View.OnClickListener {

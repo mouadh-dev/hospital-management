@@ -1,4 +1,4 @@
-package com.example.stagepfe.Patient
+package com.example.stagepfe.Patient.fragment
 
 import android.app.AlertDialog
 import android.os.Bundle
