@@ -25,8 +25,9 @@
 
         <activity android:name=".Authentication.Activity.ContainerFragmentPasswordActivity" />
         <activity android:name=".Authentication.Activity.AuthenticationFragmentContainerActivity" />
-        <activity android:name=".Authentication.Activity.MainPageActivity"/>
-        <activity android:name=".Doctor.Activity.AccountDoctorActivity" >
+
+        <activity android:name=".Doctor.Activity.AccountDoctorActivity"/>
+        <activity android:name=".Authentication.Activity.MainPageActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -110,6 +110,17 @@ class BottomBarActivity : AppCompatActivity() {
 
                     return@OnNavigationItemSelectedListener true
                 }
+                R.id.navigation_home -> {
+                    homeLayout!!.visibility = VISIBLE
+                    messageLayout!!.visibility = GONE
+                    notificatioLayout!!.visibility = GONE
+                    reclamationLayout!!.visibility = GONE
+
+                    var home = PatientAccountFragment()
+                    supportFragmentManager.beginTransaction().replace(R.id.ContainerFragmentPatient, home)
+                        .commit()
+
+                }
 
             }
             true
