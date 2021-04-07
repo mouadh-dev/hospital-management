@@ -12,6 +12,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.stagepfe.Doctor.Activity.AccountDoctorActivity
+import com.example.stagepfe.Doctor.Activity.DoctorProfilActivity
 import com.example.stagepfe.R
 
 
@@ -32,7 +33,7 @@ class DoctorReclamationFragment : Fragment() {
         initView(view)
         return  view
         var transaction= childFragmentManager.beginTransaction()
-        transaction.replace(R.id.ContainerFramentDoctorOptions,Fragment()).commit()
+        transaction.replace(R.id.ContainerFramentDoctorOptions, Fragment()).commit()
     }
 
     private fun initView(view: View) {
@@ -80,7 +81,7 @@ class DoctorReclamationFragment : Fragment() {
 
                         requireActivity().run {
                             var intent =
-                                Intent(this, AccountDoctorActivity::class.java)
+                                Intent(this, DoctorProfilActivity::class.java)
                             startActivity(intent)
                             finish()
                         }

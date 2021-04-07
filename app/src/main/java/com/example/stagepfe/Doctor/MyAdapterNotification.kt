@@ -14,14 +14,13 @@ class MyAdapterNotification(var mCtx: Context, var resources:Int, var items:List
         var layoutInflater: LayoutInflater = LayoutInflater.from(mCtx)
         var view: View = layoutInflater.inflate(resources, null)
 
-        var imageList: ImageView = view.findViewById(R.id.imageNottificationlist)
+        var imageNotificationList: ImageView = view.findViewById(R.id.imageNottificationlist)
         var messageNotification: TextView = view.findViewById(R.id.TVmessageNotification)
 
 
         var mItem: ModelNotification = items[position]
-        imageList.setImageDrawable(mCtx.resources.getDrawable(mItem.picture))
+        imageNotificationList.setImageDrawable(mCtx.resources.getDrawable(mItem.picture))
         messageNotification.text = mItem.message
-
 
         return view
     }

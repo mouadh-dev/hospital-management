@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.ListView
 import com.example.stagepfe.Doctor.ModelMessagePatient
 import com.example.stagepfe.Doctor.ModelRdvDocteur
+import com.example.stagepfe.Doctor.MyAdapterMessagePatient
+import com.example.stagepfe.Doctor.MyAdapterRdvDoctor
 import com.example.stagepfe.R
 
 class ListRdvDoctorFragment : Fragment() {
@@ -20,6 +22,7 @@ class ListRdvDoctorFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
        var view=inflater.inflate(R.layout.fragment_list_rdv_doctor, container, false)
+
         initView(view)
         return view
     }
@@ -27,6 +30,7 @@ class ListRdvDoctorFragment : Fragment() {
     private fun initView(view: View) {
         listviewRdv = view.findViewById<ListView>(R.id.listRdvDocteur)
         listRdvDoc.add(ModelRdvDocteur("Rendez-Vous", "11-03-2020 ", "11:00", "Terminer"))
+        listviewRdv!!.adapter= MyAdapterRdvDoctor(requireContext(),R.layout.list_rdv, listRdvDoc)
 
     }
 }

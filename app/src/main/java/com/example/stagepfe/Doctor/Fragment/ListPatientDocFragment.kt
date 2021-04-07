@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.ListView
 import com.example.stagepfe.Doctor.ModelMessagePatient
 import com.example.stagepfe.Doctor.ModelPatientList
+import com.example.stagepfe.Doctor.MyAdapterListPatient
+import com.example.stagepfe.Doctor.MyAdapterMessagePatient
 import com.example.stagepfe.R
 
 
@@ -28,6 +30,7 @@ class ListPatientDocFragment : Fragment() {
     private fun initView(view: View) {
         listviewPatientDoc = view.findViewById<ListView>(R.id.listPatientDocteur)
         listPatientDoc.add(ModelPatientList("Mohamed Rouahi", "Voir Plus", R.drawable.logopatient))
+        listviewPatientDoc!!.adapter= MyAdapterListPatient(requireContext(),R.layout.list_patient, listPatientDoc)
     }
 
 

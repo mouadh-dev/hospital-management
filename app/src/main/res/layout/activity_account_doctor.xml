@@ -6,10 +6,19 @@
     android:layout_height="match_parent"
     android:background="@color/blue"
     tools:context=".Doctor.Activity.AccountDoctorActivity">
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_nav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:menu="@menu/bottom_nav_menu"
+        android:background="@color/blue"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        >
 
     <LinearLayout
         android:id="@+id/profilInformation"
@@ -71,7 +80,8 @@
             android:id="@+id/ContainerFramentDoctor"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/rectangle_account"/>
+            android:background="@color/white"
+            android:layout_above="@id/bottom_nav"/>
 <!--    </RelativeLayout>-->
 
     </LinearLayout>
