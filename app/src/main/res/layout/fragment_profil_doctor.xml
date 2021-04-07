@@ -11,7 +11,9 @@
           android:layout_marginTop="180dp"
           android:orientation="vertical"
           >
+
     <TextView
+        android:id="@+id/TVfullNameDoctorProfil"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -21,6 +23,7 @@
         android:textColor="@color/black"
        />
           <TextView
+              android:id="@+id/TVtelephoneDoctorProfil"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_gravity="center"
@@ -31,6 +34,7 @@
               android:textSize="25dp"
               />
           <TextView
+              android:id="@+id/TVNaissDoctorProfil"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_gravity="center"
