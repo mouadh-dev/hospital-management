@@ -16,7 +16,7 @@ import com.example.stagepfe.R
 import com.example.stagepfe.Authentication.dao.ResponseCallback
 import com.example.stagepfe.Authentication.dao.UserDao
 import com.example.stagepfe.Authentication.entite.UserItem
-import com.example.stagepfe.Patient.Activity.AccountPatientActivity
+import com.example.stagepfe.Patient.Activity.BottomBarActivity
 import com.google.firebase.auth.FirebaseAuth
 
  class ConnexionFragment : Fragment(), View.OnClickListener {
@@ -120,7 +120,7 @@ import com.google.firebase.auth.FirebaseAuth
 
                         progressdialog.dismiss()
                         requireActivity().run {
-                            startActivity(Intent(this, AccountPatientActivity::class.java))
+                            startActivity(Intent(this, BottomBarActivity::class.java))
                             finish() // If activity no more needed in back stack
                         }
 

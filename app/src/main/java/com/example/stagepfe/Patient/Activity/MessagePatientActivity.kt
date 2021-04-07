@@ -18,7 +18,7 @@ class MessagePatientActivity : AppCompatActivity() {
         backIconMessage = findViewById(R.id.IconReturnBackMessage)
 
         backIconMessage!!.setOnClickListener {
-            var intent = Intent(this, AccountPatientActivity::class.java)
+            var intent = Intent(this, BottomBarActivity::class.java)
             startActivity(intent)
             finish()
         }

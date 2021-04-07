@@ -1,35 +1,31 @@
 package com.example.stagepfe.Patient.Activity
 
 import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.ListView
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import com.example.stagepfe.Patient.Model
 import com.example.stagepfe.Patient.MyAdapter
+import com.example.stagepfe.Patient.fragment.HomePatientFragment
 import com.example.stagepfe.Patient.fragment.PatientAccountFragment
 import com.example.stagepfe.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 
-
-class AccountPatientActivity : AppCompatActivity() {
-    var listview:ListView? = null
+class BottomBarActivity : AppCompatActivity() {
+    var listview: ListView? = null
     var list = mutableListOf<Model>()
     var search: ImageView? = null
     var slidPanel: SlidingUpPanelLayout? = null
     var downImg: ImageView? = null
     var navigation: BottomNavigationView? =null
     var titlelTV: TextView? = null
-
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_account_patient)
+        setContentView(R.layout.activity_bottom_bar)
 
         listview = findViewById<ListView>(R.id.list)
         list.add(Model("Dr Foulen Fouleni", "Generaliste", R.drawable.doctor_ic))
@@ -42,16 +38,11 @@ class AccountPatientActivity : AppCompatActivity() {
 
         listview!!.adapter = MyAdapter(this, R.layout.doctors_list, list)
 
-initView()
+        initView()
 
-
-
-
-
-        var home = PatientAccountFragment()
+        var home = HomePatientFragment()
         supportFragmentManager.beginTransaction().replace(R.id.ContainerFragmentPatient, home)
             .commit()
-
     }
 
     private fun initView() {
@@ -103,6 +94,4 @@ initView()
         }
 
     }
-
-
 }
