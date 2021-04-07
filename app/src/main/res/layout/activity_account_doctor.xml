@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:background="@color/blue"
         android:orientation="horizontal"
+        android:visibility="gone"
         >
         <ImageView
             android:layout_width="51dp"
