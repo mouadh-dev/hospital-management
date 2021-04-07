@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".Patient.Activity.ProfilePatientActivity"></activity>
+        <activity android:name=".Patient.Activity.BottomBarActivity"></activity>
+        <activity android:name=".Patient.Activity.ProfilePatientActivity" />
         <activity android:name=".Patient.Activity.MessagePatientActivity" />
         <activity android:name=".Patient.Activity.NotificationPatientActivity" />
         <activity android:name=".Patient.Activity.ReclamationPatientActivity" />

@@ -18,7 +18,7 @@ class NotificationPatientActivity : AppCompatActivity() {
         backIconNotification = findViewById(R.id.ReturnBackNotificationPatient)
 
         backIconNotification!!.setOnClickListener{
-            var intent = Intent(this, AccountPatientActivity::class.java)
+            var intent = Intent(this, BottomBarActivity::class.java)
             startActivity(intent)
             finish()
         }

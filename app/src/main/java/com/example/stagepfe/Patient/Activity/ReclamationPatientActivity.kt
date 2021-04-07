@@ -18,7 +18,7 @@ class ReclamationPatientActivity : AppCompatActivity() {
         backImg = findViewById(R.id.IconReturnBack)
 
         backImg!!.setOnClickListener{
-            var intent = Intent(this, AccountPatientActivity::class.java)
+            var intent = Intent(this, BottomBarActivity::class.java)
             startActivity(intent)
             finish()
         }
