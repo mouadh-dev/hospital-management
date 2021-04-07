@@ -1,4 +1,4 @@
 package com.example.stagepfe.Patient
 
-class ModelMessagePatient(val name: String, var message: String,var time:String, var img:Int) {
+class ModelMessagePatient(var namePatient: String, var messagePatient: String,var timemsgPatient:String, var imgmsgPatient:Int) {
 }

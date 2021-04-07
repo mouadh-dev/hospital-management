@@ -9,7 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.example.stagepfe.R
 
-class MyAdapterMessagePatient(var mCtx: Context, var resources:Int, var items:List<ModelMessagePatient>): ArrayAdapter<ModelMessagePatient>(mCtx, resources, items)  {
+class MyAdapterDoctorMessage(var mCtx: Context, var resources:Int, var items:List<ModelDoctorMessage>): ArrayAdapter<ModelDoctorMessage>(mCtx, resources, items)  {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var layoutInflater: LayoutInflater = LayoutInflater.from(mCtx)
         var view: View = layoutInflater.inflate(resources, null)
@@ -19,7 +19,7 @@ class MyAdapterMessagePatient(var mCtx: Context, var resources:Int, var items:Li
         var tempsMessager: TextView = view.findViewById(R.id.TvtimeMessagePatient)
         var messagePatient: TextView = view.findViewById(R.id.TVmessagePatientList)
 
-        var mItem: ModelMessagePatient = items[position]
+        var mItem: ModelDoctorMessage = items[position]
         imageList.setImageDrawable(mCtx.resources.getDrawable(mItem.pic))
         namePatient.text = mItem.nom
         messagePatient.text = mItem.message
