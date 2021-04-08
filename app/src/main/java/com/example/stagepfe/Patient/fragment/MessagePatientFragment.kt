@@ -13,13 +13,7 @@ import com.example.stagepfe.R
 
 class MessagePatientFragment : Fragment() {
     var listMessagePatient: ListView? = null
-    var listmsg = mutableListOf<ModelMessagePatient>()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
+    var list = mutableListOf<ModelMessagePatient>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -28,16 +22,15 @@ class MessagePatientFragment : Fragment() {
         var view = inflater.inflate(R.layout.fragment_message_patient, container, false)
 
         listMessagePatient = view.findViewById<ListView>(R.id.Message__Patient)
-        listmsg.add(ModelMessagePatient("Mouadh", "merci docteur", "12:44", R.drawable.doctor_ic))
 
-        listmsg.add(ModelMessagePatient("Mouadh", "merci docteur", "12:44", R.drawable.doctor_ic))
-
-        listmsg.add(ModelMessagePatient("Mouadh", "merci docteur", "12:44", R.drawable.doctor_ic))
-        listmsg.add(ModelMessagePatient("Mouadh", "merci docteur", "12:44", R.drawable.doctor_ic))
-        listmsg.add(ModelMessagePatient("Mouadh", "merci docteur", "12:44", R.drawable.doctor_ic))
-        listmsg.add(ModelMessagePatient("Mouadh", "merci docteur", "12:44", R.drawable.doctor_ic))
-        listmsg.add(ModelMessagePatient("Mouadh", "merci docteur", "12:44", R.drawable.doctor_ic))
-        listMessagePatient!!.adapter=MyAdapterMessagePatient(requireContext(), R.layout.fragment_message_patient, listmsg)
+        list.add(ModelMessagePatient("Mouadh", "merci docteur", "12:44", R.drawable.doctor_ic))
+        list.add(ModelMessagePatient("Mouadh", "merci docteur", "12:44", R.drawable.doctor_ic))
+        list.add(ModelMessagePatient("Mouadh", "merci docteur", "12:44", R.drawable.doctor_ic))
+        list.add(ModelMessagePatient("Mouadh", "merci docteur", "12:44", R.drawable.doctor_ic))
+        list.add(ModelMessagePatient("Mouadh", "merci docteur", "12:44", R.drawable.doctor_ic))
+        list.add(ModelMessagePatient("Mouadh", "merci docteur", "12:44", R.drawable.doctor_ic))
+        list.add(ModelMessagePatient("Mouadh", "merci docteur", "12:44", R.drawable.doctor_ic))
+        listMessagePatient!!.adapter=MyAdapterMessagePatient(requireContext(), R.layout.message_patient, list)
         return view
     }
 
