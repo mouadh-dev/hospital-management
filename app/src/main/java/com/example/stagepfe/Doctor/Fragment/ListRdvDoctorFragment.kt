@@ -28,7 +28,7 @@ class ListRdvDoctorFragment : Fragment() {
     private fun initView(view: View) {
         listviewRdv = view.findViewById<ListView>(R.id.listRdvDocteur)
         listRdvDoc.add(ModelRdvDocteur("Rendez-Vous", "11-03-2020 ", "11:00", "Terminer"))
-        listviewRdv!!.adapter= MyAdapterRdvDoctor(requireContext(),R.layout.list_rdv, listRdvDoc)
+        listviewRdv!!.adapter= MyAdapterRdvDoctor(requireContext(),R.layout.list_rdv_for_doctor, listRdvDoc)
 
     }
 }

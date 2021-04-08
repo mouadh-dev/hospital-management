@@ -16,7 +16,7 @@
 
         <!--    MEssage  -->
         <LinearLayout
-            android:id="@+id/MessageLayout"
+            android:id="@+id/MessageLayoutDoctor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -107,7 +107,7 @@
 
         <!--    Notification-->
         <LinearLayout
-            android:id="@+id/NotificationLayout"
+            android:id="@+id/NotificationLayoutDoctor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -129,7 +129,7 @@
                     android:background="@drawable/whiteellipse" />
 
                 <ImageView
-                    android:id="@+id/ReturnBackNotificationPatient"
+                    android:id="@+id/ReturnBackNotificationDoctor"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
@@ -149,7 +149,7 @@
 
         <!--    Reclamation-->
         <LinearLayout
-            android:id="@+id/reclamationLayout"
+            android:id="@+id/reclamationLayoutDoctor"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -206,16 +206,103 @@
         android:id="@+id/ContainerFragmentDoctor"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/bottom_nav"
+        android:layout_above="@id/bottom_nav_Doctor"
         android:layout_below="@+id/containertopBar"
         android:background="@drawable/rectangle_account"
         />
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_nav"
+        android:id="@+id/bottom_nav_Doctor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         app:menu="@menu/bottom_nav_menu"
         android:background="@color/blue"/>
+
+    <com.sothree.slidinguppanel.SlidingUpPanelLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:sothree="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/sliding_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottom_nav"
+        android:gravity="bottom"
+        sothree:umanoDragView="@+id/dragView"
+        sothree:umanoOverlay="true"
+        sothree:umanoPanelHeight="200dp"
+        sothree:umanoParallaxOffset="100dp"
+        sothree:umanoScrollableView="@+id/list"
+        sothree:umanoShadowHeight="4dp"
+        android:visibility="gone"
+        >
+        <!-- MAIN CONTENT -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+        </FrameLayout>
+
+        <!-- SLIDING LAYOUT -->
+        <LinearLayout
+            android:id="@+id/dragView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ffffff"
+            android:clickable="true"
+            android:focusable="false"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="68dp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/edit_text_style"
+                    android:drawableLeft="@drawable/search"
+                    android:hint="Rechercher"
+                    android:paddingLeft="10dp"
+                    android:textColorHint="@color/gray"
+                    android:textColor="@color/black"/>
+                <ImageView
+                    android:id="@+id/DownIC"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/down_ic"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginRight="10dp"/>
+
+
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/listPatientForDocteur"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"></ListView>
+        </LinearLayout>
+    </com.sothree.slidinguppanel.SlidingUpPanelLayout>
+    <!--Float Button -->
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/float_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/blue"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="80dp"
+        app:fab_size="normal"
+        android:elevation="10dp"
+        android:src="@drawable/whitesearch"
+        />
 
 </RelativeLayout>

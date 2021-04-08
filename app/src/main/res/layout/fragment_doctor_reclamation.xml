@@ -42,7 +42,7 @@
             android:textColor="@color/black"
             android:textColorHint="#888282"
             android:textSize="15dp"
-            android:inputType="textPersonName"/>
+           />
 
         <EditText
             android:id="@+id/ReclamationPhoneNumber"
