@@ -28,7 +28,7 @@ class ListPatientDocFragment : Fragment() {
     private fun initView(view: View) {
         listviewPatientDoc = view.findViewById<ListView>(R.id.listPatientDocteur)
         listPatientDoc.add(ModelPatientList("Mohamed Rouahi", "Voir Plus", R.drawable.logopatient))
-        listviewPatientDoc!!.adapter= MyAdapterListPatient(requireContext(),R.layout.list_patient, listPatientDoc)
+        listviewPatientDoc!!.adapter= MyAdapterListPatient(requireContext(),R.layout.list_patient_for_doctor, listPatientDoc)
     }
 
 
