@@ -1,5 +1,6 @@
 package com.example.stagepfe.Doctor.Activity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -13,6 +14,7 @@ import com.example.stagepfe.Doctor.Fragment.DoctorNotificationFragment
 import com.example.stagepfe.Doctor.Fragment.DoctorReclamationFragment
 import com.example.stagepfe.Doctor.ModelPatientList
 import com.example.stagepfe.Doctor.MyAdapterListPatient
+import com.example.stagepfe.Patient.Activity.ProfilePatientActivity
 import com.example.stagepfe.Patient.Model
 import com.example.stagepfe.Patient.MyAdapter
 import com.example.stagepfe.Patient.fragment.MessagePatientFragment
@@ -124,6 +126,13 @@ class AccountDoctorActivity : AppCompatActivity() {
                     var home = AccueilDoctorFragment()
                     supportFragmentManager.beginTransaction().replace(R.id.ContainerFragmentDoctor, home)
                         .commit()
+
+                }
+                R.id.navigation_profile -> {
+
+                    var intent = Intent(this, DoctorProfilActivity::class.java)
+                    startActivity(intent)
+                    finish()
 
                 }
 
