@@ -25,6 +25,12 @@ class DoctorNotificationFragment : Fragment() {
         listNoti.add(ModelNotification("Un patient a annulé son rendez vous ",R.drawable.date))
         listNoti.add(ModelNotification("Nouvelle annonce aujourd'hui ",R.drawable.date))
         listNoti.add(ModelNotification("Un patient a rapporté son rendez vous ",R.drawable.date))
+        listNoti.add(ModelNotification("Un patient a rapporté son rendez vous ",R.drawable.date))
+        listNoti.add(ModelNotification("Un patient a rapporté son rendez vous ",R.drawable.date))
+        listNoti.add(ModelNotification("Un patient a rapporté son rendez vous ",R.drawable.date))
+        listNoti.add(ModelNotification("Un patient a rapporté son rendez vous ",R.drawable.date))
+        listNoti.add(ModelNotification("Un patient a rapporté son rendez vous ",R.drawable.date))
+        listNoti.add(ModelNotification("Un patient a rapporté son rendez vous ",R.drawable.date))
         listviewNoti!!.adapter = MyAdapterNotification(requireContext(), R.layout.notification_doctor_list, listNoti)
         initView(view)
         return view

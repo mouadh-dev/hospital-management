@@ -25,6 +25,12 @@ class DoctorMessageFragment : Fragment() {
         listPat.add(ModelDoctorMessage("Mouadh" ,"merci docteur","12:44" ,R.drawable.logopatient))
         listPat.add(ModelDoctorMessage("Mohamed" ,"je veut annuler mon RDV ","21:03" ,R.drawable.logopatient))
         listPat.add(ModelDoctorMessage("Mouadh" ,"merci docteur","12:94" ,R.drawable.logopatient))
+        listPat.add(ModelDoctorMessage("Mouadh" ,"merci docteur","12:94" ,R.drawable.logopatient))
+        listPat.add(ModelDoctorMessage("Mouadh" ,"merci docteur","12:94" ,R.drawable.logopatient))
+        listPat.add(ModelDoctorMessage("Mouadh" ,"merci docteur","12:94" ,R.drawable.logopatient))
+        listPat.add(ModelDoctorMessage("Mouadh" ,"merci docteur","12:94" ,R.drawable.logopatient))
+        listPat.add(ModelDoctorMessage("Mouadh" ,"merci docteur","12:94" ,R.drawable.logopatient))
+        listPat.add(ModelDoctorMessage("Mouadh" ,"merci docteur","12:94" ,R.drawable.logopatient))
         listviewPatient!!.adapter=MyAdapterDoctorMessage(requireContext(),R.layout.message_patients_list_for_doctor,listPat)
 
         return view

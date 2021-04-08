@@ -16,15 +16,13 @@ class MyAdapterListPatient(var mCtx: Context, var resources:Int, var items:List<
 
        var imageList: ImageView = view.findViewById(R.id.IVpatientImageList)
        var nomDuPatient: TextView = view.findViewById(R.id.TVnamePatientList)
-       var voirPlusPatient: TextView = view.findViewById(R.id.TVvoirPlusPatient)
+
 
 
 
        var mItem: ModelPatientList = items[position]
        imageList.setImageDrawable(mCtx.resources.getDrawable(mItem.pic_patient))
        nomDuPatient.text = mItem.nom_patient
-       voirPlusPatient.text = mItem.msg_patient
-
 
        return view
    }
