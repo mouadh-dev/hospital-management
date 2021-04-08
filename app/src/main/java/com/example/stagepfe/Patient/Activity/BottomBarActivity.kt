@@ -1,5 +1,6 @@
 package com.example.stagepfe.Patient.Activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.View.GONE
@@ -13,6 +14,7 @@ import com.example.stagepfe.Authentication.Fragment.ConnexionFragment
 import com.example.stagepfe.Patient.Model
 import com.example.stagepfe.Patient.MyAdapter
 import com.example.stagepfe.Patient.fragment.MessagePatientFragment
+import com.example.stagepfe.Patient.fragment.NotificationPatintFragment
 import com.example.stagepfe.Patient.fragment.PatientAccountFragment
 import com.example.stagepfe.Patient.fragment.PatientReclamationFragment
 import com.example.stagepfe.R
@@ -89,7 +91,7 @@ class BottomBarActivity : AppCompatActivity() {
                     homeLayout!!.visibility = GONE
                     messageLayout!!.visibility = GONE
 
-                    var notificationnav = PatientReclamationFragment()
+                    var notificationnav = NotificationPatintFragment()
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.ContainerFragmentPatient, notificationnav).commit()
 
@@ -120,6 +122,13 @@ class BottomBarActivity : AppCompatActivity() {
                     var home = PatientAccountFragment()
                     supportFragmentManager.beginTransaction().replace(R.id.ContainerFragmentPatient, home)
                         .commit()
+
+                }
+                R.id.navigation_profile -> {
+
+                    var intent = Intent(this,ProfilePatientActivity::class.java)
+                    startActivity(intent)
+                    finish()
 
                 }
 
