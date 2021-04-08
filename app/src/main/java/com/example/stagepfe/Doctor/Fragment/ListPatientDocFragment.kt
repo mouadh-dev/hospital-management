@@ -6,10 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
-import com.example.stagepfe.Doctor.ModelMessagePatient
 import com.example.stagepfe.Doctor.ModelPatientList
 import com.example.stagepfe.Doctor.MyAdapterListPatient
-import com.example.stagepfe.Doctor.MyAdapterMessagePatient
 import com.example.stagepfe.R
 
 

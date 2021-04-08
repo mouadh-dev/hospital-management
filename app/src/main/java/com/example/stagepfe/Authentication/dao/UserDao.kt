@@ -9,7 +9,10 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 
 class UserDao : IGestionUser {
@@ -70,6 +73,17 @@ class UserDao : IGestionUser {
                 }
             }
 
+    }
+    fun retrieveUSerByid(id: String){
+        myRef.child(id).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+                var  userItem: UserItem? = snapshot.getValue(UserItem::class.java)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
     }
 
 

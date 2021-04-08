@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.stagepfe.Authentication.Fragment.ConnexionFragment
 import com.example.stagepfe.Patient.Model
 import com.example.stagepfe.Patient.MyAdapter
+import com.example.stagepfe.Patient.fragment.MessagePatientFragment
 import com.example.stagepfe.Patient.fragment.PatientAccountFragment
 import com.example.stagepfe.Patient.fragment.PatientReclamationFragment
 import com.example.stagepfe.R
@@ -103,12 +104,23 @@ class BottomBarActivity : AppCompatActivity() {
                     reclamationLayout!!.visibility = GONE
                     homeLayout!!.visibility = GONE
 
-                    var messagenav = PatientReclamationFragment()
+                    var messagenav = MessagePatientFragment()
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.ContainerFragmentPatient, messagenav).commit()
 
 
                     return@OnNavigationItemSelectedListener true
+                }
+                R.id.navigation_home -> {
+                    homeLayout!!.visibility = VISIBLE
+                    messageLayout!!.visibility = GONE
+                    notificatioLayout!!.visibility = GONE
+                    reclamationLayout!!.visibility = GONE
+
+                    var home = PatientAccountFragment()
+                    supportFragmentManager.beginTransaction().replace(R.id.ContainerFragmentPatient, home)
+                        .commit()
+
                 }
 
             }
