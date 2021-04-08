@@ -16,7 +16,7 @@
 
         <!--    MEssage  -->
         <LinearLayout
-            android:id="@+id/MessageLayout"
+            android:id="@+id/MessageLayoutDoctor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -107,7 +107,7 @@
 
         <!--    Notification-->
         <LinearLayout
-            android:id="@+id/NotificationLayout"
+            android:id="@+id/NotificationLayoutDoctor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -129,7 +129,7 @@
                     android:background="@drawable/whiteellipse" />
 
                 <ImageView
-                    android:id="@+id/ReturnBackNotificationPatient"
+                    android:id="@+id/ReturnBackNotificationDoctor"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
@@ -149,7 +149,7 @@
 
         <!--    Reclamation-->
         <LinearLayout
-            android:id="@+id/reclamationLayout"
+            android:id="@+id/reclamationLayoutDoctor"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -206,12 +206,12 @@
         android:id="@+id/ContainerFragmentDoctor"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/bottom_nav"
+        android:layout_above="@id/bottom_nav_Doctor"
         android:layout_below="@+id/containertopBar"
         android:background="@drawable/rectangle_account"
         />
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_nav"
+        android:id="@+id/bottom_nav_Doctor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
