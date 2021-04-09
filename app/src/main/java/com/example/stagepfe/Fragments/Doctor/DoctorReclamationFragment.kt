@@ -31,8 +31,7 @@ class DoctorReclamationFragment : Fragment() {
         var view= inflater.inflate(R.layout.fragment_doctor_reclamation, container, false)
         initView(view)
         return  view
-        var transaction= childFragmentManager.beginTransaction()
-        transaction.replace(R.id.ContainerFramentDoctorOptions, Fragment()).commit()
+
     }
 
     private fun initView(view: View) {

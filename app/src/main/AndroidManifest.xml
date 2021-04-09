@@ -23,12 +23,15 @@
             android:label="@string/title_activity_account_patient" />
         <activity android:name=".Activity.Doctors.DoctorProfilActivity" />
 
-        <activity android:name=".Activity.Authentication.ContainerFragmentPasswordActivity" />
-        <activity android:name=".Activity.Authentication.AuthenticationFragmentContainerActivity" />
+
+
+            <activity android:name=".Activity.Authentication.ContainerFragmentPasswordActivity"/>
+                <activity android:name=".Activity.Authentication.AuthenticationFragmentContainerActivity"/>
 
         <activity android:name=".Activity.Doctors.AccountDoctorActivity"/>
         <activity android:name=".MainPageActivity">
-            <intent-filter>
+
+                <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
