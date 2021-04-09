@@ -24,11 +24,12 @@
         <activity android:name=".Activity.Doctors.DoctorProfilActivity" />
 
 
-        <activity android:name=".MainPageActivity"/>
+
             <activity android:name=".Activity.Authentication.ContainerFragmentPasswordActivity"/>
                 <activity android:name=".Activity.Authentication.AuthenticationFragmentContainerActivity"/>
 
-        <activity android:name=".Activity.Doctors.AccountDoctorActivity">
+        <activity android:name=".Activity.Doctors.AccountDoctorActivity"/>
+        <activity android:name=".MainPageActivity">
 
                 <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
