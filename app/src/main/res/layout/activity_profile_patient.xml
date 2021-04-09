@@ -22,9 +22,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            android:id="@+id/container_update_profile_patient"
-        <FrameLayout
 
+        <LinearLayout
+            android:id="@+id/container_update_profile_patient"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone"/>
@@ -98,6 +98,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </LinearLayout>
+
         </FrameLayout>
 
     </LinearLayout>

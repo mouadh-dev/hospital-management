@@ -18,7 +18,7 @@ class ProfilePatientActivity : AppCompatActivity() {
     var viewPager: ViewPager? = null
     var tabs: TabLayout? = null
     var updatePatient: ImageView? = null
-    var containerUpdate: FrameLayout? = null
+    var containerUpdate: LinearLayout? = null
     var containerprofileViwPager: LinearLayout? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,15 +46,7 @@ class ProfilePatientActivity : AppCompatActivity() {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-        updatePatient!!.setOnClickListener{
 
-            containerprofileViwPager!!.visibility = GONE
-            containerUpdate!!.visibility = VISIBLE
-
-            var update = ModifyProfilePatientFragment()
-            supportFragmentManager.beginTransaction().replace(R.id.UpdateProfilDoctorContainer, update)
-                .commit()
-        }
 
 
 ////////////////////////////////////////View Pager//////////////////////////////////////////////////
@@ -69,7 +61,15 @@ class ProfilePatientActivity : AppCompatActivity() {
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
+        updatePatient!!.setOnClickListener{
 
+            containerprofileViwPager!!.visibility = GONE
+            containerUpdate!!.visibility = VISIBLE
+
+            var update = ModifyProfilePatientFragment()
+            supportFragmentManager.beginTransaction().replace(R.id.UpdateProfilDoctorContainer, update)
+                .commit()
+        }
 
 
     }
