@@ -1,96 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Patient.Activity.ProfilePatientActivity"
-    android:background="@color/white">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    tools:context=".Activity.Patients.ProfilePatientActivity">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@drawable/rectangle_account">
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:src="@drawable/patientprofilepicture"
-        />
+        android:background="@drawable/rectangle_account"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:src="@drawable/patientprofilepicture" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:gravity="center"
-            android:visibility="visible"
-            >
+            android:orientation="vertical"
+            android:visibility="visible">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:gravity="center"
-                >
+                android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="35dp"
                     android:text="Foulen Fouleni"
                     android:textColor="@color/black"
-                    />
+                    android:textSize="35dp" />
+
                 <ImageView
                     android:layout_width="32dp"
                     android:layout_height="32dp"
-                    android:src="@drawable/edit"
                     android:layout_marginLeft="40dp"
-                    />
+                    android:src="@drawable/edit" />
             </LinearLayout>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:text="** *** ***"
                 android:textColor="@color/gray_specific"
-                android:textSize="25dp"
-                android:layout_marginTop="20dp"
-                />
+                android:textSize="25dp" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:text="21/05/1997 24ans"
                 android:textColor="@color/gray_specific"
-                android:textSize="25dp"
-                android:layout_marginTop="20dp"
-                />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
+                android:textSize="25dp" />
+
+
+
+
+
+
+
+
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabs_ViewPager"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Mes rendez-vous"
-                android:textSize="20dp"
-                android:textColor="@color/black"
-                android:gravity="center"
+                app:tabGravity="start"
+                app:tabIndicatorColor="@color/blue"
+                app:tabSelectedTextColor="@color/black"
+                app:tabTextAppearance="@style/MyTabLayoutTextAppearance"
+
+
+
                 />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Mes rapports"
-                android:textSize="20dp"
-                android:textColor="@color/black"
-                android:gravity="center"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Mes ordonances"
-                android:textSize="20dp"
-                android:textColor="@color/black"
-                android:gravity="center"
-                />
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/View_Pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
         </LinearLayout>
 
     </LinearLayout>
