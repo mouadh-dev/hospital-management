@@ -14,6 +14,7 @@ import com.example.stagepfe.Fragments.Patient.OrdonancePatientFragment
 import com.example.stagepfe.Fragments.Patient.RapportPatientFragment
 import com.example.stagepfe.Fragments.Patient.RendezVousPatientFragment
 import com.example.stagepfe.R
+import com.example.stagepfe.ViewPagerAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -42,50 +43,22 @@ class ProfilePatientActivity : AppCompatActivity() {
         viewPager = findViewById(R.id.View_Pager)
         tabs = findViewById(R.id.tabs_ViewPager)
 
+
 ////////////////////////////////////////View Pager//////////////////////////////////////////////////
 
-        var adapter = MyViewPagerAdapter(supportFragmentManager)
-        adapter.addFragment(RendezVousPatientFragment(), " Mes rendez-vous ")
-        adapter.addFragment(RapportPatientFragment(), " Mes rapports ")
-        adapter.addFragment(OrdonancePatientFragment(), " Mes ordonances ")
+        var adapter = ViewPagerAdapter(supportFragmentManager)
+        adapter.addFragment(RendezVousPatientFragment(), " Rendez-vous ")
+        adapter.addFragment(RapportPatientFragment(), " Rapports ")
+        adapter.addFragment(OrdonancePatientFragment(), " Ordonances ")
 
         viewPager!!.adapter = adapter
         tabs!!.setupWithViewPager(viewPager)
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
+//////////////////////////////////////////////////////////////////////////////////////////////////
     }
-    //////////////////////////////////////////////////////////////////////////////////////////////////
 
-    class MyViewPagerAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager) {
 
-        private val fragmentList: MutableList<Fragment> = ArrayList()
-        private val titleList: MutableList<String> = ArrayList()
-
-        override fun getItem(position: Int): Fragment {
-            return fragmentList[position]
-        }
-
-        override fun getCount(): Int {
-            return fragmentList.size
-        }
-
-        fun addFragment(fragment: Fragment, title: String) {
-            fragmentList.add(fragment)
-            titleList.add(title)
-        }
-
-        override fun getPageTitle(position: Int): CharSequence? {
-            return titleList[position]
-        }
-
-    }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
 }

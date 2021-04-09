@@ -5,24 +5,26 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.example.stagepfe.Fragments.Doctor.ListRdvDoctorFragment
 
-class ViewPagerAdapter (fm: FragmentManager): FragmentPagerAdapter(fm) {
-    private val COUNT = 1
+class ViewPagerAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager) {
+
+    private val fragmentList: MutableList<Fragment> = ArrayList()
+    private val titleList: MutableList<String> = ArrayList()
 
     override fun getItem(position: Int): Fragment {
-        var fragment: Fragment? = null
-        when (position) {
-            0 -> fragment = ListRdvDoctorFragment()
-        }
-
-        return fragment!!
+        return fragmentList[position]
     }
 
     override fun getCount(): Int {
-        return COUNT
+        return fragmentList.size
+    }
+
+    fun addFragment(fragment: Fragment, title: String) {
+        fragmentList.add(fragment)
+        titleList.add(title)
     }
 
     override fun getPageTitle(position: Int): CharSequence? {
-        return "Tab " + (position + 1)
+        return titleList[position]
     }
 
 }
