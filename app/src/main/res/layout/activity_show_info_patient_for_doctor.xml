@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    tools:context=".Activity.Doctors.ShowInfoPatientForDoctorActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/rectangle_account"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:src="@drawable/patientprofilepicture" />
+
+        <FrameLayout
+            android:id="@+id/UpdateProfilDoctorContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!--add ordonnance -->
+
+
+        <LinearLayout
+            android:id="@+id/UpdateprofilDoctorLayoutContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            >
+
+
+        </LinearLayout>
+
+
+
+
+
+
+            <!--profilPatient -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Foulen Fouleni"
+                    android:textColor="@color/black"
+                    android:textSize="35dp" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="** *** ***"
+                android:textColor="@color/gray_specific"
+                android:textSize="25dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="21/05/1997 24ans"
+                android:textColor="@color/gray_specific"
+                android:textSize="25dp" />
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabs_ViewPager_show_profil_pat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:tabGravity="start"
+                app:tabIndicatorColor="@color/blue"
+                app:tabSelectedTextColor="@color/black"
+                app:tabTextAppearance="@style/MyTabLayoutTextAppearance"
+
+
+                />
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/View_Pager_show_profil_pat"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+        </FrameLayout>
+    </LinearLayout>
+
+</RelativeLayout>
