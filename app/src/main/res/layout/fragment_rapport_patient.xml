@@ -5,13 +5,10 @@
     android:layout_height="match_parent"
     tools:context=".Fragments.Patient.RapportPatientFragment">
 
-    <TextView
+    <ListView
+        android:id="@+id/List_Rapport"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Fragment Rapport"
-        android:textSize="50dp"
-        android:textColor="@color/black"
-        android:gravity="center"
         />
 
 </FrameLayout>
