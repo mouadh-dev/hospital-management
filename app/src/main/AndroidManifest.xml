@@ -27,8 +27,9 @@
 
 
 
-                <activity android:name=".MainPageActivity"/>
-                    <activity android:name=".Activity.Doctors.AccountDoctorActivity">
+
+                    <activity android:name=".Activity.Doctors.AccountDoctorActivity"/>
+                        <activity android:name=".MainPageActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
