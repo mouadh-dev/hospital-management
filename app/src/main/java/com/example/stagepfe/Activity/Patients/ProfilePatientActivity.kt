@@ -3,6 +3,7 @@ package com.example.stagepfe.Activity.Patients
 import android.os.Bundle
 import android.view.View
 import android.view.View.*
+import android.widget.ImageView
 import android.widget.TableLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -22,6 +23,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 class ProfilePatientActivity : AppCompatActivity() {
     var viewPager: ViewPager? = null
     var tabs: TabLayout? = null
+    var updateProfilePatient: ImageView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +44,7 @@ class ProfilePatientActivity : AppCompatActivity() {
 
         viewPager = findViewById(R.id.View_Pager)
         tabs = findViewById(R.id.tabs_ViewPager)
+        updateProfilePatient = findViewById(R.id.update_Profile_Patient)
 
 
 ////////////////////////////////////////View Pager//////////////////////////////////////////////////
@@ -56,6 +59,11 @@ class ProfilePatientActivity : AppCompatActivity() {
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
+
+        updateProfilePatient!!.setOnClickListener{
+
+        }
+
     }
 
 
