@@ -18,7 +18,32 @@
             android:layout_height="200dp"
             android:src="@drawable/patientprofilepicture" />
 
-        <LinearLayout
+  <FrameLayout
+    android:id="@+id/UpdateProfilDoctorContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+
+    <LinearLayout
+        android:id="@+id/UpdateprofilDoctorLayoutContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+       android:visibility="gone"
+           >
+
+
+    </LinearLayout>
+
+
+
+
+
+
+
+    <LinearLayout
+        android:id="@+id/profilDoctorLayoutContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -39,6 +64,7 @@
                     android:textSize="35dp" />
 
                 <ImageView
+                    android:id="@+id/IVprofilDoctorUpdate"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_marginLeft="40dp"
@@ -64,11 +90,6 @@
 
 
 
-
-
-
-
-
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabs_ViewPager_Doctor"
                 android:layout_width="match_parent"
@@ -79,7 +100,6 @@
                 app:tabTextAppearance="@style/MyTabLayoutTextAppearance"
 
 
-
                 />
 
             <androidx.viewpager.widget.ViewPager
@@ -87,7 +107,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </LinearLayout>
-
+</FrameLayout>
     </LinearLayout>
 
 </RelativeLayout>

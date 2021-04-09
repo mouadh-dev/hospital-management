@@ -51,6 +51,7 @@ class DoctorProfileUpdateFragment : Fragment() {
       var view= inflater.inflate(R.layout.fragment_doctor_profile_update, container, false)
         initView(view)
         return  view
+
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
 
         adresseProfilDoctorET!!.setOnClickListener {
@@ -67,8 +68,8 @@ class DoctorProfileUpdateFragment : Fragment() {
     private fun initView(view: View) {
         firstNameProfilDoctorET = view.findViewById(R.id.FirstNameProfilDoctor)
         secondNameProfilDoctorET = view.findViewById(R.id.SecondNameProfilDoctor)
-        adresseProfilDoctorET = view.findViewById(R.id.DateNaissProfilDoctor)
-        dateNaissProfilDoctorET = view.findViewById(R.id.AdresseProfilDoctor)
+        adresseProfilDoctorET = view.findViewById(R.id.AdresseProfilDoctor)
+        dateNaissProfilDoctorET = view.findViewById(R.id.DateNaissProfilDoctor)
         telephoneProfilDoctorET = view.findViewById(R.id.TelephoneProfilDoctor)
         descriptionProfilDoctorET = view.findViewById(R.id.DescriptionProfileDoctor)
         saveProfilButton = view.findViewById<Button>(R.id.SaveProfilDoctorButton)
@@ -183,6 +184,8 @@ class DoctorProfileUpdateFragment : Fragment() {
         val sdf = SimpleDateFormat(myFormat, Locale.US)
 
         dateNaissProfilDoctorET!!.setText(sdf.format(myProfilDoctorCalendar.time))    }
+
+
 
     fun getLastLocation() {
         if (checkPermission()) {

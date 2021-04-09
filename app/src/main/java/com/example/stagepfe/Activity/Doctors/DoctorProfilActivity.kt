@@ -2,10 +2,16 @@ package com.example.stagepfe.Activity.Doctors
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.viewpager.widget.ViewPager
 import com.example.stagepfe.Adapters.Patients.ViewPagerAdapter
+import com.example.stagepfe.Fragments.Doctor.DoctorProfileUpdateFragment
 import com.example.stagepfe.Fragments.Doctor.ProfilDoctorMyPatientFragment
 import com.example.stagepfe.Fragments.Doctor.ProfilDoctorMyRdvFragment
+import com.example.stagepfe.Fragments.Patient.PatientAccountFragment
+import com.example.stagepfe.Fragments.Patient.PatientReclamationFragment
 import com.example.stagepfe.R
 import com.google.android.material.tabs.TabLayout
 
@@ -13,6 +19,9 @@ class DoctorProfilActivity : AppCompatActivity() {
 
     var viewPager: ViewPager? = null
     var tabs: TabLayout? = null
+    var updateProfilDoctor: ImageView? =null
+    var profilDoctorLayout: LinearLayout? = null
+    var updateProfilDoctorLayout: LinearLayout? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,6 +32,22 @@ class DoctorProfilActivity : AppCompatActivity() {
     private fun initView() {
         viewPager = findViewById(R.id.View_Pager_Doctor)
         tabs = findViewById(R.id.tabs_ViewPager_Doctor)
+        updateProfilDoctor=findViewById<ImageView>(R.id.IVprofilDoctorUpdate)
+        profilDoctorLayout=findViewById(R.id.profilDoctorLayoutContainer)
+        updateProfilDoctorLayout=findViewById(R.id.UpdateprofilDoctorLayoutContainer)
+
+
+        updateProfilDoctor!!.setOnClickListener {
+            profilDoctorLayout!!.visibility = View.GONE
+            updateProfilDoctorLayout!!.visibility = View.VISIBLE
+
+            var UpdateDoctorProfil = DoctorProfileUpdateFragment()
+            supportFragmentManager.beginTransaction().replace(R.id.UpdateprofilDoctorLayoutContainer, UpdateDoctorProfil)
+                .commit()
+
+        }
+
+
 
         var adapter = ViewPagerAdapter(supportFragmentManager)
         adapter.addFragment(ProfilDoctorMyRdvFragment(), "Mes Rendez-vous ")
