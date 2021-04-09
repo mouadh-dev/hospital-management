@@ -1,4 +1,4 @@
-package com.example.stagepfe
+package com.example.stagepfe.Adapters.Patients
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
