@@ -1,70 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardBackgroundColor="#B4FFFFFF"
 
     >
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="3dp"
         android:background="@drawable/background_list"
-        android:orientation="horizontal"
-        >
+        android:orientation="horizontal">
 
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_gravity="center"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
-            >
+            android:orientation="vertical">
+
             <TextView
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Rendez-Vous"
                 android:textColor="@color/black"
-                android:textSize="15dp"
-                />
+                android:textSize="15dp" />
 
 
             <TextView
+                android:id="@+id/Date_RDV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="date de RDV"
-                android:textSize="15dp"
-                android:textColor="#949494"
                 android:layout_marginTop="10dp"
-                />
+                android:text="date de RDV"
+                android:textColor="#949494"
+                android:textSize="15dp" />
+
             <TextView
+                android:id="@+id/Hour_RDV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="date de RDV"
-                android:textSize="15dp"
-                android:textColor="#949494"
                 android:layout_marginTop="5dp"
-                />
+                android:text="Heure RDV"
+                android:textColor="#949494"
+                android:textSize="15dp" />
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/Color_Check_RDV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:background="#E90000">
         <TextView
-
+            android:id="@+id/Check_RDV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="pas encore"
             android:textColor="@color/white"
             android:textSize="10dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="20dp"
-            android:background="#E90000"
-            />
-
+            android:layout_marginHorizontal="10dp"/>
+        </LinearLayout>
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>
