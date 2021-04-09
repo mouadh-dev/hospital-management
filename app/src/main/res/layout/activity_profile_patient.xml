@@ -18,7 +18,20 @@
             android:layout_height="200dp"
             android:src="@drawable/patientprofilepicture" />
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            android:id="@+id/container_update_profile_patient"
+        <FrameLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"/>
+
+
         <LinearLayout
+            android:id="@+id/container_update_first"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -85,6 +98,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </LinearLayout>
+        </FrameLayout>
 
     </LinearLayout>
 

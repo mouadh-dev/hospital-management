@@ -1,29 +1,25 @@
 package com.example.stagepfe.Activity.Patients
 
 import android.os.Bundle
-import android.view.View
 import android.view.View.*
-import android.widget.ImageView
-import android.widget.TableLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.example.stagepfe.Fragments.Patient.OrdonancePatientFragment
 import com.example.stagepfe.Fragments.Patient.RapportPatientFragment
 import com.example.stagepfe.Fragments.Patient.RendezVousPatientFragment
 import com.example.stagepfe.R
-import com.example.stagepfe.ViewPagerAdapter
+import com.example.stagepfe.Adapters.Patients.ViewPagerAdapter
+import com.example.stagepfe.Fragments.Patient.ModifyProfilePatientFragment
 import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
 
 
 class ProfilePatientActivity : AppCompatActivity() {
     var viewPager: ViewPager? = null
     var tabs: TabLayout? = null
-    var updateProfilePatient: ImageView? = null
+    var updatePatient: ImageView? = null
+    var containerUpdate: FrameLayout? = null
+    var containerprofileViwPager: LinearLayout? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +40,21 @@ class ProfilePatientActivity : AppCompatActivity() {
 
         viewPager = findViewById(R.id.View_Pager)
         tabs = findViewById(R.id.tabs_ViewPager)
-        updateProfilePatient = findViewById(R.id.update_Profile_Patient)
+        updatePatient = findViewById(R.id.update_Profile_Patient)
+        containerUpdate = findViewById(R.id.container_update_profile_patient)
+        containerprofileViwPager = findViewById(R.id.container_update_first)
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+        updatePatient!!.setOnClickListener{
+
+            containerprofileViwPager!!.visibility = GONE
+            containerUpdate!!.visibility = VISIBLE
+
+            var update = ModifyProfilePatientFragment()
+            supportFragmentManager.beginTransaction().replace(R.id.UpdateProfilDoctorContainer, update)
+                .commit()
+        }
 
 
 ////////////////////////////////////////View Pager//////////////////////////////////////////////////
@@ -60,9 +70,7 @@ class ProfilePatientActivity : AppCompatActivity() {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-        updateProfilePatient!!.setOnClickListener{
 
-        }
 
     }
 
