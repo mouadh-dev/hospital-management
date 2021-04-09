@@ -37,11 +37,6 @@
     </LinearLayout>
 
 
-
-
-
-
-
     <LinearLayout
         android:id="@+id/profilDoctorLayoutContainer"
             android:layout_width="match_parent"
