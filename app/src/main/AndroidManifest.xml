@@ -13,25 +13,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".Activity.Patients.BottomBarActivity"></activity>
+        <activity android:name=".Activity.Doctors.ShowInfoPatientForDoctorActivity"></activity>
+        <activity android:name=".Activity.Patients.BottomBarActivity" />
         <activity android:name=".Activity.Patients.ProfilePatientActivity" />
         <activity android:name=".Patient.Activity.MessagePatientActivity" />
         <activity android:name=".Patient.Activity.NotificationPatientActivity" />
         <activity android:name=".Patient.Activity.ReclamationPatientActivity" />
-        <activity
-            android:name=".Patient.Activity.AccountPatientActivity"
+        <activity android:name=".Patient.Activity.AccountPatientActivity"
             android:label="@string/title_activity_account_patient" />
         <activity android:name=".Activity.Doctors.DoctorProfilActivity" />
+        <activity android:name=".Activity.Authentication.ContainerFragmentPasswordActivity" />
+        <activity android:name=".Activity.Authentication.AuthenticationFragmentContainerActivity" />
 
 
-
-            <activity android:name=".Activity.Authentication.ContainerFragmentPasswordActivity"/>
-                <activity android:name=".Activity.Authentication.AuthenticationFragmentContainerActivity"/>
-
-        <activity android:name=".Activity.Doctors.AccountDoctorActivity"/>
-        <activity android:name=".MainPageActivity">
-
-                <intent-filter>
+            <activity android:name=".Activity.Doctors.AccountDoctorActivity"/>
+                <activity android:name=".MainPageActivity">
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />

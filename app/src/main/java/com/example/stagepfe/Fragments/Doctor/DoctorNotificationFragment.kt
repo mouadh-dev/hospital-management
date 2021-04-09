@@ -20,7 +20,16 @@ class DoctorNotificationFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         var view= inflater.inflate(R.layout.fragment_doctor_notification, container, false)
+
+
+        initView(view)
+        return view
+    }
+
+    private fun initView(view: View) {
         listviewNoti =view.findViewById<ListView>(R.id.listNotificationDocteur)
+
+
         listNoti.add(ModelNotification("Un patient a annulé son rendez vous ",R.drawable.date))
         listNoti.add(ModelNotification("Nouvelle annonce aujourd'hui ",R.drawable.date))
         listNoti.add(ModelNotification("Un patient a rapporté son rendez vous ",R.drawable.date))
@@ -30,12 +39,8 @@ class DoctorNotificationFragment : Fragment() {
         listNoti.add(ModelNotification("Un patient a rapporté son rendez vous ",R.drawable.date))
         listNoti.add(ModelNotification("Un patient a rapporté son rendez vous ",R.drawable.date))
         listNoti.add(ModelNotification("Un patient a rapporté son rendez vous ",R.drawable.date))
-        listviewNoti!!.adapter = MyAdapterNotificationDoctor(requireContext(), R.layout.notification_doctor_list, listNoti)
-        initView(view)
-        return view
-    }
 
-    private fun initView(view: View) {
+        listviewNoti!!.adapter = MyAdapterNotificationDoctor(requireContext(), R.layout.notification_doctor_list, listNoti)
 
     }
 }

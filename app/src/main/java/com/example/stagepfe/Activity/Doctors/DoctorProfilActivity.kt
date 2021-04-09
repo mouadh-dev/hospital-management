@@ -1,5 +1,6 @@
 package com.example.stagepfe.Activity.Doctors
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -41,14 +42,11 @@ class DoctorProfilActivity : AppCompatActivity() {
             profilDoctorLayout!!.visibility = View.GONE
             updateProfilDoctorLayout!!.visibility = View.VISIBLE
 
-            var UpdateDoctorProfil = DoctorProfileUpdateFragment()
-            supportFragmentManager.beginTransaction().replace(R.id.UpdateprofilDoctorLayoutContainer, UpdateDoctorProfil)
-                .commit()
+            var intent = Intent(this, ShowInfoPatientForDoctorActivity::class.java)
+            startActivity(intent)
+            finish()
 
         }
-
-
-
         var adapter = ViewPagerAdapter(supportFragmentManager)
         adapter.addFragment(ProfilDoctorMyRdvFragment(), "Mes Rendez-vous ")
         adapter.addFragment(ProfilDoctorMyPatientFragment(), " Mes patients ")
