@@ -5,14 +5,10 @@
     android:layout_height="match_parent"
     tools:context=".Fragments.Patient.RendezVousPatientFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Fragment Rendez Vous"
-        android:textSize="50dp"
-        android:textColor="@color/black"
-        android:gravity="center"
-        />
+   <ListView
+       android:id="@+id/List_RDV"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       />
 
 </FrameLayout>

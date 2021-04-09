@@ -12,4 +12,6 @@
     <color name="bluetitle">#00A8FF</color>
     <color name="transparent">#ffffff00</color>
     <color name="gray_specific">#C4C4C4</color>
+    <color name ="red">#FFE90000</color>
+    <color name="green">#21E900</color>
 </resources>
