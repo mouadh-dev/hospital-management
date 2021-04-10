@@ -41,8 +41,8 @@ class ProfilePatientActivity : AppCompatActivity() {
         viewPager = findViewById(R.id.View_Pager)
         tabs = findViewById(R.id.tabs_ViewPager)
         updatePatient = findViewById(R.id.update_Profile_Patient)
-        containerUpdate = findViewById(R.id.container_update_profile_patient)
-        containerprofileViwPager = findViewById(R.id.container_update_first)
+        containerUpdate = findViewById(R.id.Container_UpdateAll)
+        containerprofileViwPager = findViewById(R.id.Container_ViewPager)
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -63,11 +63,11 @@ class ProfilePatientActivity : AppCompatActivity() {
 //////////////////////////////////////////////////////////////////////////////////////////////////
         updatePatient!!.setOnClickListener{
 
-            containerprofileViwPager!!.visibility = GONE
             containerUpdate!!.visibility = VISIBLE
+            containerprofileViwPager!!.visibility = GONE
 
             var update = ModifyProfilePatientFragment()
-            supportFragmentManager.beginTransaction().replace(R.id.UpdateProfilDoctorContainer, update)
+            supportFragmentManager.beginTransaction().replace(R.id.Container_UpdateAll, update)
                 .commit()
         }
 

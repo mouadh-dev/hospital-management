@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.stagepfe.Fragments.Authentication.ConnexionFragment
-import com.example.stagepfe.Activity.Patients.BottomBarActivity
+import com.example.stagepfe.Activity.Patients.BottomBarPatientActivity
 import com.example.stagepfe.R
 import com.google.firebase.auth.FirebaseAuth
 
@@ -26,7 +26,7 @@ class AuthenticationFragmentContainerActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         if(FirebaseAuth.getInstance().currentUser!=null){
-            startActivity(Intent(this, BottomBarActivity::class.java))
+            startActivity(Intent(this, BottomBarPatientActivity::class.java))
         }
     }
 

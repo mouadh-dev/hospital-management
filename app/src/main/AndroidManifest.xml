@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity android:name=".Activity.Doctors.ShowInfoPatientForDoctorActivity"></activity>
-        <activity android:name=".Activity.Patients.BottomBarActivity" />
+        <activity android:name=".Activity.Patients.BottomBarPatientActivity" />
         <activity android:name=".Activity.Patients.ProfilePatientActivity" />
         <activity android:name=".Patient.Activity.MessagePatientActivity" />
         <activity android:name=".Patient.Activity.NotificationPatientActivity" />

@@ -24,14 +24,15 @@
 
 
         <LinearLayout
-            android:id="@+id/container_update_profile_patient"
+            android:id="@+id/Container_UpdateAll"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            android:orientation="horizontal" />
 
 
         <LinearLayout
-            android:id="@+id/container_update_first"
+            android:id="@+id/Container_ViewPager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"

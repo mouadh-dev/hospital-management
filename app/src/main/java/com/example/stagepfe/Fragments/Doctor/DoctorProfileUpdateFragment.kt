@@ -52,16 +52,7 @@ class DoctorProfileUpdateFragment : Fragment() {
         initView(view)
         return  view
 
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
 
-        adresseProfilDoctorET!!.setOnClickListener {
-            Log.d("Debug:", checkPermission().toString())
-            Log.d("Debug:", isLocationEnabled(requireContext()).toString())
-            RequestPermission()
-//            fusedLocationProviderClient.lastLocation.addOnSuccessListener{location: Location? ->
-//                 textView.text = location?.latitude.toString() + "," + location?.longitude.toString()
-            getLastLocation()
-        }
 
     }
 
@@ -76,6 +67,19 @@ class DoctorProfileUpdateFragment : Fragment() {
 
         adresseProfilDoctorET!!.isFocusable = false
         dateNaissProfilDoctorET!!.isFocusable = false
+
+
+
+               fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
+
+        adresseProfilDoctorET!!.setOnClickListener {
+            Log.d("Debug:", checkPermission().toString())
+            Log.d("Debug:", isLocationEnabled(requireContext()).toString())
+            RequestPermission()
+//            fusedLocationProviderClient.lastLocation.addOnSuccessListener{location: Location? ->
+//                 textView.text = location?.latitude.toString() + "," + location?.longitude.toString()
+            getLastLocation()
+        }
 
         saveProfilButton!!.setOnClickListener {
             if (firstNameProfilDoctorET!!.text.isEmpty() || secondNameProfilDoctorET!!.text.isEmpty()
@@ -154,8 +158,7 @@ class DoctorProfileUpdateFragment : Fragment() {
         ///////////////////////////////////////////////////////////////////////////////////////////////////
 
         //*****************************************calender***********************************************
-        val date =
-            DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth -> // TODO Auto-generated method stub
+        val date = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth -> // TODO Auto-generated method stub
                 myProfilDoctorCalendar[Calendar.YEAR] = year
                 myProfilDoctorCalendar[Calendar.MONTH] = monthOfYear
                 myProfilDoctorCalendar[Calendar.DAY_OF_MONTH] = dayOfMonth
@@ -348,6 +351,8 @@ class DoctorProfileUpdateFragment : Fragment() {
             }
         }
     }
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
 }

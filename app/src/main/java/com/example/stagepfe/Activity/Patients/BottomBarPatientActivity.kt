@@ -20,7 +20,7 @@ import com.example.stagepfe.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 
-class BottomBarActivity : AppCompatActivity() {
+class BottomBarPatientActivity : AppCompatActivity() {
     var listview: ListView? = null
     var list = mutableListOf<Model>()
     var search: ImageView? = null
