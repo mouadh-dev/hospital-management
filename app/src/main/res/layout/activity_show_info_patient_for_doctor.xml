@@ -17,30 +17,79 @@
             android:layout_height="200dp"
             android:src="@drawable/patientprofilepicture" />
 
+
         <FrameLayout
             android:id="@+id/UpdateProfilDoctorContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+
             <!--add ordonnance -->
 
 
-        <LinearLayout
-            android:id="@+id/UpdateprofilDoctorLayoutContainer"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"
-            >
-
-
-        </LinearLayout>
 
 
 
+            <com.sothree.slidinguppanel.SlidingUpPanelLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:sothree="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/sliding_layout_ordonnance"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="bottom"
+                sothree:umanoDragView="@+id/dragView"
+                sothree:umanoOverlay="true"
+                sothree:umanoPanelHeight="200dp"
+                sothree:umanoParallaxOffset="100dp"
+                sothree:umanoScrollableView="@+id/list"
+                sothree:umanoShadowHeight="4dp"
+                android:visibility="gone"
+                >
+
+                <!-- MAIN CONTENT -->
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    >
+
+
+                </FrameLayout>
+
+                <!-- SLIDING LAYOUT -->
+                <LinearLayout
+                    android:id="@+id/dragView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#ffffff"
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/DownIC"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/down_ic"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="25dp"
+                            android:layout_marginRight="10dp"/>
 
 
 
-            <!--profilPatient -->
+                </LinearLayout>
+            </com.sothree.slidinguppanel.SlidingUpPanelLayout>
+
+
+
+
+
+
+
+
+            <!--show info Patient -->
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -93,5 +142,19 @@
         </LinearLayout>
         </FrameLayout>
     </LinearLayout>
+    <!--Float Button -->
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/float_button_ordonnance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/blue"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="80dp"
+        app:fab_size="normal"
+        android:elevation="10dp"
+        android:src="@drawable/whitesearch"
+        />
 </RelativeLayout>
