@@ -16,7 +16,7 @@ import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.entite.UserItem
 
 
-class FragmentPatientInscription : Fragment() {
+class PatientInscriptionFragment : Fragment() {
 
     private var returnButton: Button? = null
     var maladiPatient: EditText? = null

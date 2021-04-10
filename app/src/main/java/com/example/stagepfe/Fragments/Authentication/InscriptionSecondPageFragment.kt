@@ -95,7 +95,7 @@ class InscriptionSecondPageFragment : Fragment() {
 
 
         buttonReturn!!.setOnClickListener {
-            var firstPage = FragmentInscriptionFirstPage()
+            var firstPage = InscriptionFirstPageFragment()
             requireFragmentManager().beginTransaction()
                 .replace(R.id.ContainerFragmentLayout, firstPage)
                 .commit()

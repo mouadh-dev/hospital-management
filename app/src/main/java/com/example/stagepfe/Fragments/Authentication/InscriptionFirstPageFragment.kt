@@ -18,7 +18,7 @@ import com.example.stagepfe.entite.UserItem
 import com.example.stagepfe.R
 
 
-class FragmentInscriptionFirstPage : Fragment() {
+class InscriptionFirstPageFragment : Fragment() {
 
     private var buttonReturn: Button? = null
     lateinit var buttonNext: Button

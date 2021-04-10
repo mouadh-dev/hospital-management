@@ -19,7 +19,7 @@ import com.example.stagepfe.Activity.Authentication.AuthenticationFragmentContai
 import com.example.stagepfe.R
 
 
-class FragmentNewPassword : Fragment() {
+class NewPasswordFragment : Fragment() {
 
     private var finishButton: Button? = null
     private var newPassword: EditText? = null

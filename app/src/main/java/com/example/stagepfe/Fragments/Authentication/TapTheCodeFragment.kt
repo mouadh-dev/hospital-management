@@ -12,7 +12,7 @@ import android.widget.ImageView
 import com.example.stagepfe.R
 
 
-class FragmentTapTheCode : Fragment() {
+class TapTheCodeFragment : Fragment() {
 
     var secondIconBack: ImageView? = null
     var nextButtonCode: Button? = null
@@ -49,7 +49,7 @@ class FragmentTapTheCode : Fragment() {
                      dialog.dismiss()
                  }
                  } else {
-                var NewPasswordPage = FragmentNewPassword()
+                var NewPasswordPage = NewPasswordFragment()
                 requireFragmentManager().beginTransaction()!!
                     .replace(R.id.ContainerForgotPassword, NewPasswordPage)!!.commit()
              }

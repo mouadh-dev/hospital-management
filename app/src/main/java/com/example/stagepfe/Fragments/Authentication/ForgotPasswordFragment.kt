@@ -49,7 +49,7 @@ class ForgotPasswordFragment : Fragment() {
                     dialog.dismiss()
                 }
             } else {
-                var TapTheCode = FragmentTapTheCode()
+                var TapTheCode = TapTheCodeFragment()
                 requireFragmentManager().beginTransaction()!!
                     .replace(R.id.ContainerForgotPassword, TapTheCode)!!.commit()
             }

@@ -55,7 +55,7 @@ import com.google.firebase.auth.FirebaseAuth
         passwordConnectET = view.findViewById<EditText>(R.id.Password_Connexion)
 
         inscriptionButton!!.setOnClickListener {
-            var FirstInscriptionFr = FragmentInscriptionFirstPage()
+            var FirstInscriptionFr = InscriptionFirstPageFragment()
             requireFragmentManager().beginTransaction().replace(R.id.ContainerFragmentLayout, FirstInscriptionFr).commit()
         }
         forgotPassWord!!.setOnClickListener {
