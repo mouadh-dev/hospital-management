@@ -94,7 +94,7 @@ class InscriptionFirstPageFragment : Fragment() {
                 user.confirmpassword= confirmPass!!.text.toString()
                 bundle.putParcelable("datafirstpage", user)
                 secondPage.arguments=bundle
-                println("mouadh "+ user.toString())
+//                println("mouadh "+ user.toString())
                 requireFragmentManager().beginTransaction()
                     .replace(R.id.ContainerFragmentLayout, secondPage).commit()
 

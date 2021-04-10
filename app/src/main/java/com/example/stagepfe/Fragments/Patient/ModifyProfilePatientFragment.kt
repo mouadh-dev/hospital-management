@@ -21,8 +21,13 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.core.app.ActivityCompat
 import com.example.stagepfe.Activity.Patients.BottomBarPatientActivity
+import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.R
+import com.example.stagepfe.entite.UserItem
 import com.google.android.gms.location.*
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -34,6 +39,7 @@ class ModifyProfilePatientFragment : Fragment() {
     private var dateNaissProfilPatientET: EditText? = null
     private var telephoneProfilPatientET: EditText? = null
     private var saveButtonPatient: Button? = null
+
 
 
     val patientCalendar = Calendar.getInstance()
@@ -81,6 +87,24 @@ class ModifyProfilePatientFragment : Fragment() {
                     dialog.dismiss()
                 }
             } else {
+//var test: FirebaseUser = FirebaseAuth.getInstance().currentUser
+//                if (test != null) {
+//                    // User is signed in
+//
+//                    var user: UserItem = UserItem()
+//                var userDao = UserDao()
+//                user.nom = firstNameProfilPatientET!!.text.toString()
+//                user.prenom = lastNameProfilPatientET!!.text.toString()
+//                user.adresse = adresseProfilPatientET!!.text.toString()
+//                user.datenaiss = dateNaissProfilPatientET!!.text.toString()
+//                user.phonenumber = telephoneProfilPatientET!!.text.toString()
+//
+//
+//                } else {
+//                    // No user is signed in
+//                }
+//
+
                 var v = View.inflate(
                     requireContext(),
                     R.layout.fragment_dialog,

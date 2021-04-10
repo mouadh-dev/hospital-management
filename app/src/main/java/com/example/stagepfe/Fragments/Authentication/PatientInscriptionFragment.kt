@@ -149,7 +149,7 @@ class PatientInscriptionFragment : Fragment() {
 
                 println("mouadh" + user.toString())
 
-                userDao.insertUser(user)
+                //userDao.insertUser(user)
 
 /////////////////////////////////////////Progress dialog////////////////////////////////////////////
 
