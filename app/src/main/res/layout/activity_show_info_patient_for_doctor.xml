@@ -77,7 +77,6 @@
                             android:layout_marginRight="10dp"/>
 
 
-
                 </LinearLayout>
             </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 
