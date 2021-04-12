@@ -14,20 +14,17 @@ import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.app.ActivityCompat
+import androidx.fragment.app.Fragment
 import com.example.stagepfe.Activity.Patients.BottomBarPatientActivity
-import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.R
-import com.example.stagepfe.entite.UserItem
 import com.google.android.gms.location.*
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.ktx.Firebase
+import np.com.susanthapa.curved_bottom_navigation.BottomNavItemView.Companion.TAG
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -58,6 +55,17 @@ class ModifyProfilePatientFragment : Fragment() {
         return  view
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val user = FirebaseAuth.getInstance().currentUser
+//        if (user != null) {
+//            Log.d(TAG, "onCreate: " + user.displayName)
+//            if (user.displayName != null) {
+//                firstNameProfilPatientET!!.setText(user.displayName)
+//            }
+//        }
+    }
+
     private fun initView(view: View) {
         firstNameProfilPatientET = view.findViewById(R.id.FirstNameProfilPatient)
         lastNameProfilPatientET = view.findViewById(R.id.LastNameProfilPatient)
@@ -68,6 +76,9 @@ class ModifyProfilePatientFragment : Fragment() {
 
         adresseProfilPatientET!!.isFocusable = false
         dateNaissProfilPatientET!!.isFocusable = false
+
+
+
 
 ///////////////////////////////////////////Button save//////////////////////////////////////////////
         saveButtonPatient!!.setOnClickListener {
@@ -87,23 +98,17 @@ class ModifyProfilePatientFragment : Fragment() {
                     dialog.dismiss()
                 }
             } else {
-//var test: FirebaseUser = FirebaseAuth.getInstance().currentUser
-//                if (test != null) {
-//                    // User is signed in
-//
-//                    var user: UserItem = UserItem()
+
+
+
+//                var user: UserItem = UserItem()
 //                var userDao = UserDao()
 //                user.nom = firstNameProfilPatientET!!.text.toString()
 //                user.prenom = lastNameProfilPatientET!!.text.toString()
 //                user.adresse = adresseProfilPatientET!!.text.toString()
 //                user.datenaiss = dateNaissProfilPatientET!!.text.toString()
 //                user.phonenumber = telephoneProfilPatientET!!.text.toString()
-//
-//
-//                } else {
-//                    // No user is signed in
-//                }
-//
+
 
                 var v = View.inflate(
                     requireContext(),
@@ -229,7 +234,12 @@ fun getLastLocation() {
                     NewLocationData()
                 } else {
                     Log.d("Debug:", "Your Location:" + location.longitude)
-                    adresseProfilPatientET!!.setText(getCityName(location.latitude, location.longitude))
+                    adresseProfilPatientET!!.setText(
+                        getCityName(
+                            location.latitude,
+                            location.longitude
+                        )
+                    )
                 }
             }
         } else {

@@ -23,11 +23,11 @@ class AuthenticationFragmentContainerActivity : AppCompatActivity() {
 
     }
 
-//    override fun onResume() {
-//        super.onResume()
-//        if(FirebaseAuth.getInstance().currentUser!=null){
-//            startActivity(Intent(this, BottomBarPatientActivity::class.java))
-//        }
-//    }
+    override fun onResume() {
+        super.onResume()
+        if(FirebaseAuth.getInstance().currentUser!=null){
+            startActivity(Intent(this, BottomBarPatientActivity::class.java))
+        }
+    }
 
 }
