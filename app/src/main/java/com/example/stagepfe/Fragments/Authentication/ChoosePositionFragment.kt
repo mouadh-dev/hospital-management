@@ -188,7 +188,7 @@ class ChoosePositionFragment : Fragment() {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private fun navigatetoConnexionLabo() {
-        if (matricule!!.text.isEmpty()) {
+        if (matricule!!.text.isEmpty() || cin!!.text.isEmpty()) {
             var v = View.inflate(requireContext(), R.layout.fragment_dialog, null)
             var builder = AlertDialog.Builder(requireContext())
             builder.setView(v)
@@ -298,7 +298,7 @@ class ChoosePositionFragment : Fragment() {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private fun navigatetoConnexionPharmacien() {
-        if (matricule!!.text.isEmpty()) {
+        if (matricule!!.text.isEmpty() || cin!!.text.isEmpty()) {
             var v = View.inflate(requireContext(), R.layout.fragment_dialog, null)
             var builder = AlertDialog.Builder(requireContext())
 

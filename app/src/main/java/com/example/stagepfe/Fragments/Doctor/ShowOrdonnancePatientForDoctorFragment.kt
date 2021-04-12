@@ -32,6 +32,10 @@ class ShowOrdonnancePatientForDoctorFragment : Fragment() {
     private fun initView(view: View) {
         listviewOrdoPatForDoctor =view.findViewById<ListView>(R.id.showOrdPatForDoctorr)
         listOrdoPatForDoctor.add(ModelShowOrdonnancePatForDoctor("12/12/2020","15:50"))
+        listOrdoPatForDoctor.add(ModelShowOrdonnancePatForDoctor("12/12/2020","15:50"))
+        listOrdoPatForDoctor.add(ModelShowOrdonnancePatForDoctor("12/12/2020","15:50"))
+        listOrdoPatForDoctor.add(ModelShowOrdonnancePatForDoctor("12/12/2020","15:50"))
+        listOrdoPatForDoctor.add(ModelShowOrdonnancePatForDoctor("12/12/2020","15:50"))
         listviewOrdoPatForDoctor!!.adapter = MyAdapterShowOrdonnancePatForDoc(requireContext(), R.layout.show_ordonnance_patient_to_doctor, listOrdoPatForDoctor)
 
 

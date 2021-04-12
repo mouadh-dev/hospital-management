@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.viewpager.widget.ViewPager
 import com.example.stagepfe.Adapters.Patients.ViewPagerAdapter
+import com.example.stagepfe.Fragments.Authentication.NewPasswordFragment
 import com.example.stagepfe.Fragments.Doctor.DoctorProfileUpdateFragment
 import com.example.stagepfe.Fragments.Doctor.ProfilDoctorMyPatientFragment
 import com.example.stagepfe.Fragments.Doctor.ProfilDoctorMyRdvFragment
@@ -42,9 +43,14 @@ class DoctorProfilActivity : AppCompatActivity() {
             profilDoctorLayout!!.visibility = View.GONE
             updateProfilDoctorLayout!!.visibility = View.VISIBLE
 
+
+           // var UpadteProfilDoctor = DoctorProfileUpdateFragment()
+            //supportFragmentManager.beginTransaction()
+              //   .replace(R.id.UpdateprofilDoctorLayoutContainer, UpadteProfilDoctor).commit()
+
             var intent = Intent(this, ShowInfoPatientForDoctorActivity::class.java)
-            startActivity(intent)
-            finish()
+             startActivity(intent)
+             finish()
 
         }
         var adapter = ViewPagerAdapter(supportFragmentManager)
