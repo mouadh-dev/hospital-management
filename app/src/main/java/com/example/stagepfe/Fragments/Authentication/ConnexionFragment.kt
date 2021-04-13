@@ -1,4 +1,4 @@
- package com.example.stagepfe.Fragments.Authentication
+package com.example.stagepfe.Fragments.Authentication
 
 import android.app.AlertDialog
 import android.content.Context
@@ -12,14 +12,15 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.stagepfe.Activity.Authentication.ContainerFragmentPasswordActivity
-import com.example.stagepfe.R
-import com.example.stagepfe.Dao.ResponseCallback
-import com.example.stagepfe.Dao.UserDao
-import com.example.stagepfe.entite.UserItem
+import com.example.stagepfe.Activity.Doctors.AccountDoctorActivity
 import com.example.stagepfe.Activity.Patients.BottomBarPatientActivity
+import com.example.stagepfe.Dao.UserCallback
+import com.example.stagepfe.Dao.UserDao
+import com.example.stagepfe.R
+import com.example.stagepfe.entite.UserItem
 import com.google.firebase.auth.FirebaseAuth
 
- class ConnexionFragment : Fragment(), View.OnClickListener {
+class ConnexionFragment : Fragment(), View.OnClickListener {
     private var inscriptionButton: Button? = null
     private var forgotPassWord: TextView? = null
     private var connectButton: Button? = null
@@ -29,7 +30,6 @@ import com.google.firebase.auth.FirebaseAuth
     private var mContext: Context? = null
 
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -37,7 +37,7 @@ import com.google.firebase.auth.FirebaseAuth
     ): View? {
         var view = inflater.inflate(R.layout.fragment_connexion, container, false)
         init(view)
-        mContext= requireContext()
+        mContext = requireContext()
         return view
     }
 
@@ -56,7 +56,8 @@ import com.google.firebase.auth.FirebaseAuth
 
         inscriptionButton!!.setOnClickListener {
             var FirstInscriptionFr = InscriptionFirstPageFragment()
-            requireFragmentManager().beginTransaction().replace(R.id.ContainerFragmentLayout, FirstInscriptionFr).commit()
+            requireFragmentManager().beginTransaction()
+                .replace(R.id.ContainerFragmentLayout, FirstInscriptionFr).commit()
         }
         forgotPassWord!!.setOnClickListener {
             requireActivity().run {
@@ -68,7 +69,9 @@ import com.google.firebase.auth.FirebaseAuth
         ////////////////////////////////////////////////////////////////////////////////
         connectButton!!.setOnClickListener {
 
-            if (mailConnexionET!!.text.toString().isEmpty() || passwordConnectET!!.text.toString().isEmpty()){
+            if (mailConnexionET!!.text.toString().isEmpty() || passwordConnectET!!.text.toString()
+                    .isEmpty()
+            ) {
                 var v = View.inflate(
                     requireContext(),
                     R.layout.fragment_dialog,
@@ -87,7 +90,7 @@ import com.google.firebase.auth.FirebaseAuth
                     .setOnClickListener {
                         dialog.dismiss()
                     }
-            }else{
+            } else {
 
                 var userDao = UserDao()
 
@@ -105,55 +108,67 @@ import com.google.firebase.auth.FirebaseAuth
                 progressdialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
                 progressdialog.setCancelable(false)
                 userDao.signIn(requireActivity(),
-                    UserItem(mail = mailConnexionET!!.text.toString(),password = passwordConnectET!!.text.toString()),
-                    object : ResponseCallback {
-
-
-
-                    override fun success() {
+                    UserItem(
+                        mail = mailConnexionET!!.text.toString(), password = passwordConnectET!!.text.toString()),
+                    object : UserCallback {
+                        override fun onSuccess(userItem: UserItem) {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+                            if (userItem.role!!.equals("patient")){
+                                var v = View.inflate(
+                                mContext,
+                                R.layout.fragment_dialog,
+                                null
+                            )
 
+                            progressdialog.dismiss()
+                            requireActivity().run {
+                                startActivity(Intent(this, BottomBarPatientActivity::class.java))
+                                finish() // If activity no more needed in back stack
+                            }
+
+                        }else if (userItem.role!!.equals("Médecin")){
+                                var v = View.inflate(
+                                    mContext,
+                                    R.layout.fragment_dialog,
+                                    null
+                                )
+
+                                progressdialog.dismiss()
+                                requireActivity().run {
+                                    startActivity(Intent(this, AccountDoctorActivity::class.java))
+                                    finish() // If activity no more needed in back stack
+                                }
+
+                            }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+                    }
 
-                        var v = View.inflate(
-                            mContext,
-                            R.layout.fragment_dialog,
-                            null
-                        )
 
-                        progressdialog.dismiss()
-                        requireActivity().run {
-                            startActivity(Intent(this, BottomBarPatientActivity::class.java))
-                            finish() // If activity no more needed in back stack
+                        override fun failure() {
+                            progressdialog.dismiss()
+                            var v = View.inflate(
+                                mContext,
+                                R.layout.fragment_dialog,
+                                null
+                            )
+                            var builder = AlertDialog.Builder(requireContext())
+                            builder.setView(v)
+
+                            var dialog = builder.create()
+                            dialog.show()
+                            dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+                            dialog.findViewById<TextView>(R.id.TitleDialog)
+                                .setText("Email ou adresse n'est pas correcte")
+                            dialog.findViewById<TextView>(R.id.msgdialog).visibility = View.GONE
+                            dialog.findViewById<Button>(R.id.btn_confirm)
+                                .setOnClickListener {
+                                    dialog.dismiss()
+                                }
                         }
 
-                    }
-
-                    override fun failure() {
-                        progressdialog.dismiss()
-                        var v = View.inflate(
-                            mContext,
-                            R.layout.fragment_dialog,
-                            null
-                        )
-                        var builder = AlertDialog.Builder(requireContext())
-                        builder.setView(v)
-
-                        var dialog = builder.create()
-                        dialog.show()
-                        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-                        dialog.findViewById<TextView>(R.id.TitleDialog)
-                            .setText("Email ou adresse n'est pas correcte")
-                        dialog.findViewById<TextView>(R.id.msgdialog).visibility = View.GONE
-                        dialog.findViewById<Button>(R.id.btn_confirm)
-                            .setOnClickListener {
-                                dialog.dismiss()
-                            }
-                    }
-
-                })
+                    })
             }
 
         }

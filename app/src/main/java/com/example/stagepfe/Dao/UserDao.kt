@@ -2,10 +2,7 @@ package com.example.stagepfe.Dao
 
 import android.app.Activity
 import android.content.ContentValues.TAG
-import android.content.Intent
 import android.util.Log
-import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
 import com.example.stagepfe.Activity.Patients.BottomBarPatientActivity
 import com.example.stagepfe.entite.UserItem
 import com.example.stagepfe.util.BaseConstant
@@ -58,7 +55,7 @@ class UserDao : IGestionUser {
             })
     }
 
-    fun signIn(activity: Activity, userItem: UserItem, responseCallback: ResponseCallback){
+    fun signIn(activity: Activity, userItem: UserItem, userCallback: UserCallback){
         mAuth.signInWithEmailAndPassword(userItem.mail, userItem.password)
             .addOnCompleteListener(activity) { task ->
                 if (task.isSuccessful) {
@@ -67,29 +64,36 @@ class UserDao : IGestionUser {
                     Log.d(TAG, "signInWithEmail:success")
                     val user = mAuth.currentUser
                     var registredId = user.uid
-                    var jLoginDatabase = FirebaseDatabase.getInstance().getReference().child("users").child(registredId)
-                    jLoginDatabase.addValueEventListener(object : ValueEventListener{
-                        override fun onDataChange(snapshot: DataSnapshot) {
-                            var userRole = snapshot.child("role").getValue().toString()
-                            responseCallback.success()
-
-
-                        }
-
-                        override fun onCancelled(error: DatabaseError) {
-                            Log.w(TAG, "signInWithEmail:failure", task.exception)
-                            responseCallback.failure()
-                        }
-
-                    })
+                   getUserByUid(mAuth.currentUser.uid,userCallback)
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "signInWithEmail:failure", task.exception)
 
-                    responseCallback.failure()
+                    userCallback.failure()
                 }
             }
 
+    }
+
+    private fun getUserByUid(uid: String, responseCallback: UserCallback) {
+        var jLoginDatabase = FirebaseDatabase.getInstance().reference.child("users").child(uid)
+        jLoginDatabase.addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val userItem = dataSnapshot.value
+                // dans java : dataSnapShot.getValue(UserItem.java)
+
+              //  var userRole = snapshot.child("role").getValue().toString()
+                responseCallback.onSuccess(UserItem as UserItem)
+
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.w(TAG, "signInWithEmail:failure", error.toException())
+                responseCallback.failure()
+            }
+
+        })
     }
 
     fun retrieveUSerByid(id: String){
