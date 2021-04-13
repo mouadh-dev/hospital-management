@@ -114,7 +114,7 @@ class ConnexionFragment : Fragment(), View.OnClickListener {
                         override fun onSuccess(userItem: UserItem) {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-                            if (userItem.role!!.equals("patient")){
+                            if (userItem.role!!.contains("Patient") && userItem.role!!.size==1){
                                 var v = View.inflate(
                                 mContext,
                                 R.layout.fragment_dialog,
@@ -127,7 +127,7 @@ class ConnexionFragment : Fragment(), View.OnClickListener {
                                 finish() // If activity no more needed in back stack
                             }
 
-                        }else if (userItem.role!!.equals("Médecin")){
+                        }else if (userItem.role!!.containsAll(listOf("Médecin","Patient")) ){
                                 var v = View.inflate(
                                     mContext,
                                     R.layout.fragment_dialog,

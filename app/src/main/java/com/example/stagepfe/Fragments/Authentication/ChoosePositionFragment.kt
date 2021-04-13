@@ -212,7 +212,7 @@ class ChoosePositionFragment : Fragment() {
             if (role == "Labo") {
                 var mRole = ArrayList<String>()
                 mRole.add(spinner!!.selectedItem.toString())
-                mRole.add("patient")
+                mRole.add("Patient")
                 user.role = mRole
             }
             user.matricule = matricule!!.text.toString()
@@ -323,7 +323,7 @@ class ChoosePositionFragment : Fragment() {
             if (role == "Pharmacien") {
                 var mRole = ArrayList<String>()
                 mRole.add(spinner!!.selectedItem.toString())
-                mRole.add("patient")
+                mRole.add("Patient")
                 user.role = mRole
             }
             user.matricule = matricule!!.text.toString()
@@ -477,7 +477,7 @@ class ChoosePositionFragment : Fragment() {
             if (role == "Médecin") {
                 var mRole = ArrayList<String>()
                 mRole.add(spinner!!.selectedItem.toString())
-                mRole.add("patient")
+                mRole.add("Patient")
                 user.role = mRole
             }
             user.matricule = matricule!!.text.toString()

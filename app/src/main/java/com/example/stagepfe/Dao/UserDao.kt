@@ -79,11 +79,13 @@ class UserDao : IGestionUser {
         var jLoginDatabase = FirebaseDatabase.getInstance().reference.child("users").child(uid)
         jLoginDatabase.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val userItem = dataSnapshot.value
+                val userItem = dataSnapshot.getValue(UserItem::class.java)
                 // dans java : dataSnapShot.getValue(UserItem.java)
 
               //  var userRole = snapshot.child("role").getValue().toString()
-                responseCallback.onSuccess(UserItem as UserItem)
+                if (userItem != null) {
+                    responseCallback.onSuccess(userItem)
+                }
 
 
             }
