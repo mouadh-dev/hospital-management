@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.example.stagepfe.Adapters.Patients.ViewPagerAdapter
+import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.Fragments.Patient.ModifyProfilePatientFragment
 import com.example.stagepfe.Fragments.Patient.OrdonancePatientFragment
@@ -32,6 +33,7 @@ class ProfilePatientActivity : AppCompatActivity() {
     var namePatient: TextView? = null
     var numbrePatient: TextView? = null
     var birthPAtient: TextView? = null
+
 
 
 
@@ -67,7 +69,20 @@ class ProfilePatientActivity : AppCompatActivity() {
         birthPAtient = findViewById<TextView>(R.id.Birth_Patient)
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
+        var userDao = UserDao()
+        userDao.retrieveDataUser(this,
+            UserItem(),
+            object : UserCallback {
+                override fun onSuccess(userItem: UserItem) {
+                    namePatient!!.text = userItem.nom + " " + userItem.prenom
+                    numbrePatient!!.text = userItem.phonenumber
+                    birthPAtient!!.text = userItem.datenaiss
+                }
 
+                override fun failure() {
+                }
+
+            })
 
 
 ////////////////////////////////////////View Pager//////////////////////////////////////////////////

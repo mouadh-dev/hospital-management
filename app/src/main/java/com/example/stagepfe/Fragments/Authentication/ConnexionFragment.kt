@@ -92,7 +92,7 @@ class ConnexionFragment : Fragment(), View.OnClickListener {
                     }
             } else {
 
-                var userDao = UserDao()
+                    var userDao = UserDao()
 
 
                 var v = View.inflate(

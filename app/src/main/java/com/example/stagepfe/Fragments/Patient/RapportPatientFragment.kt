@@ -33,6 +33,7 @@ var listRapportPatient: ListView? = null
 
     private fun initView(view: View) {
         listRapportPatient = view.findViewById(R.id.List_Rapport)
+
         list.add(ModelRapportPatient("DR Foulen", "11/04/2020","11:00"))
         list.add(ModelRapportPatient("DR Foulen", "11/04/2020","11:00"))
         list.add(ModelRapportPatient("DR Foulen", "11/04/2020","11:00"))

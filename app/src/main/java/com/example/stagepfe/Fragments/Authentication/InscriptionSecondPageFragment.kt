@@ -165,6 +165,7 @@ class InscriptionSecondPageFragment : Fragment() {
                 myCalendar[Calendar.MONTH] = monthOfYear
                 myCalendar[Calendar.DAY_OF_MONTH] = dayOfMonth
                 updateLabel()
+
             }
         dateNaiss!!.setOnClickListener( object : View.OnClickListener {
             override fun onClick(v: View?) {

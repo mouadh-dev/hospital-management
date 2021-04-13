@@ -14,7 +14,10 @@ import com.example.stagepfe.Fragments.Doctor.DoctorNotificationFragment
 import com.example.stagepfe.Fragments.Doctor.DoctorReclamationFragment
 import com.example.stagepfe.Models.Doctors.ModelPatientList
 import com.example.stagepfe.Adapters.Doctor.MyAdapterListPatientForDoctors
+import com.example.stagepfe.Dao.UserCallback
+import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.R
+import com.example.stagepfe.entite.UserItem
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 

@@ -80,9 +80,6 @@ class UserDao : IGestionUser {
         jLoginDatabase.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val userItem = dataSnapshot.getValue(UserItem::class.java)
-                // dans java : dataSnapShot.getValue(UserItem.java)
-
-              //  var userRole = snapshot.child("role").getValue().toString()
                 if (userItem != null) {
                     responseCallback.onSuccess(userItem)
                 }
@@ -98,18 +95,22 @@ class UserDao : IGestionUser {
         })
     }
 
-    fun retrieveUSerByid(id: String){
-        myRef.child(id).addListenerForSingleValueEvent(object : ValueEventListener {
+    fun retrieveDataUser(activity: Activity, userItem: UserItem, userCallback: UserCallback){
+
+        myRef.addValueEventListener(object : ValueEventListener   {
             override fun onDataChange(snapshot: DataSnapshot) {
+                val user = mAuth.currentUser
 
-                var userItem: UserItem? = snapshot.getValue(UserItem::class.java)
-
+                getUserByUid(mAuth.currentUser.uid,userCallback)
             }
 
             override fun onCancelled(error: DatabaseError) {
+                userCallback.failure()
             }
+
         })
     }
+
 
 
 //    fun retrieveUser(){
