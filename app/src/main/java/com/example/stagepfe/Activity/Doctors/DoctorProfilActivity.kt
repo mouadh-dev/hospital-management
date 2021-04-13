@@ -72,13 +72,13 @@ class DoctorProfilActivity : AppCompatActivity() {
             updateProfilDoctorLayout!!.visibility = View.VISIBLE
 
 
-           // var UpadteProfilDoctor = DoctorProfileUpdateFragment()
-            //supportFragmentManager.beginTransaction()
-              //   .replace(R.id.UpdateprofilDoctorLayoutContainer, UpadteProfilDoctor).commit()
+            var UpadteProfilDoctor = DoctorProfileUpdateFragment()
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.UpdateprofilDoctorLayoutContainer, UpadteProfilDoctor).commit()
 
-            var intent = Intent(this, ShowInfoPatientForDoctorActivity::class.java)
-             startActivity(intent)
-             finish()
+            // var intent = Intent(this, ShowInfoPatientForDoctorActivity::class.java)
+            //  startActivity(intent)
+            //  finish()
 
         }
         var adapter = ViewPagerAdapter(supportFragmentManager)
