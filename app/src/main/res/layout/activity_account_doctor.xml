@@ -68,7 +68,7 @@
                 android:layout_height="51dp"
                 android:layout_marginLeft="25dp"
                 android:layout_marginTop="25dp"
-                android:src="@drawable/doctor_ic" />
+                android:src="@drawable/doctor_ic"                />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -81,7 +81,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Bonjour"
+                    android:text="bonjour"
                     android:textColor="@color/white"
                     android:textSize="25dp" />
 
@@ -93,16 +93,18 @@
                     android:textColor="@color/white"
                     android:textSize="30dp" />
             </LinearLayout>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-            <ImageView
-                android:layout_width="48sp"
-                android:layout_height="48sp"
-                android:layout_marginLeft="100dp"
-
-                android:layout_marginTop="45dp"
-                android:src="@drawable/reglage"
-
-                />
+    <ImageView
+        android:layout_width="48sp"
+        android:layout_height="48sp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="30dp"
+        android:src="@drawable/reglage" />
+</RelativeLayout>
         </LinearLayout>
 
         <!--    Notification-->

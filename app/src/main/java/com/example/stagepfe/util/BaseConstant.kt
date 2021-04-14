@@ -5,6 +5,8 @@ class BaseConstant {
 
 
     val userRef: String = "users"
+    val appointments: String = "Appointment"
+    
 
 
     companion object {

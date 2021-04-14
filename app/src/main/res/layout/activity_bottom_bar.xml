@@ -92,16 +92,19 @@
                 android:textColor="@color/white"
                 android:textSize="30dp" />
         </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
         <ImageView
             android:layout_width="48sp"
             android:layout_height="48sp"
-            android:layout_marginLeft="100dp"
-
-            android:layout_marginTop="45dp"
             android:src="@drawable/reglage"
-
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="30dp"
             />
+        </RelativeLayout>
     </LinearLayout>
 
 <!--    Notification-->

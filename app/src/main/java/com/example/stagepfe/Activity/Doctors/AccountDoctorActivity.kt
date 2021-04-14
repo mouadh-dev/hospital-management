@@ -17,6 +17,7 @@ import com.example.stagepfe.Adapters.Doctor.MyAdapterListPatientForDoctors
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.R
+import com.example.stagepfe.entite.Appointment
 import com.example.stagepfe.entite.UserItem
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
@@ -33,9 +34,14 @@ class AccountDoctorActivity : AppCompatActivity() {
     var homeDoctor: LinearLayout? = null
     var messageDoctor: LinearLayout? = null
     var notificationDoctor: LinearLayout? = null
+
+//    var reglage: ImageView? = null
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_account_doctor)
+
         listviewPatientForDoctor = findViewById<ListView>(R.id.listPatientForDocteur)
         listPatientForDoctor.add(ModelPatientList("Mohamed Rouahi",R.drawable.logopatient))
         listPatientForDoctor.add(ModelPatientList("Mohamed Rouahi",R.drawable.logopatient))
@@ -54,6 +60,14 @@ class AccountDoctorActivity : AppCompatActivity() {
         search = findViewById(R.id.float_button)
         slidPanel = findViewById(R.id.sliding_layout)
         downImg = findViewById(R.id.DownIC)
+
+//        reglage = findViewById(R.id.reglage_ic)
+//        reglage!!.setOnClickListener {
+//           var userDao = UserDao()
+//            var appointment: Appointment = Appointment()
+//            appointment.date = "test"
+//            userDao.insertappointment(appointment)
+//        }
 
         navigationDoctor = findViewById(R.id.bottom_nav_Doctor)
         titlelTV = findViewById(R.id.TitleActivityBottomnavigation)

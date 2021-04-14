@@ -33,12 +33,23 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
 
     }
+    repositories {
+        mavenCentral()
+        maven { url "https://jitpack.io" }
+    }
+    allprojects {
+        repositories {
+            maven { url 'https://jitpack.io' }
+        }
+    }
     kotlinOptions {
         jvmTarget = '1.8'
     }
 }
 
 dependencies {
+    compile 'com.github.badoualy:datepicker-timeline:c6dcd05737'
+    implementation 'com.github.mybringback22:HorizontalCalendarView-Android-:0.1.0'
     //noinspection GradleCompatible
     implementation 'com.android.support:design:27.1.1'
 
@@ -74,9 +85,7 @@ dependencies {
 
 
 
-    repositories {
-        mavenCentral()
-    }
+
     compile 'com.sothree.slidinguppanel:library:3.4.0'
     implementation 'com.sothree.slidinguppanel:library:3.4.0'
     implementation 'np.com.susanthapa.curved_bottom_navigation:curved_bottom_navigation:0.6.3'

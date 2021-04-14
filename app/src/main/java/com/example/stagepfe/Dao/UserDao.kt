@@ -3,7 +3,7 @@ package com.example.stagepfe.Dao
 import android.app.Activity
 import android.content.ContentValues.TAG
 import android.util.Log
-import com.example.stagepfe.Activity.Patients.BottomBarPatientActivity
+import com.example.stagepfe.entite.Appointment
 import com.example.stagepfe.entite.UserItem
 import com.example.stagepfe.util.BaseConstant
 import com.google.android.gms.tasks.OnCompleteListener
@@ -18,6 +18,10 @@ class UserDao : IGestionUser {
     private val database = FirebaseDatabase.getInstance()
     private val myRef = database.getReference(BaseConstant.instance().userRef)
     private val mAuth = FirebaseAuth.getInstance();
+    private val myRefappoinment = database.getReference(BaseConstant.instance().appointments)
+
+
+////////////////////////////////////////////////Insert user/////////////////////////////////////////
 
 
     override fun insertUser(userItem: UserItem) {
@@ -26,6 +30,7 @@ class UserDao : IGestionUser {
         myRef.child(userItem.id!!).setValue(userItem)
     }
 
+/////////////////////////////////////////////////sign up////////////////////////////////////////////
 
 
     fun signUpUser(activity: Activity, userItem: UserItem, responseCallback: ResponseCallback) {
@@ -55,6 +60,9 @@ class UserDao : IGestionUser {
             })
     }
 
+///////////////////////////////////////////Sign in//////////////////////////////////////////////////
+
+
     fun signIn(activity: Activity, userItem: UserItem, userCallback: UserCallback){
         mAuth.signInWithEmailAndPassword(userItem.mail, userItem.password)
             .addOnCompleteListener(activity) { task ->
@@ -64,7 +72,7 @@ class UserDao : IGestionUser {
                     Log.d(TAG, "signInWithEmail:success")
                     val user = mAuth.currentUser
                     var registredId = user.uid
-                   getUserByUid(mAuth.currentUser.uid,userCallback)
+                   getUserByUid(registredId,userCallback)
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "signInWithEmail:failure", task.exception)
@@ -74,6 +82,10 @@ class UserDao : IGestionUser {
             }
 
     }
+
+
+///////////////////////////////////////////////get user by id///////////////////////////////////////
+
 
     private fun getUserByUid(uid: String, responseCallback: UserCallback) {
         var jLoginDatabase = FirebaseDatabase.getInstance().reference.child("users").child(uid)
@@ -95,6 +107,12 @@ class UserDao : IGestionUser {
         })
     }
 
+
+
+
+//////////////////////////////////////////////////retrieve data user///////////////////////////////
+
+
     fun retrieveDataUser(activity: Activity, userItem: UserItem, userCallback: UserCallback){
 
         myRef.addValueEventListener(object : ValueEventListener   {
@@ -112,26 +130,17 @@ class UserDao : IGestionUser {
     }
 
 
+//////////////////////////////////////////Insert appointment/////////////////////////////////////////
 
-//    fun retrieveUser(){
-//        myRef.addChildEventListener(object : ChildEventListener {
-//            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-//            }
-//
-//            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-//            }
-//
-//            override fun onChildRemoved(snapshot: DataSnapshot) {
-//            }
-//
-//            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
-//            }
-//
-//            override fun onCancelled(error: DatabaseError) {
-//            }
-//
-//        })
-//    }
+    override fun insertappointment(appointment: Appointment) {
+
+        appointment.id = myRefappoinment.push().key.toString()
+        myRefappoinment.child(appointment.id!!).setValue(appointment)
+
+    }
+
+
+
 
 
 }

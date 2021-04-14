@@ -514,18 +514,21 @@ class ChoosePositionFragment : Fragment() {
                 cin!!.visibility = View.VISIBLE
                 matricule!!.visibility = View.VISIBLE
                 ellipse!!.visibility = View.VISIBLE
+                buttonNext!!.text = "Suivant"
             }
             "Patient" -> {
                 buttonNext!!.setBackgroundResource(R.drawable.button_style_smaller)
                 cin!!.visibility = View.VISIBLE
                 matricule!!.visibility = View.GONE
                 ellipse!!.visibility = View.VISIBLE
+                buttonNext!!.text = "Suivant"
             }
             else -> {
                 buttonNext!!.setBackgroundResource(R.drawable.button_style_smaller)
                 cin!!.visibility = View.VISIBLE
                 matricule!!.visibility = View.VISIBLE
                 ellipse!!.visibility = View.GONE
+                buttonNext!!.text = "Terminer"
             }
         }
 
