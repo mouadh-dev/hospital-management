@@ -14,12 +14,12 @@ class MyAdapterAddRDV(var mCtx: Context, var resources:Int, var items:List<Model
         var layoutInflater: LayoutInflater = LayoutInflater.from(mCtx)
         var view: View = layoutInflater.inflate(resources, null)
 
-        var duratioRDVDoctorTV: TextView = view.findViewById(R.id.Duration_Appointment)
+        var durationRDVDoctorTV: TextView = view.findViewById(R.id.Duration_Appointment)
         var checkAddRDV: TextView = view.findViewById(R.id.check_RDV_taken)
 
         var mItem: ModelAddRDV = items[position]
 
-        duratioRDVDoctorTV.text = mItem.durationRDV
+        durationRDVDoctorTV.text = mItem.durationRDV
         checkAddRDV.text = mItem.checkRDV
 
 

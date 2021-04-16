@@ -35,7 +35,7 @@ class CheckRDVActivity : AppCompatActivity() {
         listDoctorAddRdv.add(ModelAddRDV("13:00-13:30","Reserveé"))
         listDoctorAddRdv.add(ModelAddRDV("13:30-14:00","Reserveé"))
 
-        listviewDoctorAddRdv!!.adapter = MyAdapterAddRDV(this,R.layout.list_rdv_for_doctor,listDoctorAddRdv)
+        listviewDoctorAddRdv!!.adapter = MyAdapterAddRDV(this,R.layout.list_add_rdv_doctor,listDoctorAddRdv)
 
     }
 }
