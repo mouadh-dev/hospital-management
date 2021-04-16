@@ -18,7 +18,7 @@ import com.example.stagepfe.R
 class ProfilDoctorMyRdvFragment : Fragment() {
     var listviewDoctorProfilRdv: ListView? = null
     var listDoctorProfilRdv = mutableListOf<ModelRdvDocteur>()
-    var addRDV: ImageView? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,39 +32,21 @@ class ProfilDoctorMyRdvFragment : Fragment() {
     }
 
     private fun initView(view: View) {
-        addRDV = view.findViewById(R.id.add_RDV_Button)
+
         listviewDoctorProfilRdv = view.findViewById<ListView>(R.id.listRdvDocteur)
 
-        addRDV!!.setOnClickListener {
 
-            var v = View.inflate(context, R.layout.dialog_add_rdv_doctor, null)
-            var builder = AlertDialog.Builder(requireContext())
-            builder.setView(v)
 
-            var dialog = builder.create()
-            dialog.show()
-            dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-            dialog.findViewById<Button>(R.id.btn_confirm_rdv).setOnClickListener {
-                    dialog.dismiss()
-                    listDoctorProfilRdv.add(
-                        ModelRdvDocteur(
-                            "12/12/2021",
-                            "12:35",
-                            "Terminer",
-                            R.color.red))
-                    listviewDoctorProfilRdv!!.adapter = MyAdapterRdvDoctor(requireContext(), R.layout.list_rdv_for_doctor, listDoctorProfilRdv)
-                }
-//
-        }
-//        listviewDoctorProfilRdv =view.findViewById<ListView>(R.id.listRdvDocteur)
-//        listDoctorProfilRdv.add(ModelRdvDocteur("12/12/2021","12:35","Terminer",R.color.green))
-//        listDoctorProfilRdv.add(ModelRdvDocteur("12/12/2021","12:35","Pas encore",R.color.red))
-//        listDoctorProfilRdv.add(ModelRdvDocteur("12/12/2021","12:35","Terminer",R.color.green))
-//        listDoctorProfilRdv.add(ModelRdvDocteur("12/12/2021","12:35","Pas encore",R.color.red))
-//        listDoctorProfilRdv.add(ModelRdvDocteur("12/12/2021","12:35","Terminer",R.color.green))
-//        listDoctorProfilRdv.add(ModelRdvDocteur("12/12/2021","12:35","Pas encore",R.color.red))
 
-//        listviewDoctorProfilRdv!!.adapter = MyAdapterRdvDoctor(requireContext(),R.layout.list_rdv_for_doctor,listDoctorProfilRdv)
+        listviewDoctorProfilRdv =view.findViewById<ListView>(R.id.listRdvDocteur)
+        listDoctorProfilRdv.add(ModelRdvDocteur("12/12/2021","12:35","Terminer",R.color.green))
+        listDoctorProfilRdv.add(ModelRdvDocteur("12/12/2021","12:35","Pas encore",R.color.red))
+        listDoctorProfilRdv.add(ModelRdvDocteur("12/12/2021","12:35","Terminer",R.color.green))
+        listDoctorProfilRdv.add(ModelRdvDocteur("12/12/2021","12:35","Pas encore",R.color.red))
+        listDoctorProfilRdv.add(ModelRdvDocteur("12/12/2021","12:35","Terminer",R.color.green))
+        listDoctorProfilRdv.add(ModelRdvDocteur("12/12/2021","12:35","Pas encore",R.color.red))
+
+        listviewDoctorProfilRdv!!.adapter = MyAdapterRdvDoctor(requireContext(),R.layout.list_rdv_for_doctor,listDoctorProfilRdv)
 
 
     }
