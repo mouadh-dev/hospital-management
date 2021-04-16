@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardBackgroundColor="#B4FFFFFF"
+android:layout_margin="20dp"
+
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        android:background="@drawable/background_list"
+        android:orientation="horizontal"
+        android:backgroundTint="#9BD8F8">
+
+
+        <TextView
+            android:id="@+id/Duration_Appointment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="08:00-09:00"
+            android:textColor="#6D6565"
+            android:textSize="20dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="30dp"
+            />
+        <TextView
+            android:id="@+id/check_RDV_taken"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reserveé"
+            android:textColor="#00A8FF"
+            android:textSize="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="30dp"
+            />
+
+
+    </RelativeLayout>
+</RelativeLayout>

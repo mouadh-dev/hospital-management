@@ -11,4 +11,16 @@
         android:layout_height="match_parent"
         android:layout_weight="1"></ListView>
 
+    <ImageView
+        android:id="@+id/add_RDV_Button"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/add_cercle"
+        android:layout_gravity="right|bottom"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:elevation="@dimen/activity_horizontal_margin"
+        />
+
+
 </FrameLayout>

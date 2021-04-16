@@ -51,19 +51,14 @@
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:cardBackgroundColor="#360D6495">
+            app:cardBackgroundColor="#1B0D6495">
         <com.github.badoualy.datepicker.DatePickerTimeline
             android:id="@+id/time_line"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            app:mti_primaryColor="@color/blue"
-            app:mti_ringLblDateSelectedColor="@color/blue"
-            app:mti_lblDateSelectedColor="@color/white"
-            app:mti_bgLblDateSelectedColor="@color/blue"
-            app:mti_tabSelectedColor="@color/black"
-            app:mti_lblLabelColor="@color/gray_specific"
-            app:mti_bgLblTodayColor="@color/blue"
+            app:mti_primaryColor="@color/white"
+
 
             />
         </androidx.cardview.widget.CardView>

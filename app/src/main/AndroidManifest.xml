@@ -13,16 +13,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".test"></activity>
+        <activity android:name=".Activity.Doctors.CheckRDVActivity"></activity>
         <activity android:name=".Activity.Doctors.ShowInfoPatientForDoctorActivity" />
         <activity android:name=".Activity.Patients.BottomBarPatientActivity" />
         <activity android:name=".Activity.Patients.ProfilePatientActivity" />
-        <activity android:name=".Patient.Activity.MessagePatientActivity" />
-        <activity android:name=".Patient.Activity.NotificationPatientActivity" />
-        <activity android:name=".Patient.Activity.ReclamationPatientActivity" />
-        <activity
-            android:name=".Patient.Activity.AccountPatientActivity"
-            android:label="@string/title_activity_account_patient" />
         <activity android:name=".Activity.Doctors.DoctorProfilActivity" />
         <activity android:name=".Activity.Authentication.ContainerFragmentPasswordActivity" />
         <activity android:name=".Activity.Authentication.AuthenticationFragmentContainerActivity" />

@@ -85,14 +85,16 @@ class InscriptionFirstPageFragment : Fragment() {
 
                 var secondPage =
                     InscriptionSecondPageFragment()
+
                 var bundle= Bundle()
-                var user: UserItem = UserItem()
+                var user = UserItem()
                 user.nom=firstName!!.text.trim().toString()
                 user.prenom=lastName!!.text.trim().toString()
                 user.mail=mail!!.text.trim().toString()
                 user.password=password!!.text.toString()
                 user.confirmpassword= confirmPass!!.text.toString()
                 bundle.putParcelable("datafirstpage", user)
+
                 secondPage.arguments=bundle
                 requireFragmentManager().beginTransaction()
                     .replace(R.id.ContainerFragmentLayout, secondPage).commit()

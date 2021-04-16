@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.stagepfe.Activity.Doctors.AccountDoctorActivity
 import com.example.stagepfe.Fragments.Authentication.ConnexionFragment
 import com.example.stagepfe.Activity.Patients.BottomBarPatientActivity
+import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.R
 import com.google.firebase.auth.FirebaseAuth
 
@@ -26,7 +27,9 @@ class AuthenticationFragmentContainerActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        var userDao = UserDao()
         if(FirebaseAuth.getInstance().currentUser!=null){
+//            if(userDao.)
             startActivity(Intent(this, AccountDoctorActivity::class.java))
         }
     }
