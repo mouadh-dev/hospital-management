@@ -2,6 +2,7 @@ package com.example.stagepfe.Fragments.Doctor
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +18,7 @@ import com.github.badoualy.datepicker.MonthView.DateLabelAdapter
 import java.util.*
 
 
-class AccueilDoctorFragment : Fragment() {
+open class AccueilDoctorFragment : Fragment() {
     var timeLine: DatePickerTimeline? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,18 +35,19 @@ class AccueilDoctorFragment : Fragment() {
     private fun initView(view: View) {
         timeLine = view.findViewById(R.id.time_line)
 
-//        timeLine!!.setFirstVisibleDate(2016, Calendar.JULY, 19)
-//        timeLine!!.setLastVisibleDate(2020, Calendar.JULY, 19)
+
+
         timeLine!!.setDateLabelAdapter(DateLabelAdapter { calendar, index ->
             Integer.toString(calendar[Calendar.MONTH] + 1) + "/" + calendar[Calendar.YEAR] % 2000
         })
-        timeLine!!.setOnDateSelectedListener(OnDateSelectedListener { year, month, day, index ->
 
-        })
 
         timeLine!!.setOnDateSelectedListener { year, month, day, index ->
+
             requireActivity().run {
-                startActivity(Intent(this, CheckRDVActivity::class.java))
+               var intent = Intent(this, CheckRDVActivity::class.java)
+                intent.putExtra("key", "Veuillez choisir l'heure du rendez-vous pour $day,$month,$year")
+                startActivity(intent)
                 finish() // If activity no more needed in back stack
             }
         }

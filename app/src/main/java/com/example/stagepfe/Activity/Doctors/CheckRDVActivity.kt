@@ -1,17 +1,24 @@
 package com.example.stagepfe.Activity.Doctors
 
+import android.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.ListView
+import android.widget.TextView
 import com.example.stagepfe.Adapters.Doctor.MyAdapterAddRDV
+import com.example.stagepfe.Fragments.Doctor.AccueilDoctorFragment
 import com.example.stagepfe.Models.Doctors.ModelAddRDV
-import com.example.stagepfe.Models.Doctors.ModelRdvDocteur
 import com.example.stagepfe.R
+import com.github.badoualy.datepicker.DatePickerTimeline
 
 
 class CheckRDVActivity : AppCompatActivity() {
     var listviewDoctorAddRdv: ListView? = null
     var listDoctorAddRdv = mutableListOf<ModelAddRDV>()
+    var pickerDate:TextView? = null
+    var secondTimeLine: DatePickerTimeline? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,6 +29,25 @@ class CheckRDVActivity : AppCompatActivity() {
 
     private fun initView() {
        listviewDoctorAddRdv = findViewById<ListView>(R.id.list_add_RDV)
+        pickerDate = findViewById(R.id.pick_date_TV)
+        secondTimeLine = findViewById(R.id.second_time_line)
+
+        pickerDate!!.text = intent.getStringExtra("key")
+        secondTimeLine!!.setOnDateSelectedListener { year, month, day, index ->
+            var v = View.inflate(this, R.layout.progress_dialog, null)
+            var builder = AlertDialog.Builder(this)
+            builder.setView(v)
+
+            var progressdialog = builder.create()
+            progressdialog.show()
+            progressdialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+            progressdialog.setCancelable(false)
+
+            secondTimeLine!!.onDateSelectedListener
+            pickerDate!!.text = "Veuillez choisir l'heure du rendez-vous pour $day/$month/$year"
+            progressdialog.dismiss()
+        }
+
         listDoctorAddRdv.add(ModelAddRDV("08:00-08:30","Reserveé"))
         listDoctorAddRdv.add(ModelAddRDV("08:30-09:00","Reserveé"))
         listDoctorAddRdv.add(ModelAddRDV("09:00-09:30","Reserveé"))

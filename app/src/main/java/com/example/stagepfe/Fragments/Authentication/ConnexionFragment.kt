@@ -95,11 +95,7 @@ class ConnexionFragment : Fragment(), View.OnClickListener {
                     var userDao = UserDao()
 
 
-                var v = View.inflate(
-                    mContext,
-                    R.layout.progress_dialog,
-                    null
-                )
+                var v = View.inflate(mContext, R.layout.progress_dialog, null)
                 var builder = AlertDialog.Builder(mContext)
                 builder.setView(v)
 

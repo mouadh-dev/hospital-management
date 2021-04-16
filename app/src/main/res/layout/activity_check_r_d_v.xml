@@ -60,13 +60,24 @@
             app:cardBackgroundColor="#1B0D6495"
             android:layout_marginTop="20dp">
             <com.github.badoualy.datepicker.DatePickerTimeline
-                android:id="@+id/time_line"
+                android:id="@+id/second_time_line"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 app:mti_primaryColor="@color/white"
                 />
         </androidx.cardview.widget.CardView>
+        <TextView
+            android:id="@+id/pick_date_TV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Veuillez choisir l'heure du rendez-vous pour ---------"
+            android:textColor="#434343"
+            android:textSize="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginHorizontal="20dp"
+            />
+
 
         <ListView
             android:id="@+id/list_add_RDV"
