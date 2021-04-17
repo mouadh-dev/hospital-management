@@ -46,7 +46,7 @@ open class AccueilDoctorFragment : Fragment() {
 
             requireActivity().run {
                var intent = Intent(this, CheckRDVActivity::class.java)
-                intent.putExtra("key", "Veuillez choisir l'heure du rendez-vous pour $day,$month,$year")
+//                intent.putExtra("key", "Veuillez choisir l'heure du rendez-vous pour $day,$month,$year")
                 startActivity(intent)
                 finish() // If activity no more needed in back stack
             }

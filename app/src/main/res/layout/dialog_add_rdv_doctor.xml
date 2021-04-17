@@ -8,70 +8,129 @@
     <LinearLayout
         android:id="@+id/ll"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="400dp"
         android:layout_marginTop="50dp"
         android:layout_marginBottom="50dp"
-        android:orientation="vertical"
         android:background="@drawable/bg_linear_layout"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/bluetitle"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/name_Doctor_Time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:layout_marginLeft="20dp"
+                android:text="mouadh laabidi"
+                android:textSize="25dp"
+
+                />
+
+            <TextView
+                android:id="@+id/speciality_Doctor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:text="mouadh laabidi"
+                android:textSize="20dp"
+                android:layout_marginBottom="10dp"/>
+        </LinearLayout>
+
         <RelativeLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-android:layout_gravity="center"
-            android:layout_marginTop="20dp">
+            android:layout_marginHorizontal="16dp"
+            android:background="#FFF179">
 
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginLeft="200dp"
-                android:layout_marginTop="12dp"
-                android:src="@drawable/triangle" />
+            <TextView
+                android:id="@+id/daterdvunchangable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:layout_marginLeft="20dp"
+                android:text="Date rendez-vous"
+                android:textColor="@color/black"
+                android:textSize="15dp" />
 
-        <Spinner
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:background="@drawable/spinner_style"
-            android:visibility="visible"
-            android:entries="@array/User_Position"
-            android:popupBackground="@color/white"
-            android:spinnerMode="dialog"
-            android:theme="@style/Spinner"
-            />
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/daterdv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/daterdvunchangable"
+                android:layout_marginVertical="10dp"
+                android:layout_marginLeft="20dp"
+                android:text="mouadh laabidi"
+                android:textColor="@color/black"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/timerdv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="10:00"
+                android:textSize="30dp"
+                android:layout_alignParentRight="true"
+                android:textColor="@color/black"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="15dp"
+                />
+
+        </RelativeLayout>
+
         <EditText
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:background="@drawable/edit_text_style"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
-            android:visibility="visible"/>
+            android:background="@drawable/edit_text_style"
+            android:hint="Nom et prénom"
+            android:inputType="textPersonName"
+            android:lines="1"
+            android:paddingLeft="20dp"
+            android:textColorHint="@color/gray"
+            android:visibility="visible" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/edit_text_style"
+            android:hint="Numéro de téléphone"
+            android:inputType="phone"
+            android:lines="1"
+            android:paddingLeft="20dp"
+            android:textColorHint="@color/gray"
+            android:visibility="visible" />
 
     </LinearLayout>
-
-
-
 
 
     <Button
         android:id="@+id/btn_confirm_rdv"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        android:text="Confirmer"
+        android:layout_marginHorizontal="16dp"
         android:background="@drawable/button_style"
+        android:text="Confirmer"
         android:textColor="@color/white"
-        android:textAllCaps="false"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
         android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@id/ll"
-        app:layout_constraintEnd_toEndOf="@id/ll"
-        app:layout_constraintTop_toBottomOf="@id/ll"
         app:layout_constraintBottom_toBottomOf="@id/ll"
-        />
-
+        app:layout_constraintEnd_toEndOf="@id/ll"
+        app:layout_constraintStart_toStartOf="@id/ll"
+        app:layout_constraintTop_toBottomOf="@id/ll" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
