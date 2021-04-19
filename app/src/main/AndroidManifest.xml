@@ -13,7 +13,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".Activity.Doctors.CheckRDVActivity"></activity>
+        <activity android:name=".Activity.AgentLabo.ProfilAgentLaboActivity"></activity>
+        <activity android:name=".Activity.AgentLabo.AccueilAgentLaboActivity" />
+        <activity android:name=".Activity.Pharmacien.ProfilPharmacienActivity" />
+        <activity android:name=".Activity.Pharmacien.AccueilPharmacienActivity" />
+        <activity android:name=".Activity.Doctors.CheckRDVActivity" />
         <activity android:name=".Activity.Doctors.ShowInfoPatientForDoctorActivity" />
         <activity android:name=".Activity.Patients.BottomBarPatientActivity" />
         <activity android:name=".Activity.Patients.ProfilePatientActivity" />
