@@ -1,4 +1,10 @@
 package com.example.stagepfe.Models.Doctors
 
-class ModelAddRDV(val durationRDV:String, var checkRDV:String)  {
-    }
+import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.example.stagepfe.R
+
+class ModelAddRDV(var dispo:Int,var time:String,var reserv:String) {
+}

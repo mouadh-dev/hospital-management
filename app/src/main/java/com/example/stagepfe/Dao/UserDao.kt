@@ -17,7 +17,7 @@ class UserDao : IGestionUser {
 
     private val database = FirebaseDatabase.getInstance()
     private val myRef = database.getReference(BaseConstant.instance().userRef)
-    private val mAuth = FirebaseAuth.getInstance();
+    private val mAuth = FirebaseAuth.getInstance()
     private val myRefappoinment = database.getReference(BaseConstant.instance().appointments)
 
 
@@ -28,6 +28,7 @@ class UserDao : IGestionUser {
 
         userItem.id = myRef.push().key.toString()
         myRef.child(userItem.id!!).setValue(userItem)
+
     }
 
 /////////////////////////////////////////////////sign up////////////////////////////////////////////
@@ -63,7 +64,7 @@ class UserDao : IGestionUser {
 ///////////////////////////////////////////Sign in//////////////////////////////////////////////////
 
 
-    fun signIn(activity: Activity, userItem: UserItem, userCallback: UserCallback){
+    fun signIn(activity: Activity, userItem: UserItem, userCallback: UserCallback) {
         mAuth.signInWithEmailAndPassword(userItem.mail, userItem.password)
             .addOnCompleteListener(activity) { task ->
                 if (task.isSuccessful) {
@@ -72,7 +73,7 @@ class UserDao : IGestionUser {
                     Log.d(TAG, "signInWithEmail:success")
                     val user = mAuth.currentUser
                     var registredId = user.uid
-                   getUserByUid(registredId,userCallback)
+                    getUserByUid(registredId, userCallback)
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "signInWithEmail:failure", task.exception)
@@ -88,8 +89,8 @@ class UserDao : IGestionUser {
 
 
     private fun getUserByUid(uid: String, responseCallback: UserCallback) {
-        var jLoginDatabase = FirebaseDatabase.getInstance().reference.child("users").child(uid)
-        jLoginDatabase.addValueEventListener(object : ValueEventListener{
+        var jLoginDatabase = database.reference.child("users").child(uid)
+        jLoginDatabase.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val userItem = dataSnapshot.getValue(UserItem::class.java)
                 if (userItem != null) {
@@ -108,18 +109,16 @@ class UserDao : IGestionUser {
     }
 
 
-
-
 //////////////////////////////////////////////////retrieve data user///////////////////////////////
 
 
-    fun retrieveDataUser(activity: Activity, userItem: UserItem, userCallback: UserCallback){
+    fun retrieveDataUser(activity: Activity, userItem: UserItem, userCallback: UserCallback) {
 
-        myRef.addValueEventListener(object : ValueEventListener   {
+        myRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val user = mAuth.currentUser
+//                val user = mAuth.currentUser
 
-                getUserByUid(mAuth.currentUser.uid,userCallback)
+                getUserByUid(mAuth.currentUser.uid, userCallback)
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -132,16 +131,47 @@ class UserDao : IGestionUser {
 
 //////////////////////////////////////////Insert appointment/////////////////////////////////////////
 
-    override fun insertappointment(appointment: Appointment) {
-
+    override fun insertappointment(appointment: Appointment, userItem: UserItem) {
+//        var test = myRefappoinment.push().toString()
+//        myRefappoinment.child(test)
         appointment.id = myRefappoinment.push().key.toString()
         myRefappoinment.child(appointment.id!!).setValue(appointment)
+//        var k=userItem.id.toString()
+//        var hour = HashMap<String, String>()
+//        var day = HashMap<String, HashMap<String, String>>()
+//        hour["'Open'"] = "HOUR 01"
+//        day["'DAY01'"] = hour
+//
+//        myRef.child(userItem.id!!).setValue(day)
+
+    }
+
+    //////////////////////////////////////////retrieve appointment//////////////////////////////////////
+//    fun retrieveAppointment(
+//        activity: Activity,
+//        appointment: Appointment,
+//        appointmentCallback: AppointmentCallback
+//    ) {
+        private fun getAppointment(uid: String, responseCallback: AppointmentCallback) {
+//            override fun onDataChange(snapshot: DataSnapshot) {
+
+               var appointmentdatabase = database.reference.child("id")
+                appointmentdatabase.addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        TODO("Not yet implemented")
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        TODO("Not yet implemented")
+                    }
+
+                })
 
 
+
+
+        }
     }
 
 
 
-
-
-}
