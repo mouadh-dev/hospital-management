@@ -15,8 +15,9 @@
         android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity android:name=".Activity.Administrateur.AccueilAdministrateurActivity"></activity>
         <activity android:name=".Activity.AgentLabo.ProfilAgentLaboActivity" />
+        <activity android:name=".Activity.AgentLabo.AccueilAgentLaboActivity" />
         <activity android:name=".Activity.Pharmacien.ProfilPharmacienActivity" />
-        <activity android:name=".Activity.Pharmacien.AccueilPharmacienActivity"/>
+        <activity android:name=".Activity.Pharmacien.AccueilPharmacienActivity" />
         <activity android:name=".Activity.Doctors.CheckRDVActivity" />
         <activity android:name=".Activity.Doctors.ShowInfoPatientForDoctorActivity" />
         <activity android:name=".Activity.Patients.BottomBarPatientActivity" />
@@ -25,8 +26,7 @@
         <activity android:name=".Activity.Authentication.ContainerFragmentPasswordActivity" />
         <activity android:name=".Activity.Authentication.AuthenticationFragmentContainerActivity" />
         <activity android:name=".Activity.Doctors.AccountDoctorActivity" />
-        <activity android:name=".MainPageActivity"/>
-        <activity android:name=".Activity.AgentLabo.AccueilAgentLaboActivity">
+        <activity android:name=".MainPageActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
