@@ -11,9 +11,11 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.example.stagepfe.Activity.AgentLabo.AccueilAgentLaboActivity
 import com.example.stagepfe.Activity.Authentication.ContainerFragmentPasswordActivity
 import com.example.stagepfe.Activity.Doctors.AccountDoctorActivity
 import com.example.stagepfe.Activity.Patients.BottomBarPatientActivity
+import com.example.stagepfe.Activity.Pharmacien.AccueilPharmacienActivity
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.R
@@ -136,7 +138,32 @@ class ConnexionFragment : Fragment(), View.OnClickListener {
                                     finish() // If activity no more needed in back stack
                                 }
 
+                            } else if (userItem.role!!.containsAll(listOf("Pharmacien","Patient")) ) {
+                                var v = View.inflate(
+                                    mContext,
+                                    R.layout.fragment_dialog,
+                                    null
+                                )
+
+                                progressdialog.dismiss()
+                                requireActivity().run {
+                                    startActivity(Intent(this, AccueilPharmacienActivity::class.java))
+                                    finish() // If activity no more needed in back stack
+                                }
+                            } else if (userItem.role!!.containsAll(listOf("Labo","Patient")) ) {
+                                var v = View.inflate(
+                                    mContext,
+                                    R.layout.fragment_dialog,
+                                    null
+                                )
+
+                                progressdialog.dismiss()
+                                requireActivity().run {
+                                    startActivity(Intent(this, AccueilAgentLaboActivity::class.java))
+                                    finish() // If activity no more needed in back stack
+                                }
                             }
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
                     }

@@ -13,6 +13,8 @@ import android.os.Bundle
 import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -36,6 +38,8 @@ class ModifyProfilePatientFragment : Fragment() {
     private var dateNaissProfilPatientET: EditText? = null
     private var telephoneProfilPatientET: EditText? = null
     private var saveButtonPatient: Button? = null
+    private var showNewPasswordPatientIV: ImageView? = null
+    private var newPasswordPatientET: EditText? = null
 
 
 
@@ -73,9 +77,43 @@ class ModifyProfilePatientFragment : Fragment() {
         dateNaissProfilPatientET = view.findViewById(R.id.DateNaissProfilPatient)
         telephoneProfilPatientET = view.findViewById(R.id.TelephoneProfilPatient)
         saveButtonPatient = view.findViewById(R.id.SaveProfilButtonPatient)
+        showNewPasswordPatientIV = view.findViewById(R.id.Eye_Show_newPassword_patient)
+        newPasswordPatientET = view.findViewById(R.id.NewPasswordPatient)
 
         adresseProfilPatientET!!.isFocusable = false
         dateNaissProfilPatientET!!.isFocusable = false
+
+          ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+        //*****************************************password***********************************************
+        newPasswordPatientET!!.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (newPasswordPatientET!!.length() <= 8){
+                    saveButtonPatient!!.isEnabled = false
+                    saveButtonPatient!!.setBackgroundResource(R.drawable.gray_button)
+                    newPasswordPatientET!!.error = "le mot de passe est faible "
+                }else{
+                    saveButtonPatient!!.isEnabled = true
+                    saveButtonPatient!!.setBackgroundResource(R.drawable.button_style_smaller)
+
+                }
+            }
+        })
+        showNewPasswordPatientIV!!.setOnClickListener {
+            if (newPasswordPatientET!!.getTransformationMethod()
+                    .equals(PasswordTransformationMethod.getInstance())
+            ) {
+                newPasswordPatientET!!.transformationMethod = HideReturnsTransformationMethod.getInstance()
+            } else {
+                newPasswordPatientET!!.transformationMethod = PasswordTransformationMethod.getInstance()
+            }
+        }
 
 
 
@@ -84,7 +122,7 @@ class ModifyProfilePatientFragment : Fragment() {
         saveButtonPatient!!.setOnClickListener {
             if (firstNameProfilPatientET!!.text.isEmpty() || lastNameProfilPatientET!!.text.isEmpty()
                 || adresseProfilPatientET!!.text.isEmpty() || dateNaissProfilPatientET!!.text.isEmpty()
-                || telephoneProfilPatientET!!.text.isEmpty()
+                || telephoneProfilPatientET!!.text.isEmpty()|| newPasswordPatientET!!.text.isEmpty()
             ) {
                 var v = View.inflate(requireContext(), R.layout.fragment_dialog, null)
                 var builder = AlertDialog.Builder(requireContext())

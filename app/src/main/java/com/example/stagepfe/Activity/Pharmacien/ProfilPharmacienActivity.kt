@@ -6,9 +6,12 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.example.stagepfe.Dao.UserCallback
+import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.Fragments.Doctor.DoctorProfileUpdateFragment
 import com.example.stagepfe.Fragments.Pharmacien.PharmacienProfilUpdateFragment
 import com.example.stagepfe.R
+import com.example.stagepfe.entite.UserItem
 
 class ProfilPharmacienActivity : AppCompatActivity() {
 
@@ -32,6 +35,25 @@ class ProfilPharmacienActivity : AppCompatActivity() {
         namePharmacien = findViewById(R.id.name_Pharmacien)
         phoneNumbrePharmacien= findViewById(R.id.PhoneNumber_Pharmacien)
         birthDatePharmacien = findViewById(R.id.BirthDate_Pharmacien)
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        var userDao = UserDao()
+        userDao.retrieveDataUser(this,
+            UserItem(),
+            object : UserCallback {
+                override fun onSuccess(userItem: UserItem) {
+                    namePharmacien!!.text = userItem.nom + " " + userItem.prenom
+                    phoneNumbrePharmacien!!.text = userItem.phonenumber
+                    birthDatePharmacien!!.text = userItem.datenaiss
+                }
+
+                override fun failure() {
+                }
+
+            })
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
