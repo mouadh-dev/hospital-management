@@ -43,7 +43,7 @@ class ProfilAgentLaboActivity : AppCompatActivity() {
 
                 var UpadteProfilAgent = ProfilAgentUpdateFragment()
                 supportFragmentManager.beginTransaction()
-                    .replace(R.id.UpdateprofilPharmacienLayoutContainer, UpadteProfilAgent).commit()
+                    .replace(R.id.UpdateprofilAgentLayoutContainer, UpadteProfilAgent).commit()
 
 
             }

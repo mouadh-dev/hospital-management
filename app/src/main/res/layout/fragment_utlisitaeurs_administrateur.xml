@@ -5,10 +5,26 @@
     android:layout_height="match_parent"
     tools:context=".Fragments.Administrateur.UtlisitaeursAdministrateurFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Gerer votre utilisateurs"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textSize="10dp"/>
+
+        <ListView
+            android:layout_marginTop="5dp"
+            android:id="@+id/ListUtilisateursAdministrateur"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            />
+    </LinearLayout>
 
 </FrameLayout>
