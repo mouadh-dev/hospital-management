@@ -42,6 +42,7 @@ data class UserItem constructor(
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
+        parcel.readString(),
         parcel.readString()
     ) {
     }
@@ -63,6 +64,7 @@ data class UserItem constructor(
         parcel.writeString(medicament)
         parcel.writeString(speciality)
         parcel.writeString(bio)
+        parcel.writeString(id)
     }
 
     override fun describeContents(): Int {
@@ -78,7 +80,5 @@ data class UserItem constructor(
             return arrayOfNulls(size)
         }
     }
-
-
 }
 

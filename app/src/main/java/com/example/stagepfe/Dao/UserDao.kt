@@ -18,7 +18,7 @@ class UserDao : IGestionUser {
     private val database = FirebaseDatabase.getInstance()
     private val myRef = database.getReference(BaseConstant.instance().userRef)
     private val mAuth = FirebaseAuth.getInstance()
-    private val myRefappoinment = database.getReference(BaseConstant.instance().appointments)
+//    private val myRefappoinment = database.getReference(BaseConstant.instance().appointments)
 
 
 ////////////////////////////////////////////////Insert user/////////////////////////////////////////
@@ -134,8 +134,8 @@ class UserDao : IGestionUser {
     override fun insertappointment(appointment: Appointment, userItem: UserItem) {
 //        var test = myRefappoinment.push().toString()
 //        myRefappoinment.child(test)
-        appointment.id = myRefappoinment.push().key.toString()
-        myRefappoinment.child(appointment.id!!).setValue(appointment)
+//        appointment.id = myRefappoinment.push().key.toString()
+//        myRefappoinment.child(appointment.id!!).setValue(appointment)
 //        var k=userItem.id.toString()
 //        var hour = HashMap<String, String>()
 //        var day = HashMap<String, HashMap<String, String>>()
@@ -152,25 +152,25 @@ class UserDao : IGestionUser {
 //        appointment: Appointment,
 //        appointmentCallback: AppointmentCallback
 //    ) {
-        private fun getAppointment(uid: String, responseCallback: AppointmentCallback) {
-//            override fun onDataChange(snapshot: DataSnapshot) {
-
-               var appointmentdatabase = database.reference.child("id")
-                appointmentdatabase.addValueEventListener(object : ValueEventListener {
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        TODO("Not yet implemented")
-                    }
-
-                    override fun onCancelled(error: DatabaseError) {
-                        TODO("Not yet implemented")
-                    }
-
-                })
-
-
-
-
-        }
+//        private fun getAppointment(uid: String, responseCallback: AppointmentCallback) {
+////            override fun onDataChange(snapshot: DataSnapshot) {
+//
+//               var appointmentdatabase = database.reference.child("id")
+//                appointmentdatabase.addValueEventListener(object : ValueEventListener {
+//                    override fun onDataChange(snapshot: DataSnapshot) {
+//                        TODO("Not yet implemented")
+//                    }
+//
+//                    override fun onCancelled(error: DatabaseError) {
+//                        TODO("Not yet implemented")
+//                    }
+//
+//                })
+//
+//
+//
+//
+//        }
     }
 
 
