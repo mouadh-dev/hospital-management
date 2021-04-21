@@ -13,6 +13,8 @@ import android.os.Bundle
 import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -34,7 +36,8 @@ class ProfilAgentUpdateFragment : Fragment() {
     private var adresseProfilAgentET: EditText? = null
     private var dateNaissProfilAgentET: EditText? = null
     private var telephoneProfilAgentET: EditText? = null
-    private var descriptionProfilAgentET: EditText? = null
+    private var showNewPasswordAgentIV: ImageView? = null
+    private var newPasswordAgentET: EditText? = null
     private var saveProfilAgentButton: Button? = null
 
 
@@ -62,11 +65,45 @@ class ProfilAgentUpdateFragment : Fragment() {
         adresseProfilAgentET = view.findViewById(R.id.AdresseProfilAgent)
         dateNaissProfilAgentET = view.findViewById(R.id.DateNaissProfilAgent)
         telephoneProfilAgentET = view.findViewById(R.id.TelephoneProfilAgent)
-        descriptionProfilAgentET = view.findViewById(R.id.DescriptionProfileAgent)
+        showNewPasswordAgentIV = view.findViewById(R.id.Eye_Show_newPassword_Agent)
+        newPasswordAgentET = view.findViewById(R.id.NewPasswordAgent)
         saveProfilAgentButton = view.findViewById<Button>(R.id.SaveProfilAgentButton)
 
         adresseProfilAgentET!!.isFocusable = false
         dateNaissProfilAgentET!!.isFocusable = false
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+        //*****************************************password***********************************************
+        newPasswordAgentET!!.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (newPasswordAgentET!!.length() <= 8){
+                    saveProfilAgentButton!!.isEnabled = false
+                    saveProfilAgentButton!!.setBackgroundResource(R.drawable.gray_button)
+                    newPasswordAgentET!!.error = "le mot de passe est faible "
+                }else{
+                    saveProfilAgentButton!!.isEnabled = true
+                    saveProfilAgentButton!!.setBackgroundResource(R.drawable.button_style_smaller)
+
+                }
+            }
+        })
+        showNewPasswordAgentIV!!.setOnClickListener {
+            if (newPasswordAgentET!!.getTransformationMethod()
+                    .equals(PasswordTransformationMethod.getInstance())
+            ) {
+                newPasswordAgentET!!.transformationMethod = HideReturnsTransformationMethod.getInstance()
+            } else {
+                newPasswordAgentET!!.transformationMethod = PasswordTransformationMethod.getInstance()
+            }
+        }
+
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
 
@@ -82,7 +119,7 @@ class ProfilAgentUpdateFragment : Fragment() {
         saveProfilAgentButton!!.setOnClickListener {
             if (firstNameProfilAgentET!!.text.isEmpty() || secondNameProfilAgentET!!.text.isEmpty()
                 || adresseProfilAgentET!!.text.isEmpty() || dateNaissProfilAgentET!!.text.isEmpty()
-                || descriptionProfilAgentET!!.text.isEmpty()
+                || newPasswordAgentET!!.text.isEmpty()
             ) {
                 var v = View.inflate(requireContext(), R.layout.fragment_dialog, null)
                 var builder = AlertDialog.Builder(requireContext())

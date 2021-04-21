@@ -6,9 +6,12 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.example.stagepfe.Dao.UserCallback
+import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.Fragments.AgentLabo.ProfilAgentUpdateFragment
 import com.example.stagepfe.Fragments.Pharmacien.PharmacienProfilUpdateFragment
 import com.example.stagepfe.R
+import com.example.stagepfe.entite.UserItem
 
 class ProfilAgentLaboActivity : AppCompatActivity() {
 
@@ -33,6 +36,24 @@ class ProfilAgentLaboActivity : AppCompatActivity() {
             nameAgent = findViewById(R.id.name_Agent)
             phoneNumbreAgent= findViewById(R.id.PhoneNumber_Agent)
             birthDateAgent = findViewById(R.id.BirthDate_Agent)
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        var userDao = UserDao()
+        userDao.retrieveDataUser(this,
+            UserItem(),
+            object : UserCallback {
+                override fun onSuccess(userItem: UserItem) {
+                    nameAgent!!.text = userItem.nom + " " + userItem.prenom
+                    phoneNumbreAgent!!.text = userItem.phonenumber
+                    birthDateAgent!!.text = userItem.datenaiss
+                }
+
+                override fun failure() {
+                }
+
+            })
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

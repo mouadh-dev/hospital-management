@@ -13,6 +13,8 @@ import android.os.Bundle
 import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -35,7 +37,8 @@ class PharmacienProfilUpdateFragment : Fragment() {
     private var adresseProfilPharmacienET: EditText? = null
     private var dateNaissProfilPharmacienET: EditText? = null
     private var telephoneProfilPharmacienET: EditText? = null
-    private var descriptionProfilPharmacienET: EditText? = null
+    private var showNewPasswordPharmacienIV: ImageView? = null
+    private var newPasswordPharmacienET: EditText? = null
     private var saveProfilPharmacienButton: Button? = null
 
 
@@ -61,11 +64,44 @@ class PharmacienProfilUpdateFragment : Fragment() {
         adresseProfilPharmacienET = view.findViewById(R.id.AdresseProfilPharmacien)
         dateNaissProfilPharmacienET = view.findViewById(R.id.DateNaissProfilPharmacien)
         telephoneProfilPharmacienET = view.findViewById(R.id.TelephoneProfilPharmacien)
-        descriptionProfilPharmacienET = view.findViewById(R.id.DescriptionProfilePharmacien)
+        showNewPasswordPharmacienIV = view.findViewById(R.id.Eye_Show_newPassword_Pharmacien)
+        newPasswordPharmacienET = view.findViewById(R.id.NewPasswordPharmacien)
         saveProfilPharmacienButton = view.findViewById<Button>(R.id.SaveProfilPharmacienButton)
 
         adresseProfilPharmacienET!!.isFocusable = false
         dateNaissProfilPharmacienET!!.isFocusable = false
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+        //*****************************************password***********************************************
+        newPasswordPharmacienET!!.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (newPasswordPharmacienET!!.length() <= 8){
+                    saveProfilPharmacienButton!!.isEnabled = false
+                    saveProfilPharmacienButton!!.setBackgroundResource(R.drawable.gray_button)
+                    newPasswordPharmacienET!!.error = "le mot de passe est faible "
+                }else{
+                    saveProfilPharmacienButton!!.isEnabled = true
+                    saveProfilPharmacienButton!!.setBackgroundResource(R.drawable.button_style_smaller)
+
+                }
+            }
+        })
+        showNewPasswordPharmacienIV!!.setOnClickListener {
+            if (newPasswordPharmacienET!!.getTransformationMethod()
+                    .equals(PasswordTransformationMethod.getInstance())
+            ) {
+                newPasswordPharmacienET!!.transformationMethod = HideReturnsTransformationMethod.getInstance()
+            } else {
+                newPasswordPharmacienET!!.transformationMethod = PasswordTransformationMethod.getInstance()
+            }
+        }
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
 
@@ -81,7 +117,7 @@ class PharmacienProfilUpdateFragment : Fragment() {
         saveProfilPharmacienButton!!.setOnClickListener {
             if (firstNameProfilPharmacienET!!.text.isEmpty() || secondNameProfilPharmacienET!!.text.isEmpty()
                 || adresseProfilPharmacienET!!.text.isEmpty() || dateNaissProfilPharmacienET!!.text.isEmpty()
-                || descriptionProfilPharmacienET!!.text.isEmpty()
+                || newPasswordPharmacienET!!.text.isEmpty()
             ) {
                 var v = View.inflate(requireContext(), R.layout.fragment_dialog, null)
                 var builder = AlertDialog.Builder(requireContext())

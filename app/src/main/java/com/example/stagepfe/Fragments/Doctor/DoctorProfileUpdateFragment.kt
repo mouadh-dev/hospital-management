@@ -13,6 +13,8 @@ import android.os.Bundle
 import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -32,8 +34,10 @@ class DoctorProfileUpdateFragment : Fragment() {
     private var adresseProfilDoctorET: EditText? = null
     private var dateNaissProfilDoctorET: EditText? = null
     private var telephoneProfilDoctorET: EditText? = null
-    private var descriptionProfilDoctorET: EditText? = null
+    private var newPasswordDoctorET: EditText? = null
     private var saveProfilButton: Button? = null
+    private var showNewPasswordIV: ImageView? = null
+
 
 
     val myProfilDoctorCalendar = Calendar.getInstance()
@@ -62,8 +66,9 @@ class DoctorProfileUpdateFragment : Fragment() {
         adresseProfilDoctorET = view.findViewById(R.id.AdresseProfilDoctor)
         dateNaissProfilDoctorET = view.findViewById(R.id.DateNaissProfilDoctor)
         telephoneProfilDoctorET = view.findViewById(R.id.TelephoneProfilDoctor)
-        descriptionProfilDoctorET = view.findViewById(R.id.DescriptionProfileDoctor)
+        newPasswordDoctorET = view.findViewById(R.id.NewPasswordDoctor)
         saveProfilButton = view.findViewById<Button>(R.id.SaveProfilDoctorButton)
+        showNewPasswordIV = view.findViewById(R.id.Eye_Show_newPassword)
 
         adresseProfilDoctorET!!.isFocusable = false
         dateNaissProfilDoctorET!!.isFocusable = false
@@ -84,7 +89,7 @@ class DoctorProfileUpdateFragment : Fragment() {
         saveProfilButton!!.setOnClickListener {
             if (firstNameProfilDoctorET!!.text.isEmpty() || secondNameProfilDoctorET!!.text.isEmpty()
                 || adresseProfilDoctorET!!.text.isEmpty() || dateNaissProfilDoctorET!!.text.isEmpty()
-                || descriptionProfilDoctorET!!.text.isEmpty()
+                || newPasswordDoctorET!!.text.isEmpty()
             ) {
                 var v = View.inflate(requireContext(), R.layout.fragment_dialog, null)
                 var builder = AlertDialog.Builder(requireContext())
@@ -130,6 +135,37 @@ class DoctorProfileUpdateFragment : Fragment() {
             }
 
 
+        }
+        ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+        //*****************************************password***********************************************
+        newPasswordDoctorET!!.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (newPasswordDoctorET!!.length() <= 8){
+                    saveProfilButton!!.isEnabled = false
+                    saveProfilButton!!.setBackgroundResource(R.drawable.gray_button)
+                    newPasswordDoctorET!!.error = "le mot de passe est faible "
+                }else{
+                    saveProfilButton!!.isEnabled = true
+                    saveProfilButton!!.setBackgroundResource(R.drawable.button_style_smaller)
+
+                }
+            }
+        })
+        showNewPasswordIV!!.setOnClickListener {
+            if (newPasswordDoctorET!!.getTransformationMethod()
+                    .equals(PasswordTransformationMethod.getInstance())
+            ) {
+                newPasswordDoctorET!!.transformationMethod = HideReturnsTransformationMethod.getInstance()
+            } else {
+                newPasswordDoctorET!!.transformationMethod = PasswordTransformationMethod.getInstance()
+            }
         }
         ///////////////////////////////////////////////////////////////////////////////////////////////////
 
