@@ -4,10 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.ListView
-import android.widget.TextView
+import android.widget.*
 import com.example.stagepfe.Fragments.Doctor.AccueilDoctorFragment
 import com.example.stagepfe.Fragments.Doctor.DoctorMessageFragment
 import com.example.stagepfe.Fragments.Doctor.DoctorNotificationFragment
@@ -20,9 +17,11 @@ import com.example.stagepfe.R
 import com.example.stagepfe.entite.Appointment
 import com.example.stagepfe.entite.UserItem
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.database.*
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 
 class AccountDoctorActivity : AppCompatActivity() {
+
     var listviewPatientForDoctor: ListView? = null
     var listPatientForDoctor = mutableListOf<ModelPatientList>()
     var search: ImageView? = null
@@ -34,28 +33,49 @@ class AccountDoctorActivity : AppCompatActivity() {
     var homeDoctor: LinearLayout? = null
     var messageDoctor: LinearLayout? = null
     var notificationDoctor: LinearLayout? = null
-
+    var txtSearch: AutoCompleteTextView? =null
+    lateinit var ref : DatabaseReference
 //    var reglage: ImageView? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_account_doctor)
+        ref=FirebaseDatabase.getInstance().getReference("users")
 
-        listviewPatientForDoctor = findViewById<ListView>(R.id.listPatientForDocteur)
-        listPatientForDoctor.add(ModelPatientList("Mohamed Rouahi",R.drawable.logopatient))
-        listPatientForDoctor.add(ModelPatientList("Mohamed Rouahi",R.drawable.logopatient))
-        listPatientForDoctor.add(ModelPatientList("Mohamed Rouahi",R.drawable.logopatient))
-        listPatientForDoctor.add(ModelPatientList("Mohamed Rouahi",R.drawable.logopatient))
-        listPatientForDoctor.add(ModelPatientList("Mohamed Rouahi",R.drawable.logopatient))
-        listPatientForDoctor.add(ModelPatientList("Mohamed Rouahi",R.drawable.logopatient))
-        listviewPatientForDoctor!!.adapter = MyAdapterListPatientForDoctors(this, R.layout.list_patient_for_doctor, listPatientForDoctor)
+
 
         var home = AccueilDoctorFragment()
         supportFragmentManager.beginTransaction().replace(R.id.ContainerFragmentDoctor, home).commit()
         initView()
+        populateSearch()
     }
+//////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
+    private fun populateSearch() {
+       ref.addValueEventListener(object :ValueEventListener{
+           override fun onDataChange(snapshot: DataSnapshot) {
+            if (snapshot!!.exists()){
+                listPatientForDoctor.clear()
+                ArrayList<String> patient=new ArrayList<>()
+                for (e in snapshot.children){
+                    val Users = e.getValue(users::class.java)
+                    listPatientForDoctor.add(Users!! as ModelPatientList )
+                    txtSearch!!.setAdapter(MyAdapterListPatientForDoctors)
+                }
+                ArrayAdapter adapter=new ArrayAdapter(applicationContext(),android.R.layout.list_patient_for_doctor)
+            }
+           }
 
+           override fun onCancelled(error: DatabaseError) {
+           }
+
+       })
+ref.addListenerForSingleValueEvent(eventListener)
+
+    }
+////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////
     private fun initView() {
         search = findViewById(R.id.float_button)
         slidPanel = findViewById(R.id.sliding_layout)
@@ -75,8 +95,19 @@ class AccountDoctorActivity : AppCompatActivity() {
         homeDoctor = findViewById(R.id.profilInformationDoctor)
         messageDoctor = findViewById(R.id.MessageLayoutDoctor)
         notificationDoctor = findViewById(R.id.NotificationLayoutDoctor)
+        txtSearch= findViewById(R.id.TxtSearch)
 
-        navigationDoctor!!.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { item ->
+    listviewPatientForDoctor = findViewById<ListView>(R.id.listPatientForDocteur)
+    //listPatientForDoctor.add(ModelPatientList("Mohamed Rouahi",R.drawable.logopatient))
+    //listPatientForDoctor.add(ModelPatientList("Mohamed Rouahi",R.drawable.logopatient))
+    //listPatientForDoctor.add(ModelPatientList("Mohamed Rouahi",R.drawable.logopatient))
+    //listPatientForDoctor.add(ModelPatientList("Mohamed Rouahi",R.drawable.logopatient))
+    //listPatientForDoctor.add(ModelPatientList("Mohamed Rouahi",R.drawable.logopatient))
+    //listPatientForDoctor.add(ModelPatientList("Mohamed Rouahi",R.drawable.logopatient))
+    //listviewPatientForDoctor!!.adapter = MyAdapterListPatientForDoctors(this, R.layout.list_patient_for_doctor, listPatientForDoctor)
+
+
+    navigationDoctor!!.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_reclamation -> {
                     reclamationDoctor!!.visibility = View.VISIBLE
