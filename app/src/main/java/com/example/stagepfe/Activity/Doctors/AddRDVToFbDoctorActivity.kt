@@ -3,6 +3,7 @@ package com.example.stagepfe.Activity.Doctors
 import android.content.ContentValues
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.stagepfe.Dao.UserCallback
@@ -26,6 +27,8 @@ class AddRDVToFbDoctorActivity : AppCompatActivity() {
     var hourRDV: TextView? = null
     var confirmButton: TextView? = null
     var namePatient: AutoCompleteTextView? = null
+    var phonePatient: EditText? = null
+    var numberPatient:String? = null
 
 
 
@@ -42,7 +45,7 @@ class AddRDVToFbDoctorActivity : AppCompatActivity() {
         hourRDV = findViewById<TextView>(R.id.timerdv)
         namePatient = findViewById<AutoCompleteTextView>(R.id.Name_PatientADD_RDv)
         confirmButton = findViewById<Button>(R.id.btn_confirm_rdv)
-
+        phonePatient = findViewById(R.id.phone_numbre)
 
 
 
@@ -114,15 +117,33 @@ populateSearch()
                         var nom= ds.child("nom").getValue(String::class.java)
                         var prenom= ds.child("prenom").getValue(String::class.java)
                         var role= ds.child("role").child("0").getValue(String::class.java)
+                        var number = ds.child("phonenumber").getValue(String::class.java)
 
-                        var test = "$nom $prenom"
-                        var test2 = "$role"
-                        names.add(test)
-                        names.add(test2)
-//                        names.add(p)
+
+                        var fullName = "$nom $prenom"
+
+                        numberPatient = "$number"
+                        names.add(fullName)
+
+//                        phonePatient!!.setText("$numero")
                     }
                     val adapter: ArrayAdapter<*> = ArrayAdapter<String>(this@AddRDVToFbDoctorActivity,android.R.layout.simple_list_item_1, names)
                     namePatient!!.setAdapter(adapter)
+
+                    namePatient!!.setOnItemClickListener(object: AdapterView.OnItemClickListener {
+                        override fun onItemClick(
+                            parent: AdapterView<*>?,
+                            view: View?,
+                            position: Int,
+                            id: Long
+                        ) {
+                            var selection:String = parent!!.getItemAtPosition(position).toString()
+                            phonePatient!!.setText(numberPatient)
+                        }
+
+                    })
+
+
                 }
             }
 

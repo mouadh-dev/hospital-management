@@ -20,44 +20,19 @@ class UserDao : IGestionUser {
     private val myRef = database.getReference(BaseConstant.instance().userRef)
     private val mAuth = FirebaseAuth.getInstance()
     private val ref = FirebaseDatabase.getInstance().getReference("users")
-//    private val myRefappoinment = database.getReference(BaseConstant.instance().appointments)
 
 
-////////////////////////////////////////////////get user by name////////////////////////////////////
 
-//     fun populateSearch(responseCallback: SearchCalback) {
-//        val eventListener: ValueEventListener = object : ValueEventListener {
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//                if (snapshot.exists()) {
-//                    for (ds in snapshot.children) {
-//                        val n = ds.child("name").getValue(String::class.java)
-//
-//                        responseCallback.success(n!!)
-//                    }
-//                }
-//            }
-//
-//            override fun onCancelled(error: DatabaseError) {
-//                Log.w(TAG, "signInWithEmail:failure", error.toException())
-//                responseCallback.failure()
-//            }
-//        }
-//        ref.addListenerForSingleValueEvent(eventListener)
-//    }
+
 
 ////////////////////////////////////////////////Insert user/////////////////////////////////////////
-
-
     override fun insertUser(userItem: UserItem) {
 
         userItem.id = myRef.push().key.toString()
         myRef.child(userItem.id!!).setValue(userItem)
 
     }
-
 /////////////////////////////////////////////////sign up////////////////////////////////////////////
-
-
     fun signUpUser(activity: Activity, userItem: UserItem, responseCallback: ResponseCallback) {
         mAuth.createUserWithEmailAndPassword(userItem.mail, userItem.password)
             .addOnCompleteListener(activity, object : OnCompleteListener<AuthResult?> {
@@ -84,10 +59,7 @@ class UserDao : IGestionUser {
                 }
             })
     }
-
 ///////////////////////////////////////////Sign in//////////////////////////////////////////////////
-
-
     fun signIn(activity: Activity, userItem: UserItem, userCallback: UserCallback) {
         mAuth.signInWithEmailAndPassword(userItem.mail, userItem.password)
             .addOnCompleteListener(activity) { task ->
@@ -107,11 +79,7 @@ class UserDao : IGestionUser {
             }
 
     }
-
-
 ///////////////////////////////////////////////get user by id///////////////////////////////////////
-
-
     private fun getUserByUid(uid: String, responseCallback: UserCallback) {
         var jLoginDatabase = database.reference.child("users").child(uid)
         jLoginDatabase.addValueEventListener(object : ValueEventListener {
@@ -131,11 +99,7 @@ class UserDao : IGestionUser {
 
         })
     }
-
-
-//////////////////////////////////////////////////retrieve data user///////////////////////////////
-
-
+//////////////////////////////////////////////////retrieve data user////////////////////////////////
     fun retrieveDataUser(activity: Activity, userItem: UserItem, userCallback: UserCallback) {
 
         myRef.addValueEventListener(object : ValueEventListener {
@@ -151,16 +115,8 @@ class UserDao : IGestionUser {
 
         })
     }
-
-
-//////////////////////////////////////////Insert appointment/////////////////////////////////////////
-
-    override fun insertappointment(
-        appointment: Appointment,
-        userItem: UserItem,
-        uid: String,
-        responseCallback: UserCallback
-    ) {
+//////////////////////////////////////////Insert appointment////////////////////////////////////////
+    override fun insertappointment(appointment: Appointment, userItem: UserItem, uid: String, responseCallback: UserCallback) {
         var test = database.reference.child("users").child(uid)
         test.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -195,7 +151,7 @@ class UserDao : IGestionUser {
 
     }
 
-    //////////////////////////////////////////retrieve appointment//////////////////////////////////////
+//////////////////////////////////////////retrieve appointment//////////////////////////////////////
 //    fun retrieveAppointment(
 //        activity: Activity,
 //        appointment: Appointment,
