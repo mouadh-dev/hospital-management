@@ -1,14 +1,13 @@
 package com.example.stagepfe.Activity.Patients
 
+import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.ListView
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.stagepfe.Models.Patient.Model
 import com.example.stagepfe.Adapters.Patients.MyAdapter
@@ -18,6 +17,10 @@ import com.example.stagepfe.Fragments.Patient.PatientAccountFragment
 import com.example.stagepfe.Fragments.Patient.PatientReclamationFragment
 import com.example.stagepfe.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 
 class BottomBarPatientActivity : AppCompatActivity() {
@@ -32,6 +35,7 @@ class BottomBarPatientActivity : AppCompatActivity() {
     var homeLayout: LinearLayout? = null
     var messageLayout: LinearLayout? = null
     var notificatioLayout: LinearLayout? = null
+    var txtSearchDoctor: AutoCompleteTextView? =null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bottom_bar)
@@ -66,6 +70,7 @@ class BottomBarPatientActivity : AppCompatActivity() {
         homeLayout = findViewById(R.id.profilInformationLayout)
         messageLayout = findViewById(R.id.MessageLayout)
         notificatioLayout = findViewById(R.id.NotificationLayout)
+        txtSearchDoctor= findViewById(R.id.TxtSearchDoctor)
 
 
 
@@ -143,6 +148,39 @@ class BottomBarPatientActivity : AppCompatActivity() {
             slidPanel!!.visibility = View.GONE
             search!!.visibility = View.VISIBLE
         }
+        populateSearch()
+    }
 
+    private fun populateSearch() {
+        val ref = FirebaseDatabase.getInstance().getReference("users")
+        val eventListener: ValueEventListener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    var names: ArrayList<String?> = ArrayList()
+                    for (ds in snapshot.children) {
+                        var nom = ds.child("nom").getValue(String::class.java)
+                        var prenom = ds.child("prenom").getValue(String::class.java)
+                        var role = ds.child("role").child("0").getValue(String::class.java)
+
+                        var test = "$nom $prenom"
+                        var test2 = "$role"
+                        names.add(test)
+                        names.add(test2)
+//                        names.add(p)
+                    }
+                    val adapter: ArrayAdapter<*> = ArrayAdapter<String>(
+                        this@BottomBarPatientActivity,
+                        android.R.layout.simple_list_item_1,
+                        names
+                    )
+                    txtSearchDoctor!!.setAdapter(adapter)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.w(ContentValues.TAG, "signInWithEmail:failure", error.toException())
+            }
+        }
+        ref.addListenerForSingleValueEvent(eventListener)
     }
 }
