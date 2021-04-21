@@ -259,28 +259,28 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="68dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:gravity="center">
 
                 <AutoCompleteTextView
                     android:id="@+id/TxtSearch"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:layout_marginHorizontal="30dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_weight="1"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:background="@drawable/edit_text_style"
-                    android:drawableLeft="@drawable/search"
-                    android:hint="Rechercher"
-                    android:paddingLeft="10dp"
+                    android:hint="Recherche"
+                    android:inputType="textPersonName"
+                    android:lines="1"
+                    android:paddingLeft="20dp"
                     android:textColorHint="@color/gray"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/black"
+                   />
                 <ImageView
                     android:id="@+id/DownIC"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:src="@drawable/down_ic"
-                    android:layout_marginTop="25dp"
-                    android:layout_marginRight="10dp"/>
+                    android:layout_marginLeft="25dp"/>
 
 
             </LinearLayout>

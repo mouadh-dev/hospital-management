@@ -1,8 +1,10 @@
 package com.example.stagepfe.Activity.Doctors
 
+import android.content.ContentValues
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.*
 import com.example.stagepfe.Fragments.Doctor.AccueilDoctorFragment
@@ -34,48 +36,22 @@ class AccountDoctorActivity : AppCompatActivity() {
     var messageDoctor: LinearLayout? = null
     var notificationDoctor: LinearLayout? = null
     var txtSearch: AutoCompleteTextView? =null
-    lateinit var ref : DatabaseReference
+
 //    var reglage: ImageView? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_account_doctor)
-        ref=FirebaseDatabase.getInstance().getReference("users")
+
 
 
 
         var home = AccueilDoctorFragment()
         supportFragmentManager.beginTransaction().replace(R.id.ContainerFragmentDoctor, home).commit()
         initView()
-//        populateSearch()
+//
     }
-//////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////
-//    private fun populateSearch() {
-//       ref.addValueEventListener(object :ValueEventListener{
-//           override fun onDataChange(snapshot: DataSnapshot) {
-//            if (snapshot!!.exists()){
-//                listPatientForDoctor.clear()
-//                ArrayList<String> patient=new ArrayList<>()
-//                for (e in snapshot.children){
-//                    val Users = e.getValue(users::class.java)
-//                    listPatientForDoctor.add(Users!! as ModelPatientList )
-//                    txtSearch!!.setAdapter(MyAdapterListPatientForDoctors)
-//                }
-//                ArrayAdapter adapter=new ArrayAdapter(applicationContext(),android.R.layout.list_patient_for_doctor)
-//            }
-//           }
-//
-//           override fun onCancelled(error: DatabaseError) {
-//           }
-//
-//       })
-//ref.addListenerForSingleValueEvent(eventListener)
-//
-//    }
-////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////
     private fun initView() {
         search = findViewById(R.id.float_button)
         slidPanel = findViewById(R.id.sliding_layout)
@@ -104,7 +80,7 @@ class AccountDoctorActivity : AppCompatActivity() {
     //listPatientForDoctor.add(ModelPatientList("Mohamed Rouahi",R.drawable.logopatient))
     //listPatientForDoctor.add(ModelPatientList("Mohamed Rouahi",R.drawable.logopatient))
     //listPatientForDoctor.add(ModelPatientList("Mohamed Rouahi",R.drawable.logopatient))
-    //listviewPatientForDoctor!!.adapter = MyAdapterListPatientForDoctors(this, R.layout.list_patient_for_doctor, listPatientForDoctor)
+    listviewPatientForDoctor!!.adapter = MyAdapterListPatientForDoctors(this, R.layout.list_patient_for_doctor, listPatientForDoctor)
 
 
     navigationDoctor!!.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { item ->
@@ -189,6 +165,46 @@ class AccountDoctorActivity : AppCompatActivity() {
             slidPanel!!.visibility = View.GONE
             search!!.visibility = View.VISIBLE
         }
+        populateSearch()
+    }
 
+
+
+    //////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
+    private fun populateSearch() {
+        val ref = FirebaseDatabase.getInstance().getReference("users")
+        val eventListener: ValueEventListener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    var names: ArrayList<String?> = ArrayList()
+                    for (ds in snapshot.children) {
+                        var nom = ds.child("nom").getValue(String::class.java)
+                        var prenom = ds.child("prenom").getValue(String::class.java)
+                        var role = ds.child("role").child("0").getValue(String::class.java)
+
+                        var test = "$nom $prenom"
+                        var test2 = "$role"
+                        names.add(test)
+                        names.add(test2)
+//                        names.add(p)
+                    }
+                    val adapter: ArrayAdapter<*> = ArrayAdapter<String>(
+                        this@AccountDoctorActivity,
+                        android.R.layout.simple_list_item_1,
+                        names
+                    )
+                    txtSearch!!.setAdapter(adapter)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.w(ContentValues.TAG, "signInWithEmail:failure", error.toException())
+            }
+
+        }
+        ref.addListenerForSingleValueEvent(eventListener)
+////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////
     }
 }
