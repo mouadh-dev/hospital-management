@@ -275,12 +275,17 @@
                     android:textColorHint="@color/gray"
                     android:textColor="@color/black"
                    />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
                 <ImageView
                     android:id="@+id/DownIC"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:src="@drawable/down_ic"
-                    android:layout_marginLeft="25dp"/>
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"/>
+                </RelativeLayout>
 
 
             </LinearLayout>
