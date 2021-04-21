@@ -47,9 +47,9 @@ class CheckRDVActivity : AppCompatActivity(), OnItemClickListner {
         month = intent.getStringExtra("keymonth")!!.toInt()
 
         secondTimeLine!!.setOnDateSelectedListener { year, month, day, index ->
-            this.day = Calendar.DAY_OF_MONTH
-            this.year = Calendar.YEAR
-            this.month = Calendar.MONTH
+            this.day = day
+            this.year = year
+            this.month = month
 
             pickerDate!!.text =
                 "Veuillez choisir l'heure du rendez-vous pour ${this.day}-${this.month}-${this.year}"
