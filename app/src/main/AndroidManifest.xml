@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".Activity.Administrateur.AccueilAdministrateurActivity"></activity>
+        <activity android:name=".Activity.Doctors.AddRDVToFbDoctorActivity"></activity>
+        <activity android:name=".Activity.Administrateur.AccueilAdministrateurActivity" />
         <activity android:name=".Activity.AgentLabo.ProfilAgentLaboActivity" />
         <activity android:name=".Activity.AgentLabo.AccueilAgentLaboActivity" />
         <activity android:name=".Activity.Pharmacien.ProfilPharmacienActivity" />

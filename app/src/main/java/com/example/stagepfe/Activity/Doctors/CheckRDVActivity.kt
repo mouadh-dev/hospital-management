@@ -1,24 +1,16 @@
 package com.example.stagepfe.Activity.Doctors
 
+import android.content.Intent
 import android.os.Bundle
-import android.view.View
-import android.widget.Button
-import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.stagepfe.Adapters.Doctor.MyAdapterAddRDV
 import com.example.stagepfe.Adapters.Doctor.MyAdapterAddRDV.OnItemClickListner
-import com.example.stagepfe.Dao.UserCallback
-import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.Models.Doctors.ModelAddRDV
 import com.example.stagepfe.R
-import com.example.stagepfe.entite.Appointment
-import com.example.stagepfe.entite.UserItem
 import com.github.badoualy.datepicker.DatePickerTimeline
 
 
@@ -45,9 +37,6 @@ class CheckRDVActivity : AppCompatActivity(), OnItemClickListner {
         pickerDate = findViewById(R.id.pick_date_TV)
         secondTimeLine = findViewById(R.id.second_time_line)
         pickerDate!!.text = intent.getStringExtra("key")
-//        sendParamDialog = findViewById<TextView>(R.id.Duration_Appointment)
-//
-//        var time:String = sendParamDialog!!.text.toString()
         year = intent.getStringExtra("keyyear")!!.toInt()
         day = intent.getStringExtra("keyday")!!.toInt()
         month = intent.getStringExtra("keymonth")!!.toInt()
@@ -57,7 +46,7 @@ class CheckRDVActivity : AppCompatActivity(), OnItemClickListner {
             this.year = year
             this.month = month
             pickerDate!!.text =
-                "Veuillez choisir l'heure du rendez-vous pour ${this.day}/${this.month}/${this.year}"
+                "Veuillez choisir l'heure du rendez-vous pour ${this.day}-${this.month}-${this.year}"
         }
 
 
@@ -93,78 +82,25 @@ class CheckRDVActivity : AppCompatActivity(), OnItemClickListner {
 
 
     }
-//    private fun reserve(): String {
-//    }
 
 
     override fun onItemClick(item: ModelAddRDV, position: Int) {
 
+        var hour: TextView = findViewById(R.id.tvTime)
+        var hour1 = hour.text.toString()
+        var year1 = year.toString()
+        var month = month.toString()
+        var day = day.toString()
 
-        var time = item.time
-        dialog(time)
+        var intent = Intent(this, AddRDVToFbDoctorActivity::class.java)
+        intent.putExtra("hour", hour1)
+        intent.putExtra("year", year1)
+        intent.putExtra("month", month)
+        intent.putExtra("day", day)
+
+        startActivity(intent)
+        finish()
     }
 
-    private fun dialog(time: String) {
 
-
-        var v = View.inflate(
-            this,
-            R.layout.dialog_add_rdv_doctor,
-            null
-        )
-        var builder = AlertDialog.Builder(this)
-        builder.setView(v)
-
-        var dialog = builder.create()
-        dialog.show()
-        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-        ////////////
-        var userdao = UserDao()
-        userdao.retrieveDataUser(this,
-            UserItem(),
-            object : UserCallback {
-                override fun onSuccess(userItem: UserItem) {
-                    dialog.findViewById<TextView>(R.id.name_Doctor_Time)!!.text =
-                        userItem.nom + " " + userItem.prenom
-                    dialog.findViewById<TextView>(R.id.speciality_Doctor)!!.text =
-                        userItem.speciality
-
-
-                    dialog.findViewById<TextView>(R.id.daterdv)!!.text =
-                        "${this@CheckRDVActivity.day}/${this@CheckRDVActivity.month}/${this@CheckRDVActivity.year}"
-                    dialog.findViewById<TextView>(R.id.timerdv)!!.text = time
-
-                }
-
-                override fun failure() {
-                }
-
-            })
-
-
-        dialog.findViewById<Button>(R.id.btn_confirm_rdv)!!.setOnClickListener {
-            dialog.dismiss()
-            var appointment = Appointment()
-            var userItem = UserItem()
-            appointment.nameDoctor =
-                dialog.findViewById<TextView>(R.id.name_Doctor_Time)!!.text.toString()
-            appointment.date = "$day/$month/$year"
-            appointment.namePatient =
-                dialog.findViewById<EditText>(R.id.Name_Patient_Dialog)!!.text.toString().trim()
-            appointment.dispo = "reserveé"
-            appointment.FinishOrNot = "Pas encore"
-
-            appointment.hour = time
-            userdao.insertappointment(appointment,userItem)
-            var takenAppointment: TextView = findViewById(R.id.tvTextTaken)
-            takenAppointment.text =
-                dialog.findViewById<EditText>(R.id.Name_Patient_Dialog)!!.text.toString().trim()
-            var toast = Toast.makeText(
-                applicationContext,
-                "Rendez-vous ajoute avec succès",
-                Toast.LENGTH_SHORT
-            )
-            toast.show()
-        }
-    }
 }

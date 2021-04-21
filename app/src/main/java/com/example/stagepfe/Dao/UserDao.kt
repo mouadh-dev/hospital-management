@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.ContentValues.TAG
 import android.util.Log
 import com.example.stagepfe.entite.Appointment
+import com.example.stagepfe.entite.User
 import com.example.stagepfe.entite.UserItem
 import com.example.stagepfe.util.BaseConstant
 import com.google.android.gms.tasks.OnCompleteListener
@@ -11,6 +12,8 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.google.firebase.database.Transaction.success
+import kotlin.Result.Companion.success
 
 
 class UserDao : IGestionUser {
@@ -131,7 +134,27 @@ class UserDao : IGestionUser {
 
 //////////////////////////////////////////Insert appointment/////////////////////////////////////////
 
-    override fun insertappointment(appointment: Appointment, userItem: UserItem) {
+    override fun insertappointment(appointment: Appointment, userItem: UserItem,uid: String,responseCallback: UserCallback) {
+        var test = database.reference.child("users").child(uid)
+        test.addValueEventListener(object: ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val userItem = snapshot.getValue(UserItem::class.java)
+                if (userItem != null) {
+                    responseCallback.onSuccess(userItem)
+                    var hour = HashMap<String, Appointment>()
+                    var day = HashMap<String, HashMap<String,Appointment >>()
+                    hour[appointment.hour.toString()] = appointment
+                    day[appointment.date.toString()] = hour
+                    myRef.child(mAuth.currentUser.uid).updateChildren(day as Map<String, Any>)
+                }
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+        })
 //        var test = myRefappoinment.push().toString()
 //        myRefappoinment.child(test)
 //        appointment.id = myRefappoinment.push().key.toString()
