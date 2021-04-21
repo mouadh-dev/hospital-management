@@ -1,10 +1,10 @@
 package com.example.stagepfe.Dao
 
+import android.R
 import android.app.Activity
 import android.content.ContentValues.TAG
 import android.util.Log
 import com.example.stagepfe.entite.Appointment
-import com.example.stagepfe.entite.User
 import com.example.stagepfe.entite.UserItem
 import com.example.stagepfe.util.BaseConstant
 import com.google.android.gms.tasks.OnCompleteListener
@@ -12,8 +12,6 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import com.google.firebase.database.Transaction.success
-import kotlin.Result.Companion.success
 
 
 class UserDao : IGestionUser {
@@ -21,8 +19,31 @@ class UserDao : IGestionUser {
     private val database = FirebaseDatabase.getInstance()
     private val myRef = database.getReference(BaseConstant.instance().userRef)
     private val mAuth = FirebaseAuth.getInstance()
+    private val ref = FirebaseDatabase.getInstance().getReference("users")
 //    private val myRefappoinment = database.getReference(BaseConstant.instance().appointments)
 
+
+////////////////////////////////////////////////get user by name////////////////////////////////////
+
+//     fun populateSearch(responseCallback: SearchCalback) {
+//        val eventListener: ValueEventListener = object : ValueEventListener {
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                if (snapshot.exists()) {
+//                    for (ds in snapshot.children) {
+//                        val n = ds.child("name").getValue(String::class.java)
+//
+//                        responseCallback.success(n!!)
+//                    }
+//                }
+//            }
+//
+//            override fun onCancelled(error: DatabaseError) {
+//                Log.w(TAG, "signInWithEmail:failure", error.toException())
+//                responseCallback.failure()
+//            }
+//        }
+//        ref.addListenerForSingleValueEvent(eventListener)
+//    }
 
 ////////////////////////////////////////////////Insert user/////////////////////////////////////////
 
@@ -134,15 +155,20 @@ class UserDao : IGestionUser {
 
 //////////////////////////////////////////Insert appointment/////////////////////////////////////////
 
-    override fun insertappointment(appointment: Appointment, userItem: UserItem,uid: String,responseCallback: UserCallback) {
+    override fun insertappointment(
+        appointment: Appointment,
+        userItem: UserItem,
+        uid: String,
+        responseCallback: UserCallback
+    ) {
         var test = database.reference.child("users").child(uid)
-        test.addValueEventListener(object: ValueEventListener{
+        test.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val userItem = snapshot.getValue(UserItem::class.java)
                 if (userItem != null) {
                     responseCallback.onSuccess(userItem)
                     var hour = HashMap<String, Appointment>()
-                    var day = HashMap<String, HashMap<String,Appointment >>()
+                    var day = HashMap<String, HashMap<String, Appointment>>()
                     hour[appointment.hour.toString()] = appointment
                     day[appointment.date.toString()] = hour
                     myRef.child(mAuth.currentUser.uid).updateChildren(day as Map<String, Any>)

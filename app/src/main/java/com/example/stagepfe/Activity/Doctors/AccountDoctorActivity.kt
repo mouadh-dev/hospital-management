@@ -48,32 +48,32 @@ class AccountDoctorActivity : AppCompatActivity() {
         var home = AccueilDoctorFragment()
         supportFragmentManager.beginTransaction().replace(R.id.ContainerFragmentDoctor, home).commit()
         initView()
-        populateSearch()
+//        populateSearch()
     }
 //////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////
-    private fun populateSearch() {
-       ref.addValueEventListener(object :ValueEventListener{
-           override fun onDataChange(snapshot: DataSnapshot) {
-            if (snapshot!!.exists()){
-                listPatientForDoctor.clear()
-                ArrayList<String> patient=new ArrayList<>()
-                for (e in snapshot.children){
-                    val Users = e.getValue(users::class.java)
-                    listPatientForDoctor.add(Users!! as ModelPatientList )
-                    txtSearch!!.setAdapter(MyAdapterListPatientForDoctors)
-                }
-                ArrayAdapter adapter=new ArrayAdapter(applicationContext(),android.R.layout.list_patient_for_doctor)
-            }
-           }
-
-           override fun onCancelled(error: DatabaseError) {
-           }
-
-       })
-ref.addListenerForSingleValueEvent(eventListener)
-
-    }
+//    private fun populateSearch() {
+//       ref.addValueEventListener(object :ValueEventListener{
+//           override fun onDataChange(snapshot: DataSnapshot) {
+//            if (snapshot!!.exists()){
+//                listPatientForDoctor.clear()
+//                ArrayList<String> patient=new ArrayList<>()
+//                for (e in snapshot.children){
+//                    val Users = e.getValue(users::class.java)
+//                    listPatientForDoctor.add(Users!! as ModelPatientList )
+//                    txtSearch!!.setAdapter(MyAdapterListPatientForDoctors)
+//                }
+//                ArrayAdapter adapter=new ArrayAdapter(applicationContext(),android.R.layout.list_patient_for_doctor)
+//            }
+//           }
+//
+//           override fun onCancelled(error: DatabaseError) {
+//           }
+//
+//       })
+//ref.addListenerForSingleValueEvent(eventListener)
+//
+//    }
 ////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////
     private fun initView() {

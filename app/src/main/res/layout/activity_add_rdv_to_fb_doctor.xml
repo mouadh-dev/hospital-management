@@ -118,13 +118,9 @@
             android:lines="1"
             android:paddingLeft="20dp"
             android:textColorHint="@color/gray"
-            android:visibility="visible"
             android:textColor="@color/black"
             />
-        <ListView
-            android:id="@+id/List_Suggestion"
-            android:layout_width="233dp"
-            android:layout_height="100dp"/>
+
 
         <EditText
             android:layout_width="wrap_content"

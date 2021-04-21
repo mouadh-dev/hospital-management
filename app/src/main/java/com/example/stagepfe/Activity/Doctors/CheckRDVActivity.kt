@@ -12,6 +12,11 @@ import com.example.stagepfe.Adapters.Doctor.MyAdapterAddRDV.OnItemClickListner
 import com.example.stagepfe.Models.Doctors.ModelAddRDV
 import com.example.stagepfe.R
 import com.github.badoualy.datepicker.DatePickerTimeline
+import com.github.badoualy.datepicker.MonthView.DateLabelAdapter
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class CheckRDVActivity : AppCompatActivity(), OnItemClickListner {
@@ -42,20 +47,27 @@ class CheckRDVActivity : AppCompatActivity(), OnItemClickListner {
         month = intent.getStringExtra("keymonth")!!.toInt()
 
         secondTimeLine!!.setOnDateSelectedListener { year, month, day, index ->
-            this.day = day
-            this.year = year
-            this.month = month
+            this.day = Calendar.DAY_OF_MONTH
+            this.year = Calendar.YEAR
+            this.month = Calendar.MONTH
+
             pickerDate!!.text =
                 "Veuillez choisir l'heure du rendez-vous pour ${this.day}-${this.month}-${this.year}"
         }
+        secondTimeLine!!.setDateLabelAdapter(DateLabelAdapter { calendar, index ->
+            Integer.toString(
+                calendar[Calendar.MONTH] + 1
+            ) + "/" + calendar[Calendar.YEAR] % 2000
+
+        })
 
 
-//            listDoctorAddRdv.add(ModelAddRDV("08:00", reserve()))
+
+
+
 
         //Recycler View
         val recyclerView: RecyclerView = findViewById(R.id.recycler_view) as RecyclerView
-
-        //Data
 
         //Data
         val dataList: MutableList<ModelAddRDV> = ArrayList()
