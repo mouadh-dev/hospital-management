@@ -134,13 +134,17 @@ class UserDao : IGestionUser {
 
                 if (snapshot.exists()) {
 
-//                    for (ds in snapshot.children) {
+                    for (ds in snapshot.children) {
 
-                        var userItem = snapshot.getValue(UserItem::class.java)
+                        var userItem = ds.getValue(UserItem::class.java)
+                        var firstNAme = userItem!!.nom
+                        var lastName = userItem.prenom
+                        var fullNAme = firstNAme + " " + lastName
+
+                        if (appointment.namePatient.equals(fullNAme)) {
 
 
-
-                            var id = userItem!!.id
+                            var id = userItem.id
                             responseCallback.successAppointment(appointment)
                             var hour = HashMap<String, Appointment>()
                             var day = HashMap<String, HashMap<String, Appointment>>()
@@ -150,8 +154,8 @@ class UserDao : IGestionUser {
                             appointmentRef.child(id.toString())
                                 .child(appointment.date.toString())
                                 .child(appointment.hour.toString()).setValue(appointment)
-
-
+                        }
+                    }
                 }
             }
             override fun onCancelled(error: DatabaseError) {

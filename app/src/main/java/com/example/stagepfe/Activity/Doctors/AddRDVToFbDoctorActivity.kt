@@ -49,7 +49,7 @@ class AddRDVToFbDoctorActivity : AppCompatActivity() {
         hourRDV = findViewById<TextView>(R.id.timerdv)
         namePatient = findViewById<AutoCompleteTextView>(R.id.Name_PatientADD_RDv)
         confirmButton = findViewById<Button>(R.id.btn_confirm_rdv)
-        phonePatient = findViewById(R.id.phone_numbre)
+
         cancelButton = findViewById(R.id.Cancel_Button_rdv)
         initAdapter()
 
@@ -135,7 +135,6 @@ class AddRDVToFbDoctorActivity : AppCompatActivity() {
                     for (ds in snapshot.children) {
                         var nom = ds.child("nom").getValue(String::class.java)
                         var prenom = ds.child("prenom").getValue(String::class.java)
-                        var role = ds.child("role").child("0").getValue(String::class.java)
                         var number = ds.child("phonenumber").getValue(String::class.java)
 
 
@@ -148,23 +147,8 @@ class AddRDVToFbDoctorActivity : AppCompatActivity() {
                     }
 
                     adapter!!.notifyDataSetChanged()
-                    namePatient!!.setOnItemClickListener(object : AdapterView.OnItemClickListener {
-                        override fun onItemClick(
-                            parent: AdapterView<*>?,
-                            view: View?,
-                            position: Int,
-                            id: Long
-                        ) {
-                            var selection: String = parent!!.getItemAtPosition(position).toString()
-                            phonePatient!!.setText(numberPatient)
-                        }
-
-                    })
-
-
                 }
             }
-
             override fun onCancelled(error: DatabaseError) {
                 Log.w(ContentValues.TAG, "signInWithEmail:failure", error.toException())
 
