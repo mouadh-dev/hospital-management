@@ -21,7 +21,8 @@ data class UserItem constructor(
     var medicament: String? = "",
     var speciality: String? = "",
     var bio: String? = "",
-    var id: String? = ""
+    var id: String? = "",
+   var reservation: HashMap<String, HashMap<String, Appointment>>?=null
 
 
 ) : Parcelable {
@@ -43,7 +44,8 @@ data class UserItem constructor(
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
-        parcel.readString()
+        parcel.readString(),
+        TODO("reservation")
     ) {
     }
 
@@ -80,5 +82,6 @@ data class UserItem constructor(
             return arrayOfNulls(size)
         }
     }
+
 }
 

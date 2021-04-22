@@ -1,16 +1,19 @@
 package com.example.stagepfe.Activity.Doctors
 
 import android.content.ContentValues
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.example.stagepfe.Dao.AppointmentCallback
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.R
 import com.example.stagepfe.entite.Appointment
 import com.example.stagepfe.entite.UserItem
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -28,9 +31,10 @@ class AddRDVToFbDoctorActivity : AppCompatActivity() {
     var confirmButton: TextView? = null
     var namePatient: AutoCompleteTextView? = null
     var phonePatient: EditText? = null
-    var numberPatient:String? = null
-
-
+    var numberPatient: String? = null
+    var cancelButton: Button? = null
+    var adapter: ArrayAdapter<String>?=null
+    var names: ArrayList<String?>?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,26 +50,36 @@ class AddRDVToFbDoctorActivity : AppCompatActivity() {
         namePatient = findViewById<AutoCompleteTextView>(R.id.Name_PatientADD_RDv)
         confirmButton = findViewById<Button>(R.id.btn_confirm_rdv)
         phonePatient = findViewById(R.id.phone_numbre)
+        cancelButton = findViewById(R.id.Cancel_Button_rdv)
+        initAdapter()
 
-
-
+///////////////////////////////////////////cancelButton////////////////////////////////////////////
+        cancelButton!!.setOnClickListener {
+            var intent = Intent(this, AccountDoctorActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+////////////////////////////////////////////////////////////////////////////////////////////////////
         time = intent.getStringExtra("hour")!!.toString()
         year = intent.getStringExtra("year")!!.toString()
         day = intent.getStringExtra("day")!!.toString()
         month = intent.getStringExtra("month")!!.toString()
+        var m:Int = month!!.toInt()
+        m+=1
+        month = m.toString()
 
         var userdao = UserDao()
         userdao.retrieveDataUser(this, UserItem(), object : UserCallback {
 
-                override fun onSuccess(userItem: UserItem) {
-                    nameDoctor!!.text = userItem.nom + " " + userItem.prenom
-                    speciality!!.text = userItem.speciality
-                    dateRDV!!.text = "$day-$month-$year"
-                    hourRDV!!.text = time
-                }
+            override fun onSuccess(userItem: UserItem) {
+                nameDoctor!!.text = userItem.nom + " " + userItem.prenom
+                speciality!!.text = userItem.speciality
+                dateRDV!!.text = "$day-$month-$year"
+                hourRDV!!.text = time
+            }
 
-                override fun failure() {}
-            })
+            override fun failure() {}
+        })
 
         confirmButton!!.setOnClickListener {
 
@@ -78,66 +92,70 @@ class AddRDVToFbDoctorActivity : AppCompatActivity() {
             appointment.FinishOrNot = "Pas encore"
             appointment.hour = hourRDV!!.text.toString()
 
-            userdao.insertappointment(appointment, userItem, userItem.id!!, object : UserCallback {
-                override fun onSuccess(userItem: UserItem) {
-                    var toast = Toast.makeText(applicationContext, "Rendez-vous ajoute avec succès", Toast.LENGTH_SHORT)
+            userdao.insertappointment(appointment, userItem, FirebaseAuth.getInstance().uid.toString(), object : AppointmentCallback {
+                override fun successAppointment(appointment: Appointment) {
+                    var toast = Toast.makeText(
+                        applicationContext,
+                        "Rendez-vous ajoute avec succès",
+                        Toast.LENGTH_SHORT
+                    )
                     toast.show()
                 }
 
-                override fun failure() {}
+                override fun failureAppointment() {
+
+                }
+
 
             })
         }
 /////////////////////////////////////////Suggestion Search//////////////////////////////////////////
-populateSearch()
+        populateSearch()
 
-//            listviewPatientNameSearch!!.visibility = View.VISIBLE
-//            userdao.populateSearch(object: SearchCalback{
-//                override fun success(n:String) {
-//
-//                    listPatientSearch.add(ModelSearchRdv(n))
-//                    listviewPatientNameSearch!!.adapter = MyAdapterSearchRdv(this@AddRDVToFbDoctorActivity, R.layout.row_search_rdv, listPatientSearch)
-//                }
-//
-//                override fun failure() {
-//                }
-//
-//            })
+
+    }
+
+    private fun initAdapter() {
+         names = ArrayList()
+        adapter  = ArrayAdapter<String>(
+            this@AddRDVToFbDoctorActivity,
+            android.R.layout.simple_list_item_1,
+            names as ArrayList<String>
+        )
+        namePatient!!.setAdapter(adapter)
 
 
     }
 
     private fun populateSearch() {
-         val ref = FirebaseDatabase.getInstance().getReference("users")
+        val ref = FirebaseDatabase.getInstance().getReference("users")
         val eventListener: ValueEventListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
-                    var names: ArrayList<String?> = ArrayList()
                     for (ds in snapshot.children) {
-                        var nom= ds.child("nom").getValue(String::class.java)
-                        var prenom= ds.child("prenom").getValue(String::class.java)
-                        var role= ds.child("role").child("0").getValue(String::class.java)
+                        var nom = ds.child("nom").getValue(String::class.java)
+                        var prenom = ds.child("prenom").getValue(String::class.java)
+                        var role = ds.child("role").child("0").getValue(String::class.java)
                         var number = ds.child("phonenumber").getValue(String::class.java)
 
 
                         var fullName = "$nom $prenom"
 
                         numberPatient = "$number"
-                        names.add(fullName)
+                        names!!.add(fullName)
 
 //                        phonePatient!!.setText("$numero")
                     }
-                    val adapter: ArrayAdapter<*> = ArrayAdapter<String>(this@AddRDVToFbDoctorActivity,android.R.layout.simple_list_item_1, names)
-                    namePatient!!.setAdapter(adapter)
 
-                    namePatient!!.setOnItemClickListener(object: AdapterView.OnItemClickListener {
+                    adapter!!.notifyDataSetChanged()
+                    namePatient!!.setOnItemClickListener(object : AdapterView.OnItemClickListener {
                         override fun onItemClick(
                             parent: AdapterView<*>?,
                             view: View?,
                             position: Int,
                             id: Long
                         ) {
-                            var selection:String = parent!!.getItemAtPosition(position).toString()
+                            var selection: String = parent!!.getItemAtPosition(position).toString()
                             phonePatient!!.setText(numberPatient)
                         }
 

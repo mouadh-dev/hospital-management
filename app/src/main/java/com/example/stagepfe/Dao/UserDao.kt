@@ -1,6 +1,5 @@
 package com.example.stagepfe.Dao
 
-import android.R
 import android.app.Activity
 import android.content.ContentValues.TAG
 import android.util.Log
@@ -11,7 +10,10 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 
 class UserDao : IGestionUser {
@@ -19,20 +21,19 @@ class UserDao : IGestionUser {
     private val database = FirebaseDatabase.getInstance()
     private val myRef = database.getReference(BaseConstant.instance().userRef)
     private val mAuth = FirebaseAuth.getInstance()
-    private val ref = FirebaseDatabase.getInstance().getReference("users")
+    private val appointmentRef = FirebaseDatabase.getInstance().getReference("users")
 
 
-
-
-
-////////////////////////////////////////////////Insert user/////////////////////////////////////////
+    ////////////////////////////////////////////////Insert user/////////////////////////////////////////
     override fun insertUser(userItem: UserItem) {
 
         userItem.id = myRef.push().key.toString()
         myRef.child(userItem.id!!).setValue(userItem)
 
     }
-/////////////////////////////////////////////////sign up////////////////////////////////////////////
+
+
+    /////////////////////////////////////////////////sign up////////////////////////////////////////////
     fun signUpUser(activity: Activity, userItem: UserItem, responseCallback: ResponseCallback) {
         mAuth.createUserWithEmailAndPassword(userItem.mail, userItem.password)
             .addOnCompleteListener(activity, object : OnCompleteListener<AuthResult?> {
@@ -59,7 +60,8 @@ class UserDao : IGestionUser {
                 }
             })
     }
-///////////////////////////////////////////Sign in//////////////////////////////////////////////////
+
+    ///////////////////////////////////////////Sign in//////////////////////////////////////////////////
     fun signIn(activity: Activity, userItem: UserItem, userCallback: UserCallback) {
         mAuth.signInWithEmailAndPassword(userItem.mail, userItem.password)
             .addOnCompleteListener(activity) { task ->
@@ -79,7 +81,8 @@ class UserDao : IGestionUser {
             }
 
     }
-///////////////////////////////////////////////get user by id///////////////////////////////////////
+
+    ///////////////////////////////////////////////get user by id///////////////////////////////////////
     private fun getUserByUid(uid: String, responseCallback: UserCallback) {
         var jLoginDatabase = database.reference.child("users").child(uid)
         jLoginDatabase.addValueEventListener(object : ValueEventListener {
@@ -99,7 +102,8 @@ class UserDao : IGestionUser {
 
         })
     }
-//////////////////////////////////////////////////retrieve data user////////////////////////////////
+
+    //////////////////////////////////////////////////retrieve data user////////////////////////////////
     fun retrieveDataUser(activity: Activity, userItem: UserItem, userCallback: UserCallback) {
 
         myRef.addValueEventListener(object : ValueEventListener {
@@ -115,68 +119,47 @@ class UserDao : IGestionUser {
 
         })
     }
-//////////////////////////////////////////Insert appointment////////////////////////////////////////
-    override fun insertappointment(appointment: Appointment, userItem: UserItem, uid: String, responseCallback: UserCallback) {
-        var test = database.reference.child("users").child(uid)
-        test.addValueEventListener(object : ValueEventListener {
+
+    //////////////////////////////////////////Insert appointment////////////////////////////////////////
+    override fun insertappointment(
+        appointment: Appointment,
+        userItem: UserItem,
+        uid: String,
+        responseCallback: AppointmentCallback
+    ) {
+        appointmentRef.addListenerForSingleValueEvent(object : ValueEventListener {
+
             override fun onDataChange(snapshot: DataSnapshot) {
-                val userItem = snapshot.getValue(UserItem::class.java)
-                if (userItem != null) {
-                    responseCallback.onSuccess(userItem)
-                    var hour = HashMap<String, Appointment>()
-                    var day = HashMap<String, HashMap<String, Appointment>>()
-                    hour[appointment.hour.toString()] = appointment
-                    day[appointment.date.toString()] = hour
-                    myRef.child(mAuth.currentUser.uid).updateChildren(day as Map<String, Any>)
+
+
+                if (snapshot.exists()) {
+
+//                    for (ds in snapshot.children) {
+
+                        var userItem = snapshot.getValue(UserItem::class.java)
+
+
+
+                            var id = userItem!!.id
+                            responseCallback.successAppointment(appointment)
+                            var hour = HashMap<String, Appointment>()
+                            var day = HashMap<String, HashMap<String, Appointment>>()
+                            hour[appointment.hour.toString()] = appointment
+                            day[appointment.date.toString()] = hour
+                            userItem.reservation = day
+                            appointmentRef.child(id.toString())
+                                .child(appointment.date.toString())
+                                .child(appointment.hour.toString()).setValue(appointment)
+
+
                 }
-
             }
-
             override fun onCancelled(error: DatabaseError) {
-
             }
-
         })
-//        var test = myRefappoinment.push().toString()
-//        myRefappoinment.child(test)
-//        appointment.id = myRefappoinment.push().key.toString()
-//        myRefappoinment.child(appointment.id!!).setValue(appointment)
-//        var k=userItem.id.toString()
-//        var hour = HashMap<String, String>()
-//        var day = HashMap<String, HashMap<String, String>>()
-//        hour["'Open'"] = "HOUR 01"
-//        day["'DAY01'"] = hour
-//
-//        myRef.child(userItem.id!!).setValue(day)
 
     }
-
-//////////////////////////////////////////retrieve appointment//////////////////////////////////////
-//    fun retrieveAppointment(
-//        activity: Activity,
-//        appointment: Appointment,
-//        appointmentCallback: AppointmentCallback
-//    ) {
-//        private fun getAppointment(uid: String, responseCallback: AppointmentCallback) {
-////            override fun onDataChange(snapshot: DataSnapshot) {
-//
-//               var appointmentdatabase = database.reference.child("id")
-//                appointmentdatabase.addValueEventListener(object : ValueEventListener {
-//                    override fun onDataChange(snapshot: DataSnapshot) {
-//                        TODO("Not yet implemented")
-//                    }
-//
-//                    override fun onCancelled(error: DatabaseError) {
-//                        TODO("Not yet implemented")
-//                    }
-//
-//                })
-//
-//
-//
-//
-//        }
-    }
+}
 
 
 

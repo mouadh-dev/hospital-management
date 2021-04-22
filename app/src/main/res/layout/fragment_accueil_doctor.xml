@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             app:mti_primaryColor="@color/white"
-
+            app:mti_tabSelectedColor="@color/black"
 
             />
         </androidx.cardview.widget.CardView>

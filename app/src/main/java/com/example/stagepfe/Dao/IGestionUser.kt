@@ -7,6 +7,6 @@ interface IGestionUser{
 
 
     fun insertUser(userItem: UserItem)
-    fun insertappointment(appointment: Appointment,userItem: UserItem,uid: String,responseCallback: UserCallback)
+    fun insertappointment(appointment: Appointment,userItem: UserItem,uid: String,responseCallback: AppointmentCallback)
 
 }

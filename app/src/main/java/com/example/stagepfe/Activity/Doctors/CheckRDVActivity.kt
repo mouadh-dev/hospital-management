@@ -2,6 +2,7 @@ package com.example.stagepfe.Activity.Doctors
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -13,8 +14,7 @@ import com.example.stagepfe.Models.Doctors.ModelAddRDV
 import com.example.stagepfe.R
 import com.github.badoualy.datepicker.DatePickerTimeline
 import com.github.badoualy.datepicker.MonthView.DateLabelAdapter
-import java.time.LocalDate
-import java.time.LocalDateTime
+
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -23,7 +23,7 @@ class CheckRDVActivity : AppCompatActivity(), OnItemClickListner {
 
     var pickerDate: TextView? = null
     var secondTimeLine: DatePickerTimeline? = null
-
+    var returnIcon:ImageView? = null
     var year: Int = 0
     var month: Int = 0
     var day: Int = 0
@@ -38,7 +38,7 @@ class CheckRDVActivity : AppCompatActivity(), OnItemClickListner {
 
     private fun initView() {
 
-
+returnIcon = findViewById(R.id.IconReturnBackMessage)
         pickerDate = findViewById(R.id.pick_date_TV)
         secondTimeLine = findViewById(R.id.second_time_line)
         pickerDate!!.text = intent.getStringExtra("key")
@@ -46,20 +46,30 @@ class CheckRDVActivity : AppCompatActivity(), OnItemClickListner {
         day = intent.getStringExtra("keyday")!!.toInt()
         month = intent.getStringExtra("keymonth")!!.toInt()
 
-        secondTimeLine!!.setOnDateSelectedListener { year, month, day, index ->
-            this.day = day
-            this.year = year
-            this.month = month
-
-            pickerDate!!.text =
-                "Veuillez choisir l'heure du rendez-vous pour ${this.day}-${this.month}-${this.year}"
+///////////////////////////////////////returnIcon//////////////////////////////////////////////////
+        returnIcon!!.setOnClickListener {
+            var intent = Intent(this, AccountDoctorActivity::class.java)
+            startActivity(intent)
+            finish()
         }
+///////////////////////////////////////////////////////////////////////////////////////////////////
         secondTimeLine!!.setDateLabelAdapter(DateLabelAdapter { calendar, index ->
             Integer.toString(
                 calendar[Calendar.MONTH] + 1
             ) + "/" + calendar[Calendar.YEAR] % 2000
 
         })
+        secondTimeLine!!.setOnDateSelectedListener { year, month, day, index ->
+            this.day = day
+            this.year = year
+            this.month = month+1
+
+
+
+            pickerDate!!.text =
+                "Veuillez choisir l'heure du rendez-vous pour" + this.day+"-"+this.month+"-"+this.year
+        }
+
 
 
 
@@ -98,15 +108,14 @@ class CheckRDVActivity : AppCompatActivity(), OnItemClickListner {
 
     override fun onItemClick(item: ModelAddRDV, position: Int) {
 
-        var hour: TextView = findViewById(R.id.tvTime)
-        var hour1 = hour.text.toString()
-        var year1 = year.toString()
+        var hourSended = item.time
+        var year = year.toString()
         var month = month.toString()
         var day = day.toString()
 
         var intent = Intent(this, AddRDVToFbDoctorActivity::class.java)
-        intent.putExtra("hour", hour1)
-        intent.putExtra("year", year1)
+        intent.putExtra("hour", hourSended)
+        intent.putExtra("year", year)
         intent.putExtra("month", month)
         intent.putExtra("day", day)
 
