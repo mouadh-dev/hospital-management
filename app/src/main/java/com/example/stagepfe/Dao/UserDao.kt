@@ -152,7 +152,7 @@ class UserDao : IGestionUser {
                             day[appointment.date.toString()] = hour
                             userItem.reservation = day
                             appointmentRef.child(id.toString())
-                                .child(appointment.date.toString())
+                                .child("Appointment").child(appointment.date.toString())
                                 .child(appointment.hour.toString()).setValue(appointment)
                         }
                     }
@@ -163,6 +163,21 @@ class UserDao : IGestionUser {
         })
 
     }
+/////////////////////////////////////////////getAppointment/////////////////////////////////////////
+//private  fun getAppointment(responseCallback: AppointmentCallback,userCallback: UserCallback){
+//    var test = database.reference.child("users").child("Appointment")
+//    test.addValueEventListener(object : ValueEventListener {
+//        override fun onDataChange(snapshot: DataSnapshot) {
+//            for (ds in snapshot.children){
+//                responseCallback.successAppointment
+//            }
+//        }
+//
+//        override fun onCancelled(error: DatabaseError) {
+//
+//        }
+//    })
+//}
 }
 
 
