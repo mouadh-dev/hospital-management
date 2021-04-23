@@ -21,7 +21,7 @@ class UserDao : IGestionUser {
     private val database = FirebaseDatabase.getInstance()
     private val myRef = database.getReference(BaseConstant.instance().userRef)
     private val mAuth = FirebaseAuth.getInstance()
-    private val appointmentRef = FirebaseDatabase.getInstance().getReference("users")
+    private val userRef = FirebaseDatabase.getInstance().getReference("users")
 
 
     ////////////////////////////////////////////////Insert user/////////////////////////////////////////
@@ -31,7 +31,6 @@ class UserDao : IGestionUser {
         myRef.child(userItem.id!!).setValue(userItem)
 
     }
-
 
     /////////////////////////////////////////////////sign up////////////////////////////////////////////
     fun signUpUser(activity: Activity, userItem: UserItem, responseCallback: ResponseCallback) {
@@ -127,7 +126,7 @@ class UserDao : IGestionUser {
         uid: String,
         responseCallback: AppointmentCallback
     ) {
-        appointmentRef.addListenerForSingleValueEvent(object : ValueEventListener {
+        userRef.addListenerForSingleValueEvent(object : ValueEventListener {
 
             override fun onDataChange(snapshot: DataSnapshot) {
 
@@ -151,33 +150,46 @@ class UserDao : IGestionUser {
                             hour[appointment.hour.toString()] = appointment
                             day[appointment.date.toString()] = hour
                             userItem.reservation = day
-                            appointmentRef.child(id.toString())
+                            userRef.child(id.toString())
                                 .child("Appointment").child(appointment.date.toString())
                                 .child(appointment.hour.toString()).setValue(appointment)
                         }
                     }
                 }
             }
+
             override fun onCancelled(error: DatabaseError) {
             }
         })
 
     }
-/////////////////////////////////////////////getAppointment/////////////////////////////////////////
-//private  fun getAppointment(responseCallback: AppointmentCallback,userCallback: UserCallback){
-//    var test = database.reference.child("users").child("Appointment")
-//    test.addValueEventListener(object : ValueEventListener {
-//        override fun onDataChange(snapshot: DataSnapshot) {
-//            for (ds in snapshot.children){
-//                responseCallback.successAppointment
-//            }
-//        }
-//
-//        override fun onCancelled(error: DatabaseError) {
-//
-//        }
-//    })
-//}
+
+    /////////////////////////////////////////////getAppointment/////////////////////////////////////////
+    fun getAppointment(
+        appointment: Appointment,
+        userItem: UserItem,
+        responseCallback: AppointmentCallback
+    ) {
+        userRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+
+
+                    for (ds in snapshot.children) {
+                        var appointmentRef = ds.child("Appointment").getValue()
+                        if (appointmentRef != null){
+
+                            responseCallback.successAppointment(appointment)
+                        }
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                responseCallback.failureAppointment()
+            }
+        })
+    }
 }
 
 

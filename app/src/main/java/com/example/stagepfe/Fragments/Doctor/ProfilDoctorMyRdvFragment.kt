@@ -11,8 +11,12 @@ import android.widget.ListView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.stagepfe.Adapters.Doctor.MyAdapterRdvDoctor
+import com.example.stagepfe.Dao.AppointmentCallback
+import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.Models.Doctors.ModelRdvDocteur
 import com.example.stagepfe.R
+import com.example.stagepfe.entite.Appointment
+import com.example.stagepfe.entite.UserItem
 
 
 class ProfilDoctorMyRdvFragment : Fragment() {
@@ -36,9 +40,23 @@ class ProfilDoctorMyRdvFragment : Fragment() {
         listviewDoctorProfilRdv = view.findViewById<ListView>(R.id.listRdvDocteur)
 
 
+//var userdao = UserDao()
+//        var appointment = Appointment()
+//        var userItem = UserItem()
+//        userdao.getAppointment(appointment,userItem,object : AppointmentCallback{
+//            override fun successAppointment(appointment: Appointment) {
+//                listDoctorProfilRdv.add(ModelRdvDocteur("12/12/2021","12:35","Terminer",R.color.green))
+//                listviewDoctorProfilRdv!!.adapter = MyAdapterRdvDoctor(requireContext(),R.layout.list_rdv_for_doctor,listDoctorProfilRdv)
+//            }
+//
+//            override fun failureAppointment() {
+//
+//            }
+//
+//        })
 
 
-        listviewDoctorProfilRdv =view.findViewById<ListView>(R.id.listRdvDocteur)
+
         listDoctorProfilRdv.add(ModelRdvDocteur("12/12/2021","12:35","Terminer",R.color.green))
         listDoctorProfilRdv.add(ModelRdvDocteur("12/12/2021","12:35","Pas encore",R.color.red))
         listDoctorProfilRdv.add(ModelRdvDocteur("12/12/2021","12:35","Terminer",R.color.green))

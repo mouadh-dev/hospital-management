@@ -82,8 +82,8 @@ class DoctorProfilActivity : AppCompatActivity() {
 
         }
         var adapter = ViewPagerAdapter(supportFragmentManager)
-        adapter.addFragment(ProfilDoctorMyRdvFragment(), "Mes Rendez-vous ")
-        adapter.addFragment(ProfilDoctorMyPatientFragment(), " Mes patients ")
+        adapter.addFragment(ProfilDoctorMyRdvFragment(), "Rendez-vous")
+        adapter.addFragment(ProfilDoctorMyPatientFragment(), "patients")
 
         viewPager!!.adapter = adapter
         tabs!!.setupWithViewPager(viewPager)
