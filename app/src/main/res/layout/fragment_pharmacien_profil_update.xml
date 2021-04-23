@@ -10,8 +10,8 @@
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
         android:layout_centerVertical="true"
-        android:layout_marginTop="20dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingBottom="50dp">
 
 
         <EditText
@@ -135,20 +135,67 @@
                 android:src="@drawable/eye"
                 android:layout_marginLeft="260dp"
                 android:layout_marginTop="15dp"/>
+
         </RelativeLayout>
-
-        <Button
-            android:id="@+id/SaveProfilPharmacienButton"
-            android:layout_width="233dp"
-            android:layout_height="40dp"
-            android:background="@drawable/button_style_smaller"
-            android:text="Enregistrer"
-            android:layout_marginTop="15dp"
-            android:textColor="@color/white"
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textSize="20dp"
+            android:layout_marginTop="20dp">
 
-            />
+            <EditText
+                android:id="@+id/ConfirmNewPasswordDoctor"
+                android:layout_width="290dp"
+                android:layout_height="50dp"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:background="@drawable/edit_text_style"
+                android:hint="*************"
+                android:inputType="textPassword"
+                android:paddingLeft="20dp"
+                android:paddingRight="10dp"
+                android:textColor="@color/black"
+                android:textColorHint="#888282"
+                android:textSize="15dp"
+
+                />
+            <ImageView
+                android:id="@+id/Eye_Show_ConfirmnewPassword_Pharmacien"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/eye"
+                android:layout_marginLeft="260dp"
+                android:layout_marginTop="15dp"/>
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="25dp">
+
+            <Button
+                android:id="@+id/ReturnbuttonProfilPharmacien"
+                android:layout_width="101dp"
+                android:layout_height="33dp"
+                android:background="@drawable/cancel_button_style"
+                android:text="Précédent"
+                android:textColor="@color/white"
+                android:textSize="10dp"
+
+                />
+
+            <Button
+                android:id="@+id/SaveProfilPharmacienButton"
+                android:layout_width="101dp"
+                android:layout_height="33dp"
+                android:layout_marginLeft="31dp"
+                android:background="@drawable/button_style_smaller"
+                android:text="Enregistrer"
+                android:textColor="@color/white"
+                android:textSize="10dp"
+
+                />
+        </LinearLayout>
 
 
     </LinearLayout>

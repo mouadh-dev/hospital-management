@@ -37,8 +37,11 @@ class ProfilAgentUpdateFragment : Fragment() {
     private var dateNaissProfilAgentET: EditText? = null
     private var telephoneProfilAgentET: EditText? = null
     private var showNewPasswordAgentIV: ImageView? = null
+    private var showConfirmNewPasswordAgentIV: ImageView? = null
     private var newPasswordAgentET: EditText? = null
+    private var confirmNewPasswordAgentET: EditText? = null
     private var saveProfilAgentButton: Button? = null
+    private var returnProfilAgentButton: Button? = null
 
 
     val myProfilAgentCalendar = Calendar.getInstance()
@@ -66,8 +69,11 @@ class ProfilAgentUpdateFragment : Fragment() {
         dateNaissProfilAgentET = view.findViewById(R.id.DateNaissProfilAgent)
         telephoneProfilAgentET = view.findViewById(R.id.TelephoneProfilAgent)
         showNewPasswordAgentIV = view.findViewById(R.id.Eye_Show_newPassword_Agent)
+        showConfirmNewPasswordAgentIV = view.findViewById(R.id.Eye_Show_ConfirmnewPassword_Agent)
         newPasswordAgentET = view.findViewById(R.id.NewPasswordAgent)
+        confirmNewPasswordAgentET = view.findViewById(R.id.ConfirmNewPasswordAgent)
         saveProfilAgentButton = view.findViewById<Button>(R.id.SaveProfilAgentButton)
+        returnProfilAgentButton = view.findViewById<Button>(R.id.ReturnbuttonProfilAgent)
 
         adresseProfilAgentET!!.isFocusable = false
         dateNaissProfilAgentET!!.isFocusable = false
@@ -103,8 +109,38 @@ class ProfilAgentUpdateFragment : Fragment() {
                 newPasswordAgentET!!.transformationMethod = PasswordTransformationMethod.getInstance()
             }
         }
+        confirmNewPasswordAgentET!!.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (notequal()){
+                    saveProfilAgentButton!!.isEnabled = false
+                    saveProfilAgentButton!!.setBackgroundResource(R.drawable.gray_button)
+                    confirmNewPasswordAgentET!!.error = "le mot de passe ne correspond pas"
+                }else{
+                    saveProfilAgentButton!!.isEnabled = true
+                    saveProfilAgentButton!!.setBackgroundResource(R.drawable.button_style_smaller)
+
+                }
+            }
 
 
+        })
+
+        showConfirmNewPasswordAgentIV!!.setOnClickListener{
+            if(confirmNewPasswordAgentET!!.getTransformationMethod().equals(PasswordTransformationMethod.getInstance()))
+            {
+                confirmNewPasswordAgentET!!.transformationMethod = HideReturnsTransformationMethod.getInstance()
+            }else {
+                confirmNewPasswordAgentET!!.transformationMethod = PasswordTransformationMethod.getInstance()
+            }
+        }
+        ///////////////////////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////////////
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
 
         adresseProfilAgentET!!.setOnClickListener {
@@ -216,6 +252,9 @@ class ProfilAgentUpdateFragment : Fragment() {
 
         //*****************************************calender function*******************************************
     }
+
+
+
     private fun updateLabel() {
         val myFormat = "MM/dd/yy" //In which you need put here
 
@@ -384,10 +423,9 @@ class ProfilAgentUpdateFragment : Fragment() {
             }
         }
 
-
-
+    }
+    private fun notequal(): Boolean {
+        return confirmNewPasswordAgentET!!.text.toString() != newPasswordAgentET!!.text.toString()
 
     }
-
-
 }

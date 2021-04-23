@@ -23,6 +23,7 @@ import android.widget.*
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.example.stagepfe.Activity.Patients.BottomBarPatientActivity
+import com.example.stagepfe.Fragments.Authentication.ConnexionFragment
 import com.example.stagepfe.R
 import com.google.android.gms.location.*
 import com.google.firebase.auth.FirebaseAuth
@@ -38,8 +39,11 @@ class ModifyProfilePatientFragment : Fragment() {
     private var dateNaissProfilPatientET: EditText? = null
     private var telephoneProfilPatientET: EditText? = null
     private var saveButtonPatient: Button? = null
+    private var returnButtonPatient: Button? = null
     private var showNewPasswordPatientIV: ImageView? = null
+    private var showConfirmNewPasswordPatientIV: ImageView? = null
     private var newPasswordPatientET: EditText? = null
+    private var newConfirmPasswordPatientET: EditText? = null
 
 
 
@@ -76,12 +80,17 @@ class ModifyProfilePatientFragment : Fragment() {
         adresseProfilPatientET = view.findViewById(R.id.AdresseProfilPatient)
         dateNaissProfilPatientET = view.findViewById(R.id.DateNaissProfilPatient)
         telephoneProfilPatientET = view.findViewById(R.id.TelephoneProfilPatient)
-        saveButtonPatient = view.findViewById(R.id.SaveProfilButtonPatient)
+        saveButtonPatient = view.findViewById(R.id.SaveButtonUdateProfil)
+        returnButtonPatient = view.findViewById(R.id.ReturnbuttonProfilUpdate)
         showNewPasswordPatientIV = view.findViewById(R.id.Eye_Show_newPassword_patient)
+        showConfirmNewPasswordPatientIV = view.findViewById(R.id.Eye_Show_ConfirmnewPassword_patient)
         newPasswordPatientET = view.findViewById(R.id.NewPasswordPatient)
+        newConfirmPasswordPatientET = view.findViewById(R.id.ConfirmNewPasswordPatient)
 
         adresseProfilPatientET!!.isFocusable = false
         dateNaissProfilPatientET!!.isFocusable = false
+
+
 
           ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -115,6 +124,37 @@ class ModifyProfilePatientFragment : Fragment() {
             }
         }
 
+
+        newConfirmPasswordPatientET!!.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (notequal()){
+                    saveButtonPatient!!.isEnabled = false
+                    saveButtonPatient!!.setBackgroundResource(R.drawable.gray_button)
+                    newConfirmPasswordPatientET!!.error = "le mot de passe ne correspond pas"
+                }else{
+                    saveButtonPatient!!.isEnabled = true
+                    saveButtonPatient!!.setBackgroundResource(R.drawable.button_style_smaller)
+
+                }
+            }
+
+
+        })
+
+        showConfirmNewPasswordPatientIV!!.setOnClickListener{
+            if(newConfirmPasswordPatientET!!.getTransformationMethod().equals(PasswordTransformationMethod.getInstance()))
+            {
+                newConfirmPasswordPatientET!!.transformationMethod = HideReturnsTransformationMethod.getInstance()
+            }else {
+                newConfirmPasswordPatientET!!.transformationMethod = PasswordTransformationMethod.getInstance()
+            }
+        }
 
 
 
@@ -238,7 +278,10 @@ class ModifyProfilePatientFragment : Fragment() {
         }
 
     }
-//////////////////////////////////////////Calendar Function////////////////////////////////////////
+
+
+
+    //////////////////////////////////////////Calendar Function////////////////////////////////////////
     private fun updateLabel() {
         val myFormat = "MM/dd/yy" //In which you need put here
 
@@ -413,4 +456,7 @@ fun getLastLocation() {
         }
     }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+private fun notequal(): Boolean {
+    return newConfirmPasswordPatientET!!.text.toString() != newPasswordPatientET!!.text.toString()
+}
 }
