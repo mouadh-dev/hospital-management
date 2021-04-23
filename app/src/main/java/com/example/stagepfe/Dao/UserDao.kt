@@ -178,6 +178,7 @@ class UserDao : IGestionUser {
                     for (ds in snapshot.children) {
                         var appointmentRef = ds.child("Appointment").getValue()
                         if (appointmentRef != null){
+//                            appointment = ds.child()
 
                             responseCallback.successAppointment(appointment)
                         }

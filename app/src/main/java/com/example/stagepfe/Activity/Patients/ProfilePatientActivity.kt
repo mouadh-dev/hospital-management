@@ -1,11 +1,9 @@
 package com.example.stagepfe.Activity.Patients
 
-import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.ImageView
@@ -25,7 +23,6 @@ import com.example.stagepfe.entite.UserItem
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import java.lang.StringBuilder
 
 
 class ProfilePatientActivity : AppCompatActivity() {
@@ -66,7 +63,7 @@ class ProfilePatientActivity : AppCompatActivity() {
 
     private fun initView() {
 
-        viewPager = findViewById(R.id.View_Pager)
+        viewPager = findViewById(R.id.View_Pager_Patient)
         tabs = findViewById(R.id.tabs_ViewPager)
         updatePatient = findViewById(R.id.update_Profile_Patient)
         imageProfilPatient = findViewById(R.id.IVimageProfilPatient)

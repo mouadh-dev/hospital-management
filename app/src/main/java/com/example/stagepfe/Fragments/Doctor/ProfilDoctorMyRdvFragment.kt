@@ -40,31 +40,31 @@ class ProfilDoctorMyRdvFragment : Fragment() {
         listviewDoctorProfilRdv = view.findViewById<ListView>(R.id.listRdvDocteur)
 
 
-//var userdao = UserDao()
-//        var appointment = Appointment()
-//        var userItem = UserItem()
-//        userdao.getAppointment(appointment,userItem,object : AppointmentCallback{
-//            override fun successAppointment(appointment: Appointment) {
-//                listDoctorProfilRdv.add(ModelRdvDocteur("12/12/2021","12:35","Terminer",R.color.green))
-//                listviewDoctorProfilRdv!!.adapter = MyAdapterRdvDoctor(requireContext(),R.layout.list_rdv_for_doctor,listDoctorProfilRdv)
-//            }
+var userdao = UserDao()
+        var appointment = Appointment()
+        var userItem = UserItem()
+        userdao.getAppointment(appointment,userItem,object : AppointmentCallback{
+            override fun successAppointment(appointment: Appointment) {
+                listDoctorProfilRdv.add(ModelRdvDocteur(appointment.date.toString(),appointment.hour.toString(),appointment.FinishOrNot.toString(),R.color.green))
+                listviewDoctorProfilRdv!!.adapter = MyAdapterRdvDoctor(requireContext(),R.layout.list_rdv_for_doctor,listDoctorProfilRdv)
+            }
+
+            override fun failureAppointment() {
+
+            }
+
+        })
+
+
+
+//        listDoctorProfilRdv.add(ModelRdvDocteur("12/12/2021","12:35","Terminer",R.color.green))
+//        listDoctorProfilRdv.add(ModelRdvDocteur("12/12/2021","12:35","Pas encore",R.color.red))
+//        listDoctorProfilRdv.add(ModelRdvDocteur("12/12/2021","12:35","Terminer",R.color.green))
+//        listDoctorProfilRdv.add(ModelRdvDocteur("12/12/2021","12:35","Pas encore",R.color.red))
+//        listDoctorProfilRdv.add(ModelRdvDocteur("12/12/2021","12:35","Terminer",R.color.green))
+//        listDoctorProfilRdv.add(ModelRdvDocteur("12/12/2021","12:35","Pas encore",R.color.red))
 //
-//            override fun failureAppointment() {
-//
-//            }
-//
-//        })
-
-
-
-        listDoctorProfilRdv.add(ModelRdvDocteur("12/12/2021","12:35","Terminer",R.color.green))
-        listDoctorProfilRdv.add(ModelRdvDocteur("12/12/2021","12:35","Pas encore",R.color.red))
-        listDoctorProfilRdv.add(ModelRdvDocteur("12/12/2021","12:35","Terminer",R.color.green))
-        listDoctorProfilRdv.add(ModelRdvDocteur("12/12/2021","12:35","Pas encore",R.color.red))
-        listDoctorProfilRdv.add(ModelRdvDocteur("12/12/2021","12:35","Terminer",R.color.green))
-        listDoctorProfilRdv.add(ModelRdvDocteur("12/12/2021","12:35","Pas encore",R.color.red))
-
-        listviewDoctorProfilRdv!!.adapter = MyAdapterRdvDoctor(requireContext(),R.layout.list_rdv_for_doctor,listDoctorProfilRdv)
+//        listviewDoctorProfilRdv!!.adapter = MyAdapterRdvDoctor(requireContext(),R.layout.list_rdv_for_doctor,listDoctorProfilRdv)
 
 
     }
