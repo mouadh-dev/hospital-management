@@ -38,8 +38,11 @@ class PharmacienProfilUpdateFragment : Fragment() {
     private var dateNaissProfilPharmacienET: EditText? = null
     private var telephoneProfilPharmacienET: EditText? = null
     private var showNewPasswordPharmacienIV: ImageView? = null
+    private var showConfirmNewPasswordPharmacienIV: ImageView? = null
     private var newPasswordPharmacienET: EditText? = null
+    private var confirmNewPasswordPharmacienET: EditText? = null
     private var saveProfilPharmacienButton: Button? = null
+    private var returnProfilPharmacienButton: Button? = null
 
 
     val myProfilPharmacienCalendar = Calendar.getInstance()
@@ -65,8 +68,11 @@ class PharmacienProfilUpdateFragment : Fragment() {
         dateNaissProfilPharmacienET = view.findViewById(R.id.DateNaissProfilPharmacien)
         telephoneProfilPharmacienET = view.findViewById(R.id.TelephoneProfilPharmacien)
         showNewPasswordPharmacienIV = view.findViewById(R.id.Eye_Show_newPassword_Pharmacien)
+        showConfirmNewPasswordPharmacienIV = view.findViewById(R.id.Eye_Show_ConfirmnewPassword_Pharmacien)
         newPasswordPharmacienET = view.findViewById(R.id.NewPasswordPharmacien)
+        confirmNewPasswordPharmacienET = view.findViewById(R.id.ConfirmNewPasswordDoctor)
         saveProfilPharmacienButton = view.findViewById<Button>(R.id.SaveProfilPharmacienButton)
+        returnProfilPharmacienButton = view.findViewById<Button>(R.id.ReturnbuttonProfilPharmacien)
 
         adresseProfilPharmacienET!!.isFocusable = false
         dateNaissProfilPharmacienET!!.isFocusable = false
@@ -102,6 +108,41 @@ class PharmacienProfilUpdateFragment : Fragment() {
                 newPasswordPharmacienET!!.transformationMethod = PasswordTransformationMethod.getInstance()
             }
         }
+
+
+        confirmNewPasswordPharmacienET!!.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (notequal()){
+                    saveProfilPharmacienButton!!.isEnabled = false
+                    saveProfilPharmacienButton!!.setBackgroundResource(R.drawable.gray_button)
+                    confirmNewPasswordPharmacienET!!.error = "le mot de passe ne correspond pas"
+                }else{
+                    saveProfilPharmacienButton!!.isEnabled = true
+                    saveProfilPharmacienButton!!.setBackgroundResource(R.drawable.button_style_smaller)
+
+                }
+            }
+
+
+        })
+
+        showConfirmNewPasswordPharmacienIV!!.setOnClickListener{
+            if(confirmNewPasswordPharmacienET!!.getTransformationMethod().equals(PasswordTransformationMethod.getInstance()))
+            {
+                confirmNewPasswordPharmacienET!!.transformationMethod = HideReturnsTransformationMethod.getInstance()
+            }else {
+                confirmNewPasswordPharmacienET!!.transformationMethod = PasswordTransformationMethod.getInstance()
+            }
+        }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////////////
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
 
@@ -214,6 +255,9 @@ class PharmacienProfilUpdateFragment : Fragment() {
 
         //*****************************************calender function*******************************************
           }
+
+
+
     private fun updateLabel() {
         val myFormat = "MM/dd/yy" //In which you need put here
 
@@ -384,5 +428,8 @@ class PharmacienProfilUpdateFragment : Fragment() {
 
 
     }
+    private fun notequal(): Boolean {
+        return confirmNewPasswordPharmacienET!!.text.toString() != newPasswordPharmacienET!!.text.toString()
 
+    }
 }

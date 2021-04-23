@@ -35,8 +35,11 @@ class DoctorProfileUpdateFragment : Fragment() {
     private var dateNaissProfilDoctorET: EditText? = null
     private var telephoneProfilDoctorET: EditText? = null
     private var newPasswordDoctorET: EditText? = null
+    private var confirmNewPasswordDoctorET: EditText? = null
     private var saveProfilButton: Button? = null
+    private var returnProfilButton: Button? = null
     private var showNewPasswordIV: ImageView? = null
+    private var showNewPassworConfirmdIV: ImageView? = null
 
 
 
@@ -67,8 +70,11 @@ class DoctorProfileUpdateFragment : Fragment() {
         dateNaissProfilDoctorET = view.findViewById(R.id.DateNaissProfilDoctor)
         telephoneProfilDoctorET = view.findViewById(R.id.TelephoneProfilDoctor)
         newPasswordDoctorET = view.findViewById(R.id.NewPasswordDoctor)
+        confirmNewPasswordDoctorET = view.findViewById(R.id.ConfirmNewPasswordDoctor)
         saveProfilButton = view.findViewById<Button>(R.id.SaveProfilDoctorButton)
+        returnProfilButton = view.findViewById<Button>(R.id.ReturnbuttonProfilDoctor)
         showNewPasswordIV = view.findViewById(R.id.Eye_Show_newPassword)
+        showNewPassworConfirmdIV = view.findViewById(R.id.Eye_Show_ConfirmnewPassword_Doctor)
 
         adresseProfilDoctorET!!.isFocusable = false
         dateNaissProfilDoctorET!!.isFocusable = false
@@ -167,6 +173,40 @@ class DoctorProfileUpdateFragment : Fragment() {
                 newPasswordDoctorET!!.transformationMethod = PasswordTransformationMethod.getInstance()
             }
         }
+
+
+
+        confirmNewPasswordDoctorET!!.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (notequal()){
+                    saveProfilButton!!.isEnabled = false
+                    saveProfilButton!!.setBackgroundResource(R.drawable.gray_button)
+                    confirmNewPasswordDoctorET!!.error = "le mot de passe ne correspond pas"
+                }else{
+                    saveProfilButton!!.isEnabled = true
+                    saveProfilButton!!.setBackgroundResource(R.drawable.button_style_smaller)
+
+                }
+            }
+
+
+        })
+
+        showNewPassworConfirmdIV!!.setOnClickListener{
+            if(confirmNewPasswordDoctorET!!.getTransformationMethod().equals(PasswordTransformationMethod.getInstance()))
+            {
+                confirmNewPasswordDoctorET!!.transformationMethod = HideReturnsTransformationMethod.getInstance()
+            }else {
+                confirmNewPasswordDoctorET!!.transformationMethod = PasswordTransformationMethod.getInstance()
+            }
+        }
+
         ///////////////////////////////////////////////////////////////////////////////////////////////////
 
         //*****************************************calender***********************************************
@@ -217,6 +257,9 @@ class DoctorProfileUpdateFragment : Fragment() {
 
         //*****************************************calender function*******************************************
     }
+
+
+
     private fun updateLabel() {
         val myFormat = "MM/dd/yy" //In which you need put here
 
@@ -390,5 +433,7 @@ class DoctorProfileUpdateFragment : Fragment() {
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
-
+private fun notequal(): Boolean {
+    return confirmNewPasswordDoctorET!!.text.toString() != newPasswordDoctorET!!.text.toString()
+}
 }

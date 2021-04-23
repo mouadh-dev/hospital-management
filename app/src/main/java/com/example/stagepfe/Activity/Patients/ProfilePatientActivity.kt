@@ -1,6 +1,10 @@
 package com.example.stagepfe.Activity.Patients
 
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -28,11 +32,14 @@ class ProfilePatientActivity : AppCompatActivity() {
     var viewPager: ViewPager? = null
     var tabs: TabLayout? = null
     var updatePatient: ImageView? = null
+    var imageProfilPatient: ImageView? = null
     var containerUpdate: LinearLayout? = null
     var containerprofileViwPager: LinearLayout? = null
     var namePatient: TextView? = null
     var numbrePatient: TextView? = null
     var birthPAtient: TextView? = null
+    private val pickImage = 100
+    private var imageUri: Uri? = null
 
 
 
@@ -62,11 +69,20 @@ class ProfilePatientActivity : AppCompatActivity() {
         viewPager = findViewById(R.id.View_Pager)
         tabs = findViewById(R.id.tabs_ViewPager)
         updatePatient = findViewById(R.id.update_Profile_Patient)
+        imageProfilPatient = findViewById(R.id.IVimageProfilPatient)
         containerUpdate = findViewById(R.id.Container_UpdateAll)
         containerprofileViwPager = findViewById(R.id.Container_ViewPager)
         namePatient = findViewById<TextView>(R.id.Full_Name_Patient)
         numbrePatient = findViewById<TextView>(R.id.Number_Patient)
         birthPAtient = findViewById<TextView>(R.id.Birth_Patient)
+
+
+
+        imageProfilPatient!!.setOnClickListener {
+            val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+            startActivityForResult(gallery, pickImage)
+
+        }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
         var userDao = UserDao()
@@ -112,4 +128,11 @@ class ProfilePatientActivity : AppCompatActivity() {
 
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK && requestCode == pickImage) {
+            imageUri = data?.data
+            imageProfilPatient!!.setImageURI(imageUri)
+        }
+    }
 }
