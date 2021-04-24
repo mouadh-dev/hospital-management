@@ -17,6 +17,7 @@ import com.example.stagepfe.Models.Doctors.ModelRdvDocteur
 import com.example.stagepfe.R
 import com.example.stagepfe.entite.Appointment
 import com.example.stagepfe.entite.UserItem
+import java.util.HashMap
 
 
 class ProfilDoctorMyRdvFragment : Fragment() {
@@ -40,18 +41,30 @@ class ProfilDoctorMyRdvFragment : Fragment() {
         listviewDoctorProfilRdv = view.findViewById<ListView>(R.id.listRdvDocteur)
 
 
-var userdao = UserDao()
+        var userdao = UserDao()
         var appointment = Appointment()
         var userItem = UserItem()
         userdao.getAppointment(appointment,userItem,object : AppointmentCallback{
+
+
+//            override fun successAppointment(appointment: HashMap<String, HashMap<String, Appointment>>?) {
+//
+//                //listDoctorProfilRdv.add(ModelRdvDocteur(appointment.date.toString(),appointment.hour.toString(),appointment.FinishOrNot.toString(),R.color.green))
+//                //listviewDoctorProfilRdv!!.adapter = MyAdapterRdvDoctor(requireContext(),R.layout.list_rdv_for_doctor,listDoctorProfilRdv)
+//
+//            }
+
             override fun successAppointment(appointment: Appointment) {
-                listDoctorProfilRdv.add(ModelRdvDocteur(appointment.date.toString(),appointment.hour.toString(),appointment.FinishOrNot.toString(),R.color.green))
+listDoctorProfilRdv.add(ModelRdvDocteur(appointment.date.toString(),appointment.hour.toString(),appointment.FinishOrNot.toString(),R.color.green))
                 listviewDoctorProfilRdv!!.adapter = MyAdapterRdvDoctor(requireContext(),R.layout.list_rdv_for_doctor,listDoctorProfilRdv)
+
             }
 
             override fun failureAppointment() {
 
             }
+
+
 
         })
 

@@ -132,13 +132,13 @@ class UserDao : IGestionUser {
 
 
                 if (snapshot.exists()) {
-
                     for (ds in snapshot.children) {
 
                         var userItem = ds.getValue(UserItem::class.java)
                         var firstNAme = userItem!!.nom
                         var lastName = userItem.prenom
                         var fullNAme = firstNAme + " " + lastName
+                        var id = userItem.id
 
                         if (appointment.namePatient.equals(fullNAme)) {
 
@@ -149,9 +149,9 @@ class UserDao : IGestionUser {
                             var day = HashMap<String, HashMap<String, Appointment>>()
                             hour[appointment.hour.toString()] = appointment
                             day[appointment.date.toString()] = hour
-                            userItem.reservation = day
+                            userItem.rendezVous = day
                             userRef.child(id.toString())
-                                .child("Appointment").child(appointment.date.toString())
+                                .child("rendezVous").child(appointment.date.toString())
                                 .child(appointment.hour.toString()).setValue(appointment)
                         }
                     }
@@ -164,7 +164,7 @@ class UserDao : IGestionUser {
 
     }
 
-    /////////////////////////////////////////////getAppointment/////////////////////////////////////////
+/////////////////////////////////////////////getAppointment/////////////////////////////////////////
     fun getAppointment(
         appointment: Appointment,
         userItem: UserItem,
@@ -172,17 +172,36 @@ class UserDao : IGestionUser {
     ) {
         userRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+
                 if (snapshot.exists()) {
-
-
                     for (ds in snapshot.children) {
-                        var appointmentRef = ds.child("Appointment").getValue()
-                        if (appointmentRef != null){
-//                            appointment = ds.child()
+                        var userItem = ds.getValue(UserItem::class.java)
+                        if (userItem!!.rendezVous != null) {
+                            var map = userItem.rendezVous
+                            for (entry in map!!.entries){
 
-                            responseCallback.successAppointment(appointment)
+                                for (test in entry.value){
+                                    var appointment = test.value
+
+                                    responseCallback.successAppointment(appointment)
+                                }
+                            }
+
+//                            date = date.dropLast(1)
+//                            date = date.drop(1)
+//                            var hour = ds.child("users").child(id).child("rendezVous").child(date).value as HashMap<String,Appointment>
+//
+//                            for (n in hour)
+//                            hour.get(0)
+//                            var v = ds.child("users").child(id).child("rendezVous").child(date).child(hour).getValue(Appointment::class.java)
+
+//                            println("mouadh $v")
+
+
+
                         }
                     }
+
                 }
             }
 
