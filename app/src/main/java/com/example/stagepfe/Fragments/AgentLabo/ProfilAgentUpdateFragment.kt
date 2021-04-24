@@ -153,9 +153,10 @@ class ProfilAgentUpdateFragment : Fragment() {
         }
 
         saveProfilAgentButton!!.setOnClickListener {
-            if (firstNameProfilAgentET!!.text.isEmpty() || secondNameProfilAgentET!!.text.isEmpty()
-                || adresseProfilAgentET!!.text.isEmpty() || dateNaissProfilAgentET!!.text.isEmpty()
-                || newPasswordAgentET!!.text.isEmpty()
+            if (firstNameProfilAgentET!!.text.isEmpty() && secondNameProfilAgentET!!.text.isEmpty()
+                &&  adresseProfilAgentET!!.text.isEmpty() &&  dateNaissProfilAgentET!!.text.isEmpty()
+                &&  newPasswordAgentET!!.text.isEmpty() &&  confirmNewPasswordAgentET!!.text.isEmpty()
+                &&  telephoneProfilAgentET!!.text.isEmpty()
             ) {
                 var v = View.inflate(requireContext(), R.layout.fragment_dialog, null)
                 var builder = AlertDialog.Builder(requireContext())

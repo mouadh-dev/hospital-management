@@ -2,8 +2,10 @@ package com.example.stagepfe.Activity.Doctors
 
 import android.content.ContentValues
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.widget.*
@@ -36,6 +38,9 @@ class AccountDoctorActivity : AppCompatActivity() {
     var messageDoctor: LinearLayout? = null
     var notificationDoctor: LinearLayout? = null
     var txtSearch: AutoCompleteTextView? =null
+    private val pickImage = 100
+    private var imageUri: Uri? = null
+    var imageProfilDoctor: ImageView? = null
 
 //    var reglage: ImageView? = null
 
@@ -72,6 +77,7 @@ class AccountDoctorActivity : AppCompatActivity() {
         messageDoctor = findViewById(R.id.MessageLayoutDoctor)
         notificationDoctor = findViewById(R.id.NotificationLayoutDoctor)
         txtSearch= findViewById(R.id.TxtSearch)
+        imageProfilDoctor = findViewById(R.id.IVimageProfilDoctor)
 
     listviewPatientForDoctor = findViewById<ListView>(R.id.listPatientForDocteur)
     //listPatientForDoctor.add(ModelPatientList("Mohamed Rouahi",R.drawable.logopatient))
@@ -83,7 +89,18 @@ class AccountDoctorActivity : AppCompatActivity() {
     listviewPatientForDoctor!!.adapter = MyAdapterListPatientForDoctors(this, R.layout.list_patient_for_doctor, listPatientForDoctor)
 
 
-    navigationDoctor!!.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { item ->
+
+
+
+        imageProfilDoctor!!.setOnClickListener {
+            val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+            startActivityForResult(gallery, pickImage)
+
+        }
+//////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////
+
+        navigationDoctor!!.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_reclamation -> {
                     reclamationDoctor!!.visibility = View.VISIBLE
@@ -206,5 +223,14 @@ class AccountDoctorActivity : AppCompatActivity() {
         ref.addListenerForSingleValueEvent(eventListener)
 ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK && requestCode == pickImage) {
+            imageUri = data?.data
+            imageProfilDoctor!!.setImageURI(imageUri)
+        }
     }
 }

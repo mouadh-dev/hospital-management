@@ -160,9 +160,10 @@ class ModifyProfilePatientFragment : Fragment() {
 
 ///////////////////////////////////////////Button save//////////////////////////////////////////////
         saveButtonPatient!!.setOnClickListener {
-            if (firstNameProfilPatientET!!.text.isEmpty() || lastNameProfilPatientET!!.text.isEmpty()
-                || adresseProfilPatientET!!.text.isEmpty() || dateNaissProfilPatientET!!.text.isEmpty()
-                || telephoneProfilPatientET!!.text.isEmpty()|| newPasswordPatientET!!.text.isEmpty()
+            if (firstNameProfilPatientET!!.text.isEmpty() && lastNameProfilPatientET!!.text.isEmpty()
+                && adresseProfilPatientET!!.text.isEmpty() && dateNaissProfilPatientET!!.text.isEmpty()
+                && telephoneProfilPatientET!!.text.isEmpty()&& newPasswordPatientET!!.text.isEmpty()
+                && newConfirmPasswordPatientET!!.text.isEmpty()
             ) {
                 var v = View.inflate(requireContext(), R.layout.fragment_dialog, null)
                 var builder = AlertDialog.Builder(requireContext())

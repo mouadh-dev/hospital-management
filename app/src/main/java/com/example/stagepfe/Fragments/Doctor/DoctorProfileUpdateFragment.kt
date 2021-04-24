@@ -35,6 +35,7 @@ class DoctorProfileUpdateFragment : Fragment() {
     private var dateNaissProfilDoctorET: EditText? = null
     private var telephoneProfilDoctorET: EditText? = null
     private var newPasswordDoctorET: EditText? = null
+    private var bioDoctorET: EditText? = null
     private var confirmNewPasswordDoctorET: EditText? = null
     private var saveProfilButton: Button? = null
     private var returnProfilButton: Button? = null
@@ -71,6 +72,7 @@ class DoctorProfileUpdateFragment : Fragment() {
         telephoneProfilDoctorET = view.findViewById(R.id.TelephoneProfilDoctor)
         newPasswordDoctorET = view.findViewById(R.id.NewPasswordDoctor)
         confirmNewPasswordDoctorET = view.findViewById(R.id.ConfirmNewPasswordDoctor)
+        bioDoctorET = view.findViewById(R.id.DescriptionProfileDoctor)
         saveProfilButton = view.findViewById<Button>(R.id.SaveProfilDoctorButton)
         returnProfilButton = view.findViewById<Button>(R.id.ReturnbuttonProfilDoctor)
         showNewPasswordIV = view.findViewById(R.id.Eye_Show_newPassword)
@@ -93,9 +95,10 @@ class DoctorProfileUpdateFragment : Fragment() {
         }
 
         saveProfilButton!!.setOnClickListener {
-            if (firstNameProfilDoctorET!!.text.isEmpty() || secondNameProfilDoctorET!!.text.isEmpty()
-                || adresseProfilDoctorET!!.text.isEmpty() || dateNaissProfilDoctorET!!.text.isEmpty()
-                || newPasswordDoctorET!!.text.isEmpty()
+            if (firstNameProfilDoctorET!!.text.isEmpty() && secondNameProfilDoctorET!!.text.isEmpty()
+                && adresseProfilDoctorET!!.text.isEmpty() && dateNaissProfilDoctorET!!.text.isEmpty()
+                && telephoneProfilDoctorET!!.text.isEmpty() && bioDoctorET!!.text.isEmpty()
+                && newPasswordDoctorET!!.text.isEmpty() && confirmNewPasswordDoctorET!!.text.isEmpty()
             ) {
                 var v = View.inflate(requireContext(), R.layout.fragment_dialog, null)
                 var builder = AlertDialog.Builder(requireContext())
