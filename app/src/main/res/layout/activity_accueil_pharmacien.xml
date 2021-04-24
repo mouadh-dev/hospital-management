@@ -20,6 +20,7 @@
         android:visibility="visible">
 
         <ImageView
+            android:id="@+id/IVimageProfilPharmacien"
             android:layout_width="51dp"
             android:layout_height="51dp"
             android:layout_marginLeft="25dp"

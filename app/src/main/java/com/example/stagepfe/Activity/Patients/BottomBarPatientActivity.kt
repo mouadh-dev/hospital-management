@@ -2,7 +2,9 @@ package com.example.stagepfe.Activity.Patients
 
 import android.content.ContentValues
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.view.View.GONE
@@ -16,12 +18,24 @@ import com.example.stagepfe.Fragments.Patient.NotificationPatintFragment
 import com.example.stagepfe.Fragments.Patient.PatientAccountFragment
 import com.example.stagepfe.Fragments.Patient.PatientReclamationFragment
 import com.example.stagepfe.R
+import com.google.android.gms.tasks.OnFailureListener
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.UploadTask
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.util.*
+import kotlin.collections.ArrayList
 
 class BottomBarPatientActivity : AppCompatActivity() {
     var listview: ListView? = null
@@ -36,10 +50,15 @@ class BottomBarPatientActivity : AppCompatActivity() {
     var messageLayout: LinearLayout? = null
     var notificatioLayout: LinearLayout? = null
     var txtSearchDoctor: AutoCompleteTextView? =null
+    private val pickImage = 100
+    private var imageUri: Uri? = null
+    var imageProfilPatient: ImageView? = null
+    //  lateinit var auth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bottom_bar)
-
+        //  auth = FirebaseAuth.getInstance()
         listview = findViewById<ListView>(R.id.list)
         list.add(Model("Dr Foulen Fouleni", "Generaliste", R.drawable.doctor_ic))
         list.add(Model("Dr Foulen Fouleni", "Generaliste", R.drawable.doctor_ic))
@@ -71,6 +90,18 @@ class BottomBarPatientActivity : AppCompatActivity() {
         messageLayout = findViewById(R.id.MessageLayout)
         notificatioLayout = findViewById(R.id.NotificationLayout)
         txtSearchDoctor= findViewById(R.id.TxtSearchDoctor)
+        imageProfilPatient = findViewById(R.id.IVimageProfilPatient)
+
+
+
+        imageProfilPatient!!.setOnClickListener {
+            val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+            startActivityForResult(gallery, pickImage)
+            //   updateImageProfil()
+
+        }
+//////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -151,6 +182,30 @@ class BottomBarPatientActivity : AppCompatActivity() {
         populateSearch()
     }
 
+   // private fun updateImageProfil() {
+    //  val user = auth.currentUser
+   // user?.let { user ->
+   //  val photoURI = Uri.parse("android.resource://$packageName/${R.drawable.logo_black_square}")
+    //  val profileUpdates = UserProfileChangeRequest.Builder()
+    //     .setPhotoUri(photoURI)
+    //    .build()
+    //  CoroutineScope(Dispatchers.IO).launch {
+    //   try {
+    //      user.updateProfile(profileUpdates).await()
+    //      withContext(Dispatchers.Main) {
+    //         Toast.makeText(this@BottomBarPatientActivity, "Successfully updated profile",
+    //   Toast.LENGTH_LONG).show()
+    //        }
+    //    } catch(e: Exception) {
+    //        withContext(Dispatchers.Main) {
+    //          Toast.makeText(this@BottomBarPatientActivity, e.message, Toast.LENGTH_LONG).show()
+    //      }
+    //     }
+
+    //    }
+//  }
+    //  }
+
     private fun populateSearch() {
         val ref = FirebaseDatabase.getInstance().getReference("users")
         val eventListener: ValueEventListener = object : ValueEventListener {
@@ -183,4 +238,38 @@ class BottomBarPatientActivity : AppCompatActivity() {
         }
         ref.addListenerForSingleValueEvent(eventListener)
     }
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK && requestCode == pickImage) {
+            imageUri = data?.data
+            imageProfilPatient!!.setImageURI(imageUri)
+            // uploadImageToFirebase(imageUri)
+        }
+    }
+///////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////Storage image ///////////////////////////////////////////////////////
+   // private fun uploadImageToFirebase(imageUri: Uri?) {
+   // if (imageUri != null) {
+    // val fileName = UUID.randomUUID().toString() +".jpg"
+
+    // val database = FirebaseDatabase.getInstance()
+    // val refStorage = FirebaseStorage.getInstance().reference.child("images/$fileName")
+
+    // refStorage.putFile(imageUri)
+    //  .addOnSuccessListener(
+    //  OnSuccessListener<UploadTask.TaskSnapshot> { taskSnapshot ->
+        //    taskSnapshot.storage.downloadUrl.addOnSuccessListener {
+    //         val imageUrl = it.toString()
+    //     }
+    //  })
+
+    //  ?.addOnFailureListener(OnFailureListener { e ->
+    //       print(e.message)
+    //   })
+    //  }
+    // }
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 }

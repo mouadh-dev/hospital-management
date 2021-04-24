@@ -1,9 +1,12 @@
 package com.example.stagepfe.Activity.Pharmacien
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.View
+import android.widget.ImageView
 import com.example.stagepfe.Activity.Doctors.DoctorProfilActivity
 import com.example.stagepfe.Fragments.Doctor.AccueilDoctorFragment
 import com.example.stagepfe.Fragments.Doctor.DoctorMessageFragment
@@ -16,6 +19,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 class AccueilPharmacienActivity : AppCompatActivity() {
 
     var navigationPharmacien: BottomNavigationView? = null
+    private val pickImage = 100
+    private var imageUri: Uri? = null
+    var imageProfilPharmacien: ImageView? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_accueil_pharmacien)
@@ -26,6 +33,15 @@ class AccueilPharmacienActivity : AppCompatActivity() {
 
     private fun initView() {
         navigationPharmacien = findViewById(R.id.bottom_nav_Pharmacien)
+        imageProfilPharmacien = findViewById(R.id.IVimageProfilPharmacien)
+
+        imageProfilPharmacien!!.setOnClickListener {
+            val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+            startActivityForResult(gallery, pickImage)
+
+        }
+//////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////
 
         navigationPharmacien!!.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { item ->
             when (item.itemId) {
@@ -49,5 +65,14 @@ class AccueilPharmacienActivity : AppCompatActivity() {
             }
             true
         })
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK && requestCode == pickImage) {
+            imageUri = data?.data
+            imageProfilPharmacien!!.setImageURI(imageUri)
+        }
     }
 }

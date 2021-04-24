@@ -156,9 +156,10 @@ class PharmacienProfilUpdateFragment : Fragment() {
         }
 
         saveProfilPharmacienButton!!.setOnClickListener {
-            if (firstNameProfilPharmacienET!!.text.isEmpty() || secondNameProfilPharmacienET!!.text.isEmpty()
-                || adresseProfilPharmacienET!!.text.isEmpty() || dateNaissProfilPharmacienET!!.text.isEmpty()
-                || newPasswordPharmacienET!!.text.isEmpty()
+            if (firstNameProfilPharmacienET!!.text.isEmpty() && secondNameProfilPharmacienET!!.text.isEmpty()
+                &&  adresseProfilPharmacienET!!.text.isEmpty() &&  dateNaissProfilPharmacienET!!.text.isEmpty()
+                &&  newPasswordPharmacienET!!.text.isEmpty() &&  confirmNewPasswordPharmacienET!!.text.isEmpty()
+                &&  telephoneProfilPharmacienET!!.text.isEmpty()
             ) {
                 var v = View.inflate(requireContext(), R.layout.fragment_dialog, null)
                 var builder = AlertDialog.Builder(requireContext())
