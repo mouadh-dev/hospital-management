@@ -107,7 +107,6 @@ class UserDao : IGestionUser {
 
         myRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-//                val user = mAuth.currentUser
 
                 getUserByUid(mAuth.currentUser.uid, userCallback)
             }
@@ -130,19 +129,13 @@ class UserDao : IGestionUser {
 
             override fun onDataChange(snapshot: DataSnapshot) {
 
-
                 if (snapshot.exists()) {
                     for (ds in snapshot.children) {
-
                         var userItem = ds.getValue(UserItem::class.java)
                         var firstNAme = userItem!!.nom
                         var lastName = userItem.prenom
                         var fullNAme = firstNAme + " " + lastName
-                        var id = userItem.id
-
                         if (appointment.namePatient.equals(fullNAme)) {
-
-
                             var id = userItem.id
                             responseCallback.successAppointment(appointment)
                             var hour = HashMap<String, Appointment>()
@@ -164,47 +157,26 @@ class UserDao : IGestionUser {
 
     }
 
-/////////////////////////////////////////////getAppointment/////////////////////////////////////////
-    fun getAppointment(
-        appointment: Appointment,
-        userItem: UserItem,
-        responseCallback: AppointmentCallback
-    ) {
+    /////////////////////////////////////////////getAppointment/////////////////////////////////////////
+    fun getAppointment(userItem:UserItem,responseCallback: AppointmentCallback) {
         userRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-
                 if (snapshot.exists()) {
                     for (ds in snapshot.children) {
                         var userItem = ds.getValue(UserItem::class.java)
                         if (userItem!!.rendezVous != null) {
                             var map = userItem.rendezVous
-                            for (entry in map!!.entries){
-
-                                for (test in entry.value){
+                            for (entry in map!!.entries) {
+                                for (test in entry.value) {
                                     var appointment = test.value
 
                                     responseCallback.successAppointment(appointment)
                                 }
                             }
-
-//                            date = date.dropLast(1)
-//                            date = date.drop(1)
-//                            var hour = ds.child("users").child(id).child("rendezVous").child(date).value as HashMap<String,Appointment>
-//
-//                            for (n in hour)
-//                            hour.get(0)
-//                            var v = ds.child("users").child(id).child("rendezVous").child(date).child(hour).getValue(Appointment::class.java)
-
-//                            println("mouadh $v")
-
-
-
                         }
                     }
-
                 }
             }
-
             override fun onCancelled(error: DatabaseError) {
                 responseCallback.failureAppointment()
             }
