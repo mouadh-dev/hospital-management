@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.stagepfe.Adapters.Doctor.MyAdapterRdvDoctor
 import com.example.stagepfe.Dao.AppointmentCallback
@@ -15,13 +14,12 @@ import com.example.stagepfe.Models.Doctors.ModelRdvDocteur
 import com.example.stagepfe.R
 import com.example.stagepfe.entite.Appointment
 import com.example.stagepfe.entite.UserItem
-import com.google.firebase.auth.FirebaseAuth
 
 
 class ProfilDoctorMyRdvFragment : Fragment() {
     var listviewDoctorProfilRdv: ListView? = null
     var listDoctorProfilRdv = mutableListOf<ModelRdvDocteur>()
-    var nameDoctor:String? = null
+    var nameDoctor: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,12 +38,12 @@ class ProfilDoctorMyRdvFragment : Fragment() {
 
 
         var userdao = UserDao()
-var userItem = UserItem()
+        var userItem = UserItem()
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        userdao.getAppointment(userItem,object : AppointmentCallback {
+        userdao.getAppointment(userItem, object : AppointmentCallback {
             override fun successAppointment(appointment: Appointment) {
                 userdao.retrieveDataUser(requireActivity(),
                     UserItem(),
@@ -53,21 +51,38 @@ var userItem = UserItem()
                         override fun onSuccess(userItem: UserItem) {
                             var nameDoctor = userItem.nom + " " + userItem.prenom
                             println("mouadh" + nameDoctor)
-                            if(appointment.nameDoctor!!.equals(nameDoctor)) {
-                                listDoctorProfilRdv.add(
-                                    ModelRdvDocteur(
-                                        appointment.date.toString(),
-                                        appointment.hour.toString(),
-                                        appointment.FinishOrNot.toString(),
-                                        R.color.green,
-                                        appointment.namePatient.toString()
+                            if (appointment.nameDoctor!!.equals(nameDoctor)) {
+                                if (appointment.FinishOrNot.equals("Pas encore")) {
+                                    listDoctorProfilRdv.add(
+                                        ModelRdvDocteur(
+                                            appointment.date.toString(),
+                                            appointment.hour.toString(),
+                                            appointment.FinishOrNot.toString(),
+                                            R.color.green,
+                                            appointment.namePatient.toString()
+                                        )
                                     )
-                                )
-                                listviewDoctorProfilRdv!!.adapter = MyAdapterRdvDoctor(
-                                    requireContext(),
-                                    R.layout.list_rdv_for_doctor,
-                                    listDoctorProfilRdv
-                                )
+                                    listviewDoctorProfilRdv!!.adapter = MyAdapterRdvDoctor(
+                                        requireContext(),
+                                        R.layout.list_rdv_for_doctor,
+                                        listDoctorProfilRdv
+                                    )
+                                } else {
+                                    listDoctorProfilRdv.add(
+                                        ModelRdvDocteur(
+                                            appointment.date.toString(),
+                                            appointment.hour.toString(),
+                                            appointment.FinishOrNot.toString(),
+                                            R.color.red,
+                                            appointment.namePatient.toString()
+                                        )
+                                    )
+                                    listviewDoctorProfilRdv!!.adapter = MyAdapterRdvDoctor(
+                                        requireContext(),
+                                        R.layout.list_rdv_for_doctor,
+                                        listDoctorProfilRdv
+                                    )
+                                }
                             }
 
                         }
@@ -82,19 +97,7 @@ var userItem = UserItem()
 
             override fun failureAppointment() {}
         })
-
-
-//        listDoctorProfilRdv.add(ModelRdvDocteur("12/12/2021","12:35","Terminer",R.color.green))
-//        listDoctorProfilRdv.add(ModelRdvDocteur("12/12/2021","12:35","Pas encore",R.color.red))
-//        listDoctorProfilRdv.add(ModelRdvDocteur("12/12/2021","12:35","Terminer",R.color.green))
-//        listDoctorProfilRdv.add(ModelRdvDocteur("12/12/2021","12:35","Pas encore",R.color.red))
-//        listDoctorProfilRdv.add(ModelRdvDocteur("12/12/2021","12:35","Terminer",R.color.green))
-//        listDoctorProfilRdv.add(ModelRdvDocteur("12/12/2021","12:35","Pas encore",R.color.red))
-
-
-
     }
-
 
 
 }
