@@ -14,9 +14,11 @@ import android.widget.TextView
 import com.example.stagepfe.Activity.Doctors.AccountDoctorActivity
 import com.example.stagepfe.Activity.Doctors.DoctorProfilActivity
 import com.example.stagepfe.Dao.ResponseCallback
+import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.R
 import com.example.stagepfe.entite.Reclamation
+import com.example.stagepfe.entite.UserItem
 
 
 class DoctorReclamationFragment : Fragment() {
@@ -24,6 +26,9 @@ class DoctorReclamationFragment : Fragment() {
     private var phoneNumberReclamationET: EditText? = null
     private var descriptionReclamationET: EditText? = null
     private var sendButton: Button? = null
+    var userDao = UserDao()
+    var reclamation = Reclamation()
+    var userItem = UserItem()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,6 +47,22 @@ class DoctorReclamationFragment : Fragment() {
         phoneNumberReclamationET = view.findViewById(R.id.ReclamationPhoneNumber)
         descriptionReclamationET = view.findViewById(R.id.DescriptionReclamation)
         sendButton = view.findViewById<Button>(R.id.SendbuttonReclamtion)
+
+        fullNameReclamationET!!.isFocusable = false
+        phoneNumberReclamationET!!.isFocusable = false
+
+
+        userDao.retrieveDataUser(requireActivity(), userItem, object : UserCallback {
+            override fun onSuccess(userItem: UserItem) {
+                fullNameReclamationET!!.setText(userItem.prenom + " " + userItem.nom)
+                phoneNumberReclamationET!!.setText(userItem.phonenumber)
+            }
+
+            override fun failure() {
+
+            }
+        })
+
 
         sendButton!!.setOnClickListener {
             if (fullNameReclamationET!!.text.isEmpty() || phoneNumberReclamationET!!.text.isEmpty()
@@ -80,8 +101,8 @@ class DoctorReclamationFragment : Fragment() {
                     .setOnClickListener {
                         dialog.dismiss()
 
-                        var userDao = UserDao()
-                        var reclamation = Reclamation()
+
+
                         reclamation.fullName = fullNameReclamationET!!.text.toString()
                         reclamation.description = descriptionReclamationET!!.text.toString()
                         reclamation.phoneNumber = phoneNumberReclamationET!!.text.toString()

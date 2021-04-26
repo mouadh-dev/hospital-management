@@ -46,14 +46,27 @@ class ProfilDoctorMyPatientFragment : Fragment() {
                     UserItem(),
                     object : UserCallback {
                         override fun onSuccess(userItem: UserItem) {
-                            var nameDoctor = userItem.nom + " " + userItem.prenom
-                            println("mouadh" + nameDoctor)
-                            if (appointment.nameDoctor!!.equals(nameDoctor)) {
 
-                                listDoctorDoctorProfilMyPatient.add(ModelPatientListForDoctorProfil(appointment.namePatient.toString(),R.drawable.logopatient))
-                                listviewDoctorProfilMyPatient!!.adapter = MyAdapterPatientListForDoctorProfil(requireContext(),R.layout.list_patient_for_doctor_profil,listDoctorDoctorProfilMyPatient)
+                                        var nameDoctor = userItem.nom + " " + userItem.prenom
+                                        if (appointment.nameDoctor!!.equals(nameDoctor) || nameDoctor != appointment.namePatient) {
 
-                            }
+                                            listDoctorDoctorProfilMyPatient.add(
+                                                ModelPatientListForDoctorProfil(
+                                                    appointment.namePatient.toString(),
+                                                    R.drawable.logopatient
+                                                )
+                                            )
+                                            listviewDoctorProfilMyPatient!!.adapter =
+                                                MyAdapterPatientListForDoctorProfil(
+                                                    requireContext(),
+                                                    R.layout.list_patient_for_doctor_profil,
+                                                    listDoctorDoctorProfilMyPatient
+                                                )
+
+                                        }
+
+
+
 
                         }
 
