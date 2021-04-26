@@ -87,18 +87,18 @@ class DoctorReclamationFragment : Fragment() {
                         reclamation.phoneNumber = phoneNumberReclamationET!!.text.toString()
                         userDao.insertReclamation(reclamation, object : ResponseCallback {
                             override fun success() {
-                                requireActivity().run {
-                                    var intent =
-                                        Intent(this, AccountDoctorActivity::class.java)
-                                    startActivity(intent)
-                                    finish()
-                                }
-
                             }
 
                             override fun failure() {
                             }
                         })
+                        requireActivity().run {
+                                    var intent = Intent(this, AccountDoctorActivity::class.java)
+                                    startActivity(intent)
+                                    finish()
+                                }
+//
+//
 
 
                     }
