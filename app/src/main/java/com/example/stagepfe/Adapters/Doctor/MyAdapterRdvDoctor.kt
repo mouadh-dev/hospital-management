@@ -19,6 +19,7 @@ class MyAdapterRdvDoctor(var mCtx: Context, var resources:Int, var items:List<Mo
         var TVdateRendezVous: TextView = view.findViewById(R.id.TVdateRendezVous)
         var TVheureRendezVous: TextView = view.findViewById(R.id.TVheureRendezVous)
         var colorCheckRDV: LinearLayout = view.findViewById(R.id.Color_Check_RDV_Doctor)
+        var namePatient: TextView = view.findViewById(R.id.name_Patient)
 
 
         var mItem: ModelRdvDocteur = items[position]
@@ -26,6 +27,7 @@ class MyAdapterRdvDoctor(var mCtx: Context, var resources:Int, var items:List<Mo
         TVdateRendezVous.text = mItem.heure_rdv
         TVheureRendezVous.text = mItem.etat_rdv
         colorCheckRDV.setBackgroundColor(mCtx.resources.getColor( mItem.color_Check_RDV_Doc))
+        namePatient.text = mItem.namePatient
         return view
     }
 }

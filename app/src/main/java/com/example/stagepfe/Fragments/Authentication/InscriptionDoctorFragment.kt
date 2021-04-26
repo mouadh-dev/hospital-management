@@ -152,6 +152,7 @@ class InscriptionDoctorFragment : Fragment() {
                             dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
                             dialog.findViewById<TextView>(R.id.TitleDialog).text =
                                 "il y a une faute réessayez"
+                            dialog.findViewById<TextView>(R.id.msgdialog).visibility = View.GONE
 
                             dialog.findViewById<Button>(R.id.btn_confirm)
                                 .setOnClickListener {

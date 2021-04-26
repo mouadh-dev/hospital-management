@@ -24,8 +24,6 @@ class ChoosePositionFragment : Fragment() {
     private var buttonNext: Button? = null
     private var ellipse: View? = null
     private var role: String? = null
-    private var user: UserItem? = null
-    private var messageDialog: TextView? = null
     var mContext: Context? = null
 
 
@@ -97,8 +95,6 @@ class ChoosePositionFragment : Fragment() {
             when (role) {
                 "choisir" -> {
                     buttonNext!!.isEnabled = false
-                    var userchooseposition = requireArguments().get("datasecondpage")
-
                 }
                 "Médecin" -> {
                     navigateToMedecin()
@@ -151,9 +147,7 @@ class ChoosePositionFragment : Fragment() {
             }
 
         })
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-
         cin!!.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
@@ -176,10 +170,7 @@ class ChoosePositionFragment : Fragment() {
                 }
             }
         })
-
     }
-
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //***************************************navigation***********************************************
 
@@ -280,6 +271,7 @@ class ChoosePositionFragment : Fragment() {
                     dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
                     dialog.findViewById<TextView>(R.id.TitleDialog).text =
                         "il y a une faute réessayez"
+                    dialog.findViewById<TextView>(R.id.msgdialog).visibility = View.GONE
 
                     dialog.findViewById<Button>(R.id.btn_confirm)
                         .setOnClickListener {
@@ -395,6 +387,7 @@ class ChoosePositionFragment : Fragment() {
                     dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
                     dialog.findViewById<TextView>(R.id.TitleDialog).text =
                         "il y a une faute réessayez"
+                    dialog
 
                     dialog.findViewById<Button>(R.id.btn_confirm)
                         .setOnClickListener {

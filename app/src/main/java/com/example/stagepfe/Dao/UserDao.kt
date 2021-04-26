@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.ContentValues.TAG
 import android.util.Log
 import com.example.stagepfe.entite.Appointment
+import com.example.stagepfe.entite.Reclamation
 import com.example.stagepfe.entite.UserItem
 import com.example.stagepfe.util.BaseConstant
 import com.google.android.gms.tasks.OnCompleteListener
@@ -22,14 +23,12 @@ class UserDao : IGestionUser {
     private val myRef = database.getReference(BaseConstant.instance().userRef)
     private val mAuth = FirebaseAuth.getInstance()
     private val userRef = FirebaseDatabase.getInstance().getReference("users")
-
+    private val reclamationRef = database.getReference(BaseConstant.instance().reclamation)
 
     ////////////////////////////////////////////////Insert user/////////////////////////////////////////
     override fun insertUser(userItem: UserItem) {
-
         userItem.id = myRef.push().key.toString()
         myRef.child(userItem.id!!).setValue(userItem)
-
     }
 
     /////////////////////////////////////////////////sign up////////////////////////////////////////////
@@ -60,6 +59,26 @@ class UserDao : IGestionUser {
             })
     }
 
+    /////////////////////////////////////////////getAppointment/////////////////////////////////////////
+//    fun updateUser(uid: String, userItem: UserItem, userCallback: UserCallback) {
+//        var jLoginDatabase = database.reference.child("users").child(uid)
+//        jLoginDatabase.addValueEventListener(object : ValueEventListener {
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                val user= mAuth.currentUser
+//                var registredId = user.uid
+//                getUserByUid(registredId, userCallback)
+//
+//
+//            }
+//
+//            override fun onCancelled(error: DatabaseError) {
+//
+//            }
+//
+//
+//        })
+//    }
+
     ///////////////////////////////////////////Sign in//////////////////////////////////////////////////
     fun signIn(activity: Activity, userItem: UserItem, userCallback: UserCallback) {
         mAuth.signInWithEmailAndPassword(userItem.mail, userItem.password)
@@ -80,6 +99,7 @@ class UserDao : IGestionUser {
             }
 
     }
+
 
     ///////////////////////////////////////////////get user by id///////////////////////////////////////
     private fun getUserByUid(uid: String, responseCallback: UserCallback) {
@@ -107,7 +127,6 @@ class UserDao : IGestionUser {
 
         myRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-//                val user = mAuth.currentUser
 
                 getUserByUid(mAuth.currentUser.uid, userCallback)
             }
@@ -130,19 +149,13 @@ class UserDao : IGestionUser {
 
             override fun onDataChange(snapshot: DataSnapshot) {
 
-
                 if (snapshot.exists()) {
                     for (ds in snapshot.children) {
-
                         var userItem = ds.getValue(UserItem::class.java)
                         var firstNAme = userItem!!.nom
                         var lastName = userItem.prenom
                         var fullNAme = firstNAme + " " + lastName
-                        var id = userItem.id
-
                         if (appointment.namePatient.equals(fullNAme)) {
-
-
                             var id = userItem.id
                             responseCallback.successAppointment(appointment)
                             var hour = HashMap<String, Appointment>()
@@ -164,44 +177,24 @@ class UserDao : IGestionUser {
 
     }
 
-/////////////////////////////////////////////getAppointment/////////////////////////////////////////
-    fun getAppointment(
-        appointment: Appointment,
-        userItem: UserItem,
-        responseCallback: AppointmentCallback
-    ) {
+    /////////////////////////////////////////////getAppointment/////////////////////////////////////////
+    fun getAppointment(userItem: UserItem, responseCallback: AppointmentCallback) {
         userRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-
                 if (snapshot.exists()) {
                     for (ds in snapshot.children) {
                         var userItem = ds.getValue(UserItem::class.java)
                         if (userItem!!.rendezVous != null) {
                             var map = userItem.rendezVous
-                            for (entry in map!!.entries){
-
-                                for (test in entry.value){
+                            for (entry in map!!.entries) {
+                                for (test in entry.value) {
                                     var appointment = test.value
 
                                     responseCallback.successAppointment(appointment)
                                 }
                             }
-
-//                            date = date.dropLast(1)
-//                            date = date.drop(1)
-//                            var hour = ds.child("users").child(id).child("rendezVous").child(date).value as HashMap<String,Appointment>
-//
-//                            for (n in hour)
-//                            hour.get(0)
-//                            var v = ds.child("users").child(id).child("rendezVous").child(date).child(hour).getValue(Appointment::class.java)
-
-//                            println("mouadh $v")
-
-
-
                         }
                     }
-
                 }
             }
 
@@ -210,6 +203,14 @@ class UserDao : IGestionUser {
             }
         })
     }
+
+    //////////////////////////////////////////insertReclamation/////////////////////////////////////////
+    override fun insertReclamation(reclamation: Reclamation, responseCallback: ResponseCallback) {
+        reclamation.id = reclamationRef.push().key.toString()
+        reclamationRef.child(reclamation.id!!).setValue(reclamation)
+    }
+
+
 }
 
 

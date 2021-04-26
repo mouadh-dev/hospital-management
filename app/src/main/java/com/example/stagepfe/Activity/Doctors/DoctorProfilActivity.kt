@@ -1,6 +1,5 @@
 package com.example.stagepfe.Activity.Doctors
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -11,12 +10,9 @@ import androidx.viewpager.widget.ViewPager
 import com.example.stagepfe.Adapters.Patients.ViewPagerAdapter
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
-import com.example.stagepfe.Fragments.Authentication.NewPasswordFragment
 import com.example.stagepfe.Fragments.Doctor.DoctorProfileUpdateFragment
 import com.example.stagepfe.Fragments.Doctor.ProfilDoctorMyPatientFragment
 import com.example.stagepfe.Fragments.Doctor.ProfilDoctorMyRdvFragment
-import com.example.stagepfe.Fragments.Patient.PatientAccountFragment
-import com.example.stagepfe.Fragments.Patient.PatientReclamationFragment
 import com.example.stagepfe.R
 import com.example.stagepfe.entite.UserItem
 import com.google.android.material.tabs.TabLayout
@@ -31,6 +27,7 @@ class DoctorProfilActivity : AppCompatActivity() {
     var nameDoctor: TextView? = null
     var phoneNumbreDoctor: TextView? = null
     var birthDateDoctor: TextView? = null
+    var bundle =Bundle()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,6 +81,7 @@ class DoctorProfilActivity : AppCompatActivity() {
         var adapter = ViewPagerAdapter(supportFragmentManager)
         adapter.addFragment(ProfilDoctorMyRdvFragment(), "Rendez-vous")
         adapter.addFragment(ProfilDoctorMyPatientFragment(), "patients")
+
 
         viewPager!!.adapter = adapter
         tabs!!.setupWithViewPager(viewPager)

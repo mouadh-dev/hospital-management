@@ -9,7 +9,6 @@ import android.widget.TextView
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.Fragments.AgentLabo.ProfilAgentUpdateFragment
-import com.example.stagepfe.Fragments.Pharmacien.PharmacienProfilUpdateFragment
 import com.example.stagepfe.R
 import com.example.stagepfe.entite.UserItem
 

@@ -16,15 +16,20 @@ import android.text.TextWatcher
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.app.ActivityCompat
+import androidx.fragment.app.Fragment
 import com.example.stagepfe.Activity.Doctors.AccountDoctorActivity
+import com.example.stagepfe.Activity.Doctors.DoctorProfilActivity
+import com.example.stagepfe.Dao.UserCallback
+import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.R
+import com.example.stagepfe.entite.UserItem
 import com.google.android.gms.location.*
+import com.google.firebase.database.FirebaseDatabase
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -43,7 +48,6 @@ class DoctorProfileUpdateFragment : Fragment() {
     private var showNewPassworConfirmdIV: ImageView? = null
 
 
-
     val myProfilDoctorCalendar = Calendar.getInstance()
 
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
@@ -56,10 +60,9 @@ class DoctorProfileUpdateFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-      var view= inflater.inflate(R.layout.fragment_doctor_profile_update, container, false)
+        var view = inflater.inflate(R.layout.fragment_doctor_profile_update, container, false)
         initView(view)
-        return  view
-
+        return view
 
 
     }
@@ -82,18 +85,27 @@ class DoctorProfileUpdateFragment : Fragment() {
         dateNaissProfilDoctorET!!.isFocusable = false
 
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+        var userDao = UserDao()
+        var userItem = UserItem()
+        userDao.retrieveDataUser(requireActivity(),
+            UserItem(),
+            object : UserCallback {
+                override fun onSuccess(userItem: UserItem) {
+                    firstNameProfilDoctorET!!.setText(userItem.nom)
+                    secondNameProfilDoctorET!!.setText(userItem.prenom)
+                    dateNaissProfilDoctorET!!.setText(userItem.datenaiss)
+                    telephoneProfilDoctorET!!.setText(userItem.phonenumber)
+                    adresseProfilDoctorET!!.setText(userItem.adresse)
+                    bioDoctorET!!.setText(userItem.bio)
+                }
 
-               fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
+                override fun failure() {
+                }
 
-        adresseProfilDoctorET!!.setOnClickListener {
-            Log.d("Debug:", checkPermission().toString())
-            Log.d("Debug:", isLocationEnabled(requireContext()).toString())
-            RequestPermission()
-//            fusedLocationProviderClient.lastLocation.addOnSuccessListener{location: Location? ->
-//                 textView.text = location?.latitude.toString() + "," + location?.longitude.toString()
-            getLastLocation()
-        }
+            })
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
         saveProfilButton!!.setOnClickListener {
             if (firstNameProfilDoctorET!!.text.isEmpty() && secondNameProfilDoctorET!!.text.isEmpty()
                 && adresseProfilDoctorET!!.text.isEmpty() && dateNaissProfilDoctorET!!.text.isEmpty()
@@ -111,8 +123,9 @@ class DoctorProfileUpdateFragment : Fragment() {
                 dialog.findViewById<Button>(R.id.btn_confirm).setOnClickListener {
                     dialog.dismiss()
                 }
-            } else {
-                 var v = View.inflate(
+            }
+            else {
+                var v = View.inflate(
                     requireContext(),
                     R.layout.fragment_dialog,
                     null
@@ -145,9 +158,29 @@ class DoctorProfileUpdateFragment : Fragment() {
 
 
         }
-        ///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+        returnProfilButton!!.setOnClickListener {
+            requireActivity().run {
+                startActivity(Intent(this, DoctorProfilActivity::class.java))
+                finish() // If activity no more needed in back stack
+            }
+        }
 
-        //*****************************************password***********************************************
+        fusedLocationProviderClient =
+            LocationServices.getFusedLocationProviderClient(requireContext())
+
+        adresseProfilDoctorET!!.setOnClickListener {
+            Log.d("Debug:", checkPermission().toString())
+            Log.d("Debug:", isLocationEnabled(requireContext()).toString())
+            RequestPermission()
+//            fusedLocationProviderClient.lastLocation.addOnSuccessListener{location: Location? ->
+//                 textView.text = location?.latitude.toString() + "," + location?.longitude.toString()
+            getLastLocation()
+        }
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//*****************************************password***********************************************
         newPasswordDoctorET!!.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
@@ -156,12 +189,12 @@ class DoctorProfileUpdateFragment : Fragment() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                if (newPasswordDoctorET!!.length() <= 8){
+                if (newPasswordDoctorET!!.length() <= 8) {
                     saveProfilButton!!.isEnabled = false
                     saveProfilButton!!.setBackgroundResource(R.drawable.gray_button)
                     newPasswordDoctorET!!.error = "le mot de passe est faible "
-                }else{
-                    saveProfilButton!!.isEnabled = true
+                } else {
+
                     saveProfilButton!!.setBackgroundResource(R.drawable.button_style_smaller)
 
                 }
@@ -171,14 +204,14 @@ class DoctorProfileUpdateFragment : Fragment() {
             if (newPasswordDoctorET!!.getTransformationMethod()
                     .equals(PasswordTransformationMethod.getInstance())
             ) {
-                newPasswordDoctorET!!.transformationMethod = HideReturnsTransformationMethod.getInstance()
+                newPasswordDoctorET!!.transformationMethod =
+                    HideReturnsTransformationMethod.getInstance()
             } else {
-                newPasswordDoctorET!!.transformationMethod = PasswordTransformationMethod.getInstance()
+                newPasswordDoctorET!!.transformationMethod =
+                    PasswordTransformationMethod.getInstance()
             }
         }
-
-
-
+////////////////////////////////////////////////////////////////////////////////////////////////////
         confirmNewPasswordDoctorET!!.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
@@ -187,11 +220,10 @@ class DoctorProfileUpdateFragment : Fragment() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                if (notequal()){
-                    saveProfilButton!!.isEnabled = false
+                if (notequal()) {
                     saveProfilButton!!.setBackgroundResource(R.drawable.gray_button)
                     confirmNewPasswordDoctorET!!.error = "le mot de passe ne correspond pas"
-                }else{
+                } else {
                     saveProfilButton!!.isEnabled = true
                     saveProfilButton!!.setBackgroundResource(R.drawable.button_style_smaller)
 
@@ -200,19 +232,20 @@ class DoctorProfileUpdateFragment : Fragment() {
 
 
         })
-
-        showNewPassworConfirmdIV!!.setOnClickListener{
-            if(confirmNewPasswordDoctorET!!.getTransformationMethod().equals(PasswordTransformationMethod.getInstance()))
-            {
-                confirmNewPasswordDoctorET!!.transformationMethod = HideReturnsTransformationMethod.getInstance()
-            }else {
-                confirmNewPasswordDoctorET!!.transformationMethod = PasswordTransformationMethod.getInstance()
+        showNewPassworConfirmdIV!!.setOnClickListener {
+            if (confirmNewPasswordDoctorET!!.getTransformationMethod()
+                    .equals(PasswordTransformationMethod.getInstance())
+            ) {
+                confirmNewPasswordDoctorET!!.transformationMethod =
+                    HideReturnsTransformationMethod.getInstance()
+            } else {
+                confirmNewPasswordDoctorET!!.transformationMethod =
+                    PasswordTransformationMethod.getInstance()
             }
         }
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
-        ///////////////////////////////////////////////////////////////////////////////////////////////////
-
-        //*****************************************calender***********************************************
+//*****************************************calender***********************************************
         telephoneProfilDoctorET!!.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
@@ -234,10 +267,11 @@ class DoctorProfileUpdateFragment : Fragment() {
             }
 
         })
-        ///////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
-        //*****************************************calender***********************************************
-        val date = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth -> // TODO Auto-generated method stub
+//*****************************************calender***********************************************
+        val date =
+            DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth -> // TODO Auto-generated method stub
                 myProfilDoctorCalendar[Calendar.YEAR] = year
                 myProfilDoctorCalendar[Calendar.MONTH] = monthOfYear
                 myProfilDoctorCalendar[Calendar.DAY_OF_MONTH] = dayOfMonth
@@ -255,22 +289,18 @@ class DoctorProfileUpdateFragment : Fragment() {
                 ).show()
             }
         })
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        //*****************************************calender function*******************************************
+//*****************************************calender function*******************************************
     }
-
-
 
     private fun updateLabel() {
         val myFormat = "MM/dd/yy" //In which you need put here
 
         val sdf = SimpleDateFormat(myFormat, Locale.US)
 
-        dateNaissProfilDoctorET!!.setText(sdf.format(myProfilDoctorCalendar.time))    }
-
-
+        dateNaissProfilDoctorET!!.setText(sdf.format(myProfilDoctorCalendar.time))
+    }
 
     fun getLastLocation() {
         if (checkPermission()) {
@@ -298,7 +328,12 @@ class DoctorProfileUpdateFragment : Fragment() {
                         NewLocationData()
                     } else {
                         Log.d("Debug:", "Your Location:" + location.longitude)
-                        adresseProfilDoctorET!!.setText(getCityName(location.latitude, location.longitude))
+                        adresseProfilDoctorET!!.setText(
+                            getCityName(
+                                location.latitude,
+                                location.longitude
+                            )
+                        )
                     }
                 }
             } else {
@@ -313,7 +348,6 @@ class DoctorProfileUpdateFragment : Fragment() {
             RequestPermission()
         }
     }
-
 
     fun NewLocationData() {
         var locationRequest = LocationRequest()
@@ -345,7 +379,6 @@ class DoctorProfileUpdateFragment : Fragment() {
         )
     }
 
-
     private val locationCallback = object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult) {
             var lastLocation: Location = locationResult.lastLocation
@@ -362,7 +395,6 @@ class DoctorProfileUpdateFragment : Fragment() {
         }
     }
 
-
     private fun getCityName(lat: Double, long: Double): String {
         var address: String = ""
         var cityName: String = ""
@@ -377,7 +409,6 @@ class DoctorProfileUpdateFragment : Fragment() {
         Log.d("Debug:", "$cityName ; your Country $countryName")
         return "$cityName,$countryName"
     }
-
 
     fun checkPermission(): Boolean {
         //this function will return a boolean
@@ -434,9 +465,8 @@ class DoctorProfileUpdateFragment : Fragment() {
         }
     }
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////////
-private fun notequal(): Boolean {
-    return confirmNewPasswordDoctorET!!.text.toString() != newPasswordDoctorET!!.text.toString()
-}
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+    private fun notequal(): Boolean {
+        return confirmNewPasswordDoctorET!!.text.toString() != newPasswordDoctorET!!.text.toString()
+    }
 }

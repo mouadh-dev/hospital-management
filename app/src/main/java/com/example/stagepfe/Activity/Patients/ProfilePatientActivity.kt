@@ -22,7 +22,6 @@ import com.example.stagepfe.R
 import com.example.stagepfe.entite.UserItem
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.*
 
 
 class ProfilePatientActivity : AppCompatActivity() {

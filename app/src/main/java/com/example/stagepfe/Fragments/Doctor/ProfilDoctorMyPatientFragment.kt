@@ -1,6 +1,5 @@
 package com.example.stagepfe.Fragments.Doctor
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,13 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
 import android.widget.TextView
-import com.example.stagepfe.Activity.Authentication.AuthenticationFragmentContainerActivity
-import com.example.stagepfe.Activity.Doctors.ShowInfoPatientForDoctorActivity
 import com.example.stagepfe.Adapters.Doctor.MyAdapterPatientListForDoctorProfil
-import com.example.stagepfe.Adapters.Doctor.MyAdapterRdvDoctor
+import com.example.stagepfe.Dao.AppointmentCallback
+import com.example.stagepfe.Dao.UserCallback
+import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.Models.Doctors.ModelPatientListForDoctorProfil
 import com.example.stagepfe.Models.Doctors.ModelRdvDocteur
 import com.example.stagepfe.R
+import com.example.stagepfe.entite.Appointment
+import com.example.stagepfe.entite.User
+import com.example.stagepfe.entite.UserItem
 
 class ProfilDoctorMyPatientFragment : Fragment() {
     var showMore: TextView?= null
@@ -33,14 +35,39 @@ class ProfilDoctorMyPatientFragment : Fragment() {
 
     private fun initView(view: View) {
         showMore=view.findViewById<TextView>(R.id.TVShowMore)
+
         listviewDoctorProfilMyPatient =view.findViewById<ListView>(R.id.listPatientForProfilDoctor)
-        listDoctorDoctorProfilMyPatient.add(ModelPatientListForDoctorProfil("Mohamed Rouahi",R.drawable.logopatient))
-        listDoctorDoctorProfilMyPatient.add(ModelPatientListForDoctorProfil("Mohamed Rouahi",R.drawable.logopatient))
-        listDoctorDoctorProfilMyPatient.add(ModelPatientListForDoctorProfil("Mohamed Rouahi",R.drawable.logopatient))
-        listDoctorDoctorProfilMyPatient.add(ModelPatientListForDoctorProfil("Mohamed Rouahi",R.drawable.logopatient))
-        listDoctorDoctorProfilMyPatient.add(ModelPatientListForDoctorProfil("Mohamed Rouahi",R.drawable.logopatient))
-        listDoctorDoctorProfilMyPatient.add(ModelPatientListForDoctorProfil("Mohamed Rouahi",R.drawable.logopatient))
-        listviewDoctorProfilMyPatient!!.adapter = MyAdapterPatientListForDoctorProfil(requireContext(),R.layout.list_patient_for_doctor_profil,listDoctorDoctorProfilMyPatient)
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+        var userdao = UserDao()
+        var userItem = UserItem()
+        userdao.getAppointment(userItem, object : AppointmentCallback {
+            override fun successAppointment(appointment: Appointment) {
+                userdao.retrieveDataUser(requireActivity(),
+                    UserItem(),
+                    object : UserCallback {
+                        override fun onSuccess(userItem: UserItem) {
+                            var nameDoctor = userItem.nom + " " + userItem.prenom
+                            println("mouadh" + nameDoctor)
+                            if (appointment.nameDoctor!!.equals(nameDoctor)) {
+
+                                listDoctorDoctorProfilMyPatient.add(ModelPatientListForDoctorProfil(appointment.namePatient.toString(),R.drawable.logopatient))
+                                listviewDoctorProfilMyPatient!!.adapter = MyAdapterPatientListForDoctorProfil(requireContext(),R.layout.list_patient_for_doctor_profil,listDoctorDoctorProfilMyPatient)
+
+                            }
+
+                        }
+
+                        override fun failure() {
+                        }
+
+                    })
+
+
+            }
+
+            override fun failureAppointment() {}
+        })
+
 
         //showMore!!.setOnClickListener {
             //requireActivity().run {

@@ -11,9 +11,12 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import com.example.stagepfe.Activity.Doctors.AccountDoctorActivity
 import com.example.stagepfe.Activity.Doctors.DoctorProfilActivity
+import com.example.stagepfe.Dao.ResponseCallback
+import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.R
-
+import com.example.stagepfe.entite.Reclamation
 
 
 class DoctorReclamationFragment : Fragment() {
@@ -77,12 +80,27 @@ class DoctorReclamationFragment : Fragment() {
                     .setOnClickListener {
                         dialog.dismiss()
 
+                        var userDao = UserDao()
+                        var reclamation = Reclamation()
+                        reclamation.fullName = fullNameReclamationET!!.text.toString()
+                        reclamation.description = descriptionReclamationET!!.text.toString()
+                        reclamation.phoneNumber = phoneNumberReclamationET!!.text.toString()
+                        userDao.insertReclamation(reclamation, object : ResponseCallback {
+                            override fun success() {
+                            }
+
+                            override fun failure() {
+                            }
+                        })
                         requireActivity().run {
-                            var intent =
-                                Intent(this, DoctorProfilActivity::class.java)
-                            startActivity(intent)
-                            finish()
-                        }
+                                    var intent = Intent(this, AccountDoctorActivity::class.java)
+                                    startActivity(intent)
+                                    finish()
+                                }
+//
+//
+
+
                     }
             }
             }
