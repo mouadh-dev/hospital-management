@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.ContentValues.TAG
 import android.util.Log
 import com.example.stagepfe.entite.Appointment
+import com.example.stagepfe.entite.Reclamation
 import com.example.stagepfe.entite.UserItem
 import com.example.stagepfe.util.BaseConstant
 import com.google.android.gms.tasks.OnCompleteListener
@@ -22,14 +23,12 @@ class UserDao : IGestionUser {
     private val myRef = database.getReference(BaseConstant.instance().userRef)
     private val mAuth = FirebaseAuth.getInstance()
     private val userRef = FirebaseDatabase.getInstance().getReference("users")
-
+    private val reclamationRef = database.getReference(BaseConstant.instance().reclamation)
 
     ////////////////////////////////////////////////Insert user/////////////////////////////////////////
     override fun insertUser(userItem: UserItem) {
-
         userItem.id = myRef.push().key.toString()
         myRef.child(userItem.id!!).setValue(userItem)
-
     }
 
     /////////////////////////////////////////////////sign up////////////////////////////////////////////
@@ -60,6 +59,26 @@ class UserDao : IGestionUser {
             })
     }
 
+    /////////////////////////////////////////////getAppointment/////////////////////////////////////////
+//    fun updateUser(uid: String, userItem: UserItem, userCallback: UserCallback) {
+//        var jLoginDatabase = database.reference.child("users").child(uid)
+//        jLoginDatabase.addValueEventListener(object : ValueEventListener {
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                val user= mAuth.currentUser
+//                var registredId = user.uid
+//                getUserByUid(registredId, userCallback)
+//
+//
+//            }
+//
+//            override fun onCancelled(error: DatabaseError) {
+//
+//            }
+//
+//
+//        })
+//    }
+
     ///////////////////////////////////////////Sign in//////////////////////////////////////////////////
     fun signIn(activity: Activity, userItem: UserItem, userCallback: UserCallback) {
         mAuth.signInWithEmailAndPassword(userItem.mail, userItem.password)
@@ -80,6 +99,7 @@ class UserDao : IGestionUser {
             }
 
     }
+
 
     ///////////////////////////////////////////////get user by id///////////////////////////////////////
     private fun getUserByUid(uid: String, responseCallback: UserCallback) {
@@ -158,7 +178,7 @@ class UserDao : IGestionUser {
     }
 
     /////////////////////////////////////////////getAppointment/////////////////////////////////////////
-    fun getAppointment(userItem:UserItem,responseCallback: AppointmentCallback) {
+    fun getAppointment(userItem: UserItem, responseCallback: AppointmentCallback) {
         userRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
@@ -177,11 +197,20 @@ class UserDao : IGestionUser {
                     }
                 }
             }
+
             override fun onCancelled(error: DatabaseError) {
                 responseCallback.failureAppointment()
             }
         })
     }
+
+    //////////////////////////////////////////insertReclamation/////////////////////////////////////////
+    override fun insertReclamation(reclamation: Reclamation, responseCallback: ResponseCallback) {
+        reclamation.id = reclamationRef.push().key.toString()
+        reclamationRef.child(reclamation.id!!).setValue(reclamation)
+    }
+
+
 }
 
 

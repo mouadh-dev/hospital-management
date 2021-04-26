@@ -28,7 +28,6 @@ class ConnexionFragment : Fragment(), View.OnClickListener {
     private var connectButton: Button? = null
     private var mailConnexionET: EditText? = null
     private var passwordConnectET: EditText? = null
-    private lateinit var mAuth: FirebaseAuth
     private var mContext: Context? = null
 
 
