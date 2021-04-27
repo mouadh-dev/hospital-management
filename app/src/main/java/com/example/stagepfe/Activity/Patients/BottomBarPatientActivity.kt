@@ -53,12 +53,10 @@ class BottomBarPatientActivity : AppCompatActivity() {
     private val pickImage = 100
     private var imageUri: Uri? = null
     var imageProfilPatient: ImageView? = null
-    //  lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bottom_bar)
-        //  auth = FirebaseAuth.getInstance()
         listview = findViewById<ListView>(R.id.list)
         list.add(Model("Dr Foulen Fouleni", "Generaliste", R.drawable.doctor_ic))
         list.add(Model("Dr Foulen Fouleni", "Generaliste", R.drawable.doctor_ic))

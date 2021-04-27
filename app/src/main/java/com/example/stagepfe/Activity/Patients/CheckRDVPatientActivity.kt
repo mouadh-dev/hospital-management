@@ -34,9 +34,7 @@ class CheckRDVPatientActivity : AppCompatActivity(), OnItemClickListner {
         pickerDate = findViewById(R.id.pick_date_TV_Patient)
         secondTimeLine = findViewById(R.id.second_time_line_patient)
         pickerDate!!.text = intent.getStringExtra("key")
-        year = intent.getStringExtra("keyyear")!!.toInt()
-        day = intent.getStringExtra("keyday")!!.toInt()
-        month = intent.getStringExtra("keymonth")!!.toInt()
+
         ///////////////////////////////////////returnIcon//////////////////////////////////////////////////
         returnIcon!!.setOnClickListener {
             var intent = Intent(this, BottomBarPatientActivity::class.java)
@@ -59,7 +57,13 @@ class CheckRDVPatientActivity : AppCompatActivity(), OnItemClickListner {
 
             pickerDate!!.text =
                 "Veuillez choisir l'heure du rendez-vous pour" + this.day+"-"+this.month+"-"+this.year
+            listOfTime()
         }
+
+
+    }
+
+    private fun listOfTime() {
         //Recycler View
         val recyclerView: RecyclerView = findViewById(R.id.recycler_viewPatient) as RecyclerView
         //Data
@@ -84,13 +88,10 @@ class CheckRDVPatientActivity : AppCompatActivity(), OnItemClickListner {
         recyclerView.setLayoutManager(mLayoutManager)
         recyclerView.setItemAnimator(DefaultItemAnimator())
         recyclerView.setAdapter(mAdapter)
-
     }
 
 
-
-
-   override fun onItemClick(item: ModelAddRDVPatient, position: Int) {
+    override fun onItemClick(item: ModelAddRDVPatient, position: Int) {
 
         var hourSended = item.timePat
         var year = year.toString()
