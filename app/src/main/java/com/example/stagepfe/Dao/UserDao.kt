@@ -2,7 +2,10 @@ package com.example.stagepfe.Dao
 
 import android.app.Activity
 import android.content.ContentValues.TAG
+import android.net.Uri
 import android.util.Log
+import android.widget.Toast
+import com.example.stagepfe.R
 import com.example.stagepfe.entite.Appointment
 import com.example.stagepfe.entite.Reclamation
 import com.example.stagepfe.entite.UserItem
@@ -11,10 +14,15 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class UserDao : IGestionUser {
@@ -209,8 +217,32 @@ class UserDao : IGestionUser {
         reclamation.id = reclamationRef.push().key.toString()
         reclamationRef.child(reclamation.id!!).setValue(reclamation)
     }
-
-
+    ///////////////////////////////////////////update Photo////////////////////////////////////////
+//    private fun updateProfile() {
+//        val user = mAuth.currentUser
+//        user?.let { user ->
+//            val photoURI = Uri.parse("android.resource://$packageName/${R.drawable.logopatient}")
+//            val profileUpdates = UserProfileChangeRequest.Builder()
+//                .setPhotoUri(photoURI)
+//                .build()
+//
+//            CoroutineScope(Dispatchers.IO).launch {
+//                try {
+//                    user.updateProfile(profileUpdates).await()
+//                    withContext(Dispatchers.Main) {
+//                        Toast.makeText(this@MainActivity, "Successfully updated profile",
+//                            Toast.LENGTH_LONG).show()
+//                    }
+//                } catch(e: Exception) {
+//                    withContext(Dispatchers.Main) {
+//                        Toast.makeText(this@MainActivity, e.message, Toast.LENGTH_LONG).show()
+//                    }
+//                }
+//
+//            }
+//        }
+//
+//
 }
 
 
