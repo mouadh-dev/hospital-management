@@ -26,12 +26,14 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/showNameDoctorToPatient"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=" DR Foulen Fouleni"
                     android:textColor="@color/black"
                     android:textSize="35dp" />
                 <TextView
+                    android:id="@+id/showSpecialiteDoctorToPatient"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -46,6 +48,7 @@
                     android:layout_marginTop="10dp">
 
                 <TextView
+                    android:id="@+id/ContacterDoctor"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Contacter"
@@ -54,12 +57,13 @@
                     android:textSize="25dp" />
 
                     <ImageView
+                        android:id="@+id/ContacterDoctorIV"
                         android:layout_width="50dp"
                         android:layout_height="30dp"
-                        android:layout_marginLeft="5dp"
                         android:src="@drawable/ic_baseline_message_24"/>
 
                     <TextView
+                        android:id="@+id/AppelerDoctor"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Appeler"
@@ -68,13 +72,14 @@
                         android:textSize="25dp"
                         android:textStyle="bold"/>
                     <ImageView
+                        android:id="@+id/AppelerDoctorIV"
                         android:layout_width="50dp"
                         android:layout_height="30dp"
-                        android:layout_marginLeft="5dp"
                         android:src="@drawable/telephon"/>
 
             </LinearLayout>
                     <TextView
+                        android:id="@+id/BioDoctorToPatient"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="BIO"
@@ -90,7 +95,7 @@
                     app:cardBackgroundColor="#1B0D6495"
                     android:layout_marginTop="10dp">
                     <com.github.badoualy.datepicker.DatePickerTimeline
-                        android:id="@+id/time_line"
+                        android:id="@+id/time_lineDoctorProfil"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
