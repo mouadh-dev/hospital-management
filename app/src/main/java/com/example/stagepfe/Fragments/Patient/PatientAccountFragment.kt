@@ -1,18 +1,24 @@
 package com.example.stagepfe.Fragments.Patient
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.ScrollView
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
+import com.example.stagepfe.Activity.Authentication.AuthenticationFragmentContainerActivity
+import com.example.stagepfe.Activity.Patients.AddRDVToPatientActivity
+import com.example.stagepfe.Activity.Patients.CheckRDVPatientActivity
+import com.example.stagepfe.Activity.Patients.ProfilePatientActivity
 import com.example.stagepfe.R
 import com.sothree.slidinguppanel.ScrollableViewHelper
 
 
 class PatientAccountFragment : Fragment() {
-
+private var rdvImage: ImageView?=null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -24,8 +30,18 @@ class PatientAccountFragment : Fragment() {
     }
 
     private fun initView(view: View) {
+        rdvImage=view.findViewById(R.id.RDVImg)
 //        var slidingUpPanelLayout = view.findViewById(R.id.sliding_layout)
 //        slidingUpPanelLayout.setScrollableViewHelper NestedScrollableViewHelper()
+        rdvImage!!.setOnClickListener {
+            requireActivity().run {
+                var intent =
+                    Intent(this, CheckRDVPatientActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+
+        }
 
     }
 //    class NestedScrollableViewHelper : ScrollableViewHelper() {

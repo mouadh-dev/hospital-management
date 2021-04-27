@@ -76,7 +76,7 @@ class NewPasswordFragment : Fragment() {
                 dialog.show()
                 dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
                 dialog.findViewById<TextView>(R.id.TitleDialog)
-                    .setText("votre compte a été créé avec succès")
+                    .setText("votre mot de passe a été changé avec succès")
                 dialog.findViewById<ImageView>(R.id.CheckDialog)
                     .setBackgroundResource(R.drawable.ellipse_green)
                 dialog.findViewById<ImageView>(R.id.CheckDialog).setImageResource(R.drawable.check)

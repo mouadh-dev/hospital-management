@@ -53,12 +53,12 @@ class BottomBarPatientActivity : AppCompatActivity() {
     private val pickImage = 100
     private var imageUri: Uri? = null
     var imageProfilPatient: ImageView? = null
-     lateinit var auth: FirebaseAuth
+    //  lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bottom_bar)
-          auth = FirebaseAuth.getInstance()
+        //  auth = FirebaseAuth.getInstance()
         listview = findViewById<ListView>(R.id.list)
         list.add(Model("Dr Foulen Fouleni", "Generaliste", R.drawable.doctor_ic))
         list.add(Model("Dr Foulen Fouleni", "Generaliste", R.drawable.doctor_ic))
@@ -97,7 +97,7 @@ class BottomBarPatientActivity : AppCompatActivity() {
         imageProfilPatient!!.setOnClickListener {
             val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
             startActivityForResult(gallery, pickImage)
-              updateImageProfil()
+            //   updateImageProfil()
 
         }
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -182,29 +182,29 @@ class BottomBarPatientActivity : AppCompatActivity() {
         populateSearch()
     }
 
-    private fun updateImageProfil() {
-      val user = auth.currentUser
-    user?.let { user ->
-     val photoURI = Uri.parse("android.resource://$packageName/${R.drawable.logopatient}")
-      val profileUpdates = UserProfileChangeRequest.Builder()
-         .setPhotoUri(photoURI)
-        .build()
-      CoroutineScope(Dispatchers.IO).launch {
-       try {
-          user.updateProfile(profileUpdates).await()
-          withContext(Dispatchers.Main) {
-             Toast.makeText(this@BottomBarPatientActivity, "Successfully updated profile",
-       Toast.LENGTH_LONG).show()
-            }
-        } catch(e: Exception) {
-            withContext(Dispatchers.Main) {
-              Toast.makeText(this@BottomBarPatientActivity, e.message, Toast.LENGTH_LONG).show()
-          }
-         }
+   // private fun updateImageProfil() {
+    //  val user = auth.currentUser
+   // user?.let { user ->
+   //  val photoURI = Uri.parse("android.resource://$packageName/${R.drawable.logopatient}")
+    //  val profileUpdates = UserProfileChangeRequest.Builder()
+    //     .setPhotoUri(photoURI)
+    //    .build()
+    //  CoroutineScope(Dispatchers.IO).launch {
+    //   try {
+    //      user.updateProfile(profileUpdates).await()
+    //      withContext(Dispatchers.Main) {
+    //         Toast.makeText(this@BottomBarPatientActivity, "Successfully updated profile",
+    //   Toast.LENGTH_LONG).show()
+    //        }
+    //    } catch(e: Exception) {
+    //        withContext(Dispatchers.Main) {
+    //          Toast.makeText(this@BottomBarPatientActivity, e.message, Toast.LENGTH_LONG).show()
+    //      }
+    //     }
 
-        }
-  }
-      }
+    //    }
+//  }
+    //  }
 
     private fun populateSearch() {
         val ref = FirebaseDatabase.getInstance().getReference("users")
