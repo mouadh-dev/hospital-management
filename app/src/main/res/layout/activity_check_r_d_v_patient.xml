@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/blue"
+    tools:context=".Activity.Patients.CheckRDVPatientActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@color/blue"
+        >
+        <RelativeLayout
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp">
+
+            <View
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/whiteellipse" />
+            <!--            android:src="@drawable/back"-->
+            <ImageView
+                android:id="@+id/IconReturnBackMessagePatient"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:src="@drawable/forward" />
+
+        </RelativeLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rendez-vous"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:layout_marginLeft="50dp"
+            />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/rectangle_account"
+        android:orientation="vertical"
+        >
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="#1B0D6495"
+            android:layout_marginTop="20dp">
+
+            <com.github.badoualy.datepicker.DatePickerTimeline
+                android:id="@+id/second_time_line_patient"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                app:mti_primaryColor="@color/white"
+                app:mti_tabSelectedColor="@color/black"
+                />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/pick_date_TV_Patient"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Veuillez choisir la date du rendez-vous"
+            android:textColor="#939393"
+            android:textSize="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginHorizontal="20dp"
+            />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_viewPatient"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"
+            android:layout_marginTop="20dp"
+            />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardBackgroundColor="#B4FFFFFF"
+    android:layout_marginHorizontal="20dp"
+
+
+    >
+
+
+    <TextView
+        android:id="@+id/tvTimePatient"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingRight="10dp"
+        android:paddingTop="50dp"
+        android:text="12:00 AM"
+        android:textColor="@color/blue"/>
+
+    <ImageView
+        android:id="@+id/ivDividerPatient"
+        android:layout_width="10dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/tvTimePatient"
+        android:layout_alignTop="@id/tvTimePatient"
+        android:layout_toRightOf="@id/tvTimePatient"
+        android:src="@drawable/itemfour" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/ivDividerPatient"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvTextTakenPatient"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:text="mouadh"
+            android:textColor="@color/blue"/>
+
+        <ImageView
+            android:id="@+id/IVgoPatient"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_chevron_right_black_24dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/tvTextTakenPatient"
+            android:layout_marginTop="5dp"
+            android:background="#000000" />
+    </RelativeLayout>
+
+</RelativeLayout>
