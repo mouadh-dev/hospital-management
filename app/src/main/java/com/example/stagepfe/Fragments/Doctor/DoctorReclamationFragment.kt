@@ -106,13 +106,7 @@ class DoctorReclamationFragment : Fragment() {
                         reclamation.fullName = fullNameReclamationET!!.text.toString()
                         reclamation.description = descriptionReclamationET!!.text.toString()
                         reclamation.phoneNumber = phoneNumberReclamationET!!.text.toString()
-                        userDao.insertReclamation(reclamation, object : ResponseCallback {
-                            override fun success() {
-                            }
-
-                            override fun failure() {
-                            }
-                        })
+                        userDao.insertReclamation(reclamation)
                         requireActivity().run {
                                     var intent = Intent(this, AccountDoctorActivity::class.java)
                                     startActivity(intent)

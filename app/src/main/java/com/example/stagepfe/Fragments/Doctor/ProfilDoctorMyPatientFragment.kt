@@ -1,5 +1,6 @@
 package com.example.stagepfe.Fragments.Doctor
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
 import android.widget.TextView
+import com.example.stagepfe.Activity.Doctors.AccountDoctorActivity
+import com.example.stagepfe.Activity.Doctors.ShowInfoPatientForDoctorActivity
 import com.example.stagepfe.Adapters.Doctor.MyAdapterPatientListForDoctorProfil
 import com.example.stagepfe.Dao.AppointmentCallback
 import com.example.stagepfe.Dao.UserCallback
@@ -62,7 +65,13 @@ class ProfilDoctorMyPatientFragment : Fragment() {
                                                     R.layout.list_patient_for_doctor_profil,
                                                     listDoctorDoctorProfilMyPatient
                                                 )
-
+                                            //
+                                            listviewDoctorProfilMyPatient!!.setOnItemClickListener { parent, view, position, id ->
+                                                requireActivity().run {
+                                                    startActivity(Intent(this, ShowInfoPatientForDoctorActivity::class.java))
+                                                    finish() // If activity no more needed in back stack
+                                                }
+                                            }
                                         }
 
 

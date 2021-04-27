@@ -9,7 +9,7 @@ interface IGestionUser{
 
     fun insertUser(userItem: UserItem)
     fun insertappointment(appointment: Appointment,userItem: UserItem,uid: String,responseCallback: AppointmentCallback)
-    fun insertReclamation(reclamation: Reclamation,responseCallback: ResponseCallback)
+    fun insertReclamation(reclamation: Reclamation)
 
 
 }

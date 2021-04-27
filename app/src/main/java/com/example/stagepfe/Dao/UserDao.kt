@@ -213,7 +213,7 @@ class UserDao : IGestionUser {
     }
 
     //////////////////////////////////////////insertReclamation/////////////////////////////////////////
-    override fun insertReclamation(reclamation: Reclamation, responseCallback: ResponseCallback) {
+    override fun insertReclamation(reclamation: Reclamation) {
         reclamation.id = reclamationRef.push().key.toString()
         reclamationRef.child(reclamation.id!!).setValue(reclamation)
     }
