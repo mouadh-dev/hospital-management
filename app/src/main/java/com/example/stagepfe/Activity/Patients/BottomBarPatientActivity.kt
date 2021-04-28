@@ -57,24 +57,7 @@ class BottomBarPatientActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bottom_bar)
-        listview = findViewById<ListView>(R.id.list)
-        list.add(Model("Dr Foulen Fouleni", "Generaliste", R.drawable.doctor_ic))
-        list.add(Model("Dr Foulen Fouleni", "Generaliste", R.drawable.doctor_ic))
-        list.add(Model("Dr Foulen Fouleni", "Generaliste", R.drawable.doctor_ic))
-        list.add(Model("Dr Foulen Fouleni", "Generaliste", R.drawable.doctor_ic))
-        list.add(Model("Dr Foulen Fouleni", "Generaliste", R.drawable.doctor_ic))
-        list.add(Model("Dr Foulen Fouleni", "Generaliste", R.drawable.doctor_ic))
-        list.add(Model("Dr Foulen Fouleni", "Generaliste", R.drawable.doctor_ic))
-
-        listview!!.adapter = MyAdapter(this, R.layout.doctors_list, list)
-
         initView()
-
-        var home = PatientAccountFragment()
-        supportFragmentManager.beginTransaction().replace(R.id.ContainerFragmentPatient, home)
-            .commit()
-
-
     }
 
     private fun initView() {
@@ -89,8 +72,22 @@ class BottomBarPatientActivity : AppCompatActivity() {
         notificatioLayout = findViewById(R.id.NotificationLayout)
         txtSearchDoctor= findViewById(R.id.TxtSearchDoctor)
         imageProfilPatient = findViewById(R.id.IVimageProfilPatient)
+        listview = findViewById<ListView>(R.id.list)
+//////////////////////////////////////////////////////////////////////////////////////////////////
+        var home = PatientAccountFragment()
+        supportFragmentManager.beginTransaction().replace(R.id.ContainerFragmentPatient, home)
+            .commit()
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+        list.add(Model("Dr Foulen Fouleni", "Generaliste", R.drawable.doctor_ic))
+        list.add(Model("Dr Foulen Fouleni", "Generaliste", R.drawable.doctor_ic))
+        list.add(Model("Dr Foulen Fouleni", "Generaliste", R.drawable.doctor_ic))
+        list.add(Model("Dr Foulen Fouleni", "Generaliste", R.drawable.doctor_ic))
+        list.add(Model("Dr Foulen Fouleni", "Generaliste", R.drawable.doctor_ic))
+        list.add(Model("Dr Foulen Fouleni", "Generaliste", R.drawable.doctor_ic))
+        list.add(Model("Dr Foulen Fouleni", "Generaliste", R.drawable.doctor_ic))
+        listview!!.adapter = MyAdapter(this, R.layout.doctors_list, list)
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
         imageProfilPatient!!.setOnClickListener {
             val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)

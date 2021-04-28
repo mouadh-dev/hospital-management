@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    tools:context=".Activity.Patients.ShowProfilDoctorToPatientActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/rectangle_account"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:src="@drawable/patientprofilepicture" />
+
+            <!--show info Patient -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/showNameDoctorToPatient"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" DR Foulen Fouleni"
+                    android:textColor="@color/black"
+                    android:textSize="35dp" />
+                <TextView
+                    android:id="@+id/showSpecialiteDoctorToPatient"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Specialite"
+                    android:textColor="@color/gray_specific"
+                    android:textSize="25dp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/ContacterDoctor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Contacter"
+                    android:textStyle="bold"
+                    android:textColor="@color/blue"
+                    android:textSize="25dp" />
+
+                    <ImageView
+                        android:id="@+id/ContacterDoctorIV"
+                        android:layout_width="50dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_baseline_message_24"/>
+
+                    <TextView
+                        android:id="@+id/AppelerDoctor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Appeler"
+                        android:layout_marginLeft="40dp"
+                        android:textColor="@color/blue"
+                        android:textSize="25dp"
+                        android:textStyle="bold"/>
+                    <ImageView
+                        android:id="@+id/AppelerDoctorIV"
+                        android:layout_width="50dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/telephon"/>
+
+            </LinearLayout>
+                    <TextView
+                        android:id="@+id/BioDoctorToPatient"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="BIO"
+                        android:textSize="15dp"
+                        android:layout_marginTop="10dp"
+                        android:textColor="@color/black"
+                        />
+
+                <androidx.cardview.widget.CardView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="#1B0D6495"
+                    android:layout_marginTop="10dp">
+                    <com.github.badoualy.datepicker.DatePickerTimeline
+                        android:id="@+id/time_lineDoctorProfil"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        app:mti_primaryColor="@color/white"
+                        app:mti_tabSelectedColor="@color/black"
+
+                        />
+                </androidx.cardview.widget.CardView>
+
+
+
+            </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

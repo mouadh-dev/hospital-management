@@ -17,7 +17,6 @@ import com.example.stagepfe.Models.Doctors.ModelPatientListForDoctorProfil
 import com.example.stagepfe.R
 import com.example.stagepfe.entite.Appointment
 import com.example.stagepfe.entite.UserItem
-
 class ProfilDoctorMyPatientFragment : Fragment() {
     var showMore: TextView? = null
     var listviewDoctorProfilMyPatient: ListView? = null

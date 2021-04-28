@@ -67,9 +67,7 @@ class AddRDVToFbDoctorActivity : AppCompatActivity() {
         year = intent.getStringExtra("year")!!.toString()
         day = intent.getStringExtra("day")!!.toString()
         month = intent.getStringExtra("month")!!.toString()
-        var m:Int = month!!.toInt()
-        m+=1
-        month = m.toString()
+
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
