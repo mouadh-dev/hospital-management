@@ -12,8 +12,6 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.stagepfe.Activity.Doctors.AccountDoctorActivity
-import com.example.stagepfe.Activity.Doctors.DoctorProfilActivity
-import com.example.stagepfe.Dao.ResponseCallback
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.R
@@ -52,7 +50,7 @@ class DoctorReclamationFragment : Fragment() {
         phoneNumberReclamationET!!.isFocusable = false
 
 
-        userDao.retrieveDataUser(requireActivity(), userItem, object : UserCallback {
+        userDao.retrieveCurrentDataUser(requireActivity(), userItem, object : UserCallback {
             override fun onSuccess(userItem: UserItem) {
                 fullNameReclamationET!!.setText(userItem.prenom + " " + userItem.nom)
                 phoneNumberReclamationET!!.setText(userItem.phonenumber)

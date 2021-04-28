@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.*
-import com.example.stagepfe.Activity.Doctors.AccountDoctorActivity
 import com.example.stagepfe.Dao.AppointmentCallback
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
@@ -65,7 +64,7 @@ class AddRDVToPatientActivity : AppCompatActivity() {
         month = m.toString()
 
         var userdao = UserDao()
-        userdao.retrieveDataUser(this, UserItem(), object : UserCallback {
+        userdao.retrieveCurrentDataUser(this, UserItem(), object : UserCallback {
 
             override fun onSuccess(userItem: UserItem) {
                 namePatient!!.text = userItem.nom + " " + userItem.prenom

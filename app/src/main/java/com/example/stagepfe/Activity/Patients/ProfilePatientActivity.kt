@@ -82,7 +82,7 @@ class ProfilePatientActivity : AppCompatActivity() {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
         var userDao = UserDao()
-        userDao.retrieveDataUser(this,
+        userDao.retrieveCurrentDataUser(this,
             UserItem(),
             object : UserCallback {
                 override fun onSuccess(userItem: UserItem) {

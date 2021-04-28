@@ -34,6 +34,7 @@ class AddRDVToFbDoctorActivity : AppCompatActivity() {
     var cancelButton: Button? = null
     var adapter: ArrayAdapter<String>?=null
     var names: ArrayList<String?>?=null
+    var userdao = UserDao()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +53,9 @@ class AddRDVToFbDoctorActivity : AppCompatActivity() {
         cancelButton = findViewById(R.id.Cancel_Button_rdv)
         initAdapter()
 
+/////////////////////////////////////////Suggestion Search//////////////////////////////////////////
+
+
 ///////////////////////////////////////////cancelButton////////////////////////////////////////////
         cancelButton!!.setOnClickListener {
             var intent = Intent(this, AccountDoctorActivity::class.java)
@@ -67,8 +71,9 @@ class AddRDVToFbDoctorActivity : AppCompatActivity() {
         m+=1
         month = m.toString()
 
-        var userdao = UserDao()
-        userdao.retrieveDataUser(this, UserItem(), object : UserCallback {
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+        userdao.retrieveCurrentDataUser(this, UserItem(), object : UserCallback {
 
             override fun onSuccess(userItem: UserItem) {
                 nameDoctor!!.text = userItem.nom + " " + userItem.prenom
@@ -79,7 +84,9 @@ class AddRDVToFbDoctorActivity : AppCompatActivity() {
 
             override fun failure() {}
         })
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
         confirmButton!!.setOnClickListener {
 
             var appointment = Appointment()
@@ -90,6 +97,7 @@ class AddRDVToFbDoctorActivity : AppCompatActivity() {
             appointment.dispo = "reserveé"
             appointment.FinishOrNot = "Pas encore"
             appointment.hour = hourRDV!!.text.toString()
+            appointment
 
             userdao.insertappointment(appointment, userItem, FirebaseAuth.getInstance().uid.toString(), object : AppointmentCallback {
                 override fun successAppointment(appointment: Appointment) {
@@ -108,8 +116,6 @@ class AddRDVToFbDoctorActivity : AppCompatActivity() {
 
             })
         }
-/////////////////////////////////////////Suggestion Search//////////////////////////////////////////
-        populateSearch()
 
 
     }
@@ -122,37 +128,25 @@ class AddRDVToFbDoctorActivity : AppCompatActivity() {
             names as ArrayList<String>
         )
         namePatient!!.setAdapter(adapter)
+/////////////////////////////////////////Suggestion Search//////////////////////////////////////////
 
+        userdao.populateSearch(UserItem(), object : UserCallback {
+            override fun onSuccess(userItem: UserItem) {
+                var nom = userItem.nom
+                var prenom = userItem.prenom
+                var fullName = "$nom $prenom"
+                names!!.add(fullName)
+                var id = userItem.id.toString()
+
+            }
+
+            override fun failure() {
+
+            }
+           })
+        adapter!!.notifyDataSetChanged()
 
     }
 
-    private fun populateSearch() {
-        val ref = FirebaseDatabase.getInstance().getReference("users")
-        val eventListener: ValueEventListener = object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
-                    for (ds in snapshot.children) {
-                        var nom = ds.child("nom").getValue(String::class.java)
-                        var prenom = ds.child("prenom").getValue(String::class.java)
-                        var number = ds.child("phonenumber").getValue(String::class.java)
 
-
-                        var fullName = "$nom $prenom"
-
-                        numberPatient = "$number"
-                        names!!.add(fullName)
-
-//                        phonePatient!!.setText("$numero")
-                    }
-
-                    adapter!!.notifyDataSetChanged()
-                }
-            }
-            override fun onCancelled(error: DatabaseError) {
-                Log.w(ContentValues.TAG, "signInWithEmail:failure", error.toException())
-
-            }
-        }
-        ref.addListenerForSingleValueEvent(eventListener)
-    }
 }

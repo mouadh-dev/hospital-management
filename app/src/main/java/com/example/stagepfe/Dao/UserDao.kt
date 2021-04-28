@@ -2,10 +2,7 @@ package com.example.stagepfe.Dao
 
 import android.app.Activity
 import android.content.ContentValues.TAG
-import android.net.Uri
 import android.util.Log
-import android.widget.Toast
-import com.example.stagepfe.R
 import com.example.stagepfe.entite.Appointment
 import com.example.stagepfe.entite.Reclamation
 import com.example.stagepfe.entite.UserItem
@@ -14,15 +11,10 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
 class UserDao : IGestionUser {
@@ -108,9 +100,8 @@ class UserDao : IGestionUser {
 
     }
 
-
     ///////////////////////////////////////////////get user by id///////////////////////////////////////
-    private fun getUserByUid(uid: String, responseCallback: UserCallback) {
+    fun getUserByUid(uid: String, responseCallback: UserCallback) {
         var jLoginDatabase = database.reference.child("users").child(uid)
         jLoginDatabase.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -131,7 +122,11 @@ class UserDao : IGestionUser {
     }
 
     //////////////////////////////////////////////////retrieve data user////////////////////////////////
-    fun retrieveDataUser(activity: Activity, userItem: UserItem, userCallback: UserCallback) {
+    fun retrieveCurrentDataUser(
+        activity: Activity,
+        userItem: UserItem,
+        userCallback: UserCallback
+    ) {
 
         myRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -186,7 +181,7 @@ class UserDao : IGestionUser {
     }
 
     /////////////////////////////////////////////getAppointment/////////////////////////////////////////
-    fun getAppointment(userItem: UserItem, responseCallback: AppointmentCallback) {
+    fun getAppointment(responseCallback: AppointmentCallback) {
         userRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
@@ -217,6 +212,53 @@ class UserDao : IGestionUser {
         reclamation.id = reclamationRef.push().key.toString()
         reclamationRef.child(reclamation.id!!).setValue(reclamation)
     }
+
+    ///////////////////////////////////////////get user/////////////////////////////////////////////
+    private fun getUser(responseCallback: UserCallback) {
+
+        userRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (ds in dataSnapshot.children) {
+                        var userItem = ds.getValue(UserItem::class.java)
+                        responseCallback.onSuccess(userItem!!)
+                    }
+                }
+
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.w(TAG, "signInWithEmail:failure", error.toException())
+                responseCallback.failure()
+            }
+
+        })
+    }
+
+    /////////////////////////////////////////////PopulateSearch/////////////////////////////////////
+    fun populateSearch(userItem: UserItem, responseCallback: UserCallback) {
+        userRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    for (ds in snapshot.children) {
+                        var userItem = ds.getValue(UserItem::class.java)
+                        responseCallback.onSuccess(userItem!!)
+                    }
+
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                responseCallback.failure()
+            }
+
+        })
+
+
+    }
+
+
     ///////////////////////////////////////////update Photo////////////////////////////////////////
 //    private fun updateProfile() {
 //        val user = mAuth.currentUser

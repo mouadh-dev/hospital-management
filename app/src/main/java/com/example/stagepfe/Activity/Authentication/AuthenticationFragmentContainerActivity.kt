@@ -33,7 +33,7 @@ class AuthenticationFragmentContainerActivity : AppCompatActivity() {
         super.onResume()
         var userDao = UserDao()
         if(FirebaseAuth.getInstance().currentUser!=null){
-            userDao.retrieveDataUser(this,
+            userDao.retrieveCurrentDataUser(this,
                 UserItem(),
                 object : UserCallback {
                     override fun onSuccess(userItem: UserItem) {

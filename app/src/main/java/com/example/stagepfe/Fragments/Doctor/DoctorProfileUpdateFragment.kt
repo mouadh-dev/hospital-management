@@ -29,7 +29,6 @@ import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.R
 import com.example.stagepfe.entite.UserItem
 import com.google.android.gms.location.*
-import com.google.firebase.database.FirebaseDatabase
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -88,7 +87,7 @@ class DoctorProfileUpdateFragment : Fragment() {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
         var userDao = UserDao()
         var userItem = UserItem()
-        userDao.retrieveDataUser(requireActivity(),
+        userDao.retrieveCurrentDataUser(requireActivity(),
             UserItem(),
             object : UserCallback {
                 override fun onSuccess(userItem: UserItem) {

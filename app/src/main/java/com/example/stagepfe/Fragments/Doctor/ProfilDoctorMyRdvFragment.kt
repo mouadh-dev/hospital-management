@@ -38,14 +38,14 @@ class ProfilDoctorMyRdvFragment : Fragment() {
 
 
         var userdao = UserDao()
-        var userItem = UserItem()
-////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        userdao.getAppointment(userItem, object : AppointmentCallback {
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        userdao.getAppointment(object : AppointmentCallback {
             override fun successAppointment(appointment: Appointment) {
-                userdao.retrieveDataUser(requireActivity(),
+                userdao.retrieveCurrentDataUser(requireActivity(),
                     UserItem(),
                     object : UserCallback {
                         override fun onSuccess(userItem: UserItem) {

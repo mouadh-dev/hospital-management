@@ -4,13 +4,17 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.viewpager.widget.ViewPager
 import com.example.stagepfe.Adapters.Patients.ViewPagerAdapter
+import com.example.stagepfe.Dao.UserCallback
+import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.Fragments.Doctor.ProfilDoctorMyPatientFragment
 import com.example.stagepfe.Fragments.Doctor.ProfilDoctorMyRdvFragment
 import com.example.stagepfe.Fragments.Doctor.ShowOrdonnancePatientForDoctorFragment
 import com.example.stagepfe.Fragments.Doctor.ShowRapportPatientForDoctorFragment
 import com.example.stagepfe.R
+import com.example.stagepfe.entite.UserItem
 import com.google.android.material.tabs.TabLayout
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 
@@ -20,6 +24,10 @@ class ShowInfoPatientForDoctorActivity : AppCompatActivity() {
     var search: ImageView? = null
     var downImg: ImageView? = null
     var slidPanel: SlidingUpPanelLayout? = null
+    var namePatient:TextView? = null
+    var phoneNumber:TextView? = null
+    var datNaiss: TextView? = null
+    var userDao = UserDao()
 
 
 
@@ -35,6 +43,9 @@ class ShowInfoPatientForDoctorActivity : AppCompatActivity() {
         search = findViewById(R.id.float_button_ordonnance)
         slidPanel = findViewById(R.id.sliding_layout_ordonnance)
         downImg = findViewById(R.id.DownIC)
+        namePatient = findViewById(R.id.name_Patient_doctor)
+        phoneNumber = findViewById(R.id.num_phone_patient)
+        datNaiss = findViewById(R.id.date_naiss_patient)
 
         var adapter = ViewPagerAdapter(supportFragmentManager)
         adapter.addFragment(ShowOrdonnancePatientForDoctorFragment(), "Les ordonnances ")
@@ -42,6 +53,39 @@ class ShowInfoPatientForDoctorActivity : AppCompatActivity() {
 
         viewPager!!.adapter = adapter
         tabs!!.setupWithViewPager(viewPager)
+
+        var namePatientFromIntent = intent.getStringExtra("nomPatient")
+
+        userDao.populateSearch(UserItem(), object : UserCallback {
+            override fun onSuccess(userItem: UserItem) {
+                var nameToCompare = userItem.nom + " " + userItem.prenom
+                if (nameToCompare.equals(namePatientFromIntent)){
+                    var id = userItem.id
+                    userDao.getUserByUid(id!!, object : UserCallback {
+                        override fun onSuccess(userItem: UserItem) {
+                            namePatient!!.text = userItem.nom + " " + userItem.prenom
+                            phoneNumber!!.text = userItem.phonenumber
+                            datNaiss!!.text = userItem.datenaiss
+
+                        }
+
+                        override fun failure() {
+
+                        }
+                    })
+                }
+
+            }
+
+            override fun failure() {
+
+            }
+        })
+
+
+
+        namePatient!!.setText(intent.getStringExtra("nom"))
+
 
         search!!.setOnClickListener {
             slidPanel!!.visibility = View.VISIBLE
