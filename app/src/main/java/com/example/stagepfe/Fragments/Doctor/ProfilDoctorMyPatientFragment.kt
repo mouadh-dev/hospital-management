@@ -17,12 +17,14 @@ import com.example.stagepfe.Models.Doctors.ModelPatientListForDoctorProfil
 import com.example.stagepfe.R
 import com.example.stagepfe.entite.Appointment
 import com.example.stagepfe.entite.UserItem
+
+
 class ProfilDoctorMyPatientFragment : Fragment() {
     var showMore: TextView? = null
     var listviewDoctorProfilMyPatient: ListView? = null
-    var listDoctorDoctorProfilMyPatient = mutableListOf<ModelPatientListForDoctorProfil>()
-    var patientNameInList:TextView? = null
+    var listDoctorProfilMyPatient = mutableListOf<ModelPatientListForDoctorProfil>()
     var testOnRepeatingPatientName:String= ""
+    var nameCurrentUser:String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,7 +38,7 @@ class ProfilDoctorMyPatientFragment : Fragment() {
 
     private fun initView(view: View) {
         showMore = view.findViewById<TextView>(R.id.TVShowMore)
-        patientNameInList = view.findViewById(R.id.TVnamePatientListForProfilDoctor)
+
 
         listviewDoctorProfilMyPatient = view.findViewById<ListView>(R.id.listPatientForProfilDoctor)
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -50,50 +52,27 @@ class ProfilDoctorMyPatientFragment : Fragment() {
                         override fun onSuccess(userItem: UserItem) {
 
 
-                            var nameDoctor = userItem.nom + " " + userItem.prenom
-                            if (appointment.nameDoctor!!.equals(nameDoctor)) {
-                                if (appointment.namePatient != nameDoctor) {
-                                    if (testOnRepeatingPatientName != appointment.namePatient ) {
-                                        listDoctorDoctorProfilMyPatient.add(
-                                            ModelPatientListForDoctorProfil(
-                                                appointment.namePatient.toString(),
-                                                R.drawable.logopatient
-                                            )
-                                        )
-                                        listviewDoctorProfilMyPatient!!.adapter =
-                                            MyAdapterPatientListForDoctorProfil(
-                                                requireContext(),
-                                                R.layout.list_patient_for_doctor_profil,
-                                                listDoctorDoctorProfilMyPatient
-                                            )
-                                         testOnRepeatingPatientName = appointment.namePatient.toString()
-                                        //
-                                        listviewDoctorProfilMyPatient!!.setOnItemClickListener { parent, view, position, id ->
-                                            requireActivity().run {
-                                                var intent = Intent(
-                                                    this,
-                                                    ShowInfoPatientForDoctorActivity::class.java
-                                                )
-
-
-
-                                                intent.putExtra("nomPatient", testOnRepeatingPatientName)
-                                                startActivity(intent)
-                                                finish() // If activity no more needed in back stack
-                                            }
-                                        }
-
-
-                                    }
-                                }
+                            nameCurrentUser = userItem.nom + " " + userItem.prenom
+                            if (appointment.nameDoctor!!.equals(nameCurrentUser) && appointment.namePatient != nameCurrentUser
+                                && testOnRepeatingPatientName != appointment.namePatient
+                            ) {
+                                testOnRepeatingPatientName = appointment.namePatient.toString()
+                                listDoctorProfilMyPatient.add(
+                                    ModelPatientListForDoctorProfil(
+                                        testOnRepeatingPatientName,
+                                        R.drawable.logopatient
+                                    )
+                                )
+                                listviewDoctorProfilMyPatient!!.adapter =
+                                    MyAdapterPatientListForDoctorProfil(
+                                        requireContext(),
+                                        R.layout.list_patient_for_doctor_profil,
+                                        listDoctorProfilMyPatient
+                                    )
                             }
-
-
+                            //
                         }
-
-                        override fun failure() {
-                        }
-
+                        override fun failure() {}
                     })
 
 
@@ -101,7 +80,17 @@ class ProfilDoctorMyPatientFragment : Fragment() {
 
             override fun failureAppointment() {}
         })
+        listviewDoctorProfilMyPatient!!.setOnItemClickListener { parent, view, position, id ->
 
+                requireActivity().run {
+                    var intent = Intent(this, ShowInfoPatientForDoctorActivity::class.java)
+
+                    var patientNameInList = view.findViewById<TextView>(R.id.TVnamePatientListForProfilDoctor)
+                    intent.putExtra("nomPatient", patientNameInList!!.text.toString())
+                    startActivity(intent)
+                    finish() // If activity no more needed in back stack
+                }
+        }
 
         //showMore!!.setOnClickListener {
         //requireActivity().run {
