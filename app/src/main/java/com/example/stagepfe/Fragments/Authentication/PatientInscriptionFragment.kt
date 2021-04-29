@@ -67,7 +67,7 @@ class PatientInscriptionFragment : Fragment() {
         returnButton!!.setOnClickListener {
 
             var choosePosition = ChoosePositionFragment()
-            fragmentManager!!.beginTransaction()!!
+            requireFragmentManager().beginTransaction()!!
                 .replace(R.id.ContainerFragmentLayout, choosePosition)!!.commit()
         }
 
@@ -170,6 +170,10 @@ class PatientInscriptionFragment : Fragment() {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
                 userDao.signUpUser(requireActivity(), user, object : ResponseCallback {
+                    override fun success(medicament: String) {
+
+                    }
+
                     override fun success() {
                         progressdialog.dismiss()
 

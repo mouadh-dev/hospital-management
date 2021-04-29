@@ -227,6 +227,10 @@ class ChoosePositionFragment : Fragment() {
             progressdialog.setCancelable(false)
 
             userDao.signUpUser(requireActivity(), user, object : ResponseCallback {
+                override fun success(medicament: String) {
+
+                }
+
                 override fun success() {
                     progressdialog.dismiss()
 
@@ -342,6 +346,10 @@ class ChoosePositionFragment : Fragment() {
             progressdialog.setCancelable(false)
 
             userDao.signUpUser(requireActivity(), user, object : ResponseCallback {
+                override fun success(medicament: String) {
+
+                }
+
                 override fun success() {
                     progressdialog.dismiss()
                     var connexionpage = ConnexionFragment()

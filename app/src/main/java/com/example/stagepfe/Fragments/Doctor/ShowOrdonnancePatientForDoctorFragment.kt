@@ -1,11 +1,15 @@
 package com.example.stagepfe.Fragments.Doctor
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.ListView
+import com.example.stagepfe.Activity.Doctors.AddOrdonanceDoctorActivity
+import com.example.stagepfe.Activity.Doctors.ShowInfoPatientForDoctorActivity
 import com.example.stagepfe.Adapters.Doctor.MyAdapterNotificationDoctor
 import com.example.stagepfe.Adapters.Doctor.MyAdapterShowOrdonnancePatForDoc
 import com.example.stagepfe.Models.Doctors.ModelNotification
@@ -16,6 +20,7 @@ import com.example.stagepfe.R
 class ShowOrdonnancePatientForDoctorFragment : Fragment() {
     var listviewOrdoPatForDoctor: ListView? = null
     var listOrdoPatForDoctor = mutableListOf<ModelShowOrdonnancePatForDoctor>()
+    var addOrdonance:ImageView? = null
 
 
 
@@ -30,7 +35,17 @@ class ShowOrdonnancePatientForDoctorFragment : Fragment() {
     }
 
     private fun initView(view: View) {
+        addOrdonance = view.findViewById(R.id.Add_Ordonance)
         listviewOrdoPatForDoctor =view.findViewById<ListView>(R.id.showOrdPatForDoctorr)
+
+////////////////////////////////////////////addOrdonance Image//////////////////////////////////////
+        addOrdonance!!.setOnClickListener {
+            var intent = Intent(activity, AddOrdonanceDoctorActivity::class.java)
+            startActivity(intent)
+
+
+        }
+
         listOrdoPatForDoctor.add(ModelShowOrdonnancePatForDoctor("12/12/2020","15:50"))
         listOrdoPatForDoctor.add(ModelShowOrdonnancePatForDoctor("12/12/2020","15:50"))
         listOrdoPatForDoctor.add(ModelShowOrdonnancePatForDoctor("12/12/2020","15:50"))

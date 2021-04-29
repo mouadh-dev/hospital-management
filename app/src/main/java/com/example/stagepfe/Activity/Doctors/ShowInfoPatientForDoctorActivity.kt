@@ -25,7 +25,7 @@ class ShowInfoPatientForDoctorActivity : AppCompatActivity() {
     var tabs: TabLayout? = null
     var search: ImageView? = null
     var downImg: ImageView? = null
-    var slidPanel: SlidingUpPanelLayout? = null
+//    var slidPanel: SlidingUpPanelLayout? = null
     var namePatient:TextView? = null
     var phoneNumber:TextView? = null
     var datNaiss: TextView? = null
@@ -44,8 +44,8 @@ class ShowInfoPatientForDoctorActivity : AppCompatActivity() {
     private fun initView() {
         viewPager = findViewById(R.id.View_Pager_show_profil_pat)
         tabs = findViewById(R.id.tabs_ViewPager_show_profil_pat)
-        search = findViewById(R.id.float_button_ordonnance)
-        slidPanel = findViewById(R.id.sliding_layout_ordonnance)
+//        search = findViewById(R.id.float_button_ordonnance)
+//        slidPanel = findViewById(R.id.sliding_layout_ordonnance)
         downImg = findViewById(R.id.DownIC)
         namePatient = findViewById(R.id.name_Patient_doctor)
         phoneNumber = findViewById(R.id.num_phone_patient)
@@ -86,19 +86,16 @@ class ShowInfoPatientForDoctorActivity : AppCompatActivity() {
 
             }
         })
-
-
-
         namePatient!!.setText(intent.getStringExtra("nom"))
 
 
-        search!!.setOnClickListener {
-            slidPanel!!.visibility = View.VISIBLE
-            search!!.visibility = View.GONE
-        }
-        downImg!!.setOnClickListener {
-            slidPanel!!.visibility = View.GONE
-            search!!.visibility = View.VISIBLE
-        }
+//        search!!.setOnClickListener {
+//            slidPanel!!.visibility = View.VISIBLE
+//            search!!.visibility = View.GONE
+//        }
+//        downImg!!.setOnClickListener {
+//            slidPanel!!.visibility = View.GONE
+//            search!!.visibility = View.VISIBLE
+//        }
     }
 }

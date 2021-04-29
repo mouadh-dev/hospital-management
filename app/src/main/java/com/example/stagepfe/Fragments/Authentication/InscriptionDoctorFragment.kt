@@ -108,6 +108,10 @@ class InscriptionDoctorFragment : Fragment() {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
                     userDao.signUpUser(requireActivity(), user, object : ResponseCallback {
+                        override fun success(medicament: String) {
+
+                        }
+
                         override fun success() {
                             progressdialog.dismiss()
 

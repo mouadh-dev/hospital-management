@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.ContentValues.TAG
 import android.util.Log
 import com.example.stagepfe.entite.Appointment
+import com.example.stagepfe.entite.Medicament
 import com.example.stagepfe.entite.Reclamation
 import com.example.stagepfe.entite.UserItem
 import com.example.stagepfe.util.BaseConstant
@@ -23,6 +24,7 @@ class UserDao : IGestionUser {
     private val myRef = database.getReference(BaseConstant.instance().userRef)
     private val mAuth = FirebaseAuth.getInstance()
     private val userRef = FirebaseDatabase.getInstance().getReference("users")
+    private val medicamentRef = FirebaseDatabase.getInstance().getReference("Medicament")
     private val reclamationRef = database.getReference(BaseConstant.instance().reclamation)
 
     ////////////////////////////////////////////////Insert user/////////////////////////////////////////
@@ -257,7 +259,27 @@ class UserDao : IGestionUser {
 
 
     }
+    /////////////////////////////////////////////PopulateSearch/////////////////////////////////////
+    fun MedicamenteSearch(responseCallback: ResponseCallback) {
+        medicamentRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    for (ds in snapshot.children) {
+                        var medicament = ds.getValue(String::class.java)
+                        responseCallback.success(medicament!!)
+                    }
 
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                responseCallback.failure()
+            }
+
+        })
+
+
+    }
 
     ///////////////////////////////////////////update Photo////////////////////////////////////////
 //    private fun updateProfile() {
