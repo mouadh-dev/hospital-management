@@ -44,7 +44,6 @@ initView(view)
         listRDVPatient = view.findViewById<ListView>(R.id.List_RDV)
 
         var userdao = UserDao()
-        listRDVPatient!!.adapter = MyAdapterRdvPatient(requireContext(),R.layout.rdv_list_patient,list)
 
        // list.add(ModelRDVPatient("11/05/2021","11:00", "termineé", R.color.green))
         ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -64,7 +63,7 @@ initView(view)
                                             appointment.hour.toString(),
                                             appointment.FinishOrNot.toString(),
                                             R.color.green,
-                                            appointment.namePatient.toString()
+                                            appointment.nameDoctor.toString()
                                         )
                                     )
                                     listRDVPatient!!.adapter = MyAdapterRdvPatient(requireContext(),R.layout.rdv_list_patient,list)
@@ -75,7 +74,7 @@ initView(view)
                                             appointment.hour.toString(),
                                             appointment.FinishOrNot.toString(),
                                             R.color.red,
-                                            appointment.namePatient.toString()
+                                            appointment.nameDoctor.toString()
                                         )
                                     )
                                     listRDVPatient!!.adapter = MyAdapterRdvPatient(requireContext(),R.layout.rdv_list_patient,list)
