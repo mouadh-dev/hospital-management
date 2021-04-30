@@ -60,7 +60,7 @@
                         android:id="@+id/ContacterDoctorIV"
                         android:layout_width="50dp"
                         android:layout_height="30dp"
-                        android:src="@drawable/ic_baseline_message_24"/>
+                        android:src="@drawable/message"/>
 
                     <TextView
                         android:id="@+id/AppelerDoctor"

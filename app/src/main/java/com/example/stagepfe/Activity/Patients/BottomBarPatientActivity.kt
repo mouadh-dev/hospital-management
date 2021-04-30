@@ -13,33 +13,29 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.stagepfe.Models.Patient.Model
 import com.example.stagepfe.Adapters.Patients.MyAdapter
+import com.example.stagepfe.Dao.AppointmentCallback
+import com.example.stagepfe.Dao.UserCallback
+import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.Fragments.Patient.MessagePatientFragment
 import com.example.stagepfe.Fragments.Patient.NotificationPatintFragment
 import com.example.stagepfe.Fragments.Patient.PatientAccountFragment
 import com.example.stagepfe.Fragments.Patient.PatientReclamationFragment
 import com.example.stagepfe.R
-import com.google.android.gms.tasks.OnFailureListener
-import com.google.android.gms.tasks.OnSuccessListener
+import com.example.stagepfe.entite.Appointment
+import com.example.stagepfe.entite.UserItem
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.UploadTask
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.util.*
 import kotlin.collections.ArrayList
 
 class BottomBarPatientActivity : AppCompatActivity() {
     var listview: ListView? = null
     var list = mutableListOf<Model>()
+    var showMore: TextView? = null
     var search: ImageView? = null
     var slidPanel: SlidingUpPanelLayout? = null
     var downImg: ImageView? = null
@@ -53,6 +49,9 @@ class BottomBarPatientActivity : AppCompatActivity() {
     private val pickImage = 100
     private var imageUri: Uri? = null
     var imageProfilPatient: ImageView? = null
+    var nameCurrentUser:String? = null
+    var testOnRepeatingDocorName:String= ""
+    var SpecialityDoctor:String= ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,20 +72,53 @@ class BottomBarPatientActivity : AppCompatActivity() {
         txtSearchDoctor= findViewById(R.id.TxtSearchDoctor)
         imageProfilPatient = findViewById(R.id.IVimageProfilPatient)
         listview = findViewById<ListView>(R.id.list)
+        showMore = findViewById<TextView>(R.id.VoirPlus)
+
 //////////////////////////////////////////////////////////////////////////////////////////////////
         var home = PatientAccountFragment()
         supportFragmentManager.beginTransaction().replace(R.id.ContainerFragmentPatient, home)
             .commit()
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-        list.add(Model("Dr Foulen Fouleni", "Generaliste", R.drawable.doctor_ic))
-        list.add(Model("Dr Foulen Fouleni", "Generaliste", R.drawable.doctor_ic))
-        list.add(Model("Dr Foulen Fouleni", "Generaliste", R.drawable.doctor_ic))
-        list.add(Model("Dr Foulen Fouleni", "Generaliste", R.drawable.doctor_ic))
-        list.add(Model("Dr Foulen Fouleni", "Generaliste", R.drawable.doctor_ic))
-        list.add(Model("Dr Foulen Fouleni", "Generaliste", R.drawable.doctor_ic))
-        list.add(Model("Dr Foulen Fouleni", "Generaliste", R.drawable.doctor_ic))
-        listview!!.adapter = MyAdapter(this, R.layout.doctors_list, list)
+//        list.add(Model("Dr Foulen Fouleni", "Generaliste", R.drawable.doctor_ic))
+//        list.add(Model("Dr Foulen Fouleni", "Generaliste", R.drawable.doctor_ic))
+//        list.add(Model("Dr Foulen Fouleni", "Generaliste", R.drawable.doctor_ic))
+//        list.add(Model("Dr Foulen Fouleni", "Generaliste", R.drawable.doctor_ic))
+//        list.add(Model("Dr Foulen Fouleni", "Generaliste", R.drawable.doctor_ic))
+//        list.add(Model("Dr Foulen Fouleni", "Generaliste", R.drawable.doctor_ic))
+//        list.add(Model("Dr Foulen Fouleni", "Generaliste", R.drawable.doctor_ic))
+//        listview!!.adapter = MyAdapter(this, R.layout.doctors_list, list)
+        //////////////////////////////////////////////////////////////////////////////////////////////////
+
+        var userdao = UserDao()
+        var userItem=UserItem()
+ userdao.populateSearch(userItem, object : UserCallback {
+     override fun onSuccess(userItem: UserItem) {
+         var fullNameDoctor = userItem.prenom + " " + userItem.nom
+
+         if (userItem.role!!.containsAll(listOf("Médecin","Patient") )){
+             list.add(Model(fullNameDoctor, userItem.speciality.toString(), R.drawable.doctor_ic))
+             listview!!.adapter = MyAdapter(this@BottomBarPatientActivity, R.layout.doctors_list, list)
+             }
+     }
+
+     override fun failure() {
+     }
+ })
+
+
+        listview!!.setOnItemClickListener { parent, view, position, id ->
+
+
+                var intent = Intent(this, ShowProfilDoctorToPatientActivity::class.java)
+
+                var doctorNameInList = view.findViewById<TextView>(R.id.name_doctor_list)
+                intent.putExtra("nameDoctor", doctorNameInList.text.toString())
+                startActivity(intent)
+                finish() // If activity no more needed in back stack
+
+        }
+
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
         imageProfilPatient!!.setOnClickListener {

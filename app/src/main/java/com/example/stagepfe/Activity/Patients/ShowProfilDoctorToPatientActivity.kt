@@ -21,6 +21,9 @@ class ShowProfilDoctorToPatientActivity : AppCompatActivity() {
     var appelerDoctor: TextView? = null
     var contacterDoctor: TextView? = null
     var timeLine: DatePickerTimeline? = null
+    private var id:String? = null
+    var userDao = UserDao()
+    private var nameDoctorFromIntent:String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,21 +40,34 @@ class ShowProfilDoctorToPatientActivity : AppCompatActivity() {
         timeLine = findViewById(R.id.time_lineDoctorProfil)
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        var userDao = UserDao()
-        userDao.retrieveCurrentDataUser(this,
-            UserItem(),
-            object : UserCallback {
-                override fun onSuccess(userItem: UserItem) {
-                    nameDoctor!!.text = userItem.nom + " " + userItem.prenom
-                    specialiteDoctor!!.text = userItem.speciality
-                    bioDoctor!!.text = userItem.bio
+        nameDoctorFromIntent = intent.getStringExtra("nameDoctor")
+
+        userDao.populateSearch(UserItem(), object : UserCallback {
+            override fun onSuccess(userItem: UserItem) {
+                var nameToCompare = userItem.prenom + " " + userItem.nom
+                if (nameToCompare.equals(nameDoctorFromIntent)){
+                    id = userItem.id
+                    userDao.getUserByUid(id!!, object : UserCallback {
+                        override fun onSuccess(userItem: UserItem) {
+                            nameDoctor!!.text = userItem.nom + " " + userItem.prenom
+                            specialiteDoctor!!.text = userItem.speciality
+                            bioDoctor!!.text = userItem.bio
+
+                        }
+
+                        override fun failure() {
+
+                        }
+                    })
                 }
 
-                override fun failure() {
-                }
+            }
 
-            })
+            override fun failure() {
 
+            }
+        })
+        nameDoctor!!.setText(intent.getStringExtra("nom"))
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         timeLine!!.setDateLabelAdapter(DateLabelAdapter { calendar, index ->

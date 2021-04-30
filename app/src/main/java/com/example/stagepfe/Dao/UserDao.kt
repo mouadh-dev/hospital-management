@@ -3,8 +3,8 @@ package com.example.stagepfe.Dao
 import android.app.Activity
 import android.content.ContentValues.TAG
 import android.util.Log
+import androidx.fragment.app.FragmentActivity
 import com.example.stagepfe.entite.Appointment
-import com.example.stagepfe.entite.Medicament
 import com.example.stagepfe.entite.Reclamation
 import com.example.stagepfe.entite.UserItem
 import com.example.stagepfe.util.BaseConstant
@@ -125,7 +125,7 @@ class UserDao : IGestionUser {
 
     //////////////////////////////////////////////////retrieve data user////////////////////////////////
     fun retrieveCurrentDataUser(
-        activity: Activity,
+        activity: FragmentActivity,
         userItem: UserItem,
         userCallback: UserCallback
     ) {

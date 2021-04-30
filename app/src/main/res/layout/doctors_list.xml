@@ -33,4 +33,13 @@
             android:layout_marginTop="15dp"/>
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/VoirPlus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Voir plus"
+        android:layout_marginLeft="50dp"
+        android:textColor="@color/gray"
+        android:textSize="15dp"
+        android:layout_marginTop="45dp"/>
 </LinearLayout>

@@ -63,8 +63,7 @@ class DoctorReclamationFragment : Fragment() {
 
 
         sendButton!!.setOnClickListener {
-            if (fullNameReclamationET!!.text.isEmpty() || phoneNumberReclamationET!!.text.isEmpty()
-                || descriptionReclamationET!!.text.isEmpty()) {
+            if (descriptionReclamationET!!.text.isEmpty()) {
                 var v = View.inflate(requireContext(), R.layout.fragment_dialog, null)
                 var builder = AlertDialog.Builder(requireContext())
                 builder.setView(v)

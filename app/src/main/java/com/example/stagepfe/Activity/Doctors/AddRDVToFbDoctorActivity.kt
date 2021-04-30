@@ -1,9 +1,7 @@
 package com.example.stagepfe.Activity.Doctors
 
-import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.stagepfe.Dao.AppointmentCallback
@@ -13,10 +11,6 @@ import com.example.stagepfe.R
 import com.example.stagepfe.entite.Appointment
 import com.example.stagepfe.entite.UserItem
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 
 class AddRDVToFbDoctorActivity : AppCompatActivity() {
     var year: String? = null
