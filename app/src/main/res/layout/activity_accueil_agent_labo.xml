@@ -77,7 +77,6 @@
         </LinearLayout>
 
         <!--    Reclamation-->
-
         <LinearLayout
             android:id="@+id/reclamationLayoutAgent"
             android:layout_width="match_parent"

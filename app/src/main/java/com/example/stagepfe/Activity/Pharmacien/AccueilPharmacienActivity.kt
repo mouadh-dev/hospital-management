@@ -7,12 +7,15 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
 import android.widget.ImageView
+import android.widget.LinearLayout
 import com.example.stagepfe.Activity.Doctors.DoctorProfilActivity
+import com.example.stagepfe.Fragments.AgentLabo.AgentReclamationFragment
 import com.example.stagepfe.Fragments.Doctor.AccueilDoctorFragment
 import com.example.stagepfe.Fragments.Doctor.DoctorMessageFragment
 import com.example.stagepfe.Fragments.Doctor.DoctorNotificationFragment
 import com.example.stagepfe.Fragments.Doctor.DoctorReclamationFragment
 import com.example.stagepfe.Fragments.Pharmacien.AccueilPharmacienFragment
+import com.example.stagepfe.Fragments.Pharmacien.PharmacienReclamationFragment
 import com.example.stagepfe.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -22,6 +25,8 @@ class AccueilPharmacienActivity : AppCompatActivity() {
     private val pickImage = 100
     private var imageUri: Uri? = null
     var imageProfilPharmacien: ImageView? = null
+    var reclamationPharmacien: LinearLayout? = null
+    var homePharmacien: LinearLayout? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +39,8 @@ class AccueilPharmacienActivity : AppCompatActivity() {
     private fun initView() {
         navigationPharmacien = findViewById(R.id.bottom_nav_Pharmacien)
         imageProfilPharmacien = findViewById(R.id.IVimageProfilPharmacien)
+        reclamationPharmacien = findViewById(R.id.reclamationLayoutPharmacien)
+        homePharmacien = findViewById(R.id.profilInformationPharmacien)
 
         imageProfilPharmacien!!.setOnClickListener {
             val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
@@ -46,7 +53,8 @@ class AccueilPharmacienActivity : AppCompatActivity() {
         navigationPharmacien!!.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_home_phar -> {
-
+                    homePharmacien!!.visibility = View.VISIBLE
+                    reclamationPharmacien!!.visibility = View.GONE
                     var homeParmacien = AccueilPharmacienFragment()
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.ContainerFragmentPharmacien, homeParmacien).commit()
@@ -61,7 +69,17 @@ class AccueilPharmacienActivity : AppCompatActivity() {
                     finish()
 
                 }
+                R.id.navigation_reclamation_phar -> {
+                    reclamationPharmacien!!.visibility = View.VISIBLE
+                    homePharmacien!!.visibility = View.GONE
 
+
+                    var reclamationnav = PharmacienReclamationFragment()
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.ContainerFragmentPharmacien, reclamationnav).commit()
+
+                    return@OnNavigationItemSelectedListener true
+                }
             }
             true
         })
