@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <LinearLayout
-            android:id="@+id/profilInformationDoctor"
+            android:id="@+id/profilInformationAgent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/blue"
@@ -74,6 +74,58 @@
                     android:layout_marginRight="30dp"
                     android:src="@drawable/reglage" />
             </RelativeLayout>
+        </LinearLayout>
+
+        <!--    Reclamation-->
+
+        <LinearLayout
+            android:id="@+id/reclamationLayoutAgent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@color/blue"
+            android:visibility="gone"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@color/blue">
+                <RelativeLayout
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/whiteellipse" />
+                    <!--            android:src="@drawable/back"-->
+                    <ImageView
+                        android:id="@+id/IconReturnBack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:src="@drawable/forward" />
+
+                </RelativeLayout>
+                <TextView
+                    android:id="@+id/TitleActivityAgent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Réclamer"
+                    android:textSize="30dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:layout_marginLeft="50dp"
+                    />
+            </LinearLayout>
+
+
+
         </LinearLayout>
     </LinearLayout>
 
