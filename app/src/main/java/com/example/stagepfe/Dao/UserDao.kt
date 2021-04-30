@@ -3,10 +3,7 @@ package com.example.stagepfe.Dao
 import android.app.Activity
 import android.content.ContentValues.TAG
 import android.util.Log
-import com.example.stagepfe.entite.Appointment
-import com.example.stagepfe.entite.Medicament
-import com.example.stagepfe.entite.Reclamation
-import com.example.stagepfe.entite.UserItem
+import com.example.stagepfe.entite.*
 import com.example.stagepfe.util.BaseConstant
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
@@ -240,6 +237,7 @@ class UserDao : IGestionUser {
 
     /////////////////////////////////////////////PopulateSearch/////////////////////////////////////
     fun populateSearch(userItem: UserItem, responseCallback: UserCallback) {
+
         userRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
@@ -278,6 +276,43 @@ class UserDao : IGestionUser {
 
         })
 
+
+    }
+    /////////////////////////////////////////////insert Ordonance/////////////////////////////////////
+    override fun insertordonance(
+        ordonance: Ordonance,
+        userItem: UserItem,
+        uid: String,
+        ordonanceCallback: OrdonanceCallback
+    ) {
+        userRef.addListenerForSingleValueEvent(object : ValueEventListener {
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+                if (snapshot.exists()) {
+                    for (ds in snapshot.children) {
+                        var userItem = ds.getValue(UserItem::class.java)
+                        var firstNAme = userItem!!.nom
+                        var lastName = userItem.prenom
+                        var fullNAme = firstNAme + " " + lastName
+                        if (ordonance.namepatientOrdo.equals(fullNAme) || ordonance.nameDoctorOrd!!.equals(fullNAme)) {
+                            var id = userItem.id
+                            ordonanceCallback.successOrdonance(ordonance)
+                            var ordonances = HashMap<String,Ordonance>()
+                            ordonances[userItem.id.toString()] = ordonance
+
+                            userItem.ordonance = ordonances
+                            userRef.child(id.toString())
+                                .child("ordonance").child(userItem.id.toString())
+                               .setValue(ordonance)
+                        }
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
 
     }
 

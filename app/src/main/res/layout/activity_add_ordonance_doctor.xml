@@ -142,6 +142,7 @@
                 android:lines="3"
                 />
             <Button
+                android:id="@+id/add_medicament_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button_style_smaller"
@@ -152,7 +153,7 @@
                 />
 </LinearLayout>
         </RelativeLayout>
-        <FrameLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/container_add_Ord"
@@ -162,6 +163,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             />
-        </FrameLayout>
+            <Button
+                android:id="@+id/Add_Ordonance_Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_style_smaller"
+                android:text="envoyer"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20dp"/>
+        </RelativeLayout>
     </RelativeLayout>
 </LinearLayout>
