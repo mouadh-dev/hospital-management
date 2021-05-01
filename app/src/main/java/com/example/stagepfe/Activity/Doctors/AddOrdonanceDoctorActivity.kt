@@ -1,5 +1,6 @@
 package com.example.stagepfe.Activity.Doctors
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
 import android.widget.*
@@ -16,23 +17,23 @@ import com.example.stagepfe.entite.UserItem
 
 
 class AddOrdonanceDoctorActivity : AppCompatActivity() {
-    var addOne:ImageView? = null
-    var removeOne:ImageView? = null
-    var nameMedicament:AutoCompleteTextView? = null
-    var adapter: ArrayAdapter<String>?=null
+    var addOne: ImageView? = null
+    var removeOne: ImageView? = null
+    var nameMedicament: AutoCompleteTextView? = null
+    var adapter: ArrayAdapter<String>? = null
     var userdao = UserDao()
     var returnBack: ImageView? = null
     var listViewOrd: ListView? = null
     var listOrd = mutableListOf<ModelOrdonance>()
     var listMedicamentOrdonance = ArrayList<MedicamentOrdonance>()
-    var addMedicament:Button? = null
-    var addOrdonance:Button? = null
+    var addMedicament: Button? = null
+    var addOrdonance: Button? = null
     var userDao = UserDao()
     var userItem = UserItem()
     var ordonance = Ordonance()
     var medicamentOrdonance = MedicamentOrdonance()
-    var quantity :TextView? = null
-    var descriptionMedicament:EditText? = null
+    var quantity: TextView? = null
+    var descriptionMedicament: EditText? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +49,7 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
         returnBack = findViewById(R.id.return_back_Ord)
         listViewOrd = findViewById(R.id.List_Ordonance_add)
         addMedicament = findViewById(R.id.add_medicament_button)
-        addOrdonance= findViewById(R.id.Add_Ordonance_Button)
+        addOrdonance = findViewById(R.id.Add_Ordonance_Button)
         descriptionMedicament = findViewById(R.id.description_Et)
 
 
@@ -59,74 +60,114 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
 
 //            var intent = Intent(this, ShowInfoPatientForDoctorActivity::class.java)
 //            startActivity(intent)
-//            finish()
+            finish()
         }
 
- ////////////////////////////////////////////listView Medicament////////////////////////////////////
+        ////////////////////////////////////////////listView Medicament////////////////////////////////////
         addMedicament!!.setOnClickListener {
-        listOrd.add(
-            ModelOrdonance(
-                nameMedicament!!.text.toString(),
-                quantity!!.text.toString(),
-                descriptionMedicament!!.text.toString()
-            )
-        )
-        listViewOrd!!.adapter = MyAdapterOrdonance(this, R.layout.ord_add_list, listOrd)
+            if (nameMedicament!!.text.isEmpty() || quantity!!.text.equals("0")) {
+                var text = "veuillez ajouter des medicaments"
+                dialog(text)
+            } else {
+                listOrd.add(
+                    ModelOrdonance(
+                        nameMedicament!!.text.toString(),
+                        quantity!!.text.toString(),
+                        descriptionMedicament!!.text.toString()
+                    )
+                )
+                listViewOrd!!.adapter = MyAdapterOrdonance(this, R.layout.ord_add_list, listOrd)
 
+                fillList(
+                    nameMedicament!!.text.toString(),
+                    quantity!!.text.toString(),
+                    descriptionMedicament!!.text.toString()
+                )
 
-
-
-
-
-            quantity!!.setText("0")
-            descriptionMedicament!!.text.clear()
-            nameMedicament!!.text.clear()
+                quantity!!.setText("0")
+                descriptionMedicament!!.text.clear()
+                nameMedicament!!.text.clear()
+            }
         }
 
 ////////////////////////////////////////////add ordonance tofirebase////////////////////////////////
+
         addOrdonance!!.setOnClickListener {
+            if (listMedicamentOrdonance.isEmpty()) {
+                var text = "veuillez ajouter des medicaments"
+                dialog(text)
 
-           userDao.retrieveCurrentDataUser( object : UserCallback {
-               override fun onSuccess(userItem: UserItem) {
-                   ordonance.nameDoctorOrd = userItem.prenom + " " + userItem.nom
-                   ordonance.idDoctor = userItem.id
-                   ordonance.medicament = listMedicamentOrdonance
-                   ordonance.namepatientOrdo = intent.getStringExtra("test")
-                   userDao.insertordonance(ordonance, userItem,
-                       object : OrdonanceCallback {
-                           override fun successOrdonance(ordonance: Ordonance) {
-                               Toast.makeText(
-                                   applicationContext,
-                                   "add ordo avec succe",
-                                   Toast.LENGTH_SHORT
-                               ).show()
-                           }
+            } else {
+                userDao.retrieveCurrentDataUser(object : UserCallback {
+                    override fun onSuccess(userItem: UserItem) {
+                        ordonance.nameDoctorOrd = userItem.prenom + " " + userItem.nom
+                        ordonance.idDoctor = userItem.id
+                        ordonance.medicament = listMedicamentOrdonance
+                        ordonance.namepatientOrdo = ""
+                        userDao.insertordonance(ordonance, userItem,
+                            object : OrdonanceCallback {
+                                override fun successOrdonance(ordonance: Ordonance) {
+//                               startActivity(Intent(this@AddOrdonanceDoctorActivity,ShowInfoPatientForDoctorActivity::class.java))
+                                    finish()
+                                    Toast.makeText(
+                                        applicationContext,
+                                        "add ordo avec succe",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
 
-                           override fun failureOrdonance() {
+                                override fun failureOrdonance() {
 
-                           }
-                       })
-               }
+                                }
+                            })
+                    }
 
-               override fun failure() {
+                    override fun failure() {
 
-               }
-           })
+                    }
+                })
+            }
         }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
         addOne!!.setOnClickListener {
             var count = quantity!!.text.toString().toInt()
-            count+= 1
+            count += 1
             quantity!!.text = count.toString()
         }
         removeOne!!.setOnClickListener {
             var count = quantity!!.text.toString().toInt()
-            if (count > 0){
-            count-= 1
-            quantity!!.text = count.toString()
-        }
+            if (count > 0) {
+                count -= 1
+                quantity!!.text = count.toString()
+            }
         }
 
+    }
+
+    private fun dialog(text: String) {
+        var v = View.inflate(this, R.layout.fragment_dialog, null)
+        var builder = AlertDialog.Builder(this)
+        builder.setView(v)
+
+        var dialog = builder.create()
+        dialog.show()
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.findViewById<TextView>(R.id.TitleDialog).text = text
+        dialog.findViewById<TextView>(R.id.msgdialog).visibility = View.GONE
+        dialog.findViewById<Button>(R.id.btn_confirm).setOnClickListener {
+            dialog.dismiss()
+        }
+    }
+
+    private fun fillList(
+        nameMedicament: String,
+        quantityMedicament: String,
+        descriptionMedicament: String
+    ) {
+        medicamentOrdonance.nameMedicament = nameMedicament
+        medicamentOrdonance.quantity = quantityMedicament
+        medicamentOrdonance.description = descriptionMedicament
+        listMedicamentOrdonance.add(medicamentOrdonance)
     }
 
     private fun initAdapter() {

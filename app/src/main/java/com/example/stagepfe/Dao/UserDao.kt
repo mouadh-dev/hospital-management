@@ -132,6 +132,7 @@ class UserDao : IGestionUser {
             }
 
             override fun onCancelled(error: DatabaseError) {
+                Log.w(TAG, "signInWithEmail:failure", error.toException())
                 userCallback.failure()
             }
 
@@ -172,6 +173,7 @@ class UserDao : IGestionUser {
             }
 
             override fun onCancelled(error: DatabaseError) {
+                Log.w(TAG, "signInWithEmail:failure", error.toException())
             }
         })
 
@@ -294,7 +296,7 @@ class UserDao : IGestionUser {
                             ordonanceCallback.successOrdonance(ordonance)
 
                             var ordonances = HashMap<String,Ordonance>()
-                            ordonances[userItem.id.toString()] = ordonance
+                            ordonances[ordonance.nameDoctorOrd.toString()] = ordonance
 
                             userItem.ordonance = ordonances
                             userRef.child(id)

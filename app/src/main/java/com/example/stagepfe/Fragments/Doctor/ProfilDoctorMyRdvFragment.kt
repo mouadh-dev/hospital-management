@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentPagerAdapter
 import com.example.stagepfe.Adapters.Doctor.MyAdapterRdvDoctor
 import com.example.stagepfe.Dao.AppointmentCallback
 import com.example.stagepfe.Dao.UserCallback
@@ -61,11 +63,13 @@ class ProfilDoctorMyRdvFragment : Fragment() {
                                             appointment.namePatient.toString()
                                         )
                                     )
-                                    listviewDoctorProfilRdv!!.adapter = MyAdapterRdvDoctor(
-                                        requireContext(),
-                                        R.layout.list_rdv_for_doctor,
-                                        listDoctorProfilRdv
-                                    )
+                                    context?.let {
+                                        listviewDoctorProfilRdv!!.adapter = MyAdapterRdvDoctor(
+                                            requireContext(),
+                                            R.layout.list_rdv_for_doctor,
+                                            listDoctorProfilRdv
+                                        )
+                                    }
                                 } else {
                                     listDoctorProfilRdv.add(
                                         ModelRdvDoctor(
@@ -77,7 +81,7 @@ class ProfilDoctorMyRdvFragment : Fragment() {
                                         )
                                     )
                                     listviewDoctorProfilRdv!!.adapter = MyAdapterRdvDoctor(
-                                        requireContext(),
+                                        requireActivity(),
                                         R.layout.list_rdv_for_doctor,
                                         listDoctorProfilRdv
                                     )
@@ -87,6 +91,7 @@ class ProfilDoctorMyRdvFragment : Fragment() {
                         }
 
                         override fun failure() {
+
                         }
 
                     })

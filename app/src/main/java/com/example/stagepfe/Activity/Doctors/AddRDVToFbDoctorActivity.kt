@@ -91,22 +91,26 @@ class AddRDVToFbDoctorActivity : AppCompatActivity() {
             appointment.hour = hourRDV!!.text.toString()
             appointment
 
-            userdao.insertappointment(appointment, userItem, FirebaseAuth.getInstance().uid.toString(), object : AppointmentCallback {
-                override fun successAppointment(appointment: Appointment) {
-                    var toast = Toast.makeText(
-                        applicationContext,
-                        "Rendez-vous ajoute avec succès",
-                        Toast.LENGTH_SHORT
-                    )
-                    toast.show()
-                }
+            userdao.insertappointment(
+                appointment,
+                userItem,
+                FirebaseAuth.getInstance().uid.toString(),
+                object : AppointmentCallback {
+                    override fun successAppointment(appointment: Appointment) {
+                        var toast = Toast.makeText(
+                            applicationContext,
+                            "Rendez-vous ajoute avec succès",
+                            Toast.LENGTH_SHORT
+                        )
+                        toast.show()
+                    }
 
-                override fun failureAppointment() {
+                    override fun failureAppointment() {
+                        Toast.makeText(this@AddRDVToFbDoctorActivity, "something went wrong", Toast.LENGTH_SHORT).show()
+                    }
 
-                }
 
-
-            })
+                })
         }
 
 
