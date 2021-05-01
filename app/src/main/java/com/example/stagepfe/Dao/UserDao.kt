@@ -235,7 +235,6 @@ class UserDao : IGestionUser {
 
     /////////////////////////////////////////////PopulateSearch/////////////////////////////////////
     fun populateSearch(userItem: UserItem, responseCallback: UserCallback) {
-
         userRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {

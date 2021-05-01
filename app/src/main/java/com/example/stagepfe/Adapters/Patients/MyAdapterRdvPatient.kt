@@ -22,14 +22,14 @@ class MyAdapterRdvPatient(var mCtx: Context, var resources:Int, var items:List<M
         var textHourRDV: TextView = view.findViewById(R.id.Hour_RDV)
         var textCheckRDV: TextView = view.findViewById(R.id.Check_RDV)
         var colorCheckRDV: LinearLayout = view.findViewById(R.id.Color_Check_RDV)
-
+        var nameDoctor: TextView = view.findViewById(R.id.name_Doctor)
 
         var items: ModelRDVPatient = items[position]
         textDateRDV.text = items.datRDV
         textHourRDV.text = items.hourRDV
         textCheckRDV.text = items.checkRDV
         colorCheckRDV.setBackgroundColor(mCtx.resources.getColor(items.colorCheckRDV))
-
+        nameDoctor.text = items.doctorName
 
 
         return view

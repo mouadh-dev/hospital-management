@@ -21,6 +21,9 @@ class ShowProfilDoctorToPatientActivity : AppCompatActivity() {
     var appelerDoctor: TextView? = null
     var contacterDoctor: TextView? = null
     var timeLine: DatePickerTimeline? = null
+    private var id:String? = null
+    var userDao = UserDao()
+    private var nameDoctorFromIntent:String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,11 +49,12 @@ class ShowProfilDoctorToPatientActivity : AppCompatActivity() {
                     bioDoctor!!.text = userItem.bio
                 }
 
-                override fun failure() {
-                }
+                        override fun failure() {
 
-            })
+                        }
+                    })
 
+        nameDoctor!!.setText(intent.getStringExtra("nom"))
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         timeLine!!.setDateLabelAdapter(DateLabelAdapter { calendar, index ->

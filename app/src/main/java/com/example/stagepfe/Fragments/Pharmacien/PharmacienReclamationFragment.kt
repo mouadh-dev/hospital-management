@@ -1,4 +1,4 @@
-package com.example.stagepfe.Fragments.Doctor
+package com.example.stagepfe.Fragments.Pharmacien
 
 import android.app.AlertDialog
 import android.content.Intent
@@ -11,7 +11,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
-import com.example.stagepfe.Activity.Doctors.AccountDoctorActivity
+import com.example.stagepfe.Activity.AgentLabo.AccueilAgentLaboActivity
+import com.example.stagepfe.Activity.Pharmacien.AccueilPharmacienActivity
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.R
@@ -19,51 +20,46 @@ import com.example.stagepfe.entite.Reclamation
 import com.example.stagepfe.entite.UserItem
 
 
-class DoctorReclamationFragment : Fragment() {
-    private var fullNameReclamationET: EditText? = null
-    private var phoneNumberReclamationET: EditText? = null
-    private var descriptionReclamationET: EditText? = null
-    private var sendButton: Button? = null
+class PharmacienReclamationFragment : Fragment() {
+    private var fullNameReclamationPharmacienET: EditText? = null
+    private var phoneNumberReclamationPharmacienET: EditText? = null
+    private var descriptionReclamationPharmacienET: EditText? = null
+    private var sendButtonPharmacien: Button? = null
     var userDao = UserDao()
     var reclamation = Reclamation()
     var userItem = UserItem()
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        var view= inflater.inflate(R.layout.fragment_doctor_reclamation, container, false)
+        var view=  inflater.inflate(R.layout.fragment_pharmacien_reclamation, container, false)
         initView(view)
         return  view
-
     }
 
     private fun initView(view: View) {
-        fullNameReclamationET = view.findViewById(R.id.ReclamationFullName)
-        phoneNumberReclamationET = view.findViewById(R.id.ReclamationPhoneNumber)
-        descriptionReclamationET = view.findViewById(R.id.DescriptionReclamation)
-        sendButton = view.findViewById<Button>(R.id.SendbuttonReclamtion)
 
-        fullNameReclamationET!!.isFocusable = false
-        phoneNumberReclamationET!!.isFocusable = false
+        fullNameReclamationPharmacienET = view.findViewById(R.id.ReclamationFullNamePharmacien)
+        phoneNumberReclamationPharmacienET = view.findViewById(R.id.ReclamationPhoneNumberPharmacien)
+        descriptionReclamationPharmacienET = view.findViewById(R.id.DescriptionReclamationPharmacien)
+        sendButtonPharmacien = view.findViewById<Button>(R.id.SendbuttonReclamtionPharmacien)
 
+        fullNameReclamationPharmacienET!!.isFocusable = false
+        phoneNumberReclamationPharmacienET!!.isFocusable = false
 
-        userDao.retrieveCurrentDataUser( object : UserCallback {
+        userDao.retrieveCurrentDataUser(requireActivity(), userItem, object : UserCallback {
             override fun onSuccess(userItem: UserItem) {
-                fullNameReclamationET!!.setText(userItem.prenom + " " + userItem.nom)
-                phoneNumberReclamationET!!.setText(userItem.phonenumber)
+                fullNameReclamationPharmacienET!!.setText(userItem.prenom + " " + userItem.nom)
+                phoneNumberReclamationPharmacienET!!.setText(userItem.phonenumber)
             }
 
             override fun failure() {
-
             }
         })
-
-
-        sendButton!!.setOnClickListener {
-            if (descriptionReclamationET!!.text.isEmpty()) {
+        sendButtonPharmacien!!.setOnClickListener {
+            if (descriptionReclamationPharmacienET!!.text.isEmpty()) {
                 var v = View.inflate(requireContext(), R.layout.fragment_dialog, null)
                 var builder = AlertDialog.Builder(requireContext())
                 builder.setView(v)
@@ -76,7 +72,7 @@ class DoctorReclamationFragment : Fragment() {
                     dialog.dismiss()
                 }
             }else{
-                 var v = View.inflate(
+                var v = View.inflate(
                     requireContext(),
                     R.layout.fragment_dialog,
                     null
@@ -100,23 +96,18 @@ class DoctorReclamationFragment : Fragment() {
 
 
 
-                        reclamation.fullName = fullNameReclamationET!!.text.toString()
-                        reclamation.description = descriptionReclamationET!!.text.toString()
-                        reclamation.phoneNumber = phoneNumberReclamationET!!.text.toString()
+                        reclamation.fullName = fullNameReclamationPharmacienET!!.text.toString()
+                        reclamation.description = descriptionReclamationPharmacienET!!.text.toString()
+                        reclamation.phoneNumber = phoneNumberReclamationPharmacienET!!.text.toString()
                         userDao.insertReclamation(reclamation)
                         requireActivity().run {
-                                    var intent = Intent(this, AccountDoctorActivity::class.java)
-                                    startActivity(intent)
-                                    finish()
-                                }
-//
-//
-
+                            var intent = Intent(this,AccueilPharmacienActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        }
 
                     }
             }
-            }
         }
-
-
+    }
 }

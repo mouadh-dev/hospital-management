@@ -4,6 +4,7 @@ class ModelRDVPatient(
     var datRDV:String,
     var hourRDV: String,
     var checkRDV: String,
-    var colorCheckRDV: Int
+    var colorCheckRDV: Int,
+    var doctorName:String
 ) {
 }

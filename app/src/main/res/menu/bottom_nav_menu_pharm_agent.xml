@@ -5,6 +5,10 @@
         android:icon="@drawable/ic_home_black_24dp"
         android:title="Accueil" />
     <item
+        android:id="@+id/navigation_reclamation_phar"
+        android:icon="@drawable/casque"
+        android:title="Réclamation" />
+    <item
         android:id="@+id/navigation_profile_phar"
         android:icon="@drawable/profile_ic"
         android:title="Moi"
