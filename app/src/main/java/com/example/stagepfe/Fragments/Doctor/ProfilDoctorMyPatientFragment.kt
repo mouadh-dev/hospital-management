@@ -46,8 +46,7 @@ class ProfilDoctorMyPatientFragment : Fragment() {
 
         userdao.getAppointment(object : AppointmentCallback {
             override fun successAppointment(appointment: Appointment) {
-                userdao.retrieveCurrentDataUser(requireActivity(),
-                    UserItem(),
+                userdao.retrieveCurrentDataUser(
                     object : UserCallback {
                         override fun onSuccess(userItem: UserItem) {
 
@@ -69,6 +68,7 @@ class ProfilDoctorMyPatientFragment : Fragment() {
                                         R.layout.list_patient_for_doctor_profil,
                                         listDoctorProfilMyPatient
                                     )
+
                             }
                             //
                         }

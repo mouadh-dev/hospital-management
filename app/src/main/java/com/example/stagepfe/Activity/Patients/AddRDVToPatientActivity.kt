@@ -62,7 +62,7 @@ class AddRDVToPatientActivity : AppCompatActivity() {
 
 
         var userdao = UserDao()
-        userdao.retrieveCurrentDataUser(this, UserItem(), object : UserCallback {
+        userdao.retrieveCurrentDataUser( object : UserCallback {
 
             override fun onSuccess(userItem: UserItem) {
                 namePatient!!.text = userItem.nom + " " + userItem.prenom

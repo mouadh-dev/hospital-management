@@ -37,8 +37,7 @@ class ProfilPharmacienActivity : AppCompatActivity() {
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         var userDao = UserDao()
-        userDao.retrieveCurrentDataUser(this,
-            UserItem(),
+        userDao.retrieveCurrentDataUser(
             object : UserCallback {
                 override fun onSuccess(userItem: UserItem) {
                     namePharmacien!!.text = userItem.nom + " " + userItem.prenom

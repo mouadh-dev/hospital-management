@@ -122,8 +122,6 @@ class UserDao : IGestionUser {
 
     //////////////////////////////////////////////////retrieve data user////////////////////////////////
     fun retrieveCurrentDataUser(
-        activity: Activity,
-        userItem: UserItem,
         userCallback: UserCallback
     ) {
 
@@ -282,7 +280,6 @@ class UserDao : IGestionUser {
     override fun insertordonance(
         ordonance: Ordonance,
         userItem: UserItem,
-        uid: String,
         ordonanceCallback: OrdonanceCallback
     ) {
         userRef.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -292,19 +289,19 @@ class UserDao : IGestionUser {
                 if (snapshot.exists()) {
                     for (ds in snapshot.children) {
                         var userItem = ds.getValue(UserItem::class.java)
-                        var firstNAme = userItem!!.nom
-                        var lastName = userItem.prenom
-                        var fullNAme = firstNAme + " " + lastName
+                        var fullNAme = userItem!!.prenom + " " + userItem.nom
                         if (ordonance.namepatientOrdo.equals(fullNAme) || ordonance.nameDoctorOrd!!.equals(fullNAme)) {
-                            var id = userItem.id
+                            var id = userItem.id.toString()
                             ordonanceCallback.successOrdonance(ordonance)
+
                             var ordonances = HashMap<String,Ordonance>()
                             ordonances[userItem.id.toString()] = ordonance
 
                             userItem.ordonance = ordonances
-                            userRef.child(id.toString())
-                                .child("ordonance").child(userItem.id.toString())
+                            userRef.child(id)
+                                .child("ordonance").child("DR"+ordonance.nameDoctorOrd.toString())
                                .setValue(ordonance)
+
                         }
                     }
                 }

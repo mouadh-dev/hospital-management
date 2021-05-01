@@ -8,18 +8,15 @@ data class Ordonance constructor(
     var nameDoctorOrd:String? = "",
     var idPatient:String? = "",
     var idDoctor:String? = "",
-    var nameMedicament:String? = "",
-    var quantity:String? = "",
-    var description:String? = ""
+    var medicament: ArrayList<MedicamentOrdonance> = ArrayList()
+
 ):Parcelable{
     constructor(parcel: Parcel) : this(
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString()
+        TODO("medicament")
     ) {
     }
 
@@ -28,9 +25,6 @@ data class Ordonance constructor(
         parcel.writeString(nameDoctorOrd)
         parcel.writeString(idPatient)
         parcel.writeString(idDoctor)
-        parcel.writeString(nameMedicament)
-        parcel.writeString(quantity)
-        parcel.writeString(description)
     }
 
     override fun describeContents(): Int {
@@ -46,4 +40,5 @@ data class Ordonance constructor(
             return arrayOfNulls(size)
         }
     }
+
 }

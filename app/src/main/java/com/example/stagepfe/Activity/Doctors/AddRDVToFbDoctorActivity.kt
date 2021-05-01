@@ -71,7 +71,7 @@ class AddRDVToFbDoctorActivity : AppCompatActivity() {
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-        userdao.retrieveCurrentDataUser(this, UserItem(), object : UserCallback {
+        userdao.retrieveCurrentDataUser( object : UserCallback {
 
             override fun onSuccess(userItem: UserItem) {
                 nameDoctor!!.text = userItem.nom + " " + userItem.prenom

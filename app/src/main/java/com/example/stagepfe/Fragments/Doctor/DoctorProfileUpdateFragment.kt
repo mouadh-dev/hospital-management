@@ -87,8 +87,7 @@ class DoctorProfileUpdateFragment : Fragment() {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
         var userDao = UserDao()
         var userItem = UserItem()
-        userDao.retrieveCurrentDataUser(requireActivity(),
-            UserItem(),
+        userDao.retrieveCurrentDataUser(
             object : UserCallback {
                 override fun onSuccess(userItem: UserItem) {
                     firstNameProfilDoctorET!!.setText(userItem.nom)

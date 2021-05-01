@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.stagepfe.Adapters.Doctor.MyAdapterAddRDV
 import com.example.stagepfe.Adapters.Doctor.MyAdapterAddRDV.OnItemClickListner
-import com.example.stagepfe.Models.Doctors.ModelAddRDV
+import com.example.stagepfe.Models.Doctors.ModelRDV
 import com.example.stagepfe.R
 import com.github.badoualy.datepicker.DatePickerTimeline
 import com.github.badoualy.datepicker.MonthView.DateLabelAdapter
@@ -80,23 +80,23 @@ returnIcon = findViewById(R.id.IconReturnBackMessage)
         val recyclerView: RecyclerView = findViewById(R.id.recycler_view) as RecyclerView
 
         //Data
-        val dataList: MutableList<ModelAddRDV> = ArrayList()
-        dataList.add(ModelAddRDV(R.drawable.itemone, "08:00", "vide"))
-        dataList.add(ModelAddRDV(R.drawable.itemone, "08:30", "vide"))
-        dataList.add(ModelAddRDV(R.drawable.itemone, "09:00", "vide"))
-        dataList.add(ModelAddRDV(R.drawable.itemone, "09:30", "vide"))
-        dataList.add(ModelAddRDV(R.drawable.itemone, "10:00", "vide"))
-        dataList.add(ModelAddRDV(R.drawable.itemone, "10:30", "vide"))
-        dataList.add(ModelAddRDV(R.drawable.itemone, "11:00", "vide"))
-        dataList.add(ModelAddRDV(R.drawable.itemone, "11:30", "vide"))
-        dataList.add(ModelAddRDV(R.drawable.itemone, "12:00", "vide"))
-        dataList.add(ModelAddRDV(R.drawable.itemone, "12:30", "vide"))
-        dataList.add(ModelAddRDV(R.drawable.itemone, "13:00", "vide"))
-        dataList.add(ModelAddRDV(R.drawable.itemone, "13:30", "vide"))
-        dataList.add(ModelAddRDV(R.drawable.itemone, "14:00", "vide"))
+        val dataList: MutableList<ModelRDV> = ArrayList()
+        dataList.add(ModelRDV(R.drawable.itemone, "08:00", "vide"))
+        dataList.add(ModelRDV(R.drawable.itemone, "08:30", "vide"))
+        dataList.add(ModelRDV(R.drawable.itemone, "09:00", "vide"))
+        dataList.add(ModelRDV(R.drawable.itemone, "09:30", "vide"))
+        dataList.add(ModelRDV(R.drawable.itemone, "10:00", "vide"))
+        dataList.add(ModelRDV(R.drawable.itemone, "10:30", "vide"))
+        dataList.add(ModelRDV(R.drawable.itemone, "11:00", "vide"))
+        dataList.add(ModelRDV(R.drawable.itemone, "11:30", "vide"))
+        dataList.add(ModelRDV(R.drawable.itemone, "12:00", "vide"))
+        dataList.add(ModelRDV(R.drawable.itemone, "12:30", "vide"))
+        dataList.add(ModelRDV(R.drawable.itemone, "13:00", "vide"))
+        dataList.add(ModelRDV(R.drawable.itemone, "13:30", "vide"))
+        dataList.add(ModelRDV(R.drawable.itemone, "14:00", "vide"))
 
         //Recycler View Adapter
-        val mAdapter = MyAdapterAddRDV(dataList as ArrayList<ModelAddRDV>, this, this)
+        val mAdapter = MyAdapterAddRDV(dataList as ArrayList<ModelRDV>, this, this)
         val mLayoutManager: RecyclerView.LayoutManager = LinearLayoutManager(applicationContext)
         recyclerView.setLayoutManager(mLayoutManager)
         recyclerView.setItemAnimator(DefaultItemAnimator())
@@ -106,7 +106,7 @@ returnIcon = findViewById(R.id.IconReturnBackMessage)
     }
 
 
-    override fun onItemClick(item: ModelAddRDV, position: Int) {
+    override fun onItemClick(item: ModelRDV, position: Int) {
 
         var hourSended = item.time
         var year = year.toString()

@@ -33,9 +33,7 @@ class AuthenticationFragmentContainerActivity : AppCompatActivity() {
         super.onResume()
         var userDao = UserDao()
         if(FirebaseAuth.getInstance().currentUser!=null){
-            userDao.retrieveCurrentDataUser(this,
-                UserItem(),
-                object : UserCallback {
+            userDao.retrieveCurrentDataUser(object : UserCallback {
                     override fun onSuccess(userItem: UserItem) {
                         if (userItem.role!!.contains("Patient") && userItem.role!!.size==1){
                             var intent = Intent(this@AuthenticationFragmentContainerActivity, BottomBarPatientActivity::class.java)

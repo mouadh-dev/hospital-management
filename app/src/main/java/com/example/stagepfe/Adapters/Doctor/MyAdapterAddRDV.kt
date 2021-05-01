@@ -1,19 +1,16 @@
 package com.example.stagepfe.Adapters.Doctor
 
-import android.app.Activity
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.TextureView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.stagepfe.Models.Doctors.ModelAddRDV
+import com.example.stagepfe.Models.Doctors.ModelRDV
 import com.example.stagepfe.R
 
-class MyAdapterAddRDV(private val dataList: ArrayList<ModelAddRDV>, private val mCtx: Context,var clickListner: OnItemClickListner) :
+class MyAdapterAddRDV(private val dataList: ArrayList<ModelRDV>, private val mCtx: Context, var clickListner: OnItemClickListner) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val itemView: View = LayoutInflater.from(mCtx).inflate(R.layout.list_add_rdv_doctor, parent, false)
@@ -34,7 +31,7 @@ class MyAdapterAddRDV(private val dataList: ArrayList<ModelAddRDV>, private val 
         return dataList.size
     }
     inner class viewHolder(itemView : View): RecyclerView.ViewHolder(itemView){
-        fun bindItem(item: ModelAddRDV, action:OnItemClickListner){
+        fun bindItem(item: ModelRDV, action:OnItemClickListner){
             var reserv:TextView = itemView.findViewById(R.id.tvTextTaken)
             var hour:TextView = itemView.findViewById(R.id.tvTime)
             var dispo: ImageView = itemView.findViewById<View>(R.id.ivDivider) as ImageView
@@ -50,7 +47,7 @@ class MyAdapterAddRDV(private val dataList: ArrayList<ModelAddRDV>, private val 
     }
 
     interface OnItemClickListner{
-        fun onItemClick(item: ModelAddRDV, position: Int)
+        fun onItemClick(item: ModelRDV, position: Int)
     }
 
 }

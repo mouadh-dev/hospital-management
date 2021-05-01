@@ -10,7 +10,7 @@ import com.example.stagepfe.Adapters.Doctor.MyAdapterRdvDoctor
 import com.example.stagepfe.Dao.AppointmentCallback
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
-import com.example.stagepfe.Models.Doctors.ModelRdvDocteur
+import com.example.stagepfe.Models.Doctors.ModelRdvDoctor
 import com.example.stagepfe.R
 import com.example.stagepfe.entite.Appointment
 import com.example.stagepfe.entite.UserItem
@@ -18,7 +18,7 @@ import com.example.stagepfe.entite.UserItem
 
 class ProfilDoctorMyRdvFragment : Fragment() {
     var listviewDoctorProfilRdv: ListView? = null
-    var listDoctorProfilRdv = mutableListOf<ModelRdvDocteur>()
+    var listDoctorProfilRdv = mutableListOf<ModelRdvDoctor>()
     var nameDoctor: String? = null
 
     override fun onCreateView(
@@ -45,8 +45,7 @@ class ProfilDoctorMyRdvFragment : Fragment() {
 
         userdao.getAppointment(object : AppointmentCallback {
             override fun successAppointment(appointment: Appointment) {
-                userdao.retrieveCurrentDataUser(requireActivity(),
-                    UserItem(),
+                userdao.retrieveCurrentDataUser(
                     object : UserCallback {
                         override fun onSuccess(userItem: UserItem) {
                             var nameDoctor = userItem.nom + " " + userItem.prenom
@@ -54,7 +53,7 @@ class ProfilDoctorMyRdvFragment : Fragment() {
                             if (appointment.nameDoctor!!.equals(nameDoctor)) {
                                 if (appointment.FinishOrNot.equals("Pas encore")) {
                                     listDoctorProfilRdv.add(
-                                        ModelRdvDocteur(
+                                        ModelRdvDoctor(
                                             appointment.date.toString(),
                                             appointment.hour.toString(),
                                             appointment.FinishOrNot.toString(),
@@ -69,7 +68,7 @@ class ProfilDoctorMyRdvFragment : Fragment() {
                                     )
                                 } else {
                                     listDoctorProfilRdv.add(
-                                        ModelRdvDocteur(
+                                        ModelRdvDoctor(
                                             appointment.date.toString(),
                                             appointment.hour.toString(),
                                             appointment.FinishOrNot.toString(),

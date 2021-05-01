@@ -38,8 +38,7 @@ class ProfilAgentLaboActivity : AppCompatActivity() {
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         var userDao = UserDao()
-        userDao.retrieveCurrentDataUser(this,
-            UserItem(),
+        userDao.retrieveCurrentDataUser(
             object : UserCallback {
                 override fun onSuccess(userItem: UserItem) {
                     nameAgent!!.text = userItem.nom + " " + userItem.prenom

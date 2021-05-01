@@ -50,7 +50,7 @@ class DoctorReclamationFragment : Fragment() {
         phoneNumberReclamationET!!.isFocusable = false
 
 
-        userDao.retrieveCurrentDataUser(requireActivity(), userItem, object : UserCallback {
+        userDao.retrieveCurrentDataUser( object : UserCallback {
             override fun onSuccess(userItem: UserItem) {
                 fullNameReclamationET!!.setText(userItem.prenom + " " + userItem.nom)
                 phoneNumberReclamationET!!.setText(userItem.phonenumber)

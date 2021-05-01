@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.LinearLayout
 import android.widget.TextView
-import com.example.stagepfe.Models.Doctors.ModelRdvDocteur
+import com.example.stagepfe.Models.Doctors.ModelRdvDoctor
 import com.example.stagepfe.R
 
-class MyAdapterRdvDoctor(var mCtx: Context, var resources:Int, var items:List<ModelRdvDocteur>): ArrayAdapter<ModelRdvDocteur>(mCtx, resources, items)  {
+class MyAdapterRdvDoctor(var mCtx: Context, var resources:Int, var items:List<ModelRdvDoctor>): ArrayAdapter<ModelRdvDoctor>(mCtx, resources, items)  {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var layoutInflater: LayoutInflater = LayoutInflater.from(mCtx)
         var view: View = layoutInflater.inflate(resources, null)
@@ -22,7 +22,7 @@ class MyAdapterRdvDoctor(var mCtx: Context, var resources:Int, var items:List<Mo
         var namePatient: TextView = view.findViewById(R.id.name_Patient)
 
 
-        var mItem: ModelRdvDocteur = items[position]
+        var mItem: ModelRdvDoctor = items[position]
         TvetatRendezVous.text = mItem.date_rdv
         TVdateRendezVous.text = mItem.heure_rdv
         TVheureRendezVous.text = mItem.etat_rdv

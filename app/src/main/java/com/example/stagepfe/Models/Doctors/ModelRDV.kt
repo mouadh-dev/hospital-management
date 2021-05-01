@@ -6,5 +6,5 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.stagepfe.R
 
-class ModelAddRDV(var dispo:Int,var time:String,var reserv:String) {
+class ModelRDV(var dispo:Int, var time:String, var reserv:String) {
 }

@@ -46,7 +46,8 @@ data class UserItem constructor(
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
-        TODO("reservation")
+        TODO("rendezVous"),
+        TODO("ordonance")
     ) {
     }
 

@@ -11,7 +11,7 @@ interface IGestionUser{
     fun insertUser(userItem: UserItem)
     fun insertappointment(appointment: Appointment,userItem: UserItem,uid: String,responseCallback: AppointmentCallback)
     fun insertReclamation(reclamation: Reclamation)
-    fun insertordonance(ordonance: Ordonance,userItem: UserItem,uid: String,ordonanceCallback: OrdonanceCallback)
+    fun insertordonance(ordonance: Ordonance,userItem: UserItem,ordonanceCallback: OrdonanceCallback)
 
 
 }

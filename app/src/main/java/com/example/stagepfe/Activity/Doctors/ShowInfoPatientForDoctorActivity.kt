@@ -60,6 +60,8 @@ class ShowInfoPatientForDoctorActivity : AppCompatActivity() {
         tabs!!.setupWithViewPager(viewPager)
 
         namePatientFromIntent = intent.getStringExtra("nomPatient")
+//        intent.putExtra("test",namePatientFromIntent)
+        println("mouadh :" + namePatientFromIntent)
 
         userDao.populateSearch(UserItem(), object : UserCallback {
             override fun onSuccess(userItem: UserItem) {
@@ -69,6 +71,7 @@ class ShowInfoPatientForDoctorActivity : AppCompatActivity() {
                     userDao.getUserByUid(id!!, object : UserCallback {
                         override fun onSuccess(userItem: UserItem) {
                             namePatient!!.text = userItem.nom + " " + userItem.prenom
+                            intent.putExtra("test",userItem.nom + " " + userItem.prenom)
                             phoneNumber!!.text = userItem.phonenumber
                             datNaiss!!.text = userItem.datenaiss
 

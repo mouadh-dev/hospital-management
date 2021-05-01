@@ -82,8 +82,7 @@ class ProfilePatientActivity : AppCompatActivity() {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
         var userDao = UserDao()
-        userDao.retrieveCurrentDataUser(this,
-            UserItem(),
+        userDao.retrieveCurrentDataUser(
             object : UserCallback {
                 override fun onSuccess(userItem: UserItem) {
                     namePatient!!.text = userItem.nom + " " + userItem.prenom
