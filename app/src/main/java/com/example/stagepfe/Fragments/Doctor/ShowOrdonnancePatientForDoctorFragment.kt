@@ -38,19 +38,22 @@ class ShowOrdonnancePatientForDoctorFragment : Fragment() {
         addOrdonance = view.findViewById(R.id.Add_Ordonance)
         listviewOrdoPatForDoctor =view.findViewById<ListView>(R.id.showOrdPatForDoctorr)
 
-////////////////////////////////////////////addOrdonance Image//////////////////////////////////////
+////////////////////////////////////////////addOrdonance////////////////////////////////////////////
         addOrdonance!!.setOnClickListener {
-            var intent = Intent(activity, AddOrdonanceDoctorActivity::class.java)
+            var intent = Intent(requireContext(), AddOrdonanceDoctorActivity::class.java)
             startActivity(intent)
-            
+
+
         }
 
-        listOrdoPatForDoctor.add(ModelShowOrdonnancePatForDoctor("12/12/2020","15:50"))
-        listOrdoPatForDoctor.add(ModelShowOrdonnancePatForDoctor("12/12/2020","15:50"))
-        listOrdoPatForDoctor.add(ModelShowOrdonnancePatForDoctor("12/12/2020","15:50"))
-        listOrdoPatForDoctor.add(ModelShowOrdonnancePatForDoctor("12/12/2020","15:50"))
-        listOrdoPatForDoctor.add(ModelShowOrdonnancePatForDoctor("12/12/2020","15:50"))
-        listviewOrdoPatForDoctor!!.adapter = MyAdapterShowOrdonnancePatForDoc(requireContext(), R.layout.show_ordonnance_patient_to_doctor, listOrdoPatForDoctor)
+
+
+
+
+//        listOrdoPatForDoctor.add(ModelShowOrdonnancePatForDoctor("12/12/2020","15:50"))
+//        listviewOrdoPatForDoctor!!.adapter = MyAdapterShowOrdonnancePatForDoc(requireContext(), R.layout.show_ordonnance_patient_to_doctor, listOrdoPatForDoctor)
+
+
     }
 
 

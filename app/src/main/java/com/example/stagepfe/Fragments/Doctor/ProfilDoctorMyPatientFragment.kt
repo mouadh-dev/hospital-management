@@ -1,5 +1,7 @@
 package com.example.stagepfe.Fragments.Doctor
 
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -62,13 +64,14 @@ class ProfilDoctorMyPatientFragment : Fragment() {
                                         R.drawable.logopatient
                                     )
                                 )
+                                requireActivity().run {
                                 listviewDoctorProfilMyPatient!!.adapter =
                                     MyAdapterPatientListForDoctorProfil(
-                                        requireContext(),
+                                        this,
                                         R.layout.list_patient_for_doctor_profil,
                                         listDoctorProfilMyPatient
                                     )
-
+                                }
                             }
                             //
                         }
@@ -82,14 +85,14 @@ class ProfilDoctorMyPatientFragment : Fragment() {
         })
         listviewDoctorProfilMyPatient!!.setOnItemClickListener { parent, view, position, id ->
 
-                requireActivity().run {
-                    var intent = Intent(this, ShowInfoPatientForDoctorActivity::class.java)
+//                requireActivity().run {
+                    var intent = Intent(activity, ShowInfoPatientForDoctorActivity::class.java)
 
                     var patientNameInList = view.findViewById<TextView>(R.id.TVnamePatientListForProfilDoctor)
                     intent.putExtra("nomPatient", patientNameInList!!.text.toString())
                     startActivity(intent)
-                    finish() // If activity no more needed in back stack
-                }
+//                    finish() // If activity no more needed in back stack
+//                }
         }
 
         //showMore!!.setOnClickListener {

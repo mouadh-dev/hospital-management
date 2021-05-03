@@ -111,11 +111,11 @@ class InscriptionFirstPageFragment : Fragment() {
 
             override fun afterTextChanged(s: Editable?) {
                 if (android.util.Patterns.EMAIL_ADDRESS.matcher(mail!!.text.toString()).matches()) {
-                    buttonNext!!.isEnabled = true
-                    buttonNext!!.setBackgroundResource(R.drawable.button_style_smaller)
+                    buttonNext.isEnabled = true
+                    buttonNext.setBackgroundResource(R.drawable.button_style_smaller)
                 } else{
-                    buttonNext!!.isEnabled = false
-                    buttonNext!!.setBackgroundResource(R.drawable.gray_button)
+                    buttonNext.isEnabled = false
+                    buttonNext.setBackgroundResource(R.drawable.gray_button)
                     mail!!.error = "invalide Email"
                 }
             }
@@ -151,12 +151,12 @@ class InscriptionFirstPageFragment : Fragment() {
 
             override fun afterTextChanged(s: Editable?) {
                 if (notequal()){
-                    buttonNext!!.isEnabled = false
-                    buttonNext!!.setBackgroundResource(R.drawable.gray_button)
+                    buttonNext.isEnabled = false
+                    buttonNext.setBackgroundResource(R.drawable.gray_button)
                     confirmPass!!.error = "le mot de passe ne correspond pas"
                 }else{
-                    buttonNext!!.isEnabled = true
-                    buttonNext!!.setBackgroundResource(R.drawable.button_style_smaller)
+                    buttonNext.isEnabled = true
+                    buttonNext.setBackgroundResource(R.drawable.button_style_smaller)
 
                 }
             }

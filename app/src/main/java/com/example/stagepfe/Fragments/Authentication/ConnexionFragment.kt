@@ -1,5 +1,6 @@
 package com.example.stagepfe.Fragments.Authentication
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
@@ -20,7 +21,7 @@ import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.R
 import com.example.stagepfe.entite.UserItem
-import com.google.firebase.auth.FirebaseAuth
+
 
 class ConnexionFragment : Fragment(), View.OnClickListener {
     private var inscriptionButton: Button? = null
@@ -106,25 +107,32 @@ class ConnexionFragment : Fragment(), View.OnClickListener {
                 progressdialog.setCancelable(false)
                 userDao.signIn(requireActivity(),
                     UserItem(
-                        mail = mailConnexionET!!.text.toString(), password = passwordConnectET!!.text.toString()),
+                        mail = mailConnexionET!!.text.toString(),
+                        password = passwordConnectET!!.text.toString()
+                    ),
                     object : UserCallback {
                         override fun onSuccess(userItem: UserItem) {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-                            if (userItem.role!!.contains("Patient") && userItem.role!!.size==1){
+                            if (userItem.role!!.contains("Patient") && userItem.role!!.size == 1) {
                                 var v = View.inflate(
-                                mContext,
-                                R.layout.fragment_dialog,
-                                null
-                            )
+                                    mContext,
+                                    R.layout.fragment_dialog,
+                                    null
+                                )
 
-                            progressdialog.dismiss()
-                            requireActivity().run {
-                                startActivity(Intent(this, BottomBarPatientActivity::class.java))
-                                finish() // If activity no more needed in back stack
-                            }
+                                progressdialog.dismiss()
+                                requireActivity().run {
+                                    startActivity(
+                                        Intent(
+                                            this,
+                                            BottomBarPatientActivity::class.java
+                                        )
+                                    )
+                                    finish() // If activity no more needed in back stack
+                                }
 
-                        }else if (userItem.role!!.containsAll(listOf("Médecin","Patient")) ){
+                            } else if (userItem.role!!.containsAll(listOf("Médecin", "Patient"))) {
                                 var v = View.inflate(
                                     mContext,
                                     R.layout.fragment_dialog,
@@ -137,7 +145,13 @@ class ConnexionFragment : Fragment(), View.OnClickListener {
                                     finish() // If activity no more needed in back stack
                                 }
 
-                            } else if (userItem.role!!.containsAll(listOf("Pharmacien","Patient")) ) {
+                            } else if (userItem.role!!.containsAll(
+                                    listOf(
+                                        "Pharmacien",
+                                        "Patient"
+                                    )
+                                )
+                            ) {
                                 var v = View.inflate(
                                     mContext,
                                     R.layout.fragment_dialog,
@@ -146,10 +160,15 @@ class ConnexionFragment : Fragment(), View.OnClickListener {
 
                                 progressdialog.dismiss()
                                 requireActivity().run {
-                                    startActivity(Intent(this, AccueilPharmacienActivity::class.java))
+                                    startActivity(
+                                        Intent(
+                                            this,
+                                            AccueilPharmacienActivity::class.java
+                                        )
+                                    )
                                     finish() // If activity no more needed in back stack
                                 }
-                            } else if (userItem.role!!.containsAll(listOf("Labo","Patient")) ) {
+                            } else if (userItem.role!!.containsAll(listOf("Labo", "Patient"))) {
                                 var v = View.inflate(
                                     mContext,
                                     R.layout.fragment_dialog,
@@ -158,14 +177,19 @@ class ConnexionFragment : Fragment(), View.OnClickListener {
 
                                 progressdialog.dismiss()
                                 requireActivity().run {
-                                    startActivity(Intent(this, AccueilAgentLaboActivity::class.java))
+                                    startActivity(
+                                        Intent(
+                                            this,
+                                            AccueilAgentLaboActivity::class.java
+                                        )
+                                    )
                                     finish() // If activity no more needed in back stack
                                 }
                             }
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-                    }
+                        }
 
 
                         override fun failure() {
@@ -181,7 +205,8 @@ class ConnexionFragment : Fragment(), View.OnClickListener {
                             var dialog = builder.create()
                             dialog.show()
                             dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-                            dialog.findViewById<TextView>(R.id.TitleDialog).setText("Email ou adresse n'est pas correcte")
+                            dialog.findViewById<TextView>(R.id.TitleDialog)
+                                .setText("Email ou adresse n'est pas correcte")
                             dialog.findViewById<TextView>(R.id.msgdialog).visibility = View.GONE
                             dialog.findViewById<Button>(R.id.btn_confirm)
                                 .setOnClickListener {

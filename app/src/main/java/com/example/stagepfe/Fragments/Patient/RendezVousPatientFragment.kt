@@ -11,8 +11,7 @@ import com.example.stagepfe.Adapters.Patients.MyAdapterRdvPatient
 import com.example.stagepfe.Dao.AppointmentCallback
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
-import com.example.stagepfe.Models.Doctors.ModelRdvDocteur
-import com.example.stagepfe.Models.Patient.ModelMessagePatient
+
 import com.example.stagepfe.Models.Patient.ModelRDVPatient
 import com.example.stagepfe.R
 import com.example.stagepfe.entite.Appointment
@@ -49,8 +48,7 @@ initView(view)
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         userdao.getAppointment(object : AppointmentCallback {
             override fun successAppointment(appointment: Appointment) {
-                userdao.retrieveCurrentDataUser(requireActivity(),
-                    UserItem(),
+                userdao.retrieveCurrentDataUser(
                     object : UserCallback {
                         override fun onSuccess(userItem: UserItem) {
                             var namePatient = userItem.nom + " " + userItem.prenom

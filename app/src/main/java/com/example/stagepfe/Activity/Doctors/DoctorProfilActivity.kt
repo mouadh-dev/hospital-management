@@ -77,11 +77,12 @@ class DoctorProfilActivity : AppCompatActivity() {
             //  finish()
 
         }
+
         var adapter = ViewPagerAdapter(supportFragmentManager)
         adapter.addFragment(ProfilDoctorMyRdvFragment(), "Rendez-vous")
         adapter.addFragment(ProfilDoctorMyPatientFragment(), "patients")
 
-
+        viewPager!!.offscreenPageLimit = (1)
         viewPager!!.adapter = adapter
         tabs!!.setupWithViewPager(viewPager)
     }
