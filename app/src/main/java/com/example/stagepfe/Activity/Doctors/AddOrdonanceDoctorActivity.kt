@@ -5,10 +5,13 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isEmpty
+import androidx.core.view.iterator
 import com.example.stagepfe.Adapters.Doctor.MyAdapterOrdonance
 import com.example.stagepfe.Dao.OrdonanceCallback
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
+import com.example.stagepfe.Models.Doctors.ModelMeicamentDoctor
 import com.example.stagepfe.Models.Doctors.ModelOrdonance
 import com.example.stagepfe.R
 import com.example.stagepfe.entite.MedicamentOrdonance
@@ -25,7 +28,7 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
     var returnBack: ImageView? = null
     var listViewOrd: ListView? = null
     var listOrd = mutableListOf<ModelOrdonance>()
-    var listMedicamentOrdonance = ArrayList<MedicamentOrdonance>()
+
     var addMedicament: Button? = null
     var addOrdonance: Button? = null
     var userDao = UserDao()
@@ -78,11 +81,11 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
                 )
                 listViewOrd!!.adapter = MyAdapterOrdonance(this, R.layout.ord_add_list, listOrd)
 
-                fillList(
-                    nameMedicament!!.text.toString(),
-                    quantity!!.text.toString(),
-                    descriptionMedicament!!.text.toString()
-                )
+//                fillList(
+//                    nameMedicament!!.text.toString(),
+//                    quantity!!.text.toString(),
+//                    descriptionMedicament!!.text.toString()
+//                )
 
                 quantity!!.setText("0")
                 descriptionMedicament!!.text.clear()
@@ -93,7 +96,16 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
 ////////////////////////////////////////////add ordonance tofirebase////////////////////////////////
 
         addOrdonance!!.setOnClickListener {
-            if (listMedicamentOrdonance.isEmpty()) {
+            var listMedicamentOrdonance = ArrayList<MedicamentOrdonance>()
+            for (pos in listViewOrd!!){
+
+                var nameMedicamentList= findViewById<TextView>(R.id.name_medicament_list)
+                var test = nameMedicamentList.text.toString()
+                medicamentOrdonance.nameMedicament = test
+                listMedicamentOrdonance.add(medicamentOrdonance)
+            }
+
+            if (listViewOrd!!.isEmpty()) {
                 var text = "veuillez ajouter des medicaments"
                 dialog(text)
 
@@ -159,16 +171,20 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
         }
     }
 
-    private fun fillList(
-        nameMedicament: String,
-        quantityMedicament: String,
-        descriptionMedicament: String
-    ) {
-        medicamentOrdonance.nameMedicament = nameMedicament
-        medicamentOrdonance.quantity = quantityMedicament
-        medicamentOrdonance.description = descriptionMedicament
-        listMedicamentOrdonance.add(medicamentOrdonance)
-    }
+//    private fun fillList() {
+//        for (pos in listViewOrd) {
+//            medicamentOrdonance.nameMedicament = nameMedicament
+//            medicamentOrdonance.quantity = quantityMedicament
+//            medicamentOrdonance.description = descriptionMedicament
+//            listMedicamentOrdonance.add(
+//                ModelMeicamentDoctor(
+//                    nameMedicament,
+//                    quantityMedicament,
+//                    descriptionMedicament
+//                )
+//            )
+//        }
+//    }
 
     private fun initAdapter() {
 

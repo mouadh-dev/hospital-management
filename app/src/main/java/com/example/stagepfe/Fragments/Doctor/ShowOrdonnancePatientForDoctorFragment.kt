@@ -40,8 +40,9 @@ class ShowOrdonnancePatientForDoctorFragment : Fragment() {
 
 ////////////////////////////////////////////addOrdonance////////////////////////////////////////////
         addOrdonance!!.setOnClickListener {
-            var intent = Intent(activity, AddOrdonanceDoctorActivity::class.java)
+            var intent = Intent(requireContext(), AddOrdonanceDoctorActivity::class.java)
             startActivity(intent)
+
 
         }
 
