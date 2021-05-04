@@ -9,6 +9,7 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.widget.*
+import com.example.stagepfe.Activity.Authentication.AuthenticationFragmentContainerActivity
 import com.example.stagepfe.Fragments.Doctor.AccueilDoctorFragment
 import com.example.stagepfe.Fragments.Doctor.DoctorMessageFragment
 import com.example.stagepfe.Fragments.Doctor.DoctorNotificationFragment
@@ -41,6 +42,7 @@ class AccountDoctorActivity : AppCompatActivity() {
     private val pickImage = 100
     private var imageUri: Uri? = null
     var imageProfilDoctor: ImageView? = null
+    var changeUser:ImageView? = null
 
 //    var reglage: ImageView? = null
 
@@ -57,19 +59,13 @@ class AccountDoctorActivity : AppCompatActivity() {
         initView()
 //
     }
+
+
     private fun initView() {
+        changeUser = findViewById(R.id.change_user)
         search = findViewById(R.id.float_button)
         slidPanel = findViewById(R.id.sliding_layout)
         downImg = findViewById(R.id.DownIC)
-
-//        reglage = findViewById(R.id.reglage_ic)
-//        reglage!!.setOnClickListener {
-//           var userDao = UserDao()
-//            var appointment: Appointment = Appointment()
-//            appointment.date = "test"
-//            userDao.insertappointment(appointment)
-//        }
-
         navigationDoctor = findViewById(R.id.bottom_nav_Doctor)
         titlelTV = findViewById(R.id.TitleActivityBottomnavigation)
         reclamationDoctor = findViewById(R.id.reclamationLayoutDoctor)
@@ -78,7 +74,13 @@ class AccountDoctorActivity : AppCompatActivity() {
         notificationDoctor = findViewById(R.id.NotificationLayoutDoctor)
         txtSearch= findViewById(R.id.TxtSearch)
         imageProfilDoctor = findViewById(R.id.IVimageProfilDoctor)
-
+//        reglage = findViewById(R.id.reglage_ic)
+//        reglage!!.setOnClickListener {
+//           var userDao = UserDao()
+//            var appointment: Appointment = Appointment()
+//            appointment.date = "test"
+//            userDao.insertappointment(appointment)
+//        }
     listviewPatientForDoctor = findViewById<ListView>(R.id.listPatientForDocteur)
     //listPatientForDoctor.add(ModelPatientList("Mohamed Rouahi",R.drawable.logopatient))
     //listPatientForDoctor.add(ModelPatientList("Mohamed Rouahi",R.drawable.logopatient))
@@ -98,6 +100,22 @@ class AccountDoctorActivity : AppCompatActivity() {
 
         }
 //////////////////////////////////////////////////////////////////////////////////////////////////
+        changeUser!!.setOnClickListener {
+            var userDao = UserDao()
+            userDao.signout(UserItem(),object : UserCallback {
+                override fun onSuccess(userItem: UserItem) {
+
+                    var intent = Intent(this@AccountDoctorActivity,AuthenticationFragmentContainerActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+
+                override fun failure() {
+var toast= Toast.makeText(this@AccountDoctorActivity,"probleme",Toast.LENGTH_SHORT)
+                    toast.show()
+                }
+            })
+        }
         //////////////////////////////////////////////////////////////////////////////////////////////////
 
         navigationDoctor!!.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { item ->

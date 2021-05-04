@@ -113,6 +113,7 @@
     android:layout_height="match_parent">
 
     <ImageView
+        android:id="@+id/change_user"
         android:layout_width="48sp"
         android:layout_height="48sp"
         android:layout_alignParentRight="true"

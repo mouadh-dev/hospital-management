@@ -121,9 +121,7 @@ class UserDao : IGestionUser {
     }
 
     //////////////////////////////////////////////////retrieve data user////////////////////////////////
-    fun retrieveCurrentDataUser(
-        userCallback: UserCallback
-    ) {
+    fun retrieveCurrentDataUser(userCallback: UserCallback) {
 
         myRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -139,6 +137,14 @@ class UserDao : IGestionUser {
         })
     }
 
+//////////////////////////////////////////sign out methode////////////////////////////////////////
+    fun signout(userItem: UserItem,userCallback: UserCallback){
+        mAuth.signOut()
+   mAuth.addAuthStateListener{
+       userCallback.onSuccess(userItem)
+   }
+
+    }
     //////////////////////////////////////////Insert appointment////////////////////////////////////////
     override fun insertappointment(
         appointment: Appointment,
