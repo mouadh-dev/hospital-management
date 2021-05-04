@@ -43,7 +43,6 @@ class ShowRapportPatientForDoctorFragment : Fragment() {
             var intent = Intent(activity, AddRapportDoctorActivity::class.java)
             startActivity(intent)
 
-
         }
     }
 

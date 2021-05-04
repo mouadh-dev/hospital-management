@@ -22,7 +22,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.app.ActivityCompat
+import com.example.stagepfe.Activity.AgentLabo.ProfilAgentLaboActivity
 import com.example.stagepfe.Activity.Doctors.AccountDoctorActivity
+import com.example.stagepfe.Activity.Patients.ProfilePatientActivity
 import com.example.stagepfe.R
 import com.google.android.gms.location.*
 import java.text.SimpleDateFormat
@@ -77,6 +79,16 @@ class ProfilAgentUpdateFragment : Fragment() {
 
         adresseProfilAgentET!!.isFocusable = false
         dateNaissProfilAgentET!!.isFocusable = false
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        returnProfilAgentButton!!.setOnClickListener {
+            requireActivity().run {
+                startActivity(Intent(this, ProfilAgentLaboActivity::class.java))
+                finish() // If activity no more needed in back stack
+            }
+        }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////
 

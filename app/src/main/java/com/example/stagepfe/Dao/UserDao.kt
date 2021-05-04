@@ -23,6 +23,7 @@ class UserDao : IGestionUser {
     private val userRef = FirebaseDatabase.getInstance().getReference("users")
     private val medicamentRef = FirebaseDatabase.getInstance().getReference("Medicament")
     private val reclamationRef = database.getReference(BaseConstant.instance().reclamation)
+    private val rapportRef = database.getReference(BaseConstant.instance().rapport)
 
     ////////////////////////////////////////////////Insert user/////////////////////////////////////////
     override fun insertUser(userItem: UserItem) {
@@ -216,6 +217,11 @@ class UserDao : IGestionUser {
     override fun insertReclamation(reclamation: Reclamation) {
         reclamation.id = reclamationRef.push().key.toString()
         reclamationRef.child(reclamation.id!!).setValue(reclamation)
+    }
+    //////////////////////////////////////////insertRapport/////////////////////////////////////////
+    override fun insertRapport(rapport: Rapport) {
+        rapport.id = rapportRef.push().key.toString()
+        rapportRef.child(rapport.id!!).setValue(rapport)
     }
 
     ///////////////////////////////////////////get user/////////////////////////////////////////////

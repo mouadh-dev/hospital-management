@@ -56,25 +56,51 @@
             android:orientation="vertical">
 
             <EditText
-                android:id="@+id/text_Rapport_Et"
+                android:id="@+id/Name_Doctor_rapport"
+                android:layout_width="290dp"
+                android:layout_height="50dp"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/edit_text_style"
+                android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                android:drawableRight="@drawable/nom_util"
+                android:hint="nom et prenom"
+                android:paddingLeft="20dp"
+                android:paddingRight="10dp"
+                android:textColor="@color/black"
+                android:textColorHint="#888282"
+                android:textSize="15dp"
+                android:inputType="textPersonName"/>
+
+
+            <TextView
+                android:id="@+id/Description_wrong_Patient"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="60dp"
-                android:hint="Veuillez ecrire ici votre rapport"
-                android:layout_marginRight="20dp"
-                android:textColorHint="@color/gray"
-                android:background="@drawable/edit_text_style"
-                android:padding="10dp"
+                android:text="Veuillez ecrire ici votre rapport "
                 android:textColor="@color/black"
                 android:textSize="20dp"
-
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="50dp"
                 />
+
+            <EditText
+                android:id="@+id/text_Rapport_Et"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:layout_marginTop="10dp"
+                android:padding="15dp"
+                android:background="@drawable/edit_text_style"
+                android:layout_gravity="center"
+                />
+
 
             <Button
                 android:id="@+id/Add_Rapport_Button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="290dp"
+                android:layout_height="40dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/button_style_smaller"
                 android:text="envoyer"

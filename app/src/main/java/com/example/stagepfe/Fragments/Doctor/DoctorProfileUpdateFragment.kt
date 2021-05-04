@@ -22,10 +22,13 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import com.example.stagepfe.Activity.Authentication.ContainerFragmentPasswordActivity
 import com.example.stagepfe.Activity.Doctors.AccountDoctorActivity
+import com.example.stagepfe.Activity.Doctors.CheckRDVActivity
 import com.example.stagepfe.Activity.Doctors.DoctorProfilActivity
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
+import com.example.stagepfe.Fragments.Authentication.InscriptionFirstPageFragment
 import com.example.stagepfe.R
 import com.example.stagepfe.entite.UserItem
 import com.google.android.gms.location.*
@@ -102,6 +105,13 @@ class DoctorProfileUpdateFragment : Fragment() {
                 }
 
             })
+////////////////////////////////////////////////////////////////////////////////////////////////////
+        returnProfilButton!!.setOnClickListener {
+            requireActivity().run {
+                startActivity(Intent(this, DoctorProfilActivity::class.java))
+                finish() // If activity no more needed in back stack
+            }
+        }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
         saveProfilButton!!.setOnClickListener {

@@ -25,6 +25,7 @@ class DoctorProfilActivity : AppCompatActivity() {
     var profilDoctorLayout: LinearLayout? = null
     var updateProfilDoctorLayout: LinearLayout? = null
     var nameDoctor: TextView? = null
+    var bioDoctor: TextView? = null
     var phoneNumbreDoctor: TextView? = null
     var birthDateDoctor: TextView? = null
     var bundle =Bundle()
@@ -42,6 +43,7 @@ class DoctorProfilActivity : AppCompatActivity() {
         profilDoctorLayout=findViewById(R.id.profilDoctorLayoutContainer)
         updateProfilDoctorLayout=findViewById(R.id.UpdateprofilDoctorLayoutContainer)
         nameDoctor = findViewById(R.id.name_Doctor)
+        bioDoctor=findViewById(R.id.BioDoctorProfil)
         phoneNumbreDoctor = findViewById(R.id.PhoneNumber_Doctor)
         birthDateDoctor = findViewById(R.id.BirthDate_Doctor)
 
@@ -53,6 +55,7 @@ class DoctorProfilActivity : AppCompatActivity() {
                     nameDoctor!!.text = userItem.nom + " " + userItem.prenom
                     phoneNumbreDoctor!!.text = userItem.phonenumber
                     birthDateDoctor!!.text = userItem.datenaiss
+                    bioDoctor!!.text = userItem.bio
                 }
 
                 override fun failure() {

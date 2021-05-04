@@ -22,7 +22,9 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import com.example.stagepfe.Activity.Doctors.DoctorProfilActivity
 import com.example.stagepfe.Activity.Patients.BottomBarPatientActivity
+import com.example.stagepfe.Activity.Patients.ProfilePatientActivity
 import com.example.stagepfe.Fragments.Authentication.ConnexionFragment
 import com.example.stagepfe.R
 import com.google.android.gms.location.*
@@ -90,7 +92,15 @@ class ModifyProfilePatientFragment : Fragment() {
         adresseProfilPatientET!!.isFocusable = false
         dateNaissProfilPatientET!!.isFocusable = false
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+        returnButtonPatient!!.setOnClickListener {
+            requireActivity().run {
+                startActivity(Intent(this, ProfilePatientActivity::class.java))
+                finish() // If activity no more needed in back stack
+            }
+        }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
           ///////////////////////////////////////////////////////////////////////////////////////////////////
 
