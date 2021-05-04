@@ -1,9 +1,6 @@
 package com.example.stagepfe.Dao
 
-import com.example.stagepfe.entite.Appointment
-import com.example.stagepfe.entite.Ordonance
-import com.example.stagepfe.entite.Reclamation
-import com.example.stagepfe.entite.UserItem
+import com.example.stagepfe.entite.*
 
 interface IGestionUser{
 
@@ -12,6 +9,5 @@ interface IGestionUser{
     fun insertappointment(appointment: Appointment,userItem: UserItem,uid: String,responseCallback: AppointmentCallback)
     fun insertReclamation(reclamation: Reclamation)
     fun insertordonance(ordonance: Ordonance,userItem: UserItem,ordonanceCallback: OrdonanceCallback)
-
-
+    fun insertRapport(rapport: Rapport)
 }

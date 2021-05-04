@@ -79,7 +79,7 @@
                 android:id="@+id/PhoneNumber_Doctor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:text="** *** ***"
                 android:textColor="@color/gray_specific"
                 android:textSize="25dp" />
@@ -88,10 +88,19 @@
                 android:id="@+id/BirthDate_Doctor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:text="21/05/1997 24ans"
                 android:textColor="@color/gray_specific"
                 android:textSize="25dp" />
+        <TextView
+            android:id="@+id/BioDoctorProfil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BIO"
+            android:textSize="15dp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/black"
+            />
 
 
 
