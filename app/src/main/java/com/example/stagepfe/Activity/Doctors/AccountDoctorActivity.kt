@@ -51,9 +51,6 @@ class AccountDoctorActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_account_doctor)
 
-
-
-
         var home = AccueilDoctorFragment()
         supportFragmentManager.beginTransaction().replace(R.id.ContainerFragmentDoctor, home).commit()
         initView()
@@ -106,6 +103,7 @@ class AccountDoctorActivity : AppCompatActivity() {
                 override fun onSuccess(userItem: UserItem) {
 
                     var intent = Intent(this@AccountDoctorActivity,AuthenticationFragmentContainerActivity::class.java)
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)//makesure user cant go back
                     startActivity(intent)
                     finish()
                 }
@@ -116,6 +114,16 @@ var toast= Toast.makeText(this@AccountDoctorActivity,"probleme",Toast.LENGTH_SHO
                 }
             })
         }
+
+
+
+
+//                FirebaseAuth.getInstance().signOut()
+//                val intent = Intent(this@currentActivity, MainActivity::class.java)
+//
+//                startActivity(intent)
+
+
         //////////////////////////////////////////////////////////////////////////////////////////////////
 
         navigationDoctor!!.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { item ->
