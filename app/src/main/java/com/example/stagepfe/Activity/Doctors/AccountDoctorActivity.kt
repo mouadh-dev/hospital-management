@@ -102,7 +102,7 @@ class AccountDoctorActivity : AppCompatActivity() {
 //////////////////////////////////////////////////////////////////////////////////////////////////
         changeUser!!.setOnClickListener {
             var userDao = UserDao()
-            userDao.signout(UserItem(),object : UserCallback {
+            userDao.signOut(UserItem(),object : UserCallback {
                 override fun onSuccess(userItem: UserItem) {
 
                     var intent = Intent(this@AccountDoctorActivity,AuthenticationFragmentContainerActivity::class.java)

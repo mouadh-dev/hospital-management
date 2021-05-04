@@ -139,7 +139,7 @@ class UserDao : IGestionUser {
     }
 
 //////////////////////////////////////////sign out methode////////////////////////////////////////
-    fun signout(userItem: UserItem,userCallback: UserCallback){
+    fun signOut(userItem: UserItem,userCallback: UserCallback){
         mAuth.signOut()
    mAuth.addAuthStateListener{
        userCallback.onSuccess(userItem)
