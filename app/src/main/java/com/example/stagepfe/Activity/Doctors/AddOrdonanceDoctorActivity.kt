@@ -2,11 +2,13 @@ package com.example.stagepfe.Activity.Doctors
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.os.IBinder
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isEmpty
 import androidx.core.view.iterator
+import androidx.core.view.size
 import com.example.stagepfe.Adapters.Doctor.MyAdapterOrdonance
 import com.example.stagepfe.Dao.OrdonanceCallback
 import com.example.stagepfe.Dao.UserCallback
@@ -28,7 +30,7 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
     var returnBack: ImageView? = null
     var listViewOrd: ListView? = null
     var listOrd = mutableListOf<ModelOrdonance>()
-
+    var listMedicamentOrdonance =ArrayList<MedicamentOrdonance>()
     var addMedicament: Button? = null
     var addOrdonance: Button? = null
     var userDao = UserDao()
@@ -72,20 +74,12 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
                 var text = "veuillez ajouter des medicaments"
                 dialog(text)
             } else {
-                listOrd.add(
-                    ModelOrdonance(
+                listOrd.add(ModelOrdonance(
                         nameMedicament!!.text.toString(),
                         quantity!!.text.toString(),
                         descriptionMedicament!!.text.toString()
-                    )
-                )
-                listViewOrd!!.adapter = MyAdapterOrdonance(this, R.layout.ord_add_list, listOrd)
-
-//                fillList(
-//                    nameMedicament!!.text.toString(),
-//                    quantity!!.text.toString(),
-//                    descriptionMedicament!!.text.toString()
-//                )
+                ))
+                initAdapter()
 
                 quantity!!.setText("0")
                 descriptionMedicament!!.text.clear()
@@ -96,25 +90,30 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
 ////////////////////////////////////////////add ordonance tofirebase////////////////////////////////
 
         addOrdonance!!.setOnClickListener {
-            var listMedicamentOrdonance = ArrayList<MedicamentOrdonance>()
-            for (pos in listViewOrd!!){
 
-                var nameMedicamentList= findViewById<TextView>(R.id.name_medicament_list)
-                var test = nameMedicamentList.text.toString()
-                medicamentOrdonance.nameMedicament = test
-                listMedicamentOrdonance.add(medicamentOrdonance)
-            }
+
 
             if (listViewOrd!!.isEmpty()) {
                 var text = "veuillez ajouter des medicaments"
                 dialog(text)
 
             } else {
+
+                for (pos in 1.. listViewOrd!!.adapter!!.count){
+                    adapter!!.getItem(pos)
+                    var nameMedicamentList = findViewById<TextView>(R.id.name_medicament_list)
+                    println("mouadh : "+ nameMedicamentList)
+                    val test = nameMedicamentList.text.toString()
+                    medicamentOrdonance.nameMedicament = test
+                    listMedicamentOrdonance.add(medicamentOrdonance)
+                }
+
+                ordonance.medicament = listMedicamentOrdonance
                 userDao.retrieveCurrentDataUser(object : UserCallback {
                     override fun onSuccess(userItem: UserItem) {
                         ordonance.nameDoctorOrd = userItem.prenom + " " + userItem.nom
                         ordonance.idDoctor = userItem.id
-                        ordonance.medicament = listMedicamentOrdonance
+
                         ordonance.namepatientOrdo = ""
                         userDao.insertordonance(ordonance, userItem,
                             object : OrdonanceCallback {
@@ -187,6 +186,8 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
 //    }
 
     private fun initAdapter() {
+        listViewOrd!!.adapter = MyAdapterOrdonance(this, R.layout.ord_add_list, listOrd)
+
 
     }
 }

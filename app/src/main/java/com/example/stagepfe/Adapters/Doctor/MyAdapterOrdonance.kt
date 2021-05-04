@@ -5,11 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.BaseAdapter
 import android.widget.TextView
 import com.example.stagepfe.Models.Doctors.ModelOrdonance
 import com.example.stagepfe.R
 
-class MyAdapterOrdonance(var mCtx: Context, var resources:Int, var items:List<ModelOrdonance>): ArrayAdapter<ModelOrdonance>(mCtx, resources, items)  {
+class MyAdapterOrdonance(var mCtx: Context, var resources:Int, var items:List<ModelOrdonance>): BaseAdapter()
+//ArrayAdapter<ModelOrdonance>(mCtx, resources, items)
+{
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var layoutInflater: LayoutInflater = LayoutInflater.from(mCtx)
         var view: View = layoutInflater.inflate(resources, null)
@@ -30,7 +33,17 @@ class MyAdapterOrdonance(var mCtx: Context, var resources:Int, var items:List<Mo
         return view
 
     }
-//     override fun getItem(position: Int): Any {
-//        return items[position]
-//    }
+
+    override fun getCount(): Int {
+return items.size
+    }
+
+    override fun getItem(position: Int): Any {
+        return items[position]
+    }
+
+
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
 }
