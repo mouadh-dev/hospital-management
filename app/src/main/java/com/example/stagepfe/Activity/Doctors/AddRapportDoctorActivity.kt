@@ -72,7 +72,7 @@ class AddRapportDoctorActivity : AppCompatActivity() {
 
                 userDao.retrieveCurrentDataUser(object : UserCallback {
                     override fun onSuccess(userItem: UserItem) {
-                        rapports.fullName = nameDoctorRapportET!!.text.toString()
+                        rapports.fullName = userItem.prenom + " " + userItem.nom
                         rapports.textRapport = TextRapport!!.text.toString()
                         var id = userItem.id.toString()
                         userDao.insertRapport(rapports, userItem, id, object : ResponseCallback {
