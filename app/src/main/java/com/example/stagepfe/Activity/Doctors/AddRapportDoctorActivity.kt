@@ -57,33 +57,43 @@ class AddRapportDoctorActivity : AppCompatActivity() {
                     dialog.dismiss()
                 }
             } else {
-//                var v = View.inflate(this, R.layout.fragment_dialog, null)
-//                var builder = AlertDialog.Builder(this)
-//                builder.setView(v)
-//
-//                var dialog = builder.create()
-//                dialog.show()
-//                dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-//
-//                dialog.findViewById<Button>(R.id.btn_confirm).setOnClickListener {
-//                    dialog.dismiss()
-//                }
-                rapports.fullName = nameDoctorRapportET!!.text.toString()
-                rapports.textRapport = TextRapport!!.text.toString()
-                var id = userItem.id.toString()
-                userDao.insertRapport(rapports, userItem, id, object : ResponseCallback {
-                    override fun success(medicament: String) {
+                var v = View.inflate(this, R.layout.fragment_dialog, null)
+                var builder = AlertDialog.Builder(this)
+                builder.setView(v)
 
-                    }
+                var dialog = builder.create()
+                dialog.show()
+                dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
 
-                    override fun success() {
-                        var toast = Toast.makeText(
-                            this@AddRapportDoctorActivity,
-                            "rapport ajouter avec succee",
-                            Toast.LENGTH_SHORT
-                        )
-                        toast.show()
+                dialog.findViewById<Button>(R.id.btn_confirm).setOnClickListener {
+                    dialog.dismiss()
+                }
 
+
+                userDao.retrieveCurrentDataUser(object : UserCallback {
+                    override fun onSuccess(userItem: UserItem) {
+                        rapports.fullName = nameDoctorRapportET!!.text.toString()
+                        rapports.textRapport = TextRapport!!.text.toString()
+                        var id = userItem.id.toString()
+                        userDao.insertRapport(rapports, userItem, id, object : ResponseCallback {
+                            override fun success(medicament: String) {
+
+                            }
+
+                            override fun success() {
+                                var toast = Toast.makeText(
+                                    this@AddRapportDoctorActivity,
+                                    "rapport ajouter avec succee",
+                                    Toast.LENGTH_SHORT
+                                )
+                                toast.show()
+
+                            }
+
+                            override fun failure() {
+
+                            }
+                        })
                     }
 
                     override fun failure() {
