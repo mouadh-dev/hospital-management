@@ -1,5 +1,6 @@
 package com.example.stagepfe.Activity.Pharmacien
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -8,7 +9,12 @@ import android.provider.MediaStore
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
+import android.widget.Toast
+import com.example.stagepfe.Activity.Authentication.AuthenticationFragmentContainerActivity
 import com.example.stagepfe.Activity.Doctors.DoctorProfilActivity
+import com.example.stagepfe.Dao.UserCallback
+import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.Fragments.AgentLabo.AgentReclamationFragment
 import com.example.stagepfe.Fragments.Doctor.AccueilDoctorFragment
 import com.example.stagepfe.Fragments.Doctor.DoctorMessageFragment
@@ -17,6 +23,7 @@ import com.example.stagepfe.Fragments.Doctor.DoctorReclamationFragment
 import com.example.stagepfe.Fragments.Pharmacien.AccueilPharmacienFragment
 import com.example.stagepfe.Fragments.Pharmacien.PharmacienReclamationFragment
 import com.example.stagepfe.R
+import com.example.stagepfe.entite.UserItem
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class AccueilPharmacienActivity : AppCompatActivity() {
@@ -27,6 +34,7 @@ class AccueilPharmacienActivity : AppCompatActivity() {
     var imageProfilPharmacien: ImageView? = null
     var reclamationPharmacien: LinearLayout? = null
     var homePharmacien: LinearLayout? = null
+    var changeUser:ImageView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +49,7 @@ class AccueilPharmacienActivity : AppCompatActivity() {
         imageProfilPharmacien = findViewById(R.id.IVimageProfilPharmacien)
         reclamationPharmacien = findViewById(R.id.reclamationLayoutPharmacien)
         homePharmacien = findViewById(R.id.profilInformationPharmacien)
+        changeUser = findViewById(R.id.change_user_pharmacien)
 
         imageProfilPharmacien!!.setOnClickListener {
             val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
@@ -48,6 +57,9 @@ class AccueilPharmacienActivity : AppCompatActivity() {
 
         }
 //////////////////////////////////////////////////////////////////////////////////////////////////
+        changeUser!!.setOnClickListener {
+            dialog()
+        }
         //////////////////////////////////////////////////////////////////////////////////////////////////
 
         navigationPharmacien!!.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { item ->
@@ -84,6 +96,39 @@ class AccueilPharmacienActivity : AppCompatActivity() {
             true
         })
     }
+
+    private fun dialog() {
+        var v = View.inflate(this, R.layout.dialogchangeuser, null)
+        var builder = AlertDialog.Builder(this)
+        builder.setView(v)
+
+        var dialog = builder.create()
+        dialog.show()
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.findViewById<TextView>(R.id.sign_out_tv).setOnClickListener {
+            signout()
+        }
+    }
+
+    private fun signout() {
+        var userDao = UserDao()
+        userDao.signOut(UserItem(),object : UserCallback {
+            override fun onSuccess(userItem: UserItem) {
+
+                var intent = Intent(this@AccueilPharmacienActivity,
+                    AuthenticationFragmentContainerActivity::class.java)
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)//makesure user cant go back
+                startActivity(intent)
+                finish()
+            }
+
+            override fun failure() {
+                var toast= Toast.makeText(this@AccueilPharmacienActivity,"probleme", Toast.LENGTH_SHORT)
+                toast.show()
+            }
+        })
+    }
+
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

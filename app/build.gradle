@@ -40,6 +40,7 @@ android {
     allprojects {
         repositories {
             maven { url 'https://jitpack.io' }
+            mavenCentral() // jcenter() works as well because it pulls from Maven Central
         }
     }
     kotlinOptions {
@@ -48,6 +49,7 @@ android {
 }
 
 dependencies {
+
     implementation 'com.github.badoualy:datepicker-timeline:c6dcd05737'
     implementation 'com.github.mybringback22:HorizontalCalendarView-Android-:0.1.0'
     //noinspection GradleCompatible
@@ -109,6 +111,7 @@ dependencies {
 
     // Lottie Animation Library
     implementation 'com.airbnb.android:lottie:3.3.6'
-
+    //menu item
+    compile 'com.nightonke:boommenu:2.1.1'
 
 }

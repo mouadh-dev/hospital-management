@@ -3,9 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.Doctor.DoctorReclamationFragment">>
-
+    tools:context=".Fragments.Doctor.DoctorReclamationFragment">
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    >
     <LinearLayout
+        android:id="@+id/Formulaire_Layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
@@ -82,18 +86,23 @@
             android:layout_marginTop="10dp"
             android:padding="15dp"
             android:background="@drawable/edit_text_style"
-          android:layout_gravity="center"
+            android:layout_gravity="center"
             />
-            <Button
-                android:id="@+id/SendbuttonReclamtion"
-                android:layout_width="290dp"
-                android:layout_height="40dp"
-                android:background="@drawable/button_style_smaller"
-                android:text="Envoyer"
-                android:layout_marginTop="30dp"
-                android:textColor="@color/white"
-                android:textSize="20dp"
-                android:layout_gravity="center"
-                />
+
         </LinearLayout>
+    <Button
+        android:id="@+id/SendbuttonReclamtion"
+        android:layout_width="290dp"
+        android:layout_height="40dp"
+        android:background="@drawable/button_style_smaller"
+        android:text="Envoyer"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:layout_gravity="center"
+        android:layout_below="@+id/Formulaire_Layout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        />
+</RelativeLayout>
 </ScrollView>

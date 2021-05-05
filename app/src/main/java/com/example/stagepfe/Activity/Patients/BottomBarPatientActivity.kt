@@ -1,5 +1,6 @@
 package com.example.stagepfe.Activity.Patients
 
+import android.app.AlertDialog
 import android.content.ContentValues
 import android.content.Intent
 import android.net.Uri
@@ -11,6 +12,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.example.stagepfe.Activity.Authentication.AuthenticationFragmentContainerActivity
 import com.example.stagepfe.Models.Patient.Model
 import com.example.stagepfe.Adapters.Patients.MyAdapter
 import com.example.stagepfe.Dao.AppointmentCallback
@@ -52,6 +54,7 @@ class BottomBarPatientActivity : AppCompatActivity() {
     var nameCurrentUser:String? = null
     var testOnRepeatingDocorName:String= ""
     var SpecialityDoctor:String= ""
+    var changeUser:ImageView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,13 +76,17 @@ class BottomBarPatientActivity : AppCompatActivity() {
         imageProfilPatient = findViewById(R.id.IVimageProfilPatient)
         listview = findViewById<ListView>(R.id.list)
         showMore = findViewById<TextView>(R.id.VoirPlus)
+        changeUser = findViewById(R.id.change_user_patient)
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
         var home = PatientAccountFragment()
         supportFragmentManager.beginTransaction().replace(R.id.ContainerFragmentPatient, home)
             .commit()
 //////////////////////////////////////////////////////////////////////////////////////////////////
-
+        changeUser!!.setOnClickListener {
+            dialog()
+        }
+//////////////////////////////////////////////////////////////////////////////////////////////////
 //        list.add(Model("Dr Foulen Fouleni", "Generaliste", R.drawable.doctor_ic))
 //        list.add(Model("Dr Foulen Fouleni", "Generaliste", R.drawable.doctor_ic))
 //        list.add(Model("Dr Foulen Fouleni", "Generaliste", R.drawable.doctor_ic))
@@ -209,7 +216,40 @@ class BottomBarPatientActivity : AppCompatActivity() {
         populateSearch()
     }
 
-   // private fun updateImageProfil() {
+    private fun dialog() {
+        var v = View.inflate(this, R.layout.dialogchangeuser, null)
+        var builder = AlertDialog.Builder(this)
+        builder.setView(v)
+
+        var dialog = builder.create()
+        dialog.show()
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.findViewById<TextView>(R.id.sign_out_tv).setOnClickListener {
+            signout()
+        }
+
+    }
+
+    private fun signout() {
+        var userDao = UserDao()
+        userDao.signOut(UserItem(),object : UserCallback {
+            override fun onSuccess(userItem: UserItem) {
+
+                var intent = Intent(this@BottomBarPatientActivity,
+                    AuthenticationFragmentContainerActivity::class.java)
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)//makesure user cant go back
+                startActivity(intent)
+                finish()
+            }
+
+            override fun failure() {
+                var toast= Toast.makeText(this@BottomBarPatientActivity,"probleme",Toast.LENGTH_SHORT)
+                toast.show()
+            }
+        })
+    }
+
+    // private fun updateImageProfil() {
     //  val user = auth.currentUser
    // user?.let { user ->
    //  val photoURI = Uri.parse("android.resource://$packageName/${R.drawable.logopatient}")
