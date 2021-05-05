@@ -92,9 +92,7 @@ class AddRapportDoctorActivity : AppCompatActivity() {
                             }
                         })
                     }
-
                     override fun failure() {
-
                     }
                 })
             }

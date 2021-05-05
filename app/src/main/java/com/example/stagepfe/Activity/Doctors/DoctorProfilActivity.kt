@@ -69,7 +69,7 @@ class DoctorProfilActivity : AppCompatActivity() {
 
         updateProfilDoctor!!.setOnClickListener {
 //            profilDoctorLayout!!.visibility = View.GONE
-//            updateProfilDoctorLayout!!.visibility = View.VISIBLE
+//           ///////// updateProfilDoctorLayout!!.visibility = View.VISIBLE
 
 
 //            var UpadteProfilDoctor = DoctorProfileUpdateFragment()
