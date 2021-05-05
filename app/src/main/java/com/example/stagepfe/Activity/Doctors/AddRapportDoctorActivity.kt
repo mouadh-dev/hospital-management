@@ -57,18 +57,7 @@ class AddRapportDoctorActivity : AppCompatActivity() {
                     dialog.dismiss()
                 }
             } else {
-//                var v = View.inflate(this, R.layout.fragment_dialog, null)
-//                var builder = AlertDialog.Builder(this)
-//                builder.setView(v)
 //
-//                var dialog = builder.create()
-//                dialog.show()
-//                dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-//
-//                dialog.findViewById<Button>(R.id.btn_confirm).setOnClickListener {
-//                    dialog.dismiss()
-//                }
-
 
                 userDao.retrieveCurrentDataUser(object : UserCallback {
                     override fun onSuccess(userItem: UserItem) {
@@ -76,20 +65,28 @@ class AddRapportDoctorActivity : AppCompatActivity() {
                         rapports.textRapport = TextRapport!!.text.toString()
                         var id = userItem.id.toString()
                         userDao.insertRapport(rapports, userItem, id, object : ResponseCallback {
+
+
+                            override fun success() {
+                                var v = View.inflate(this@AddRapportDoctorActivity, R.layout.fragment_dialog, null)
+                var builder = AlertDialog.Builder(this@AddRapportDoctorActivity)
+                builder.setView(v)
+
+                var dialog = builder.create()
+                dialog.show()
+                dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+                dialog.findViewById<Button>(R.id.btn_confirm).setOnClickListener {
+                    dialog.dismiss()
+                    finish()
+                }
+
+
+
+                            }
                             override fun success(medicament: String) {
 
                             }
-
-                            override fun success() {
-                                var toast = Toast.makeText(
-                                    this@AddRapportDoctorActivity,
-                                    "rapport ajouter avec succee",
-                                    Toast.LENGTH_SHORT
-                                )
-                                toast.show()
-
-                            }
-
                             override fun failure() {
 
                             }
