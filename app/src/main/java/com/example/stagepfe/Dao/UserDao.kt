@@ -219,9 +219,39 @@ class UserDao : IGestionUser {
         reclamationRef.child(reclamation.id!!).setValue(reclamation)
     }
     //////////////////////////////////////////insertRapport/////////////////////////////////////////
-    override fun insertRapport(rapport: Rapport) {
-        rapport.id = rapportRef.push().key.toString()
-        rapportRef.child(rapport.id!!).setValue(rapport)
+    override fun insertRapport(rapports: Rapports, userItem:UserItem, uid:String, responseCallback:ResponseCallback) {
+        userRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    for (ds in snapshot.children) {
+                        var userItem = ds.getValue(UserItem::class.java)
+                        var firstNAme = userItem!!.nom
+                        var lastName = userItem.prenom
+                        var fullNAme = firstNAme + " " + lastName
+
+                        if (rapports.fullName.equals(fullNAme)) {
+                            var id = userItem.id
+                            responseCallback.success()
+                            var rapport = HashMap<String, Rapports>()
+
+                            rapport[rapports.id.toString()] = rapports
+
+                            userItem.rapports = rapport
+                            userRef.child(id.toString())
+                                .child("rapports")
+                                .setValue(rapports)
+                        }
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+        })
+//        rapport.id = rapportRef.push().key.toString()
+//        rapportRef.child(rapport.id!!).setValue(rapport)
     }
 
     ///////////////////////////////////////////get user/////////////////////////////////////////////

@@ -1,17 +1,17 @@
 package com.example.stagepfe.Activity.Doctors
 
 import android.app.AlertDialog
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import com.example.stagepfe.Activity.Patients.BottomBarPatientActivity
+import android.widget.Toast
+import com.example.stagepfe.Dao.ResponseCallback
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.R
-import com.example.stagepfe.entite.Rapport
+import com.example.stagepfe.entite.Rapports
 import com.example.stagepfe.entite.UserItem
 
 class AddRapportDoctorActivity : AppCompatActivity() {
@@ -20,7 +20,7 @@ class AddRapportDoctorActivity : AppCompatActivity() {
     private var nameDoctorRapportET: EditText? = null
     var userItem = UserItem()
     var userDao = UserDao()
-    var rapport= Rapport()
+    var rapports= Rapports()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_rapport_doctor)
@@ -70,9 +70,29 @@ class AddRapportDoctorActivity : AppCompatActivity() {
                 }
             }
 
-            rapport.fullName = nameDoctorRapportET!!.text.toString()
-            rapport.textRapport = TextRapport!!.text.toString()
-            userDao.insertRapport(rapport)
+            rapports.fullName = nameDoctorRapportET!!.text.toString()
+            rapports.textRapport = TextRapport!!.text.toString()
+            var id= userItem.id.toString()
+            userDao.insertRapport(rapports, userItem, id, object : ResponseCallback {
+                override fun success(medicament: String) {
+
+                }
+
+                override fun success() {
+                    var toast = Toast.makeText(
+                        this@AddRapportDoctorActivity,
+                        "rapport ajouter avec succee",
+                        Toast.LENGTH_SHORT
+                    )
+                    toast.show()
+
+                }
+
+                override fun failure() {
+
+                }
+            })
+
 
         }
     }

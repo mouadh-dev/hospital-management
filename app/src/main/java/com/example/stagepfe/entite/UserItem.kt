@@ -23,7 +23,8 @@ data class UserItem constructor(
     var bio: String? = "",
     var id: String? = "",
    var rendezVous: HashMap<String, HashMap<String, Appointment>>?=null,
-    var ordonance: HashMap<String,Ordonance>? = null
+    var ordonance: HashMap<String,Ordonance>? = null,
+var rapports: HashMap<String,Rapports>? = null
 
 
 ) : Parcelable {

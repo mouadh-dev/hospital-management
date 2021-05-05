@@ -3,7 +3,7 @@ package com.example.stagepfe.entite
 import android.os.Parcel
 import android.os.Parcelable
 
-class Rapport (
+class Rapports (
     var fullName: String? = "",
     var id:String? = "",
     var textRapport:String? = ""
@@ -25,12 +25,12 @@ class Rapport (
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<Rapport> {
-        override fun createFromParcel(parcel: Parcel): Rapport {
-            return Rapport(parcel)
+    companion object CREATOR : Parcelable.Creator<Rapports> {
+        override fun createFromParcel(parcel: Parcel): Rapports {
+            return Rapports(parcel)
         }
 
-        override fun newArray(size: Int): Array<Rapport?> {
+        override fun newArray(size: Int): Array<Rapports?> {
             return arrayOfNulls(size)
         }
     }
