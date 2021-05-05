@@ -230,16 +230,19 @@ class UserDao : IGestionUser {
                         var fullNAme = lastName + " " + firstNAme
 
                         if (rapports.fullName.equals(fullNAme)) {
-                            var id = userItem.id
+//                            var id = userItem.id
                             responseCallback.success()
-                            var rapport = HashMap<String, Rapports>()
+                            var test = HashMap<String, Rapports>()
+                            rapports.id = userRef.push().key.toString()
 
-                            rapport[rapports.id.toString()] = rapports
+                            test[rapports.id.toString()] = rapports
 
-                            userItem.rapports = rapport
-                            userRef.child(id.toString())
-                                .child("rapports")
+                            userItem.rapport = test
+                            userRef.child(uid)
+                                .child("rapports").child(rapports.id!!)
                                 .setValue(rapports)
+
+
                         }
                     }
                 }
