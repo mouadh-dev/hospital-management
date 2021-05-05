@@ -1,5 +1,6 @@
 package com.example.stagepfe.Activity.Doctors
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -67,16 +68,16 @@ class DoctorProfilActivity : AppCompatActivity() {
 
 
         updateProfilDoctor!!.setOnClickListener {
-            profilDoctorLayout!!.visibility = View.GONE
-            updateProfilDoctorLayout!!.visibility = View.VISIBLE
+//            profilDoctorLayout!!.visibility = View.GONE
+//            updateProfilDoctorLayout!!.visibility = View.VISIBLE
 
 
-            var UpadteProfilDoctor = DoctorProfileUpdateFragment()
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.UpdateprofilDoctorLayoutContainer, UpadteProfilDoctor).commit()
+//            var UpadteProfilDoctor = DoctorProfileUpdateFragment()
+//            supportFragmentManager.beginTransaction()
+//                .replace(R.id.UpdateprofilDoctorLayoutContainer, UpadteProfilDoctor).commit()
 
-            // var intent = Intent(this, ShowInfoPatientForDoctorActivity::class.java)
-            //  startActivity(intent)
+             var intent = Intent(this, UpdateProfileDoctorActivity::class.java)
+              startActivity(intent)
             //  finish()
 
         }
