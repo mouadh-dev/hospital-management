@@ -68,31 +68,39 @@ class AddRapportDoctorActivity : AppCompatActivity() {
                 dialog.findViewById<Button>(R.id.btn_confirm).setOnClickListener {
                     dialog.dismiss()
                 }
+
+
+                userDao.retrieveCurrentDataUser(object : UserCallback {
+                    override fun onSuccess(userItem: UserItem) {
+                        rapports.fullName = nameDoctorRapportET!!.text.toString()
+                        rapports.textRapport = TextRapport!!.text.toString()
+                        var id = userItem.id.toString()
+                        userDao.insertRapport(rapports, userItem, id, object : ResponseCallback {
+                            override fun success(medicament: String) {
+
+                            }
+
+                            override fun success() {
+                                var toast = Toast.makeText(
+                                    this@AddRapportDoctorActivity,
+                                    "rapport ajouter avec succee",
+                                    Toast.LENGTH_SHORT
+                                )
+                                toast.show()
+
+                            }
+
+                            override fun failure() {
+
+                            }
+                        })
+                    }
+
+                    override fun failure() {
+
+                    }
+                })
             }
-
-            rapports.fullName = nameDoctorRapportET!!.text.toString()
-            rapports.textRapport = TextRapport!!.text.toString()
-            var id= userItem.id.toString()
-            userDao.insertRapport(rapports, userItem, id, object : ResponseCallback {
-                override fun success(medicament: String) {
-
-                }
-
-                override fun success() {
-                    var toast = Toast.makeText(
-                        this@AddRapportDoctorActivity,
-                        "rapport ajouter avec succee",
-                        Toast.LENGTH_SHORT
-                    )
-                    toast.show()
-
-                }
-
-                override fun failure() {
-
-                }
-            })
-
 
         }
     }
