@@ -227,7 +227,7 @@ class UserDao : IGestionUser {
                         var userItem = ds.getValue(UserItem::class.java)
                         var firstNAme = userItem!!.nom
                         var lastName = userItem.prenom
-                        var fullNAme = firstNAme + " " + lastName
+                        var fullNAme = lastName + " " + firstNAme
 
                         if (rapports.fullName.equals(fullNAme)) {
                             var id = userItem.id
