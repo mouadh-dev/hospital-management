@@ -4,7 +4,6 @@ import android.Manifest
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.location.Location
@@ -18,17 +17,19 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.core.app.ActivityCompat
-import androidx.core.location.LocationManagerCompat.isLocationEnabled
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.R
+import com.example.stagepfe.entite.Appointment
+import com.example.stagepfe.entite.Ordonance
+import com.example.stagepfe.entite.Rapports
 import com.example.stagepfe.entite.UserItem
 import com.google.android.gms.location.*
 import java.text.SimpleDateFormat
 import java.util.*
 
 class ChangeInformationDoctorActivity : AppCompatActivity() {
-var moveBack:ImageView? = null
+var moveBackIcon:ImageView? = null
     var saveUpdate:Button? = null
     private var firstNameProfilDoctorET: EditText? = null
     private var secondNameProfilDoctorET: EditText? = null
@@ -42,6 +43,30 @@ var moveBack:ImageView? = null
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     val PERMISSION_ID = 1010
     lateinit var locationRequest: LocationRequest
+    var text:String = ""
+    var userDao = UserDao()
+    var user = UserItem()
+    ////
+//    var nom: String? = ""
+//    var prenom: String? = ""
+//    var mail: String? = ""
+//    var password: String? = ""
+//    var confirmpassword: String? = ""
+//    var adresse: String? = ""
+//    var phonenumber: String? = ""
+//    var sexe: String? = ""
+//    var groupesanguin: String? = ""
+//    var role: ArrayList<String>? = ArrayList()
+//    var matricule: String? = ""
+//    var numCIN: String? = ""
+//    var maladi: String? = ""
+//    var medicament: String? = ""
+//    var speciality: String? = ""
+//    var id: String? = ""
+//    var rendezVous: HashMap<String, HashMap<String, Appointment>>?=null
+//    var ordonance: HashMap<String, Ordonance>? = null
+//    var rapport: HashMap<String, Rapports>? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_change_information_doctor)
@@ -49,7 +74,7 @@ var moveBack:ImageView? = null
     }
 
     private fun initView() {
-        moveBack = findViewById(R.id.back_modifyProfile)
+        moveBackIcon = findViewById(R.id.back_modifyProfile)
         saveUpdate = findViewById(R.id.SaveProfilDoctorButton)
         firstNameProfilDoctorET = findViewById(R.id.FirstNameProfilDoctor)
         secondNameProfilDoctorET = findViewById(R.id.SecondNameProfilDoctor)
@@ -65,34 +90,86 @@ var moveBack:ImageView? = null
         dateNaissProfilDoctorET!!.isFocusable = false
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-        var userDao = UserDao()
-        var userItem = UserItem()
-        userDao.retrieveCurrentDataUser(
-            object : UserCallback {
-                override fun onSuccess(userItem: UserItem) {
-                    firstNameProfilDoctorET!!.setText(userItem.nom)
-                    secondNameProfilDoctorET!!.setText(userItem.prenom)
-                    dateNaissProfilDoctorET!!.setText(userItem.datenaiss)
-                    telephoneProfilDoctorET!!.setText(userItem.phonenumber)
-                    adresseProfilDoctorET!!.setText(userItem.adresse)
-                    bioDoctorET!!.setText(userItem.bio)
-                    var groupeSanguin = userItem.groupesanguin.toString()
-                    var id = userItem.id.toString()
-                    var mail = userItem.mail.toString()
-                    var matricule = userItem.matricule.toString()
-                    var numCIN = userItem.numCIN.toString()
-                    var rendezVous = userItem.rendezVous
-                    var role = userItem.role
-                    var sexe = userItem.sexe.toString()
-                    var speciality = userItem.speciality
-                }
 
-                override fun failure() {
-                }
 
-            })
+            userDao.retrieveCurrentDataUser(
+                object : UserCallback {
+                    override fun onSuccess(userItem: UserItem) {
+                        firstNameProfilDoctorET!!.setText(userItem.nom)
+                        secondNameProfilDoctorET!!.setText(userItem.prenom)
+                        dateNaissProfilDoctorET!!.setText(userItem.datenaiss)
+                        telephoneProfilDoctorET!!.setText(userItem.phonenumber)
+                        adresseProfilDoctorET!!.setText(userItem.adresse)
+                        bioDoctorET!!.setText(userItem.bio)
+                        var groupesanguin = userItem.groupesanguin.toString()
+                        var id = userItem.id.toString()
+                        var mail = userItem.mail.toString()
+                        var matricule = userItem.matricule.toString()
+                        var numCIN = userItem.numCIN.toString()
+                        var rendezVous = userItem.rendezVous
+                        var role = userItem.role
+                        var sexe = userItem.sexe.toString()
+                        var speciality = userItem.speciality
+                        var password = userItem.password
+                        var confirmpassword = userItem.confirmpassword
+                        var maladi = userItem.maladi.toString()
+                        var  medicament = userItem.medicament
+                        var ordonance = userItem.ordonance
+                        var rapport = userItem.rapport
+                        ////
+
+
+                        saveUpdate!!.setOnClickListener {
+                            user.nom = firstNameProfilDoctorET!!.text.toString()
+                            user.prenom = secondNameProfilDoctorET!!.text.toString()
+                            user.datenaiss = dateNaissProfilDoctorET!!.text.toString()
+                            user.phonenumber = telephoneProfilDoctorET!!.text.toString()
+                            user.adresse = adresseProfilDoctorET!!.text.toString()
+                            user.bio = bioDoctorET!!.text.toString()
+                            user.id = id
+                            user.mail = mail
+                            user.matricule = matricule
+                            user.numCIN = numCIN
+                            user.rendezVous = rendezVous
+                            user.role = role
+                            user.sexe = sexe
+                            user.speciality = speciality
+                            user.password = password
+                            user.confirmpassword = confirmpassword
+                            user.maladi = maladi
+                            user.medicament = medicament
+                            user.ordonance = ordonance
+                            user.rapport = rapport
+                            user.groupesanguin = groupesanguin
+
+                                text = "Modification terminée avec succes"
+                                dialog(text)
+                                userDao.updateUser(user.id.toString(),user, object : UserCallback {
+                                    override fun onSuccess(user: UserItem) {
+
+                                    }
+
+                                    override fun failure() {
+
+                                    }
+                                })
+
+                        }
+
+                    }
+
+                    override fun failure() {
+                    }
+
+                })
+
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-        moveBack!!.setOnClickListener {
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+        moveBackIcon!!.setOnClickListener {
             finish()
         }
         returnProfilButton!!.setOnClickListener {
@@ -100,58 +177,10 @@ var moveBack:ImageView? = null
                 finish()
 
         }
-        saveUpdate!!.setOnClickListener {
-            if (firstNameProfilDoctorET!!.text.isEmpty() && secondNameProfilDoctorET!!.text.isEmpty()
-                && adresseProfilDoctorET!!.text.isEmpty() && dateNaissProfilDoctorET!!.text.isEmpty()
-                && telephoneProfilDoctorET!!.text.isEmpty() && bioDoctorET!!.text.isEmpty()
-
-            ) {
-                var v = View.inflate(this, R.layout.fragment_dialog, null)
-                var builder = AlertDialog.Builder(this)
-                builder.setView(v)
-
-                var dialog = builder.create()
-                dialog.show()
-                dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-
-                dialog.findViewById<Button>(R.id.btn_confirm).setOnClickListener {
-                    dialog.dismiss()
-                }
-            }
-            else {
-                var v = View.inflate(
-                    this,
-                    R.layout.fragment_dialog,
-                    null
-                )
-                var builder = AlertDialog.Builder(this)
-                builder.setView(v)
-
-                var dialog = builder.create()
-                dialog.show()
-                dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-                dialog.findViewById<TextView>(R.id.TitleDialog)
-                    .setText("Modification terminée avec succes")
-                dialog.findViewById<ImageView>(R.id.CheckDialog)
-                    .setBackgroundResource(R.drawable.ellipse_green)
-                dialog.findViewById<ImageView>(R.id.CheckDialog).setImageResource(R.drawable.check)
-                dialog.findViewById<TextView>(R.id.msgdialog).visibility = View.GONE
-
-                dialog.findViewById<Button>(R.id.btn_confirm)
-                    .setOnClickListener {
-                        dialog.dismiss()
-                            finish()
-                        }
-                    }
-            }
-
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
         fusedLocationProviderClient =
             LocationServices.getFusedLocationProviderClient(this)
-
         adresseProfilDoctorET!!.setOnClickListener {
             Log.d("Debug:", checkPermission().toString())
             Log.d("Debug:", isLocationEnabled(this).toString())
@@ -160,8 +189,6 @@ var moveBack:ImageView? = null
 //                 textView.text = location?.latitude.toString() + "," + location?.longitude.toString()
             getLastLocation()
         }
-
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //*****************************************phoneNumber***********************************************
         telephoneProfilDoctorET!!.addTextChangedListener(object : TextWatcher {
@@ -187,8 +214,7 @@ var moveBack:ImageView? = null
         })
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //*****************************************calender***********************************************
-        val date =
-            DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth -> // TODO Auto-generated method stub
+        val date = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth -> // TODO Auto-generated method stub
                 myProfilDoctorCalendar[Calendar.YEAR] = year
                 myProfilDoctorCalendar[Calendar.MONTH] = monthOfYear
                 myProfilDoctorCalendar[Calendar.DAY_OF_MONTH] = dayOfMonth
@@ -210,6 +236,34 @@ var moveBack:ImageView? = null
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
+    private fun dialog(text: String){
+        var v = View.inflate(
+            this,
+            R.layout.fragment_dialog,
+            null
+        )
+        var builder = AlertDialog.Builder(this)
+        builder.setView(v)
+
+        var dialog = builder.create()
+        dialog.show()
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.findViewById<TextView>(R.id.TitleDialog)
+            .setText(text)
+        dialog.findViewById<ImageView>(R.id.CheckDialog)
+            .setBackgroundResource(R.drawable.ellipse_green)
+        dialog.findViewById<ImageView>(R.id.CheckDialog).setImageResource(R.drawable.check)
+        dialog.findViewById<TextView>(R.id.msgdialog).visibility = View.GONE
+
+        dialog.findViewById<Button>(R.id.btn_confirm)
+            .setOnClickListener {
+                dialog.dismiss()
+
+
+                finish()
+            }
+    }
+    //////////////////////////////////////////////////Location/////////////////////////////////////////
     private fun updateLabel() {
         val myFormat = "MM/dd/yy" //In which you need put here
 

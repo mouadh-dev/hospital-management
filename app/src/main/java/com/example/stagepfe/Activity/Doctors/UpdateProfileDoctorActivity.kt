@@ -29,7 +29,8 @@ class UpdateProfileDoctorActivity : AppCompatActivity() {
                 var intent = Intent(this, ChangeInformationDoctorActivity::class.java)
                 startActivity(intent)
             } else if (position == 1) {
-                //
+                var intent = Intent(this, ModifyPasswordActivity::class.java)
+                startActivity(intent)
             }
         }
     }

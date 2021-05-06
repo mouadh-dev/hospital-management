@@ -8,7 +8,8 @@ data class Ordonance constructor(
     var nameDoctorOrd:String? = "",
     var idPatient:String? = "",
     var idDoctor:String? = "",
-    var medicament: ArrayList<MedicamentOrdonance> = ArrayList()
+    var medicament: ArrayList<MedicamentOrdonance> = ArrayList(),
+    var id:String? = ""
 
 ):Parcelable{
     constructor(parcel: Parcel) : this(

@@ -1,12 +1,16 @@
 package com.example.stagepfe.Activity.Doctors
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
+import android.view.View
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.stagepfe.R
 
@@ -15,6 +19,7 @@ class ModifyPasswordActivity : AppCompatActivity() {
     private var confirmNewPasswordDoctorET: EditText? = null
     private var showNewPasswordIV: ImageView? = null
     private var showNewPassworConfirmdIV: ImageView? = null
+    var modifyPassword: Button? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,7 +32,15 @@ class ModifyPasswordActivity : AppCompatActivity() {
         confirmNewPasswordDoctorET = findViewById(R.id.ConfirmNewPasswordDoctor)
         showNewPasswordIV = findViewById(R.id.Eye_Show_newPassword)
         showNewPassworConfirmdIV = findViewById(R.id.Eye_Show_ConfirmnewPassword_Doctor)
+        modifyPassword = findViewById(R.id.modify_password_button)
 
+
+        modifyPassword!!.setOnClickListener {
+            if (newPasswordDoctorET!!.text.isEmpty() || confirmNewPasswordDoctorET!!.text.isEmpty()){
+                dialog()
+            }
+        }
+////////////////////////////////////////////////////////////////////////////////////////////////////
         newPasswordDoctorET!!.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
@@ -37,12 +50,12 @@ class ModifyPasswordActivity : AppCompatActivity() {
 
             override fun afterTextChanged(s: Editable?) {
                 if (newPasswordDoctorET!!.length() <= 8) {
-//                    saveProfilButton!!.isEnabled = false
-//                    saveProfilButton!!.setBackgroundResource(R.drawable.gray_button)
+                    modifyPassword!!.isEnabled = false
+                    modifyPassword!!.setBackgroundResource(R.drawable.gray_button)
                     newPasswordDoctorET!!.error = "le mot de passe est faible "
                 } else {
 
-//                    saveProfilButton!!.setBackgroundResource(R.drawable.button_style_smaller)
+                    modifyPassword!!.setBackgroundResource(R.drawable.button_style_smaller)
 
                 }
             }
@@ -68,11 +81,11 @@ class ModifyPasswordActivity : AppCompatActivity() {
 
             override fun afterTextChanged(s: Editable?) {
                 if (notequal()) {
-//                    saveProfilButton!!.setBackgroundResource(R.drawable.gray_button)
+                    modifyPassword!!.setBackgroundResource(R.drawable.gray_button)
                     confirmNewPasswordDoctorET!!.error = "le mot de passe ne correspond pas"
                 } else {
-//                    saveProfilButton!!.isEnabled = true
-//                    saveProfilButton!!.setBackgroundResource(R.drawable.button_style_smaller)
+                    modifyPassword!!.isEnabled = true
+                    modifyPassword!!.setBackgroundResource(R.drawable.button_style_smaller)
 
                 }
             }
@@ -89,6 +102,21 @@ class ModifyPasswordActivity : AppCompatActivity() {
                 confirmNewPasswordDoctorET!!.transformationMethod =
                     PasswordTransformationMethod.getInstance()
             }
+        }
+    }
+
+    private fun dialog() {
+        var v = View.inflate(this, R.layout.fragment_dialog, null)
+        var builder = AlertDialog.Builder(this)
+        builder.setView(v)
+
+        var dialog = builder.create()
+        dialog.show()
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+//        dialog.findViewById<TextView>(R.id.TitleDialog).text = text
+        dialog.findViewById<TextView>(R.id.msgdialog).visibility = View.GONE
+        dialog.findViewById<Button>(R.id.btn_confirm).setOnClickListener {
+            dialog.dismiss()
         }
     }
 

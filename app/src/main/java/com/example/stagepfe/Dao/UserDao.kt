@@ -9,10 +9,7 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 
 
 class UserDao : IGestionUser {
@@ -60,24 +57,24 @@ class UserDao : IGestionUser {
     }
 
     /////////////////////////////////////////////getAppointment/////////////////////////////////////////
-//    fun updateUser(uid: String, userItem: UserItem, userCallback: UserCallback) {
-//        var jLoginDatabase = database.reference.child("users").child(uid)
-//        jLoginDatabase.addValueEventListener(object : ValueEventListener {
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//                val user= mAuth.currentUser
-//                var registredId = user.uid
-//                getUserByUid(registredId, userCallback)
-//
-//
-//            }
-//
-//            override fun onCancelled(error: DatabaseError) {
-//
-//            }
-//
-//
-//        })
-//    }
+    fun updateUser(id:String,userItem: UserItem, userCallback: UserCallback) {
+
+        userRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                userRef.child(id).removeValue()
+                    userRef.child(id).setValue(userItem)
+                    userCallback.onSuccess(userItem)
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+
+        })
+    }
+
 
     ///////////////////////////////////////////Sign in//////////////////////////////////////////////////
     fun signIn(activity: Activity, userItem: UserItem, userCallback: UserCallback) {
@@ -138,14 +135,15 @@ class UserDao : IGestionUser {
         })
     }
 
-//////////////////////////////////////////sign out methode////////////////////////////////////////
-    fun signOut(userItem: UserItem,userCallback: UserCallback){
+    //////////////////////////////////////////sign out methode////////////////////////////////////////
+    fun signOut(userItem: UserItem, userCallback: UserCallback) {
         mAuth.signOut()
-   mAuth.addAuthStateListener{
-       userCallback.onSuccess(userItem)
-   }
+        mAuth.addAuthStateListener {
+            userCallback.onSuccess(userItem)
+        }
 
     }
+
     //////////////////////////////////////////Insert appointment////////////////////////////////////////
     override fun insertappointment(
         appointment: Appointment,
@@ -218,8 +216,14 @@ class UserDao : IGestionUser {
         reclamation.id = reclamationRef.push().key.toString()
         reclamationRef.child(reclamation.id!!).setValue(reclamation)
     }
+
     //////////////////////////////////////////insertRapport/////////////////////////////////////////
-    override fun insertRapport(rapports: Rapports, userItem:UserItem, uid:String, responseCallback:ResponseCallback) {
+    override fun insertRapport(
+        rapports: Rapports,
+        userItem: UserItem,
+        uid: String,
+        responseCallback: ResponseCallback
+    ) {
         userRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
@@ -237,7 +241,7 @@ class UserDao : IGestionUser {
 
                             test[rapports.id.toString()] = rapports
 
-                            userItem.rapports = test
+                            userItem.rapport = test
                             userRef.child(uid)
                                 .child("rapports").child(rapports.id!!)
                                 .setValue(rapports)
@@ -301,6 +305,7 @@ class UserDao : IGestionUser {
 
 
     }
+
     /////////////////////////////////////////////PopulateSearch/////////////////////////////////////
     fun MedicamenteSearch(responseCallback: ResponseCallback) {
         medicamentRef.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -322,6 +327,7 @@ class UserDao : IGestionUser {
 
 
     }
+
     /////////////////////////////////////////////insert Ordonance/////////////////////////////////////
     override fun insertordonance(
         ordonance: Ordonance,
@@ -336,17 +342,20 @@ class UserDao : IGestionUser {
                     for (ds in snapshot.children) {
                         var userItem = ds.getValue(UserItem::class.java)
                         var fullNAme = userItem!!.prenom + " " + userItem.nom
-                        if (ordonance.namepatientOrdo.equals(fullNAme) || ordonance.nameDoctorOrd!!.equals(fullNAme)) {
+                        if (ordonance.namepatientOrdo.equals(fullNAme) || ordonance.nameDoctorOrd!!.equals(
+                                fullNAme
+                            )
+                        ) {
                             var id = userItem.id.toString()
                             ordonanceCallback.successOrdonance(ordonance)
 
-                            var ordonances = HashMap<String,Ordonance>()
+                            var ordonances = HashMap<String, Ordonance>()
                             ordonances[ordonance.nameDoctorOrd.toString()] = ordonance
 
                             userItem.ordonance = ordonances
                             userRef.child(id)
-                                .child("ordonance").child("DR"+ordonance.nameDoctorOrd.toString())
-                               .setValue(ordonance)
+                                .child("ordonance").child("DR" + ordonance.nameDoctorOrd.toString())
+                                .setValue(ordonance)
 
                         }
                     }
@@ -358,7 +367,6 @@ class UserDao : IGestionUser {
         })
 
     }
-
     ///////////////////////////////////////////update Photo////////////////////////////////////////
 //    private fun updateProfile() {
 //        val user = mAuth.currentUser
