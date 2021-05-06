@@ -92,8 +92,7 @@ var moveBackIcon:ImageView? = null
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-            userDao.retrieveCurrentDataUser(
-                object : UserCallback {
+            userDao.retrieveCurrentDataUser(object : UserCallback {
                     override fun onSuccess(userItem: UserItem) {
                         firstNameProfilDoctorET!!.setText(userItem.nom)
                         secondNameProfilDoctorET!!.setText(userItem.prenom)
