@@ -15,7 +15,6 @@ class ProfilPharmacienActivity : AppCompatActivity() {
 
     var profilPharmacienLayout: LinearLayout? = null
     var updateProfilPharmacien: ImageView? =null
-    var updateProfilPharmacienLayout: LinearLayout? = null
     var namePharmacien: TextView? = null
     var phoneNumbrePharmacien: TextView? = null
     var birthDatePharmacien: TextView? = null
@@ -29,7 +28,6 @@ class ProfilPharmacienActivity : AppCompatActivity() {
     private fun initView() {
         updateProfilPharmacien=findViewById<ImageView>(R.id.IVprofilPharmacienUpdate)
         profilPharmacienLayout=findViewById(R.id.profilPharmacienLayoutContainer)
-        updateProfilPharmacienLayout=findViewById(R.id.UpdateprofilPharmacienLayoutContainer)
         namePharmacien = findViewById(R.id.name_Pharmacien)
         phoneNumbrePharmacien= findViewById(R.id.PhoneNumber_Pharmacien)
         birthDatePharmacien = findViewById(R.id.BirthDate_Pharmacien)

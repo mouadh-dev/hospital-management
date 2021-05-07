@@ -52,7 +52,7 @@
         android:layout_height="match_parent"
         android:background="@drawable/rectangle_account">
         <ListView
-            android:id="@+id/updateDoctorPharmacien"
+            android:id="@+id/updatePharmacienList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             />

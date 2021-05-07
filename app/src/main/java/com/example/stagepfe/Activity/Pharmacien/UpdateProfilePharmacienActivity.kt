@@ -22,7 +22,7 @@ class UpdateProfilePharmacienActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        listViewUpdatePharmacien = findViewById(R.id.updateDoctorPharmacien)
+        listViewUpdatePharmacien = findViewById(R.id.updatePharmacienList)
 
         listUpdatePharmacien.add(ModelUpdatePharmacien("Changer les informations"))
         listUpdatePharmacien.add(ModelUpdatePharmacien("Changer le mot de passe"))

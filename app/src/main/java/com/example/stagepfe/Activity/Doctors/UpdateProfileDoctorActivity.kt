@@ -35,7 +35,6 @@ class UpdateProfileDoctorActivity : AppCompatActivity() {
         }
     }
 
-
     private fun initAdapter() {
         listViewUpdate!!.adapter =
             MyAdapterUpdateDoctor(this, R.layout.list_update_doctor, listUpdate)
