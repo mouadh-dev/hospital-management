@@ -9,6 +9,7 @@ import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.view.View
 import android.widget.*
+import com.example.stagepfe.Dao.ResponseCallback
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.R
@@ -37,87 +38,42 @@ class ModifyPasswordPatientActivity : AppCompatActivity() {
         modifyPassword = findViewById(R.id.modify_password_button)
         actualPassword = findViewById(R.id.actual_passwordPatient)
 
+        /////////////////////////////////////////change password////////////////////////////////////////////
         userDao.retrieveCurrentDataUser(object : UserCallback {
             override fun onSuccess(userItem: UserItem) {
-                var nom = userItem.nom
-                var prenom = userItem.prenom
-                var datenaiss = userItem.datenaiss
-                var phoneNumber = userItem.phonenumber
-                var adress = userItem.adresse
-                var bio = userItem.bio
-                var groupesanguin = userItem.groupesanguin.toString()
-                var id = userItem.id.toString()
-                var mail = userItem.mail.toString()
-                var matricule = userItem.matricule.toString()
-                var numCIN = userItem.numCIN.toString()
-                var rendezVous = userItem.rendezVous
-                var role = userItem.role
-                var sexe = userItem.sexe.toString()
-                var speciality = userItem.speciality
-                var password = userItem.password
-                var confirmpassword = userItem.confirmpassword
-                var maladi = userItem.maladi.toString()
-                var medicament = userItem.medicament
-                var ordonance = userItem.ordonance
-                var rapport = userItem.rapport
-                ////
-
                 modifyPassword!!.setOnClickListener {
-                    if (!(actualPassword!!.text.toString().equals(confirmpassword.toString()))){
+                    if (!(actualPassword!!.text.toString().equals(userItem.confirmpassword.toString()))) {
                         text = "le mot de passe est incorrecte"
                         dialog(text)
                         newPasswordPatientET!!.text.clear()
                         confirmNewPasswordPatientET!!.text.clear()
                         actualPassword!!.text.clear()
-                    }else
+                    } else
                         if (newPasswordPatientET!!.text.isEmpty() || confirmNewPasswordPatientET!!.text.isEmpty()) {
                             dialog(text)
                         } else {
-                            user.nom = nom
-                            user.prenom = prenom
-                            user.datenaiss = datenaiss
-                            user.phonenumber = phoneNumber
-                            user.adresse = adress
-                            user.bio = bio
-                            user.id = id
-                            user.mail = mail
-                            user.matricule = matricule
-                            user.numCIN = numCIN
-                            user.rendezVous = rendezVous
-                            user.role = role
-                            user.sexe = sexe
-                            user.speciality = speciality
-                            user.password = newPasswordPatientET!!.text.toString()
-                            user.confirmpassword = confirmNewPasswordPatientET!!.text.toString()
-                            user.maladi = maladi
-                            user.medicament = medicament
-                            user.ordonance = ordonance
-                            user.rapport = rapport
-                            user.groupesanguin = groupesanguin
+                            var newPassword = confirmNewPasswordPatientET!!.text.toString()
+                            userDao.changePassword(newPassword,
+                                userItem, this@ModifyPasswordPatientActivity, object : ResponseCallback {
+                                    override fun success(medicament: String) {
 
-                            text = "Modification terminée avec succes"
+                                    }
 
-                            userDao.updateUser(user.id.toString(), user, object : UserCallback {
-                                override fun onSuccess(user: UserItem) {
-                                    var toast = Toast.makeText(this@ModifyPasswordPatientActivity,"Modification terminée avec succes",
-                                        Toast.LENGTH_SHORT)
-                                    toast.show()
-                                    finish()
-                                }
+                                    override fun success() {
 
-                                override fun failure() {
 
-                                }
-                            })
+                                        finish()
+                                    }
 
+                                    override fun failure() {
+                                    }
+                                })
                         }
-
                 }
-
-
             }
 
             override fun failure() {
+
             }
         })
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -170,6 +126,7 @@ class ModifyPasswordPatientActivity : AppCompatActivity() {
                 }
             }
 
+
         })
         showNewPassworConfirmdIV!!.setOnClickListener {
             if (confirmNewPasswordPatientET!!.getTransformationMethod()
@@ -183,22 +140,25 @@ class ModifyPasswordPatientActivity : AppCompatActivity() {
             }
         }
     }
-////////////////////////////////////////////////////////////////////////////////////////////////////
-        private fun dialog(text: String) {
-                 var v = View.inflate(this, R.layout.fragment_dialog, null)
-                var builder = AlertDialog.Builder(this)
-                builder.setView(v)
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    private fun dialog(text: String) {
+        var v = View.inflate(this, R.layout.fragment_dialog, null)
+        var builder = AlertDialog.Builder(this)
+        builder.setView(v)
 
-                 var dialog = builder.create()
-                  dialog.show()
-                    dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-                     dialog.findViewById<TextView>(R.id.TitleDialog).text = text
-                      dialog.findViewById<TextView>(R.id.msgdialog).visibility = View.GONE
-                          dialog.findViewById<Button>(R.id.btn_confirm).setOnClickListener {
-                             dialog.dismiss()
-                                }
-                                }
+        var dialog = builder.create()
+        dialog.show()
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.findViewById<TextView>(R.id.TitleDialog).text = text
+        dialog.findViewById<TextView>(R.id.msgdialog).visibility = View.GONE
+        dialog.findViewById<Button>(R.id.btn_confirm).setOnClickListener {
+            dialog.dismiss()
+        }
+    }
+
     private fun notequal(): Boolean {
         return confirmNewPasswordPatientET!!.text.toString() != newPasswordPatientET!!.text.toString()
     }
+
+
 }
