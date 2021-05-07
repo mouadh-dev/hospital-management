@@ -1,14 +1,13 @@
 package com.example.stagepfe.Activity.Pharmacien
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
-import com.example.stagepfe.Fragments.Pharmacien.PharmacienProfilUpdateFragment
 import com.example.stagepfe.R
 import com.example.stagepfe.entite.UserItem
 
@@ -56,13 +55,8 @@ class ProfilPharmacienActivity : AppCompatActivity() {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
         updateProfilPharmacien!!.setOnClickListener {
-            profilPharmacienLayout!!.visibility = View.GONE
-            updateProfilPharmacienLayout!!.visibility = View.VISIBLE
-
-
-            var UpadteProfilPharmacien = PharmacienProfilUpdateFragment()
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.UpdateprofilPharmacienLayoutContainer, UpadteProfilPharmacien).commit()
+            var intent = Intent(this, UpdateProfilePharmacienActivity::class.java)
+            startActivity(intent)
 
 
         }

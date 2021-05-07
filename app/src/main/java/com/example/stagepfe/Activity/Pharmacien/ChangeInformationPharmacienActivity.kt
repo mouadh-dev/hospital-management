@@ -1,4 +1,4 @@
-package com.example.stagepfe.Activity.Doctors
+package com.example.stagepfe.Activity.Pharmacien
 
 import android.Manifest
 import android.app.AlertDialog
@@ -20,149 +20,138 @@ import androidx.core.app.ActivityCompat
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.R
-import com.example.stagepfe.entite.Appointment
-import com.example.stagepfe.entite.Ordonance
-import com.example.stagepfe.entite.Rapports
 import com.example.stagepfe.entite.UserItem
 import com.google.android.gms.location.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ChangeInformationDoctorActivity : AppCompatActivity() {
-var moveBackIcon:ImageView? = null
-    var saveUpdate:Button? = null
-    private var firstNameProfilDoctorET: EditText? = null
-    private var secondNameProfilDoctorET: EditText? = null
-    private var adresseProfilDoctorET: EditText? = null
-    private var dateNaissProfilDoctorET: EditText? = null
-    private var telephoneProfilDoctorET: EditText? = null
-    private var bioDoctorET: EditText? = null
+class ChangeInformationPharmacienActivity : AppCompatActivity() {
+
+    var moveBackIcon: ImageView? = null
+    var saveUpdate: Button? = null
+    private var firstNameProfilPharmacienET: EditText? = null
+    private var secondNameProfilPharmacienET: EditText? = null
+    private var adresseProfilPharmacienET: EditText? = null
+    private var dateNaissProfilPharmacienET: EditText? = null
+    private var telephoneProfilPharmacienET: EditText? = null
+
 
     private var returnProfilButton: Button? = null
-    val myProfilDoctorCalendar = Calendar.getInstance()
+    val myProfilPharmacienCalendar = Calendar.getInstance()
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     val PERMISSION_ID = 1010
     lateinit var locationRequest: LocationRequest
-    var text:String = ""
+    var text: String = ""
     var userDao = UserDao()
     var user = UserItem()
-    ////
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_change_information_doctor)
+        setContentView(R.layout.activity_change_information_pharmacien)
         initView()
     }
 
     private fun initView() {
-        moveBackIcon = findViewById(R.id.back_modifyProfile)
-        saveUpdate = findViewById(R.id.SaveProfilDoctorButton)
-        firstNameProfilDoctorET = findViewById(R.id.FirstNameProfilDoctor)
-        secondNameProfilDoctorET = findViewById(R.id.SecondNameProfilDoctor)
-        adresseProfilDoctorET = findViewById(R.id.AdresseProfilDoctor)
-        dateNaissProfilDoctorET = findViewById(R.id.DateNaissProfilDoctor)
-        telephoneProfilDoctorET = findViewById(R.id.TelephoneProfilDoctor)
-        bioDoctorET = findViewById(R.id.DescriptionProfileDoctor)
+        moveBackIcon = findViewById(R.id.back_modifyProfilePharmacien)
+        saveUpdate = findViewById(R.id.SaveProfilPharmacienButton)
+        firstNameProfilPharmacienET = findViewById(R.id.FirstNameProfilPharmacien)
+        secondNameProfilPharmacienET = findViewById(R.id.SecondNameProfilPharmacien)
+        adresseProfilPharmacienET = findViewById(R.id.AdresseProfilPharmacien)
+        dateNaissProfilPharmacienET = findViewById(R.id.DateNaissProfilPharmacien)
+        telephoneProfilPharmacienET = findViewById(R.id.TelephoneProfilPharmacien)
 
         returnProfilButton = findViewById<Button>(R.id.ReturnbuttonProfilDoctor)
 
 
-        adresseProfilDoctorET!!.isFocusable = false
-        dateNaissProfilDoctorET!!.isFocusable = false
+        adresseProfilPharmacienET!!.isFocusable = false
+        dateNaissProfilPharmacienET!!.isFocusable = false
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-            userDao.retrieveCurrentDataUser(object : UserCallback {
-                    override fun onSuccess(userItem: UserItem) {
-                        firstNameProfilDoctorET!!.setText(userItem.nom)
-                        secondNameProfilDoctorET!!.setText(userItem.prenom)
-                        dateNaissProfilDoctorET!!.setText(userItem.datenaiss)
-                        telephoneProfilDoctorET!!.setText(userItem.phonenumber)
-                        adresseProfilDoctorET!!.setText(userItem.adresse)
-                        bioDoctorET!!.setText(userItem.bio)
-                        var groupesanguin = userItem.groupesanguin.toString()
-                        var id = userItem.id.toString()
-                        var mail = userItem.mail.toString()
-                        var matricule = userItem.matricule.toString()
-                        var numCIN = userItem.numCIN.toString()
-                        var rendezVous = userItem.rendezVous
-                        var role = userItem.role
-                        var sexe = userItem.sexe.toString()
-                        var speciality = userItem.speciality
-                        var password = userItem.password
-                        var confirmpassword = userItem.confirmpassword
-                        var maladi = userItem.maladi.toString()
-                        var  medicament = userItem.medicament
-                        var ordonance = userItem.ordonance
-                        var rapport = userItem.rapport
-                        ////
+        userDao.retrieveCurrentDataUser(object : UserCallback {
+            override fun onSuccess(userItem: UserItem) {
+                firstNameProfilPharmacienET!!.setText(userItem.nom)
+                secondNameProfilPharmacienET!!.setText(userItem.prenom)
+                dateNaissProfilPharmacienET!!.setText(userItem.datenaiss)
+                telephoneProfilPharmacienET!!.setText(userItem.phonenumber)
+                adresseProfilPharmacienET!!.setText(userItem.adresse)
+                var groupesanguin = userItem.groupesanguin.toString()
+                var id = userItem.id.toString()
+                var mail = userItem.mail.toString()
+                var matricule = userItem.matricule.toString()
+                var numCIN = userItem.numCIN.toString()
+                var rendezVous = userItem.rendezVous
+                var role = userItem.role
+                var sexe = userItem.sexe.toString()
+                var speciality = userItem.speciality
+                var password = userItem.password
+                var confirmpassword = userItem.confirmpassword
+                var maladi = userItem.maladi.toString()
+                var  medicament = userItem.medicament
+                var ordonance = userItem.ordonance
+                var rapport = userItem.rapport
+                ////
 
 
-                        saveUpdate!!.setOnClickListener {
-                            user.nom = firstNameProfilDoctorET!!.text.toString()
-                            user.prenom = secondNameProfilDoctorET!!.text.toString()
-                            user.datenaiss = dateNaissProfilDoctorET!!.text.toString()
-                            user.phonenumber = telephoneProfilDoctorET!!.text.toString()
-                            user.adresse = adresseProfilDoctorET!!.text.toString()
-                            user.bio = bioDoctorET!!.text.toString()
-                            user.id = id
-                            user.mail = mail
-                            user.matricule = matricule
-                            user.numCIN = numCIN
-                            user.rendezVous = rendezVous
-                            user.role = role
-                            user.sexe = sexe
-                            user.speciality = speciality
-                            user.password = password
-                            user.confirmpassword = confirmpassword
-                            user.maladi = maladi
-                            user.medicament = medicament
-                            user.ordonance = ordonance
-                            user.rapport = rapport
-                            user.groupesanguin = groupesanguin
+                saveUpdate!!.setOnClickListener {
+                    user.nom = firstNameProfilPharmacienET!!.text.toString()
+                    user.prenom = secondNameProfilPharmacienET!!.text.toString()
+                    user.datenaiss = dateNaissProfilPharmacienET!!.text.toString()
+                    user.phonenumber = telephoneProfilPharmacienET!!.text.toString()
+                    user.adresse = adresseProfilPharmacienET!!.text.toString()
+                    user.id = id
+                    user.mail = mail
+                    user.matricule = matricule
+                    user.numCIN = numCIN
+                    user.rendezVous = rendezVous
+                    user.role = role
+                    user.sexe = sexe
+                    user.speciality = speciality
+                    user.password = password
+                    user.confirmpassword = confirmpassword
+                    user.maladi = maladi
+                    user.medicament = medicament
+                    user.ordonance = ordonance
+                    user.rapport = rapport
+                    user.groupesanguin = groupesanguin
 
-                                text = "Modification terminée avec succes"
-                                dialog(text)
-                                userDao.updateUser(user.id.toString(),user, object : UserCallback {
-                                    override fun onSuccess(user: UserItem) {
-
-                                    }
-
-                                    override fun failure() {
-
-                                    }
-                                })
+                    text = "Modification terminée avec succes"
+                    dialog(text)
+                    userDao.updateUser(user.id.toString(),user, object : UserCallback {
+                        override fun onSuccess(user: UserItem) {
 
                         }
 
-                    }
+                        override fun failure() {
 
-                    override fun failure() {
-                    }
+                        }
+                    })
 
-                })
+                }
+
+            }
+
+            override fun failure() {
+            }
+
+        })
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         moveBackIcon!!.setOnClickListener {
             finish()
         }
         returnProfilButton!!.setOnClickListener {
 
-                finish()
+            finish()
 
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         fusedLocationProviderClient =
             LocationServices.getFusedLocationProviderClient(this)
-        adresseProfilDoctorET!!.setOnClickListener {
+        adresseProfilPharmacienET!!.setOnClickListener {
             Log.d("Debug:", checkPermission().toString())
             Log.d("Debug:", isLocationEnabled(this).toString())
             RequestPermission()
@@ -172,7 +161,7 @@ var moveBackIcon:ImageView? = null
         }
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //*****************************************phoneNumber***********************************************
-        telephoneProfilDoctorET!!.addTextChangedListener(object : TextWatcher {
+        telephoneProfilPharmacienET!!.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
@@ -180,7 +169,7 @@ var moveBackIcon:ImageView? = null
             }
 
             override fun afterTextChanged(s: Editable?) {
-                if (telephoneProfilDoctorET!!.length() < 8 || telephoneProfilDoctorET!!.length() > 8) {
+                if (telephoneProfilPharmacienET!!.length() < 8 || telephoneProfilPharmacienET!!.length() > 8) {
                     saveUpdate!!.isEnabled = false
                     saveUpdate!!.setBackgroundResource(R.drawable.gray_button)
 
@@ -196,27 +185,26 @@ var moveBackIcon:ImageView? = null
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //*****************************************calender***********************************************
         val date = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth -> // TODO Auto-generated method stub
-                myProfilDoctorCalendar[Calendar.YEAR] = year
-                myProfilDoctorCalendar[Calendar.MONTH] = monthOfYear
-                myProfilDoctorCalendar[Calendar.DAY_OF_MONTH] = dayOfMonth
-                updateLabel()
-            }
+            myProfilPharmacienCalendar[Calendar.YEAR] = year
+            myProfilPharmacienCalendar[Calendar.MONTH] = monthOfYear
+            myProfilPharmacienCalendar[Calendar.DAY_OF_MONTH] = dayOfMonth
+            updateLabel()
+        }
 //*****************************************dateNaiss***********************************************
-        dateNaissProfilDoctorET!!.setOnClickListener(object : View.OnClickListener {
+        dateNaissProfilPharmacienET!!.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 // TODO Auto-generated method stub
                 DatePickerDialog(
-                    this@ChangeInformationDoctorActivity,
+                    this@ChangeInformationPharmacienActivity,
                     date,
-                    myProfilDoctorCalendar[Calendar.YEAR],
-                    myProfilDoctorCalendar[Calendar.MONTH],
-                    myProfilDoctorCalendar[Calendar.DAY_OF_MONTH]
+                    myProfilPharmacienCalendar[Calendar.YEAR],
+                    myProfilPharmacienCalendar[Calendar.MONTH],
+                    myProfilPharmacienCalendar[Calendar.DAY_OF_MONTH]
                 ).show()
             }
         })
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
-
     private fun dialog(text: String){
         var v = View.inflate(
             this,
@@ -250,55 +238,55 @@ var moveBackIcon:ImageView? = null
 
         val sdf = SimpleDateFormat(myFormat, Locale.US)
 
-        dateNaissProfilDoctorET!!.setText(sdf.format(myProfilDoctorCalendar.time))
+        dateNaissProfilPharmacienET!!.setText(sdf.format(myProfilPharmacienCalendar.time))
     }
-//////////////////////////////////////////////////Location/////////////////////////////////////////
-fun getLastLocation() {
-    if (checkPermission()) {
-        if (isLocationEnabled(this)) {
-            if (ActivityCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
-                return
-            }
-            fusedLocationProviderClient.lastLocation.addOnCompleteListener { task ->
-                var location: Location? = task.result
-                if (location == null) {
-                    NewLocationData()
-                } else {
-                    Log.d("Debug:", "Your Location:" + location.longitude)
-                    adresseProfilDoctorET!!.setText(
-                        getCityName(
-                            location.latitude,
-                            location.longitude
-                        )
-                    )
+    //////////////////////////////////////////////////Location/////////////////////////////////////////
+    fun getLastLocation() {
+        if (checkPermission()) {
+            if (isLocationEnabled(this)) {
+                if (ActivityCompat.checkSelfPermission(
+                        this,
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                    ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                        this,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    return
                 }
+                fusedLocationProviderClient.lastLocation.addOnCompleteListener { task ->
+                    var location: Location? = task.result
+                    if (location == null) {
+                        NewLocationData()
+                    } else {
+                        Log.d("Debug:", "Your Location:" + location.longitude)
+                        adresseProfilPharmacienET!!.setText(
+                            getCityName(
+                                location.latitude,
+                                location.longitude
+                            )
+                        )
+                    }
+                }
+            } else {
+                Toast.makeText(
+                    this,
+                    "Please Turn on Your device Location",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
             }
         } else {
-            Toast.makeText(
-                this,
-                "Please Turn on Your device Location",
-                Toast.LENGTH_SHORT
-            )
-                .show()
+            RequestPermission()
         }
-    } else {
-        RequestPermission()
     }
-}
     fun NewLocationData() {
         var locationRequest = LocationRequest()
         locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
@@ -334,7 +322,7 @@ fun getLastLocation() {
 
             Log.d("Debug:", lastLocation.longitude.toString())
 
-            adresseProfilDoctorET!!.setText(
+            adresseProfilPharmacienET!!.setText(
                 getCityName(
                     lastLocation.latitude,
                     lastLocation.longitude

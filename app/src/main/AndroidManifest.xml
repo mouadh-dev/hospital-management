@@ -13,7 +13,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".Activity.Doctors.ModifyPasswordActivity"></activity>
+        <activity android:name=".Activity.Pharmacien.UpdateProfilePharmacienActivity"></activity>
+        <activity android:name=".Activity.Pharmacien.ModifyPasswordPharmacienActivity" />
+        <activity android:name=".Activity.Pharmacien.ChangeInformationPharmacienActivity" />
+        <activity android:name=".Activity.Patients.UpdateProfilePatientActivity" />
+        <activity android:name=".Activity.Patients.ModifyPasswordPatientActivity" />
+        <activity android:name=".Activity.Patients.ChangeInformationPatientActivity" />
+        <activity android:name=".Activity.Doctors.ModifyPasswordActivity" />
         <activity android:name=".Activity.Doctors.ChangeInformationDoctorActivity" />
         <activity android:name=".Activity.Doctors.UpdateProfileDoctorActivity" />
         <activity android:name=".Activity.Doctors.AddRapportDoctorActivity" />

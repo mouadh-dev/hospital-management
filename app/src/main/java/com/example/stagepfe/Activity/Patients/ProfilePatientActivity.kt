@@ -4,8 +4,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -14,7 +12,6 @@ import androidx.viewpager.widget.ViewPager
 import com.example.stagepfe.Adapters.Patients.ViewPagerAdapter
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
-import com.example.stagepfe.Fragments.Patient.ModifyProfilePatientFragment
 import com.example.stagepfe.Fragments.Patient.OrdonancePatientFragment
 import com.example.stagepfe.Fragments.Patient.RapportPatientFragment
 import com.example.stagepfe.Fragments.Patient.RendezVousPatientFragment
@@ -29,7 +26,6 @@ class ProfilePatientActivity : AppCompatActivity() {
     var tabs: TabLayout? = null
     var updatePatient: ImageView? = null
     var imageProfilPatient: ImageView? = null
-    var containerUpdate: LinearLayout? = null
     var containerprofileViwPager: LinearLayout? = null
     var namePatient: TextView? = null
     var numbrePatient: TextView? = null
@@ -66,7 +62,6 @@ class ProfilePatientActivity : AppCompatActivity() {
         tabs = findViewById(R.id.tabs_ViewPager)
         updatePatient = findViewById(R.id.update_Profile_Patient)
         imageProfilPatient = findViewById(R.id.IVimageProfilPatient)
-        containerUpdate = findViewById(R.id.Container_UpdateAll)
         containerprofileViwPager = findViewById(R.id.Container_ViewPager)
         namePatient = findViewById<TextView>(R.id.Full_Name_Patient)
         numbrePatient = findViewById<TextView>(R.id.Number_Patient)
@@ -110,12 +105,8 @@ class ProfilePatientActivity : AppCompatActivity() {
 //////////////////////////////////////////////////////////////////////////////////////////////////
         updatePatient!!.setOnClickListener {
 
-            containerUpdate!!.visibility = VISIBLE
-            containerprofileViwPager!!.visibility = GONE
-
-            var update = ModifyProfilePatientFragment()
-            supportFragmentManager.beginTransaction().replace(R.id.Container_UpdateAll, update)
-                .commit()
+            var intent = Intent(this, UpdateProfilePatientActivity::class.java)
+            startActivity(intent)
         }
 
 

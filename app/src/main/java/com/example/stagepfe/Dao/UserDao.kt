@@ -56,7 +56,7 @@ class UserDao : IGestionUser {
             })
     }
 
-    /////////////////////////////////////////////getAppointment/////////////////////////////////////////
+    /////////////////////////////////////////////updateUser/////////////////////////////////////////
     fun updateUser(id:String,userItem: UserItem, userCallback: UserCallback) {
 
         userRef.addListenerForSingleValueEvent(object : ValueEventListener {

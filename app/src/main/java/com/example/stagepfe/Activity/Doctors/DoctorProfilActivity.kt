@@ -24,7 +24,6 @@ class DoctorProfilActivity : AppCompatActivity() {
     var tabs: TabLayout? = null
     var updateProfilDoctor: ImageView? =null
     var profilDoctorLayout: LinearLayout? = null
-    var updateProfilDoctorLayout: LinearLayout? = null
     var nameDoctor: TextView? = null
     var bioDoctor: TextView? = null
     var phoneNumbreDoctor: TextView? = null
@@ -42,7 +41,6 @@ class DoctorProfilActivity : AppCompatActivity() {
         tabs = findViewById(R.id.tabs_ViewPager_Doctor)
         updateProfilDoctor=findViewById<ImageView>(R.id.IVprofilDoctorUpdate)
         profilDoctorLayout=findViewById(R.id.profilDoctorLayoutContainer)
-        updateProfilDoctorLayout=findViewById(R.id.UpdateprofilDoctorLayoutContainer)
         nameDoctor = findViewById(R.id.name_Doctor)
         bioDoctor=findViewById(R.id.BioDoctorProfil)
         phoneNumbreDoctor = findViewById(R.id.PhoneNumber_Doctor)

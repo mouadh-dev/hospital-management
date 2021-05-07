@@ -6,8 +6,8 @@
     android:layout_height="match_parent"
     android:background="@color/blue"
     android:orientation="vertical"
-    tools:context=".Activity.Doctors.UpdateProfileDoctorActivity"
-   >
+    tools:context=".Activity.Pharmacien.UpdateProfilePharmacienActivity">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
                 android:background="@drawable/whiteellipse" />
 
             <ImageView
-                android:id="@+id/return_back_UpdateDoctor"
+                android:id="@+id/return_back_UpdatePharmacien"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
@@ -52,7 +52,7 @@
         android:layout_height="match_parent"
         android:background="@drawable/rectangle_account">
         <ListView
-            android:id="@+id/updateDoctorList"
+            android:id="@+id/updateDoctorPharmacien"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             />
