@@ -9,10 +9,12 @@ import android.text.method.PasswordTransformationMethod
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.example.stagepfe.Dao.ResponseCallback
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.R
 import com.example.stagepfe.entite.UserItem
+import com.google.android.gms.tasks.Task
 
 class ModifyPasswordActivity : AppCompatActivity() {
     private var newPasswordDoctorET: EditText? = null
@@ -41,120 +43,45 @@ class ModifyPasswordActivity : AppCompatActivity() {
 
 
 
+
+/////////////////////////////////////////change password////////////////////////////////////////////
         userDao.retrieveCurrentDataUser(object : UserCallback {
             override fun onSuccess(userItem: UserItem) {
-                var nom = userItem.nom
-                var prenom = userItem.prenom
-                var datenaiss = userItem.datenaiss
-                var phoneNumber = userItem.phonenumber
-                var adress = userItem.adresse
-                var bio = userItem.bio
-                var groupesanguin = userItem.groupesanguin.toString()
-                var id = userItem.id.toString()
-                var mail = userItem.mail.toString()
-                var matricule = userItem.matricule.toString()
-                var numCIN = userItem.numCIN.toString()
-                var rendezVous = userItem.rendezVous
-                var role = userItem.role
-                var sexe = userItem.sexe.toString()
-                var speciality = userItem.speciality
-                var password = userItem.password
-                var confirmpassword = userItem.confirmpassword
-                var maladi = userItem.maladi.toString()
-                var medicament = userItem.medicament
-                var ordonance = userItem.ordonance
-                var rapport = userItem.rapport
-                ////
+        modifyPassword!!.setOnClickListener {
+            if (!(actualPassword!!.text.toString().equals(userItem.confirmpassword.toString()))) {
+                text = "le mot de passe est incorrecte"
+                dialog(text)
+                newPasswordDoctorET!!.text.clear()
+                confirmNewPasswordDoctorET!!.text.clear()
+                actualPassword!!.text.clear()
+            } else
+                if (newPasswordDoctorET!!.text.isEmpty() || confirmNewPasswordDoctorET!!.text.isEmpty()) {
+                    dialog(text)
+                } else {
+                    var newPassword = confirmNewPasswordDoctorET!!.text.toString()
+                    userDao.changePassword(newPassword,
+                        userItem, this@ModifyPasswordActivity, object : ResponseCallback {
+                        override fun success(medicament: String) {
 
-                modifyPassword!!.setOnClickListener {
-                    if (!(actualPassword!!.text.toString().equals(confirmpassword.toString()))){
-                        text = "le mot de passe est incorrecte"
-                        dialog(text)
-                        newPasswordDoctorET!!.text.clear()
-                        confirmNewPasswordDoctorET!!.text.clear()
-                        actualPassword!!.text.clear()
-                    }else
-                        if (newPasswordDoctorET!!.text.isEmpty() || confirmNewPasswordDoctorET!!.text.isEmpty()) {
-                        dialog(text)
-                    } else {
-                        user.nom = nom
-                        user.prenom = prenom
-                        user.datenaiss = datenaiss
-                        user.phonenumber = phoneNumber
-                        user.adresse = adress
-                        user.bio = bio
-                        user.id = id
-                        user.mail = mail
-                        user.matricule = matricule
-                        user.numCIN = numCIN
-                        user.rendezVous = rendezVous
-                        user.role = role
-                        user.sexe = sexe
-                        user.speciality = speciality
-                        user.password = newPasswordDoctorET!!.text.toString()
-                        user.confirmpassword = confirmNewPasswordDoctorET!!.text.toString()
-                        user.maladi = maladi
-                        user.medicament = medicament
-                        user.ordonance = ordonance
-                        user.rapport = rapport
-                        user.groupesanguin = groupesanguin
+                        }
 
-                        text = "Modification terminée avec succes"
+                        override fun success() {
 
-                        userDao.updateUser(user.id.toString(), user, object : UserCallback {
-                            override fun onSuccess(user: UserItem) {
-                                var toast = Toast.makeText(this@ModifyPasswordActivity,"Modification terminée avec succes",Toast.LENGTH_SHORT)
-                                toast.show()
-                                finish()
-                            }
 
-                            override fun failure() {
+                            finish()
+                        }
 
-                            }
-                        })
-
-                    }
-
+                        override fun failure() {
+                        }
+                    })
                 }
-
-
+        }
             }
 
             override fun failure() {
+
             }
         })
-////////////////////////////////////////////////////////////////////////////////////////////////////
-//        actualPassword!!.addTextChangedListener(object : TextWatcher {
-//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-//
-//            }
-//
-//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-//
-//            }
-//
-//            override fun afterTextChanged(s: Editable?) {
-//                userDao.retrieveCurrentDataUser(object : UserCallback {
-//                    override fun onSuccess(userItem: UserItem) {
-//                        if (!actualPassword!!.equals(userItem.confirmpassword.toString())) {
-//                            modifyPassword!!.isEnabled = false
-//                            modifyPassword!!.setBackgroundResource(R.drawable.gray_button)
-//                            newPasswordDoctorET!!.error = "le mot de passe est incorrecte "
-//                            newPasswordDoctorET!!.isFocusable = false
-//                            confirmNewPasswordDoctorET!!.isFocusable = false
-//                        }else{
-//                            modifyPassword!!.setBackgroundResource(R.drawable.button_style_smaller)
-//                            newPasswordDoctorET!!.isFocusable = true
-//                            confirmNewPasswordDoctorET!!.isFocusable = true
-//                        }
-//                    }
-//
-//                    override fun failure() {
-//
-//                    }
-//                })
-//            }
-//        })
 ////////////////////////////////////////////////////////////////////////////////////////////////////
         newPasswordDoctorET!!.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {

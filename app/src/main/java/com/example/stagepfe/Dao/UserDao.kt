@@ -2,7 +2,9 @@ package com.example.stagepfe.Dao
 
 import android.app.Activity
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import com.example.stagepfe.entite.*
 import com.example.stagepfe.util.BaseConstant
 import com.google.android.gms.tasks.OnCompleteListener
@@ -10,6 +12,7 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import kotlin.coroutines.coroutineContext
 
 
 class UserDao : IGestionUser {
@@ -393,6 +396,24 @@ class UserDao : IGestionUser {
 //        }
 //
 //
+
+
+
+    fun changePassword(password:String,userItem: UserItem,activity: Activity,responseCallback: ResponseCallback){
+        val user = FirebaseAuth.getInstance().currentUser
+        user!!.updatePassword(password).addOnCompleteListener { Task ->
+            if (Task.isSuccessful) {
+                println("Update Success")
+                userRef.child(userItem.id.toString()).child("confirmpassword").setValue(password)
+                userRef.child(userItem.id.toString()).child("password").setValue(password)
+
+                responseCallback.success()
+            } else {
+                println("Error Update" + Task.exception)
+                responseCallback.failure()
+            }
+        }
+    }
 }
 
 

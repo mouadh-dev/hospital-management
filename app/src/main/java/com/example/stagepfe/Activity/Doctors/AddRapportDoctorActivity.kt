@@ -48,11 +48,9 @@ class AddRapportDoctorActivity : AppCompatActivity() {
                 var v = View.inflate(this, R.layout.fragment_dialog, null)
                 var builder = AlertDialog.Builder(this)
                 builder.setView(v)
-
                 var dialog = builder.create()
                 dialog.show()
                 dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-
                 dialog.findViewById<Button>(R.id.btn_confirm).setOnClickListener {
                     dialog.dismiss()
                 }
@@ -75,7 +73,6 @@ class AddRapportDoctorActivity : AppCompatActivity() {
                 var dialog = builder.create()
                 dialog.show()
                 dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-
                 dialog.findViewById<Button>(R.id.btn_confirm).setOnClickListener {
                     dialog.dismiss()
                     finish()

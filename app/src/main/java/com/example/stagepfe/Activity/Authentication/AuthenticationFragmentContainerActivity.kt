@@ -1,7 +1,9 @@
 package com.example.stagepfe.Activity.Authentication
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.stagepfe.Activity.AgentLabo.AccueilAgentLaboActivity
 import com.example.stagepfe.Activity.Doctors.AccountDoctorActivity
@@ -32,13 +34,28 @@ class AuthenticationFragmentContainerActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         var userDao = UserDao()
+
+
         if(FirebaseAuth.getInstance().currentUser!=null){
+
+            var v = View.inflate(this, R.layout.progress_dialog, null)
+            var builder = AlertDialog.Builder(this)
+            builder.setView(v)
+
+            var progressdialog = builder.create()
+            progressdialog.show()
+            progressdialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+            progressdialog.setCancelable(false)
+
+
             userDao.retrieveCurrentDataUser(object : UserCallback {
+
                     override fun onSuccess(userItem: UserItem) {
                         if (userItem.role!!.contains("Patient") && userItem.role!!.size==1){
                             var intent = Intent(this@AuthenticationFragmentContainerActivity, BottomBarPatientActivity::class.java)
                             startActivity(intent)
                             finish()
+//                            progressdialog.dismiss()
                         }else
                             if(userItem.role!!.containsAll(listOf("Médecin","Patient"))) {
                                     var intent = Intent(
@@ -47,6 +64,7 @@ class AuthenticationFragmentContainerActivity : AppCompatActivity() {
                                     )
                                     startActivity(intent)
                                     finish()
+//                                progressdialog.dismiss()
 
                                 }else if (userItem.role!!.containsAll(listOf("Labo","Patient"))){
                                 var intent = Intent(
@@ -55,6 +73,7 @@ class AuthenticationFragmentContainerActivity : AppCompatActivity() {
                                 )
                                 startActivity(intent)
                                 finish()
+//                                progressdialog.dismiss()
                         }else if (userItem.role!!.containsAll(listOf("Pharmacien","Patient"))){
                                 var intent = Intent(
                                     this@AuthenticationFragmentContainerActivity,
@@ -62,7 +81,9 @@ class AuthenticationFragmentContainerActivity : AppCompatActivity() {
                                 )
                                 startActivity(intent)
                                 finish()
+//                                progressdialog.dismiss()
                             }
+                        progressdialog.dismiss()
                     }
 
                     override fun failure() {
