@@ -8,7 +8,7 @@ data class Ordonance constructor(
     var nameDoctorOrd:String? = "",
     var idPatient:String? = "",
     var idDoctor:String? = "",
-    var medicament: ArrayList<MedicamentOrdonance> = ArrayList(),
+    var medicament: ArrayList<MedicamentOrdonance> = arrayListOf<MedicamentOrdonance>(),
     var id:String? = ""
 
 ):Parcelable{

@@ -30,7 +30,7 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
     var returnBack: ImageView? = null
     var listViewOrd: ListView? = null
     var listOrd = mutableListOf<ModelOrdonance>()
-    var listMedicamentOrdonance =ArrayList<MedicamentOrdonance>()
+    var listMedicamentOrdonance = arrayListOf<MedicamentOrdonance>()
     var addMedicament: Button? = null
     var addOrdonance: Button? = null
     var userDao = UserDao()
