@@ -10,8 +10,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.stagepfe.Adapters.Doctor.MyAdapterAddRDV
 import com.example.stagepfe.Adapters.Doctor.MyAdapterAddRDV.OnItemClickListner
+import com.example.stagepfe.Dao.AppointmentCallback
+import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.Models.Doctors.ModelRDV
 import com.example.stagepfe.R
+import com.example.stagepfe.entite.Appointment
 import com.github.badoualy.datepicker.DatePickerTimeline
 import com.github.badoualy.datepicker.MonthView.DateLabelAdapter
 
@@ -27,6 +30,7 @@ class CheckRDVActivity : AppCompatActivity(), OnItemClickListner {
     var year: Int = 0
     var month: Int = 0
     var day: Int = 0
+    var userDao = UserDao()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,6 +85,9 @@ returnIcon = findViewById(R.id.IconReturnBackMessage)
 
         //Data
         val dataList: MutableList<ModelRDV> = ArrayList()
+
+
+
         dataList.add(ModelRDV(R.drawable.itemone, "08:00", "vide"))
         dataList.add(ModelRDV(R.drawable.itemone, "08:30", "vide"))
         dataList.add(ModelRDV(R.drawable.itemone, "09:00", "vide"))

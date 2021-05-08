@@ -4,8 +4,8 @@ import android.os.Parcel
 import android.os.Parcelable
 
 class Rapports (
-    var fullName: String? = "",
     var id:String? = "",
+    var fullName: String? = "",
     var textRapport:String? = ""
 ): Parcelable {
     constructor(parcel: Parcel) : this(
@@ -16,8 +16,8 @@ class Rapports (
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(fullName)
         parcel.writeString(id)
+        parcel.writeString(fullName)
         parcel.writeString(textRapport)
     }
 
@@ -34,4 +34,5 @@ class Rapports (
             return arrayOfNulls(size)
         }
     }
+
 }

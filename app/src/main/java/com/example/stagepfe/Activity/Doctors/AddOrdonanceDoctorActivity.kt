@@ -39,6 +39,7 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
     var medicamentOrdonance = MedicamentOrdonance()
     var quantity: TextView? = null
     var descriptionMedicament: EditText? = null
+    var id:String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,54 +90,64 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
 
 ////////////////////////////////////////////add ordonance tofirebase////////////////////////////////
 
+        userDao.retrieveCurrentDataUser(object : UserCallback {
+            override fun onSuccess(userItem: UserItem) {
+                id = userItem.id.toString()
+            }
+
+            override fun failure() {
+            }
+        })
         addOrdonance!!.setOnClickListener {
 
 
-
+            ordonance.medicament = listMedicamentOrdonance
             if (listViewOrd!!.isEmpty()) {
                 var text = "veuillez ajouter des medicaments"
                 dialog(text)
 
             } else {
-
-                for (pos in 1.. listViewOrd!!.adapter!!.count){
-                    adapter!!.getItem(pos)
+//                adapter!!.notifyDataSetChanged()
+                for (pos in listViewOrd!!) {
+                    adapter!!.notifyDataSetChanged()
                     var nameMedicamentList = findViewById<TextView>(R.id.name_medicament_list)
-                    println("mouadh : "+ nameMedicamentList)
+                    println("mouadh : " + nameMedicamentList)
                     val test = nameMedicamentList.text.toString()
                     medicamentOrdonance.nameMedicament = test
                     listMedicamentOrdonance.add(medicamentOrdonance)
+
                 }
 
-                ordonance.medicament = listMedicamentOrdonance
-                userDao.retrieveCurrentDataUser(object : UserCallback {
-                    override fun onSuccess(userItem: UserItem) {
-                        ordonance.nameDoctorOrd = userItem.prenom + " " + userItem.nom
-                        ordonance.idDoctor = userItem.id
+//                userDao.retrieveCurrentDataUser(object : UserCallback {
+//                    override fun onSuccess(userItem: UserItem) {
+                    ordonance.nameDoctorOrd = userItem.prenom + " " + userItem.nom
+                    ordonance.idDoctor = userItem.id
 
-                        ordonance.namepatientOrdo = ""
-                        userDao.insertordonance(ordonance, userItem,
-                            object : OrdonanceCallback {
-                                override fun successOrdonance(ordonance: Ordonance) {
+                    ordonance.namepatientOrdo = ""
+                    ordonance.medicament = listMedicamentOrdonance
+                    userDao.insertordonance(id!!, ordonance, userItem,
+                        object : OrdonanceCallback {
+                            override fun successOrdonance(ordonance: Ordonance) {
 //                               startActivity(Intent(this@AddOrdonanceDoctorActivity,ShowInfoPatientForDoctorActivity::class.java))
-                                    finish()
-                                    Toast.makeText(
-                                        applicationContext,
-                                        "add ordo avec succe",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
+                                finish()
+                                Toast.makeText(
+                                    applicationContext,
+                                    "add ordo avec succe",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
 
-                                override fun failureOrdonance() {
+                            override fun failureOrdonance() {
 
-                                }
-                            })
-                    }
+                            }
+                        })
 
-                    override fun failure() {
 
-                    }
-                })
+//                    override fun failure() {
+//
+//                    }
+//                })
+//            }
             }
         }
 ////////////////////////////////////////////////////////////////////////////////////////////////////

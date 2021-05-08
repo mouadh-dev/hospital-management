@@ -23,7 +23,7 @@ class UserDao : IGestionUser {
     private val userRef = FirebaseDatabase.getInstance().getReference("users")
     private val medicamentRef = FirebaseDatabase.getInstance().getReference("Medicament")
     private val reclamationRef = database.getReference(BaseConstant.instance().reclamation)
-    private val rapportRef = database.getReference(BaseConstant.instance().rapport)
+//    private val rapportRef = database.getReference(BaseConstant.instance().rapport).child(uid).child("rapports")
 
     ////////////////////////////////////////////////Insert user/////////////////////////////////////////
     override fun insertUser(userItem: UserItem) {
@@ -227,65 +227,42 @@ class UserDao : IGestionUser {
         uid: String,
         responseCallback: ResponseCallback
     ) {
+//        rapports.id = userRef.push().key
         userRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
-                    for (ds in snapshot.children) {
-                        var userItem = ds.getValue(UserItem::class.java)
-                        var firstNAme = userItem!!.nom
-                        var lastName = userItem.prenom
-                        var fullNAme = lastName + " " + firstNAme
+//                if (snapshot.exists()) {
+//                    for (ds in snapshot.children) {
+//                        var userItem = ds.getValue(UserItem::class.java)
+//                        var fullNAme = userItem.prenom + " " + userItem.nom
+//                        if (rapports.fullName.equals(fullNAme)) {
 
-                        if (rapports.fullName.equals(fullNAme)) {
-//                            var id = userItem.id
-                            responseCallback.success()
-                            var test = HashMap<String, Rapports>()
-                            rapports.id = userRef.push().key.toString()
+                            var rapport = HashMap<String, Rapports>()
+                            rapport[rapports.id.toString()] = rapports
+                userItem.rapport = rapport
 
-                            test[rapports.id.toString()] = rapports
-
-                            userItem.rapport = test
-                            userRef.child(uid)
-                                .child("rapports").child(rapports.id!!)
+                           rapports.id = userRef.push().key
+                userRef.child(uid).child("rapports").child(rapports.id!!)
                                 .setValue(rapports)
+                            responseCallback.success()
 
 
                         }
-                    }
-                }
-            }
+
+
+
+//                    }
+//                }
+//            }
 
             override fun onCancelled(error: DatabaseError) {
 
             }
 
         })
-//        rapport.id = rapportRef.push().key.toString()
-//        rapportRef.child(rapport.id!!).setValue(rapport)
+
+
     }
 
-    ///////////////////////////////////////////get user/////////////////////////////////////////////
-    private fun getUser(responseCallback: UserCallback) {
-
-        userRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    for (ds in dataSnapshot.children) {
-                        var userItem = ds.getValue(UserItem::class.java)
-                        responseCallback.onSuccess(userItem!!)
-                    }
-                }
-
-
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.w(TAG, "signInWithEmail:failure", error.toException())
-                responseCallback.failure()
-            }
-
-        })
-    }
 
     /////////////////////////////////////////////PopulateSearch/////////////////////////////////////
     fun populateSearch(userItem: UserItem, responseCallback: UserCallback) {
@@ -333,6 +310,7 @@ class UserDao : IGestionUser {
 
     /////////////////////////////////////////////insert Ordonance/////////////////////////////////////
     override fun insertordonance(
+        uid:String,
         ordonance: Ordonance,
         userItem: UserItem,
         ordonanceCallback: OrdonanceCallback
@@ -341,31 +319,33 @@ class UserDao : IGestionUser {
 
             override fun onDataChange(snapshot: DataSnapshot) {
 
-                if (snapshot.exists()) {
-                    for (ds in snapshot.children) {
-                        var userItem = ds.getValue(UserItem::class.java)
-                        var fullNAme = userItem!!.prenom + " " + userItem.nom
-                        if (ordonance.namepatientOrdo.equals(fullNAme) || ordonance.nameDoctorOrd!!.equals(
-                                fullNAme
-                            )
-                        ) {
-                            var id = userItem.id.toString()
-                            ordonanceCallback.successOrdonance(ordonance)
+//                if (snapshot.exists()) {
+//                    for (ds in snapshot.children) {
+//                        var userItem = ds.getValue(UserItem::class.java)
+//                        var fullNAme = userItem!!.prenom + " " + userItem.nom
+//                        if (ordonance.namepatientOrdo.equals(fullNAme) || ordonance.nameDoctorOrd!!.equals(
+//                                fullNAme
+//                            )
+//                        ) {
+                //var id = userItem.id.toString()
+                ordonanceCallback.successOrdonance(ordonance)
+                ordonance.id = userRef.push().key
+                var ordonances = HashMap<String, Ordonance>()
+                ordonances[ordonance.id.toString()] = ordonance
 
-                            var ordonances = HashMap<String, Ordonance>()
-                            ordonances[ordonance.nameDoctorOrd.toString()] = ordonance
 
-                            userItem.ordonance = ordonances
-                            userRef.child(id)
-                                .child("ordonance").child("DR" + ordonance.nameDoctorOrd.toString())
-                                .setValue(ordonance)
+                userItem.ordonance = ordonances
+                userRef.child(uid)
+                    .child("ordonance").child(ordonance.id.toString())
+                    .setValue(ordonance)
 
-                        }
-                    }
-                }
             }
+//                    }
+//                }
+//            }
 
             override fun onCancelled(error: DatabaseError) {
+                println("mou " + error)
             }
         })
 
