@@ -2,18 +2,14 @@ package com.example.stagepfe.Activity.Doctors
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.os.IBinder
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isEmpty
-import androidx.core.view.iterator
-import androidx.core.view.size
 import com.example.stagepfe.Adapters.Doctor.MyAdapterOrdonance
 import com.example.stagepfe.Dao.OrdonanceCallback
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
-import com.example.stagepfe.Models.Doctors.ModelMeicamentDoctor
 import com.example.stagepfe.Models.Doctors.ModelOrdonance
 import com.example.stagepfe.R
 import com.example.stagepfe.entite.MedicamentOrdonance
@@ -101,21 +97,30 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
         addOrdonance!!.setOnClickListener {
 
 
-            ordonance.medicament = listMedicamentOrdonance
+
             if (listViewOrd!!.isEmpty()) {
                 var text = "veuillez ajouter des medicaments"
                 dialog(text)
 
             } else {
 //                adapter!!.notifyDataSetChanged()
-                for (pos in listViewOrd!!) {
-                    adapter!!.notifyDataSetChanged()
-                    var nameMedicamentList = findViewById<TextView>(R.id.name_medicament_list)
-                    println("mouadh : " + nameMedicamentList)
-                    val test = nameMedicamentList.text.toString()
-                    medicamentOrdonance.nameMedicament = test
-                    listMedicamentOrdonance.add(medicamentOrdonance)
-
+//                for (pos in listViewOrd!!) {
+//                    var nameMedicamentList = findViewById<TextView>(R.id.name_medicament_list)
+//                    println("mouadh : " + nameMedicamentList)
+//                    val test = nameMedicamentList.text.toString()
+//                    medicamentOrdonance.nameMedicament = test
+////                    listMedicamentOrdonance.add(medicamentOrdonance)
+////                    for (element in listMedicamentOrdonance) {
+//                        ordonance.medicament = test
+////                    }
+//
+//                }
+                val adapter = listViewOrd!!.adapter
+                for (i in 0 until adapter.count) {
+                    val item = MedicamentOrdonance() // new one
+                    adapter.getItem(i)
+                    item.nameMedicament = adapter.getItem(i)
+                    listMedicamentOrdonance.add(item)
                 }
 
 //                userDao.retrieveCurrentDataUser(object : UserCallback {
@@ -124,7 +129,9 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
                     ordonance.idDoctor = userItem.id
 
                     ordonance.namepatientOrdo = ""
-                    ordonance.medicament = listMedicamentOrdonance
+
+//                    ordonance.medicament = listMedicamentOrdonance
+
                     userDao.insertordonance(id!!, ordonance, userItem,
                         object : OrdonanceCallback {
                             override fun successOrdonance(ordonance: Ordonance) {
