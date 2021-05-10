@@ -121,7 +121,7 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
                         if (patient.equals(fullname)) {
                             namePatient = patient
                             idPAtient = userItem.id.toString()
-                            println("mm :: " + namePatient + " !! " + idPAtient)
+                            println("mouadh :: " + namePatient + " !! " + idPAtient)
 
 
                         }

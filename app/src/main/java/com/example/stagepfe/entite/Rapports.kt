@@ -9,9 +9,11 @@ class Rapports (
     var idPatientRapport:String? = "",
     var nameDoctorRapport:String? = "",
     var idDoctorRapport:String? = "",
-    var textRapport:String? = ""
+    var textRapport:String? = "",
+    var specialityDoctor:String? = ""
 ): Parcelable {
     constructor(parcel: Parcel) : this(
+        parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
@@ -28,6 +30,7 @@ class Rapports (
         parcel.writeString(nameDoctorRapport)
         parcel.writeString(idDoctorRapport)
         parcel.writeString(textRapport)
+        parcel.writeString(specialityDoctor)
     }
 
     override fun describeContents(): Int {

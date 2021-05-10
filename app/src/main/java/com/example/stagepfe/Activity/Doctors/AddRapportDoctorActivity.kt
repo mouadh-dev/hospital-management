@@ -27,6 +27,7 @@ class AddRapportDoctorActivity : AppCompatActivity() {
     var idPatient:String? = null
     var nameDoctorRapport:String? = null
     var namePatientRapport:String? = null
+    var speciality:String? =  null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_rapport_doctor)
@@ -46,6 +47,7 @@ class AddRapportDoctorActivity : AppCompatActivity() {
             override fun onSuccess(userItem: UserItem) {
                 nameDoctorRapport = userItem.prenom + " " + userItem.nom
                 idDoctor = userItem.id.toString()
+                speciality = userItem.speciality.toString()
             }
 
             override fun failure() {
@@ -85,6 +87,7 @@ class AddRapportDoctorActivity : AppCompatActivity() {
                         rapports.textRapport = TextRapport!!.text.toString()
                 rapports.nameDoctorRapport = nameDoctorRapport
                 rapports.idDoctorRapport = idDoctor
+                rapports.specialityDoctor = speciality
                 userDao.populateSearch(object : UserCallback {
                     override fun onSuccess(userItem: UserItem) {
 

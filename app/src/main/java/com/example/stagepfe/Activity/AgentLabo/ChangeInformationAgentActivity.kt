@@ -86,7 +86,7 @@ class ChangeInformationAgentActivity : AppCompatActivity() {
                 var maladi = userItem.maladi.toString()
                 var  medicament = userItem.medicament
                 var ordonance = userItem.ordonance
-                var rapport = userItem.rapport
+                var rapport = userItem.rapports
                 ////
 
 
@@ -109,7 +109,7 @@ class ChangeInformationAgentActivity : AppCompatActivity() {
                     user.maladi = maladi
                     user.medicament = medicament
                     user.ordonance = ordonance
-                    user.rapport = rapport
+                    user.rapports = rapport
                     user.groupesanguin = groupesanguin
 
                     text = "Modification terminée avec succes"

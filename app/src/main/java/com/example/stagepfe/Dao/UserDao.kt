@@ -2,9 +2,7 @@ package com.example.stagepfe.Dao
 
 import android.app.Activity
 import android.content.ContentValues.TAG
-import android.content.Context
 import android.util.Log
-import android.widget.Toast
 import com.example.stagepfe.entite.*
 import com.example.stagepfe.util.BaseConstant
 import com.google.android.gms.tasks.OnCompleteListener
@@ -234,7 +232,7 @@ class UserDao : IGestionUser {
 
                             var rapport = HashMap<String, Rapports>()
                             rapport[rapports.id.toString()] = rapports
-                userItem.rapport = rapport
+                userItem.rapports = rapport
 
                            rapports.id = userRef.push().key
                 userRef.child(idDoctorRapport).child("rapports").child(rapports.id!!)
@@ -255,7 +253,28 @@ class UserDao : IGestionUser {
 
     }
 
+    fun getRapport(responseCallback: RapportCallback) {
+        userRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    for (ds in snapshot.children) {
+                        var userItem = ds.getValue(UserItem::class.java)
+                        if (userItem!!.rapports != null) {
+                            var rapport = userItem.rapports
+                            for (entry in rapport!!.entries) {
+                                var test = entry.value
+                                responseCallback.success(test)
+                            }
+                        }
+                    }
+                }
+            }
 
+            override fun onCancelled(error: DatabaseError) {
+                responseCallback.failure()
+            }
+        })
+    }
     /////////////////////////////////////////////PopulateSearch/////////////////////////////////////
     fun populateSearch(responseCallback: UserCallback) {
         userRef.addListenerForSingleValueEvent(object : ValueEventListener {
