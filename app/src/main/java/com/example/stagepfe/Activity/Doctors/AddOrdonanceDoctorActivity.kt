@@ -30,12 +30,16 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
     var addMedicament: Button? = null
     var addOrdonance: Button? = null
     var userDao = UserDao()
-    var userItem = UserItem()
+    var user = UserItem()
     var ordonance = Ordonance()
     var medicamentOrdonance = MedicamentOrdonance()
     var quantity: TextView? = null
     var descriptionMedicament: EditText? = null
-    var id:String? = null
+    var idDoctor: String? = null
+    var nameDoctor: String? = null
+    var namePatient: String? = null
+    var idPAtient: String? = null
+    private var test: MyAdapterOrdonance? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +58,7 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
         addOrdonance = findViewById(R.id.Add_Ordonance_Button)
         descriptionMedicament = findViewById(R.id.description_Et)
 
-
+        listOrd = arrayListOf<ModelOrdonance>()
         initAdapter()
 
 
@@ -71,12 +75,15 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
                 var text = "veuillez ajouter des medicaments"
                 dialog(text)
             } else {
-                listOrd.add(ModelOrdonance(
+                listOrd.add(
+                    ModelOrdonance(
                         nameMedicament!!.text.toString(),
                         quantity!!.text.toString(),
                         descriptionMedicament!!.text.toString()
-                ))
-                initAdapter()
+                    )
+                )
+                test!!.notifyDataSetChanged()
+
 
                 quantity!!.setText("0")
                 descriptionMedicament!!.text.clear()
@@ -84,18 +91,20 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
             }
         }
 
+
 ////////////////////////////////////////////add ordonance tofirebase////////////////////////////////
 
         userDao.retrieveCurrentDataUser(object : UserCallback {
             override fun onSuccess(userItem: UserItem) {
-                id = userItem.id.toString()
+                idDoctor = userItem.id.toString()
+                nameDoctor = userItem.prenom + " " + userItem.nom
             }
 
             override fun failure() {
             }
         })
-        addOrdonance!!.setOnClickListener {
 
+        addOrdonance!!.setOnClickListener {
 
 
             if (listViewOrd!!.isEmpty()) {
@@ -103,58 +112,53 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
                 dialog(text)
 
             } else {
-//                adapter!!.notifyDataSetChanged()
-//                for (pos in listViewOrd!!) {
-//                    var nameMedicamentList = findViewById<TextView>(R.id.name_medicament_list)
-//                    println("mouadh : " + nameMedicamentList)
-//                    val test = nameMedicamentList.text.toString()
-//                    medicamentOrdonance.nameMedicament = test
-////                    listMedicamentOrdonance.add(medicamentOrdonance)
-////                    for (element in listMedicamentOrdonance) {
-//                        ordonance.medicament = test
-////                    }
-//
-//                }
-                val adapter = listViewOrd!!.adapter
-                for (i in 0 until adapter.count) {
-                    val item = MedicamentOrdonance() // new one
-                    adapter.getItem(i)
-                    item.nameMedicament = adapter.getItem(i)
-                    listMedicamentOrdonance.add(item)
-                }
+filMedicament()
 
-//                userDao.retrieveCurrentDataUser(object : UserCallback {
-//                    override fun onSuccess(userItem: UserItem) {
-                    ordonance.nameDoctorOrd = userItem.prenom + " " + userItem.nom
-                    ordonance.idDoctor = userItem.id
+                userDao.populateSearch(object : UserCallback {
+                    override fun onSuccess(userItem: UserItem) {
+                        var patient = intent.getStringExtra("namePatentToOrdonance")
+                        var fullname = userItem.nom + " " + userItem.prenom
+                        if (patient.equals(fullname)) {
+                            namePatient = patient
+                            idPAtient = userItem.id.toString()
+                            println("mm :: " + namePatient + " !! " + idPAtient)
 
-                    ordonance.namepatientOrdo = ""
 
-//                    ordonance.medicament = listMedicamentOrdonance
 
-                    userDao.insertordonance(id!!, ordonance, userItem,
-                        object : OrdonanceCallback {
-                            override fun successOrdonance(ordonance: Ordonance) {
+
+                        }
+                    }
+
+                    override fun failure() {
+
+                    }
+                })
+
+
+                ordonance.idDoctor = idDoctor
+                ordonance.nameDoctorOrd = nameDoctor
+                ordonance.namepatientOrdo = namePatient
+                ordonance.idPatient = idPAtient
+                ordonance.medicament = listMedicamentOrdonance
+
+                userDao.insertordonance(idDoctor!!,idPAtient!!, ordonance, user,
+                    object : OrdonanceCallback {
+                        override fun successOrdonance(ordonance: Ordonance) {
 //                               startActivity(Intent(this@AddOrdonanceDoctorActivity,ShowInfoPatientForDoctorActivity::class.java))
-                                finish()
-                                Toast.makeText(
-                                    applicationContext,
-                                    "add ordo avec succe",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
+                            finish()
+                            Toast.makeText(
+                                applicationContext,
+                                "add ordo avec succe",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
 
-                            override fun failureOrdonance() {
+                        override fun failureOrdonance() {
 
-                            }
-                        })
+                        }
+                    })
 
 
-//                    override fun failure() {
-//
-//                    }
-//                })
-//            }
             }
         }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -171,6 +175,28 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
             }
         }
 
+    }
+
+    private fun filMedicament() {
+        for (i in 0 until test!!.count) {
+            val item = MedicamentOrdonance() // new one
+            test!!.getItem(i)
+            var view = test!!.getView(
+                i,
+                findViewById<TextView>(R.id.name_medicament_list),
+                listViewOrd!!
+            )
+
+
+            item.nameMedicament =
+                view.findViewById<TextView>(R.id.name_medicament_list).text.toString()
+            item.quantity =
+                view.findViewById<TextView>(R.id.quantity_medicament_list).text.toString()
+            item.description =
+                view.findViewById<TextView>(R.id.description_ord_list).text.toString()
+
+            listMedicamentOrdonance.add(item)
+        }
     }
 
     private fun dialog(text: String) {
@@ -204,7 +230,9 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
 //    }
 
     private fun initAdapter() {
-        listViewOrd!!.adapter = MyAdapterOrdonance(this, R.layout.ord_add_list, listOrd)
+//        listViewOrd!!.adapter = MyAdapterOrdonance(this, R.layout.ord_add_list, listOrd)
+        test = MyAdapterOrdonance(this, R.layout.ord_add_list, listOrd)
+        listViewOrd!!.adapter = test
 
 
     }

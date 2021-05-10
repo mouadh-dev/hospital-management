@@ -1,17 +1,15 @@
 package com.example.stagepfe.Activity.Doctors
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.example.stagepfe.Adapters.Patients.ViewPagerAdapter
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
-
 import com.example.stagepfe.Fragments.Doctor.ProfilDoctorMyPatientFragment
 import com.example.stagepfe.Fragments.Doctor.ProfilDoctorMyRdvFragment
 import com.example.stagepfe.R
@@ -88,4 +86,5 @@ class DoctorProfilActivity : AppCompatActivity() {
         viewPager!!.adapter = adapter
         tabs!!.setupWithViewPager(viewPager)
     }
+
 }

@@ -52,7 +52,7 @@ class ShowInfoPatientForDoctorActivity : AppCompatActivity() {
 
         namePatientFromIntent = intent.getStringExtra("nomPatient")
 
-        userDao.populateSearch(UserItem(), object : UserCallback {
+        userDao.populateSearch(object : UserCallback {
             override fun onSuccess(userItem: UserItem) {
                 var nameToCompare = userItem.nom + " " + userItem.prenom
                 if (nameToCompare.equals(namePatientFromIntent)) {
@@ -95,5 +95,8 @@ class ShowInfoPatientForDoctorActivity : AppCompatActivity() {
 //            slidPanel!!.visibility = View.GONE
 //            search!!.visibility = View.VISIBLE
 //        }
+    }
+    fun getMyData(): String? {
+        return namePatientFromIntent
     }
 }

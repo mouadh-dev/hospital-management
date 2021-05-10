@@ -99,7 +99,7 @@ class BottomBarPatientActivity : AppCompatActivity() {
 
         var userdao = UserDao()
         var userItem=UserItem()
-        userdao.populateSearch(userItem, object : UserCallback {
+        userdao.populateSearch(object : UserCallback {
           override fun onSuccess(userItem: UserItem) {
          var fullNameDoctor = userItem.prenom + " " + userItem.nom
 

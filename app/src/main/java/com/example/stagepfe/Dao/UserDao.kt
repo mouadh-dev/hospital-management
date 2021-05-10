@@ -265,7 +265,7 @@ class UserDao : IGestionUser {
 
 
     /////////////////////////////////////////////PopulateSearch/////////////////////////////////////
-    fun populateSearch(userItem: UserItem, responseCallback: UserCallback) {
+    fun populateSearch(responseCallback: UserCallback) {
         userRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
@@ -279,6 +279,7 @@ class UserDao : IGestionUser {
 
             override fun onCancelled(error: DatabaseError) {
                 responseCallback.failure()
+                println("mouadh : " + error)
             }
 
         })
@@ -310,7 +311,8 @@ class UserDao : IGestionUser {
 
     /////////////////////////////////////////////insert Ordonance/////////////////////////////////////
     override fun insertordonance(
-        uid:String,
+        idDoctor:String,
+        idPatient:String,
         ordonance: Ordonance,
         userItem: UserItem,
         ordonanceCallback: OrdonanceCallback
@@ -335,9 +337,12 @@ class UserDao : IGestionUser {
 
 
                 userItem.ordonance = ordonances
-                userRef.child(uid)
+                userRef.child(idDoctor)
                     .child("ordonance").child(ordonance.id.toString())
                     .setValue(ordonance)
+//                userRef.child(idPatient)
+//                    .child("ordonance").child(ordonance.id.toString())
+//                    .setValue(ordonance)
 
             }
 //                    }

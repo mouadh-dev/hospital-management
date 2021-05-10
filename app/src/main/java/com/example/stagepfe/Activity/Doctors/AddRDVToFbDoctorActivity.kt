@@ -126,7 +126,7 @@ class AddRDVToFbDoctorActivity : AppCompatActivity() {
         namePatient!!.setAdapter(adapter)
 /////////////////////////////////////////Suggestion Search//////////////////////////////////////////
 
-        userdao.populateSearch(UserItem(), object : UserCallback {
+        userdao.populateSearch(object : UserCallback {
             override fun onSuccess(userItem: UserItem) {
                 var nom = userItem.nom
                 var prenom = userItem.prenom
