@@ -23,7 +23,10 @@ class AddRapportDoctorActivity : AppCompatActivity() {
     var userItem = UserItem()
     var userDao = UserDao()
     var rapports = Rapports()
-    var id:String? = null
+    var idDoctor:String? = null
+    var idPatient:String? = null
+    var nameDoctorRapport:String? = null
+    var namePatientRapport:String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_rapport_doctor)
@@ -35,13 +38,25 @@ class AddRapportDoctorActivity : AppCompatActivity() {
         addRapport = findViewById(R.id.Add_Rapport_Button)
         nameDoctorRapportET = findViewById(R.id.Name_Doctor_rapport)
 
-
+        var patient = intent.getStringExtra("namePatentToRapport")
+        nameDoctorRapportET!!.setText(patient)
         nameDoctorRapportET!!.isFocusable = false
 
         userDao.retrieveCurrentDataUser(object : UserCallback {
             override fun onSuccess(userItem: UserItem) {
-                nameDoctorRapportET!!.setText(userItem.prenom + " " + userItem.nom)
-                id = userItem.id.toString()
+                nameDoctorRapport = userItem.prenom + " " + userItem.nom
+                idDoctor = userItem.id.toString()
+            }
+
+            override fun failure() {
+            }
+        })
+        userDao.populateSearch(object : UserCallback {
+            override fun onSuccess(userItem: UserItem) {
+                var fullName = userItem.nom + " " + userItem.prenom
+                if (patient.equals(fullName)){
+                    idPatient = userItem.id
+                }
             }
 
             override fun failure() {
@@ -65,10 +80,22 @@ class AddRapportDoctorActivity : AppCompatActivity() {
                     dialog.dismiss()
                 }
             } else {
-                        rapports.fullName = nameDoctorRapportET!!.text.toString()
+                        rapports.namPatientRapport = nameDoctorRapportET!!.text.toString()
+                rapports.idPatientRapport = idPatient
                         rapports.textRapport = TextRapport!!.text.toString()
+                rapports.nameDoctorRapport = nameDoctorRapport
+                rapports.idDoctorRapport = idDoctor
+                userDao.populateSearch(object : UserCallback {
+                    override fun onSuccess(userItem: UserItem) {
 
-                        userDao.insertRapport(rapports, userItem, id!!, object : ResponseCallback {
+                    }
+
+                    override fun failure() {
+
+                    }
+                })
+
+                        userDao.insertRapport(rapports, userItem, idPatient!!,idDoctor!!, object : ResponseCallback {
 
 
                             override fun success() {

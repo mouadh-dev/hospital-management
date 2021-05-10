@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.ListView
 import com.example.stagepfe.Activity.Doctors.AddOrdonanceDoctorActivity
 import com.example.stagepfe.Activity.Doctors.AddRapportDoctorActivity
+import com.example.stagepfe.Activity.Doctors.ShowInfoPatientForDoctorActivity
 import com.example.stagepfe.Adapters.Doctor.MyAdapterRapport
 import com.example.stagepfe.Adapters.Doctor.MyAdapterShowOrdonnancePatForDoc
 import com.example.stagepfe.Models.Doctors.ModelRapport
@@ -39,8 +40,12 @@ class ShowRapportPatientForDoctorFragment : Fragment() {
         listviewRapport =view.findViewById<ListView>(R.id.showRapportPatForDoctorr)
         listviewRapport!!.adapter = MyAdapterRapport(requireContext(), R.layout.list_rapport, listRapport)
 
+        val activity: ShowInfoPatientForDoctorActivity? = activity as ShowInfoPatientForDoctorActivity?
+        val myDataFromActivity: String = activity!!.getMyData().toString()
+
         addRapport!!.setOnClickListener {
             var intent = Intent(activity, AddRapportDoctorActivity::class.java)
+            intent.putExtra("namePatentToRapport",myDataFromActivity)
             startActivity(intent)
 
         }

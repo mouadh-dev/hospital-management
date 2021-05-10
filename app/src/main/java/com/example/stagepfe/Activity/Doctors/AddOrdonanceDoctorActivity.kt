@@ -112,7 +112,7 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
                 dialog(text)
 
             } else {
-filMedicament()
+                filMedicament()
 
                 userDao.populateSearch(object : UserCallback {
                     override fun onSuccess(userItem: UserItem) {
@@ -122,8 +122,6 @@ filMedicament()
                             namePatient = patient
                             idPAtient = userItem.id.toString()
                             println("mm :: " + namePatient + " !! " + idPAtient)
-
-
 
 
                         }
@@ -141,7 +139,7 @@ filMedicament()
                 ordonance.idPatient = idPAtient
                 ordonance.medicament = listMedicamentOrdonance
 
-                userDao.insertordonance(idDoctor!!,idPAtient!!, ordonance, user,
+                userDao.insertordonance(idDoctor!!, idPAtient!!, ordonance, user,
                     object : OrdonanceCallback {
                         override fun successOrdonance(ordonance: Ordonance) {
 //                               startActivity(Intent(this@AddOrdonanceDoctorActivity,ShowInfoPatientForDoctorActivity::class.java))
@@ -176,7 +174,7 @@ filMedicament()
         }
 
     }
-
+//////////////////////////////////////////////////////////////////////////////////////////////////
     private fun filMedicament() {
         for (i in 0 until test!!.count) {
             val item = MedicamentOrdonance() // new one
@@ -214,23 +212,8 @@ filMedicament()
         }
     }
 
-//    private fun fillList() {
-//        for (pos in listViewOrd) {
-//            medicamentOrdonance.nameMedicament = nameMedicament
-//            medicamentOrdonance.quantity = quantityMedicament
-//            medicamentOrdonance.description = descriptionMedicament
-//            listMedicamentOrdonance.add(
-//                ModelMeicamentDoctor(
-//                    nameMedicament,
-//                    quantityMedicament,
-//                    descriptionMedicament
-//                )
-//            )
-//        }
-//    }
 
     private fun initAdapter() {
-//        listViewOrd!!.adapter = MyAdapterOrdonance(this, R.layout.ord_add_list, listOrd)
         test = MyAdapterOrdonance(this, R.layout.ord_add_list, listOrd)
         listViewOrd!!.adapter = test
 

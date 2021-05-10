@@ -5,10 +5,16 @@ import android.os.Parcelable
 
 class Rapports (
     var id:String? = "",
-    var fullName: String? = "",
+    var namPatientRapport: String? = "",
+    var idPatientRapport:String? = "",
+    var nameDoctorRapport:String? = "",
+    var idDoctorRapport:String? = "",
     var textRapport:String? = ""
 ): Parcelable {
     constructor(parcel: Parcel) : this(
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString()
@@ -17,7 +23,10 @@ class Rapports (
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(id)
-        parcel.writeString(fullName)
+        parcel.writeString(namPatientRapport)
+        parcel.writeString(idPatientRapport)
+        parcel.writeString(nameDoctorRapport)
+        parcel.writeString(idDoctorRapport)
         parcel.writeString(textRapport)
     }
 
@@ -34,5 +43,6 @@ class Rapports (
             return arrayOfNulls(size)
         }
     }
+
 
 }

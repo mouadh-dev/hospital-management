@@ -224,36 +224,28 @@ class UserDao : IGestionUser {
     override fun insertRapport(
         rapports: Rapports,
         userItem: UserItem,
-        uid: String,
+        idPatientRapport:String,
+        idDoctorRapport: String,
         responseCallback: ResponseCallback
     ) {
-//        rapports.id = userRef.push().key
+
         userRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-//                if (snapshot.exists()) {
-//                    for (ds in snapshot.children) {
-//                        var userItem = ds.getValue(UserItem::class.java)
-//                        var fullNAme = userItem.prenom + " " + userItem.nom
-//                        if (rapports.fullName.equals(fullNAme)) {
 
                             var rapport = HashMap<String, Rapports>()
                             rapport[rapports.id.toString()] = rapports
                 userItem.rapport = rapport
 
                            rapports.id = userRef.push().key
-                userRef.child(uid).child("rapports").child(rapports.id!!)
+                userRef.child(idDoctorRapport).child("rapports").child(rapports.id!!)
                                 .setValue(rapports)
                             responseCallback.success()
+                userRef.child(idPatientRapport).child("rapports").child(rapports.id!!)
+                    .setValue(rapports)
+                responseCallback.success()
 
 
                         }
-
-
-
-//                    }
-//                }
-//            }
-
             override fun onCancelled(error: DatabaseError) {
 
             }
@@ -320,16 +312,6 @@ class UserDao : IGestionUser {
         userRef.addListenerForSingleValueEvent(object : ValueEventListener {
 
             override fun onDataChange(snapshot: DataSnapshot) {
-
-//                if (snapshot.exists()) {
-//                    for (ds in snapshot.children) {
-//                        var userItem = ds.getValue(UserItem::class.java)
-//                        var fullNAme = userItem!!.prenom + " " + userItem.nom
-//                        if (ordonance.namepatientOrdo.equals(fullNAme) || ordonance.nameDoctorOrd!!.equals(
-//                                fullNAme
-//                            )
-//                        ) {
-                //var id = userItem.id.toString()
                 ordonanceCallback.successOrdonance(ordonance)
                 ordonance.id = userRef.push().key
                 var ordonances = HashMap<String, Ordonance>()
@@ -340,17 +322,12 @@ class UserDao : IGestionUser {
                 userRef.child(idDoctor)
                     .child("ordonance").child(ordonance.id.toString())
                     .setValue(ordonance)
-//                userRef.child(idPatient)
-//                    .child("ordonance").child(ordonance.id.toString())
-//                    .setValue(ordonance)
+                userRef.child(idPatient)
+                    .child("ordonance").child(ordonance.id.toString())
+                    .setValue(ordonance)
 
             }
-//                    }
-//                }
-//            }
-
             override fun onCancelled(error: DatabaseError) {
-                println("mou " + error)
             }
         })
 
