@@ -248,17 +248,19 @@ class UserDao : IGestionUser {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
                     for (ds in snapshot.children) {
+
                         var userItem = ds.getValue(UserItem::class.java)
-                        if (userItem!!.rapports != null) {
-                            var rapport = userItem.rapports
-                            for (entry in rapport!!.values) {
-                                responseCallback.success(entry)
+                        if (userItem!!.role!!.size == 2) {
+                            if (userItem.rapports != null) {
+                                var rapport = userItem.rapports
+                                for (entry in rapport!!.values) {
+                                    responseCallback.success(entry)
+                                }
                             }
                         }
                     }
                 }
             }
-
             override fun onCancelled(error: DatabaseError) {
                 responseCallback.failure()
             }
@@ -327,9 +329,9 @@ class UserDao : IGestionUser {
                 if (snapshot.exists()) {
                     for (ds in snapshot.children) {
                         var userItem = ds.getValue(UserItem::class.java)
-                        if (userItem!!.rapports != null) {
 
-                            if (userItem.ordonance != null) {
+                        if (userItem!!.role!!.size == 2) {
+                            if (userItem!!.ordonance != null ) {
                                 var ordonance = userItem.ordonance
                                 for (entry in ordonance!!.entries) {
                                     var ord = entry.value

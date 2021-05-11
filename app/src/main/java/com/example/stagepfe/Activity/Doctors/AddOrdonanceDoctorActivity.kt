@@ -98,6 +98,42 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
             override fun onSuccess(userItem: UserItem) {
                 idDoctor = userItem.id.toString()
                 nameDoctor = userItem.prenom + " " + userItem.nom
+                userDao.populateSearch(object : UserCallback {
+                    override fun onSuccess(userItem: UserItem) {
+                        var patient = intent.getStringExtra("namePatentToOrdonance")
+                        var fullname = userItem.nom + " " + userItem.prenom
+                        if (patient.equals(fullname)) {
+                            namePatient = patient
+                            idPAtient = userItem.id.toString()
+                            println("mouadh :: " + namePatient + " !! " + idPAtient)
+                            ordonance.idDoctor = idDoctor
+                            ordonance.nameDoctorOrd = nameDoctor
+                            ordonance.namepatientOrdo = namePatient
+                            ordonance.idPatient = idPAtient
+                            ordonance.medicament = listMedicamentOrdonance
+                        }
+                        userDao.insertordonance(idDoctor!!, idPAtient!!, ordonance, user,
+                            object : OrdonanceCallback {
+                                override fun successOrdonance(ordonance: Ordonance) {
+//                               startActivity(Intent(this@AddOrdonanceDoctorActivity,ShowInfoPatientForDoctorActivity::class.java))
+                                    finish()
+                                    Toast.makeText(
+                                        applicationContext,
+                                        "add ordo avec succe",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+
+                                override fun failureOrdonance() {
+
+                                }
+                            })
+                    }
+
+                    override fun failure() {
+
+                    }
+                })
             }
 
             override fun failure() {
@@ -114,47 +150,12 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
             } else {
                 filMedicament()
 
-                userDao.populateSearch(object : UserCallback {
-                    override fun onSuccess(userItem: UserItem) {
-                        var patient = intent.getStringExtra("namePatentToOrdonance")
-                        var fullname = userItem.nom + " " + userItem.prenom
-                        if (patient.equals(fullname)) {
-                            namePatient = patient
-                            idPAtient = userItem.id.toString()
-                            println("mouadh :: " + namePatient + " !! " + idPAtient)
 
 
-                        }
-                    }
-
-                    override fun failure() {
-
-                    }
-                })
 
 
-                ordonance.idDoctor = idDoctor
-                ordonance.nameDoctorOrd = nameDoctor
-                ordonance.namepatientOrdo = namePatient
-                ordonance.idPatient = idPAtient
-                ordonance.medicament = listMedicamentOrdonance
 
-                userDao.insertordonance(idDoctor!!, idPAtient!!, ordonance, user,
-                    object : OrdonanceCallback {
-                        override fun successOrdonance(ordonance: Ordonance) {
-//                               startActivity(Intent(this@AddOrdonanceDoctorActivity,ShowInfoPatientForDoctorActivity::class.java))
-                            finish()
-                            Toast.makeText(
-                                applicationContext,
-                                "add ordo avec succe",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
 
-                        override fun failureOrdonance() {
-
-                        }
-                    })
 
 
             }
