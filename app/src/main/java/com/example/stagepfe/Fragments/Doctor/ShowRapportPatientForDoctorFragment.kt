@@ -28,7 +28,7 @@ class ShowRapportPatientForDoctorFragment : Fragment() {
     var nameDoctorRapport: String? = null
     var spcialityDoctorRapport: String? = null
     var userDao = UserDao()
-    var fullNameDoctor:String? = null
+//    var fullNameDoctor:String? = null
 
 
     override fun onCreateView(
@@ -59,33 +59,29 @@ class ShowRapportPatientForDoctorFragment : Fragment() {
             startActivity(intent)
 
         }
+        userDao.retrieveCurrentDataUser(object : UserCallback {
+            override fun onSuccess(userItem: UserItem) {
+                var fullNameDoctor = userItem.prenom + " " + userItem.nom
+
 
                 userDao.getRapport(object : RapportCallback {
                     override fun success(rapport: Rapports) {
+
                         nameDoctorRapport = rapport.nameDoctorRapport
                         spcialityDoctorRapport = rapport.specialityDoctor
+                        if (nameDoctorRapport!!.equals(fullNameDoctor) && myDataFromActivity.equals(rapport.namPatientRapport)) {
 
-                        listRapport.add(
-                            ModelRapport(
-                                "ff","hg"
-                            )
-                        )
-                        println("mouadh: " + rapport.nameDoctorRapport)
-
-
+                            listRapport.add(ModelRapport(nameDoctorRapport!!,spcialityDoctorRapport!!))
+                            requireActivity().run {
+                                listviewRapport!!.adapter =
+                                    MyAdapterRapport(this, R.layout.list_rapport, listRapport)
+                            }
+                        }
                     }
 
                     override fun failure() {
                     }
                 })
-
-
-//        listRapport.add(ModelRapport("ff", "hh"))
-        userDao.retrieveCurrentDataUser(object : UserCallback {
-            override fun onSuccess(userItem: UserItem) {
-                var fullNameDoctor = userItem.nom + " " + userItem.prenom
-
-
 
 
             }
@@ -94,12 +90,18 @@ class ShowRapportPatientForDoctorFragment : Fragment() {
 
             }
         })
-        initAdapter()
+
+
+//        listRapport.add(ModelRapport("ff", "hh"))
+
+
     }
 
     private fun initAdapter() {
-        listviewRapport!!.adapter =
-            MyAdapterRapport(requireContext(), R.layout.list_rapport, listRapport)
+//        requireActivity().run {
+//            listviewRapport!!.adapter =
+//                MyAdapterRapport(this, R.layout.list_rapport, listRapport)
+//        }
     }
 
 

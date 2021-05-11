@@ -23,7 +23,6 @@ class MyAdapterOrdonance(var mCtx: Context, var resources:Int, var items:List<Mo
         var descriptionOrd: TextView = view.findViewById(R.id.description_ord_list)
 
 
-
         var mItem: ModelOrdonance = items[position]
 
         nameMedicament.text = mItem.nomMedicament

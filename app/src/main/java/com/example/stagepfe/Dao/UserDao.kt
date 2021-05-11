@@ -21,7 +21,7 @@ class UserDao : IGestionUser {
     private val userRef = FirebaseDatabase.getInstance().getReference("users")
     private val medicamentRef = FirebaseDatabase.getInstance().getReference("Medicament")
     private val reclamationRef = database.getReference(BaseConstant.instance().reclamation)
-//    private val rapportRef = database.getReference(BaseConstant.instance().rapport).child(uid).child("rapports")
+//  private val rapportRef = database.getReference(BaseConstant.instance().rapport).child(uid).child("rapports")
 
     ////////////////////////////////////////////////Insert user/////////////////////////////////////////
     override fun insertUser(userItem: UserItem) {
@@ -110,7 +110,6 @@ class UserDao : IGestionUser {
 
 
             }
-
             override fun onCancelled(error: DatabaseError) {
                 Log.w(TAG, "signInWithEmail:failure", error.toException())
                 responseCallback.failure()
@@ -127,12 +126,10 @@ class UserDao : IGestionUser {
 
                 getUserByUid(mAuth.currentUser.uid, userCallback)
             }
-
             override fun onCancelled(error: DatabaseError) {
                 Log.w(TAG, "signInWithEmail:failure", error.toException())
                 userCallback.failure()
             }
-
         })
     }
 
@@ -177,12 +174,10 @@ class UserDao : IGestionUser {
                     }
                 }
             }
-
             override fun onCancelled(error: DatabaseError) {
                 Log.w(TAG, "signInWithEmail:failure", error.toException())
             }
         })
-
     }
 
     /////////////////////////////////////////////getAppointment/////////////////////////////////////////
@@ -226,7 +221,6 @@ class UserDao : IGestionUser {
         idDoctorRapport: String,
         responseCallback: ResponseCallback
     ) {
-
         userRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
 
@@ -245,25 +239,20 @@ class UserDao : IGestionUser {
 
                         }
             override fun onCancelled(error: DatabaseError) {
-
             }
-
         })
-
-
     }
-
+////////////////////////////////////////////get rapport ////////////////////////////////////////////
     fun getRapport(responseCallback: RapportCallback) {
-        userRef.addValueEventListener(object : ValueEventListener {
+        userRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
                     for (ds in snapshot.children) {
                         var userItem = ds.getValue(UserItem::class.java)
                         if (userItem!!.rapports != null) {
                             var rapport = userItem.rapports
-                            for (entry in rapport!!.entries) {
-                                var test = entry.value
-                                responseCallback.success(test)
+                            for (entry in rapport!!.values) {
+                                responseCallback.success(entry)
                             }
                         }
                     }
@@ -298,27 +287,7 @@ class UserDao : IGestionUser {
 
     }
 
-    /////////////////////////////////////////////PopulateSearch/////////////////////////////////////
-    fun MedicamenteSearch(responseCallback: ResponseCallback) {
-        medicamentRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
-                    for (ds in snapshot.children) {
-                        var medicament = ds.getValue(String::class.java)
-                        responseCallback.success(medicament!!)
-                    }
 
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                responseCallback.failure()
-            }
-
-        })
-
-
-    }
 
     /////////////////////////////////////////////insert Ordonance/////////////////////////////////////
     override fun insertordonance(
@@ -351,6 +320,73 @@ class UserDao : IGestionUser {
         })
 
     }
+    ////////////////////////////////////////////get Ordonance///////////////////////////////////////
+    fun getOrdonance(responseCallback: getOrdonanceCallback) {
+        userRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    for (ds in snapshot.children) {
+                        var userItem = ds.getValue(UserItem::class.java)
+                        if (userItem!!.rapports != null) {
+
+                            if (userItem.ordonance != null) {
+                                var ordonance = userItem.ordonance
+                                for (entry in ordonance!!.entries) {
+                                    var ord = entry.value
+                                    var medicament = entry.value
+                                    var test = medicament.medicament
+                                    for (med in test) {
+                                        responseCallback.successOrdonance(ord, med)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                responseCallback.failureOrdonance()
+            }
+        })
+    }
+    ////////////////////////////////////////////change password/////////////////////////////////////
+    fun changePassword(password:String,userItem: UserItem,activity: Activity,responseCallback: ResponseCallback){
+        val user = FirebaseAuth.getInstance().currentUser
+        user!!.updatePassword(password).addOnCompleteListener { Task ->
+            if (Task.isSuccessful) {
+                println("Update Success")
+                userRef.child(userItem.id.toString()).child("confirmpassword").setValue(password)
+                userRef.child(userItem.id.toString()).child("password").setValue(password)
+
+                responseCallback.success()
+            } else {
+                println("Error Update" + Task.exception)
+                responseCallback.failure()
+            }
+        }
+    }
+    /////////////////////////////////////////////PopulateSearch/////////////////////////////////////
+    fun MedicamenteSearch(responseCallback: ResponseCallback) {
+        medicamentRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    for (ds in snapshot.children) {
+                        var medicament = ds.getValue(String::class.java)
+                        responseCallback.success(medicament!!)
+                    }
+
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                responseCallback.failure()
+            }
+
+        })
+
+
+    }
     ///////////////////////////////////////////update Photo////////////////////////////////////////
 //    private fun updateProfile() {
 //        val user = mAuth.currentUser
@@ -380,21 +416,7 @@ class UserDao : IGestionUser {
 
 
 
-    fun changePassword(password:String,userItem: UserItem,activity: Activity,responseCallback: ResponseCallback){
-        val user = FirebaseAuth.getInstance().currentUser
-        user!!.updatePassword(password).addOnCompleteListener { Task ->
-            if (Task.isSuccessful) {
-                println("Update Success")
-                userRef.child(userItem.id.toString()).child("confirmpassword").setValue(password)
-                userRef.child(userItem.id.toString()).child("password").setValue(password)
 
-                responseCallback.success()
-            } else {
-                println("Error Update" + Task.exception)
-                responseCallback.failure()
-            }
-        }
-    }
 }
 
 

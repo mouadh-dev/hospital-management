@@ -10,14 +10,22 @@ import android.widget.ListView
 import androidx.fragment.app.Fragment
 import com.example.stagepfe.Activity.Doctors.AddOrdonanceDoctorActivity
 import com.example.stagepfe.Activity.Doctors.ShowInfoPatientForDoctorActivity
+import com.example.stagepfe.Adapters.Doctor.MyAdapterShowOrdonnancePatForDoc
+import com.example.stagepfe.Dao.UserCallback
+import com.example.stagepfe.Dao.UserDao
+import com.example.stagepfe.Dao.getOrdonanceCallback
 import com.example.stagepfe.Models.Doctors.ModelShowOrdonnancePatForDoctor
 import com.example.stagepfe.R
+import com.example.stagepfe.entite.MedicamentOrdonance
+import com.example.stagepfe.entite.Ordonance
+import com.example.stagepfe.entite.UserItem
 
 
 class ShowOrdonnancePatientForDoctorFragment : Fragment() {
     var listviewOrdoPatForDoctor: ListView? = null
     var listOrdoPatForDoctor = mutableListOf<ModelShowOrdonnancePatForDoctor>()
     var addOrdonance:ImageView? = null
+    var userDao = UserDao()
 
 
 
@@ -44,6 +52,40 @@ class ShowOrdonnancePatientForDoctorFragment : Fragment() {
 ////////////////////////////////////////////addOrdonance////////////////////////////////////////////
         val activity: ShowInfoPatientForDoctorActivity? = activity as ShowInfoPatientForDoctorActivity?
         val myDataFromActivity: String = activity!!.getMyData().toString()
+userDao.retrieveCurrentDataUser(object : UserCallback {
+    override fun onSuccess(userItem: UserItem) {
+        var fullNameDoctor = userItem.prenom + " " + userItem.nom
+        userDao.getOrdonance(object : getOrdonanceCallback {
+            override fun successOrdonance(
+                ordonance: Ordonance,
+                medicamentOrdonance: MedicamentOrdonance
+            ) {
+                if (ordonance.namepatientOrdo!!.equals(myDataFromActivity) &&
+                    ordonance.nameDoctorOrd!!.equals(fullNameDoctor)) {
+                    listOrdoPatForDoctor.add(
+                        ModelShowOrdonnancePatForDoctor(
+                            ordonance.namepatientOrdo!!,
+                            medicamentOrdonance.nameMedicament!!
+                        )
+                    )
+                    listviewOrdoPatForDoctor!!.adapter = MyAdapterShowOrdonnancePatForDoc(
+                        requireContext(),
+                        R.layout.show_ordonnance_patient_to_doctor,
+                        listOrdoPatForDoctor
+                    )
+                }
+            }
+
+            override fun failureOrdonance() {
+            }
+        })
+    }
+
+    override fun failure() {
+
+    }
+})
+
 
         addOrdonance!!.setOnClickListener {
             var intent = Intent(requireContext(), AddOrdonanceDoctorActivity::class.java)
