@@ -1,9 +1,12 @@
 package com.example.stagepfe.Activity.Doctors
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isEmpty
 import com.example.stagepfe.Adapters.Doctor.MyAdapterOrdonance
@@ -15,6 +18,8 @@ import com.example.stagepfe.R
 import com.example.stagepfe.entite.MedicamentOrdonance
 import com.example.stagepfe.entite.Ordonance
 import com.example.stagepfe.entite.UserItem
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 
 class AddOrdonanceDoctorActivity : AppCompatActivity() {
@@ -40,11 +45,14 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
     var namePatient: String? = null
     var idPAtient: String? = null
     private var test: MyAdapterOrdonance? = null
+    @RequiresApi(Build.VERSION_CODES.O)
+    val currentDateTime = LocalDateTime.now()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_ordonance_doctor)
         initView()
+
     }
 
     private fun initView() {
@@ -99,6 +107,7 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
                 idDoctor = userItem.id.toString()
                 nameDoctor = userItem.prenom + " " + userItem.nom
                 userDao.populateSearch(object : UserCallback {
+                    @SuppressLint("NewApi")
                     override fun onSuccess(userItem: UserItem) {
                         var patient = intent.getStringExtra("namePatentToOrdonance")
                         var fullname = userItem.nom + " " + userItem.prenom
@@ -111,23 +120,14 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
                             ordonance.namepatientOrdo = namePatient
                             ordonance.idPatient = idPAtient
                             ordonance.medicament = listMedicamentOrdonance
+                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                                ordonance.dateOrdonanceSend =
+                                    currentDateTime.format(DateTimeFormatter.ISO_DATE)
+                            }
+                            ordonance.hourOrdonanceSend =
+                                currentDateTime.format(DateTimeFormatter.ISO_TIME)
                         }
-                        userDao.insertordonance(idDoctor!!, idPAtient!!, ordonance, user,
-                            object : OrdonanceCallback {
-                                override fun successOrdonance(ordonance: Ordonance) {
-//                               startActivity(Intent(this@AddOrdonanceDoctorActivity,ShowInfoPatientForDoctorActivity::class.java))
-                                    finish()
-                                    Toast.makeText(
-                                        applicationContext,
-                                        "add ordo avec succe",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
 
-                                override fun failureOrdonance() {
-
-                                }
-                            })
                     }
 
                     override fun failure() {
@@ -141,23 +141,28 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
         })
 
         addOrdonance!!.setOnClickListener {
-
-
             if (listViewOrd!!.isEmpty()) {
                 var text = "veuillez ajouter des medicaments"
                 dialog(text)
 
             } else {
                 filMedicament()
+                userDao.insertordonance(idDoctor!!, idPAtient!!, ordonance, user,
+                    object : OrdonanceCallback {
+                        override fun successOrdonance(ordonance: Ordonance) {
+//                               startActivity(Intent(this@AddOrdonanceDoctorActivity,ShowInfoPatientForDoctorActivity::class.java))
+                            finish()
+                            Toast.makeText(
+                                applicationContext,
+                                "add ordo avec succe",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
 
+                        override fun failureOrdonance() {
 
-
-
-
-
-
-
-
+                        }
+                    })
             }
         }
 ////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -26,6 +26,7 @@ class ShowOrdonnancePatientForDoctorFragment : Fragment() {
     var listOrdoPatForDoctor = mutableListOf<ModelShowOrdonnancePatForDoctor>()
     var addOrdonance:ImageView? = null
     var userDao = UserDao()
+    var fullNameDoctor:String? = null
 
 
 
@@ -54,18 +55,19 @@ class ShowOrdonnancePatientForDoctorFragment : Fragment() {
         val myDataFromActivity: String = activity!!.getMyData().toString()
 userDao.retrieveCurrentDataUser(object : UserCallback {
     override fun onSuccess(userItem: UserItem) {
-        var fullNameDoctor = userItem.prenom + " " + userItem.nom
+        fullNameDoctor = userItem.prenom + " " + userItem.nom
+
         userDao.getOrdonance(object : getOrdonanceCallback {
             override fun successOrdonance(
                 ordonance: Ordonance,
                 medicamentOrdonance: MedicamentOrdonance
             ) {
-                if (ordonance.namepatientOrdo!!.equals(myDataFromActivity) &&
+                if (myDataFromActivity.equals(ordonance.namepatientOrdo!!) &&
                     ordonance.nameDoctorOrd!!.equals(fullNameDoctor)) {
                     listOrdoPatForDoctor.add(
                         ModelShowOrdonnancePatForDoctor(
-                            ordonance.namepatientOrdo!!,
-                            medicamentOrdonance.nameMedicament!!
+                            ordonance.dateOrdonanceSend!!,
+                            ordonance.hourOrdonanceSend!!.substring(1,5)
                         )
                     )
                     listviewOrdoPatForDoctor!!.adapter = MyAdapterShowOrdonnancePatForDoc(
@@ -85,6 +87,7 @@ userDao.retrieveCurrentDataUser(object : UserCallback {
 
     }
 })
+
 
 
         addOrdonance!!.setOnClickListener {
