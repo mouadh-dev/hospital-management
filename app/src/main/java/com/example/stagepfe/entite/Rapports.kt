@@ -10,7 +10,9 @@ class Rapports (
     var nameDoctorRapport:String? = "",
     var idDoctorRapport:String? = "",
     var textRapport:String? = "",
-    var specialityDoctor:String? = ""
+    var specialityDoctor:String? = "",
+    var dateRapport:String? = "",
+    var hourRapport:String? = ""
 ): Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),

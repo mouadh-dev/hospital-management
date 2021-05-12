@@ -15,13 +15,13 @@ class MyAdapterRapport(var mCtx: Context, var resources:Int, var items:List<Mode
         var view: View = layoutInflater.inflate(resources, null)
 
 
-        var nameDoctor: TextView = view.findViewById(R.id.NameDoctorRapport)
-        var specialityRapporteur: TextView = view.findViewById(R.id.SpecialityDoctorRapport)
+        var date: TextView = view.findViewById(R.id.dateRapport)
+        var hour: TextView = view.findViewById(R.id.hourRapport)
 
 
         var mItem: ModelRapport = items[position]
-        nameDoctor.text = mItem.nom_Doctor_Rapport
-        specialityRapporteur.text = mItem.speciality_Doctor_Rapport
+        date.text = mItem.date_Doctor_Rapport
+        hour.text = mItem.houry_Doctor_Rapport
 
 
         return view

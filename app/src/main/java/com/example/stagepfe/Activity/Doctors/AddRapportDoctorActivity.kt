@@ -1,6 +1,7 @@
 package com.example.stagepfe.Activity.Doctors
 
 import android.app.AlertDialog
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.View.GONE
@@ -8,6 +9,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.example.stagepfe.Dao.ResponseCallback
 import com.example.stagepfe.Dao.UserCallback
@@ -15,6 +17,8 @@ import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.R
 import com.example.stagepfe.entite.Rapports
 import com.example.stagepfe.entite.UserItem
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class AddRapportDoctorActivity : AppCompatActivity() {
     private var TextRapport: EditText? = null
@@ -28,12 +32,16 @@ class AddRapportDoctorActivity : AppCompatActivity() {
     var nameDoctorRapport:String? = null
     var namePatientRapport:String? = null
     var speciality:String? =  null
+    @RequiresApi(Build.VERSION_CODES.O)
+    val currentDateTime = LocalDateTime.now()
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_rapport_doctor)
         initView()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun initView() {
         TextRapport = findViewById(R.id.text_Rapport_Et)
         addRapport = findViewById(R.id.Add_Rapport_Button)
@@ -88,6 +96,8 @@ class AddRapportDoctorActivity : AppCompatActivity() {
                 rapports.nameDoctorRapport = nameDoctorRapport
                 rapports.idDoctorRapport = idDoctor
                 rapports.specialityDoctor = speciality
+                rapports.dateRapport = currentDateTime.format(DateTimeFormatter.ISO_DATE)
+                rapports.hourRapport = currentDateTime.format(DateTimeFormatter.ISO_TIME)
                 userDao.populateSearch(object : UserCallback {
                     override fun onSuccess(userItem: UserItem) {
 

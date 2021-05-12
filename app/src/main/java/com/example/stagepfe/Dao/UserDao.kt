@@ -9,8 +9,10 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.*
-import kotlin.coroutines.coroutineContext
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 
 class UserDao : IGestionUser {
@@ -58,13 +60,13 @@ class UserDao : IGestionUser {
     }
 
     /////////////////////////////////////////////updateUser/////////////////////////////////////////
-    fun updateUser(id:String,userItem: UserItem, userCallback: UserCallback) {
+    fun updateUser(id: String, userItem: UserItem, userCallback: UserCallback) {
 
         userRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 userRef.child(id).removeValue()
-                    userRef.child(id).setValue(userItem)
-                    userCallback.onSuccess(userItem)
+                userRef.child(id).setValue(userItem)
+                userCallback.onSuccess(userItem)
 
             }
 
@@ -110,6 +112,7 @@ class UserDao : IGestionUser {
 
 
             }
+
             override fun onCancelled(error: DatabaseError) {
                 Log.w(TAG, "signInWithEmail:failure", error.toException())
                 responseCallback.failure()
@@ -126,6 +129,7 @@ class UserDao : IGestionUser {
 
                 getUserByUid(mAuth.currentUser.uid, userCallback)
             }
+
             override fun onCancelled(error: DatabaseError) {
                 Log.w(TAG, "signInWithEmail:failure", error.toException())
                 userCallback.failure()
@@ -174,6 +178,7 @@ class UserDao : IGestionUser {
                     }
                 }
             }
+
             override fun onCancelled(error: DatabaseError) {
                 Log.w(TAG, "signInWithEmail:failure", error.toException())
             }
@@ -217,32 +222,34 @@ class UserDao : IGestionUser {
     override fun insertRapport(
         rapports: Rapports,
         userItem: UserItem,
-        idPatientRapport:String,
+        idPatientRapport: String,
         idDoctorRapport: String,
         responseCallback: ResponseCallback
     ) {
         userRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
 
-                            var rapport = HashMap<String, Rapports>()
-                            rapport[rapports.id.toString()] = rapports
+                var rapport = HashMap<String, Rapports>()
+                rapport[rapports.id.toString()] = rapports
                 userItem.rapports = rapport
 
-                           rapports.id = userRef.push().key
+                rapports.id = userRef.push().key
                 userRef.child(idDoctorRapport).child("rapports").child(rapports.id!!)
-                                .setValue(rapports)
-                            responseCallback.success()
+                    .setValue(rapports)
+                responseCallback.success()
                 userRef.child(idPatientRapport).child("rapports").child(rapports.id!!)
                     .setValue(rapports)
                 responseCallback.success()
 
 
-                        }
+            }
+
             override fun onCancelled(error: DatabaseError) {
             }
         })
     }
-////////////////////////////////////////////get rapport ////////////////////////////////////////////
+
+    ////////////////////////////////////////////get rapport ////////////////////////////////////////////
     fun getRapport(responseCallback: RapportCallback) {
         userRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -261,11 +268,35 @@ class UserDao : IGestionUser {
                     }
                 }
             }
+
             override fun onCancelled(error: DatabaseError) {
                 responseCallback.failure()
             }
         })
     }
+
+    //////////////////////////////////////////updateRapport/////////////////////////////////////////
+    fun updateRapport(iddoc: String,idPat: String,idRapport:String,rapports: Rapports, responseCallback: ResponseCallback) {
+
+        userRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+             userRef.child(iddoc).child("rapports").child(idRapport).removeValue()
+                userRef.child(iddoc).child("rapports").child(idRapport).setValue(rapports)
+
+                userRef.child(idPat).child("rapports").child(idRapport).removeValue()
+                userRef.child(idPat).child("rapports").child(idRapport).setValue(rapports)
+                responseCallback.success()
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+
+        })
+    }
+
     /////////////////////////////////////////////PopulateSearch/////////////////////////////////////
     fun populateSearch(responseCallback: UserCallback) {
         userRef.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -290,11 +321,10 @@ class UserDao : IGestionUser {
     }
 
 
-
     /////////////////////////////////////////////insert Ordonance/////////////////////////////////////
     override fun insertordonance(
-        idDoctor:String,
-        idPatient:String,
+        idDoctor: String,
+        idPatient: String,
         ordonance: Ordonance,
         userItem: UserItem,
         ordonanceCallback: OrdonanceCallback
@@ -317,11 +347,13 @@ class UserDao : IGestionUser {
                     .setValue(ordonance)
 
             }
+
             override fun onCancelled(error: DatabaseError) {
             }
         })
 
     }
+
     ////////////////////////////////////////////get Ordonance///////////////////////////////////////
     fun getOrdonance(responseCallback: getOrdonanceCallback) {
         userRef.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -330,8 +362,8 @@ class UserDao : IGestionUser {
                     for (ds in snapshot.children) {
                         var userItem = ds.getValue(UserItem::class.java)
 
-                        if (userItem!!.role!!.size == 2) {
-                            if (userItem!!.ordonance != null ) {
+
+                            if (userItem!!.ordonance != null) {
                                 var ordonance = userItem.ordonance
                                 for (entry in ordonance!!.entries) {
                                     var ord = entry.value
@@ -342,7 +374,7 @@ class UserDao : IGestionUser {
                                     }
                                 }
                             }
-                        }
+
                     }
                 }
             }
@@ -352,8 +384,27 @@ class UserDao : IGestionUser {
             }
         })
     }
+    ////////////////////////////////////////////remove ordonance/////////////////////////////////////
+    fun removeOrdonance(iddoc: String,idPat: String,idOrdonance:String,ordonance: Ordonance, responseCallback: ResponseCallback) {
+
+        userRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                userRef.child(iddoc).child("ordonance").child(idOrdonance).removeValue()
+                userRef.child(idPat).child("ordonance").child(idOrdonance).removeValue()
+                responseCallback.success()
+            }
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
+    }
+
     ////////////////////////////////////////////change password/////////////////////////////////////
-    fun changePassword(password:String,userItem: UserItem,activity: Activity,responseCallback: ResponseCallback){
+    fun changePassword(
+        password: String,
+        userItem: UserItem,
+        activity: Activity,
+        responseCallback: ResponseCallback
+    ) {
         val user = FirebaseAuth.getInstance().currentUser
         user!!.updatePassword(password).addOnCompleteListener { Task ->
             if (Task.isSuccessful) {
@@ -368,6 +419,7 @@ class UserDao : IGestionUser {
             }
         }
     }
+
     /////////////////////////////////////////////PopulateSearch/////////////////////////////////////
     fun MedicamenteSearch(responseCallback: ResponseCallback) {
         medicamentRef.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -415,8 +467,6 @@ class UserDao : IGestionUser {
 //        }
 //
 //
-
-
 
 
 }

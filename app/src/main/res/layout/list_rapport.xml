@@ -39,7 +39,7 @@
                 android:layout_marginLeft="150dp">
 
                 <TextView
-                    android:id="@+id/NameDoctorRapport"
+                    android:id="@+id/dateRapport"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -48,7 +48,7 @@
                     android:textSize="15dp" />
 
                 <TextView
-                    android:id="@+id/SpecialityDoctorRapport"
+                    android:id="@+id/hourRapport"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
