@@ -1,7 +1,5 @@
 package com.example.stagepfe.Fragments.Doctor
 
-import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -27,6 +25,7 @@ class ProfilDoctorMyPatientFragment : Fragment() {
     var listDoctorProfilMyPatient = mutableListOf<ModelPatientListForDoctorProfil>()
     var testOnRepeatingPatientName:String= ""
     var nameCurrentUser:String? = null
+    var adapterListPatient: MyAdapterPatientListForDoctorProfil? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,6 +42,9 @@ class ProfilDoctorMyPatientFragment : Fragment() {
 
 
         listviewDoctorProfilMyPatient = view.findViewById<ListView>(R.id.listPatientForProfilDoctor)
+
+//        listDoctorProfilMyPatient = arrayListOf<ModelPatientListForDoctorProfil>()
+        initAdapter()
 /////////////////////////////////////////////////////////////////////////////////////////////////////
         var userdao = UserDao()
 
@@ -61,17 +63,8 @@ class ProfilDoctorMyPatientFragment : Fragment() {
                                 listDoctorProfilMyPatient.add(
                                     ModelPatientListForDoctorProfil(
                                         testOnRepeatingPatientName,
-                                        R.drawable.logopatient
-                                    )
-                                )
-                                requireActivity().run {
-                                listviewDoctorProfilMyPatient!!.adapter =
-                                    MyAdapterPatientListForDoctorProfil(
-                                        this,
-                                        R.layout.list_patient_for_doctor_profil,
-                                        listDoctorProfilMyPatient
-                                    )
-                                }
+                                        R.drawable.logopatient))
+                                adapterListPatient!!.notifyDataSetChanged()
                             }
                             //
                         }
@@ -104,6 +97,16 @@ class ProfilDoctorMyPatientFragment : Fragment() {
         // }
 
         //}
+    }
+
+    private fun initAdapter() {
+
+        adapterListPatient =
+            MyAdapterPatientListForDoctorProfil(
+                requireContext(),
+                R.layout.list_patient_for_doctor_profil,
+                listDoctorProfilMyPatient)
+        listviewDoctorProfilMyPatient!!.adapter = adapterListPatient
     }
 
 

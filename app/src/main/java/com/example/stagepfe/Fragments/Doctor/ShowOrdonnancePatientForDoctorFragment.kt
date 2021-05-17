@@ -1,6 +1,5 @@
 package com.example.stagepfe.Fragments.Doctor
 
-import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,7 +10,6 @@ import androidx.fragment.app.Fragment
 import com.example.stagepfe.Activity.Doctors.AddOrdonanceDoctorActivity
 import com.example.stagepfe.Activity.Doctors.ShowInfoPatientForDoctorActivity
 import com.example.stagepfe.Adapters.Doctor.MyAdapterShowOrdonnancePatForDoc
-import com.example.stagepfe.Dao.ResponseCallback
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.Dao.getOrdonanceCallback
@@ -21,23 +19,21 @@ import com.example.stagepfe.entite.MedicamentOrdonance
 import com.example.stagepfe.entite.Ordonance
 import com.example.stagepfe.entite.UserItem
 
-import android.widget.AdapterView.OnItemLongClickListener
-import com.example.stagepfe.Adapters.Doctor.MyAdapterOrdonance
-import com.example.stagepfe.Adapters.Doctor.MyAdapterOrdonanceReading
-import com.example.stagepfe.Models.Doctors.ModelOrdonance
 import com.example.stagepfe.Models.Doctors.ModelordonanceReading
 
 
 class ShowOrdonnancePatientForDoctorFragment : Fragment() {
     var listviewOrdoPatForDoctor: ListView? = null
     var listOrdoPatForDoctor = mutableListOf<ModelShowOrdonnancePatForDoctor>()
+    private var adapterOrdonance: MyAdapterShowOrdonnancePatForDoc? = null
+
     var addOrdonance: ImageView? = null
     var userDao = UserDao()
     var fullNameDoctor: String? = null
     var fullDate: String? = null
     var listOrdReading = mutableListOf<ModelordonanceReading>()
     var listViewOrdReading: ListView? = null
-    private var test: MyAdapterOrdonanceReading? = null
+
 
 
     override fun onCreateView(
@@ -61,6 +57,8 @@ class ShowOrdonnancePatientForDoctorFragment : Fragment() {
         listviewOrdoPatForDoctor = view.findViewById<ListView>(R.id.showOrdPatForDoctorr)
         listViewOrdReading = view.findViewById(R.id.List_Medicament_to_show)
 
+        listOrdoPatForDoctor = arrayListOf<ModelShowOrdonnancePatForDoctor>()
+        initAdapter()
 ////////////////////////////////////////////addOrdonance////////////////////////////////////////////
         val activity: ShowInfoPatientForDoctorActivity? =
             activity as ShowInfoPatientForDoctorActivity?
@@ -86,12 +84,7 @@ class ShowOrdonnancePatientForDoctorFragment : Fragment() {
                                     ordonance.hourOrdonanceSend!!.substring(0, 5)
                                 )
                             )
-                            listviewOrdoPatForDoctor!!.adapter = MyAdapterShowOrdonnancePatForDoc(
-                                requireContext(),
-                                R.layout.show_ordonnance_patient_to_doctor,
-                                listOrdoPatForDoctor
-                            )
-
+                            adapterOrdonance!!.notifyDataSetChanged()
                         }
 
 
@@ -107,63 +100,63 @@ class ShowOrdonnancePatientForDoctorFragment : Fragment() {
             }
         })
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-        listviewOrdoPatForDoctor!!.setOnItemClickListener { parent, view, position, id ->
-            userDao.getOrdonance(object : getOrdonanceCallback {
-                override fun successOrdonance(
-                    ordonance: Ordonance,
-                    medicamentOrdonance: MedicamentOrdonance
-                ) {
-                    var v = View.inflate(requireContext(), R.layout.dialog_ordonance, null)
-                    var builder = AlertDialog.Builder(requireContext())
-                    builder.setView(v)
-
-                    var dialog = builder.create()
-                    dialog.show()
-                    dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-                    dialog.findViewById<TextView>(R.id.descriptionOrdonance).setText(ordonance.nameDoctorOrd)
-                    listOrdReading.add(
-                        ModelordonanceReading(
-                            medicamentOrdonance.nameMedicament!!.toString(),
-                            medicamentOrdonance.quantity!!.toString(),
-                            medicamentOrdonance.description!!
-                        )
-                    )
-
-
-                    test = MyAdapterOrdonanceReading(requireContext(), R.layout.ordonance_reading_doctor, listOrdReading)
-                    dialog.findViewById<ListView>(R.id.List_Medicament_to_show).adapter = test
-//                                listViewOrdReading!!.adapter = MyAdapterOrdonance(requireContext(), R.layout.ord_add_list, listOrd)
-//                                initAdapter()
-                    dialog.findViewById<Button>(R.id.btn_remove).setOnClickListener {
-                        dialog.dismiss()
-                        userDao.removeOrdonance(ordonance.idDoctor!!,
-                            ordonance.idPatient!!,
-                            ordonance.id!!,
-                            ordonance,
-                            object : ResponseCallback {
-                                override fun success(medicament: String) {
-
-                                }
-
-                                override fun success() {
-
-                                }
-
-                                override fun failure() {
-
-                                }
-                            })
-                    }
-                }
-
-                override fun failureOrdonance() {
-
-                }
-            })
-
-
-
-        }
+//        listviewOrdoPatForDoctor!!.setOnItemClickListener { parent, view, position, id ->
+//            userDao.getOrdonance(object : getOrdonanceCallback {
+//                override fun successOrdonance(
+//                    ordonance: Ordonance,
+//                    medicamentOrdonance: MedicamentOrdonance
+//                ) {
+//                    var v = View.inflate(requireContext(), R.layout.dialog_ordonance, null)
+//                    var builder = AlertDialog.Builder(requireContext())
+//                    builder.setView(v)
+//
+//                    var dialog = builder.create()
+//                    dialog.show()
+//                    dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+//                    dialog.findViewById<TextView>(R.id.descriptionOrdonance).setText(ordonance.nameDoctorOrd)
+//                    listOrdReading.add(
+//                        ModelordonanceReading(
+//                            medicamentOrdonance.nameMedicament!!.toString(),
+//                            medicamentOrdonance.quantity!!.toString(),
+//                            medicamentOrdonance.description!!
+//                        )
+//                    )
+//
+//
+//                    listOrdReading = MyAdapterOrdonanceReading(requireContext(), R.layout.ordonance_reading_doctor, listOrdReading)
+//                    dialog.findViewById<ListView>(R.id.List_Medicament_to_show).adapter = adapterOrdonance
+////                                listViewOrdReading!!.adapter = MyAdapterOrdonance(requireContext(), R.layout.ord_add_list, listOrd)
+////                                initAdapter()
+//                    dialog.findViewById<Button>(R.id.btn_remove).setOnClickListener {
+//                        dialog.dismiss()
+//                        userDao.removeOrdonance(ordonance.idDoctor!!,
+//                            ordonance.idPatient!!,
+//                            ordonance.id!!,
+//                            ordonance,
+//                            object : ResponseCallback {
+//                                override fun success(medicament: String) {
+//
+//                                }
+//
+//                                override fun success() {
+//
+//                                }
+//
+//                                override fun failure() {
+//
+//                                }
+//                            })
+//                    }
+//                }
+//
+//                override fun failureOrdonance() {
+//
+//                }
+//            })
+//
+//
+//
+//        }
 ///////////////////////////////////////////////////////////////////////////////////////////////////
         addOrdonance!!.setOnClickListener {
             var intent = Intent(requireContext(), AddOrdonanceDoctorActivity::class.java)
@@ -171,10 +164,13 @@ class ShowOrdonnancePatientForDoctorFragment : Fragment() {
             startActivity(intent)
         }
     }
+
     private fun initAdapter() {
-        test = MyAdapterOrdonanceReading(requireContext(), R.layout.ordonance_reading_doctor, listOrdReading)
-        listviewOrdoPatForDoctor!!.adapter = test
-
-
+       adapterOrdonance = MyAdapterShowOrdonnancePatForDoc(
+            requireContext(),
+            R.layout.show_ordonnance_patient_to_doctor,
+            listOrdoPatForDoctor)
+        listviewOrdoPatForDoctor!!.adapter = adapterOrdonance
     }
+
 }
