@@ -5,11 +5,14 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.stagepfe.Activity.AgentLabo.AccueilAgentLaboActivity
@@ -26,10 +29,12 @@ import com.example.stagepfe.entite.UserItem
 class ConnexionFragment : Fragment(), View.OnClickListener {
     private var inscriptionButton: Button? = null
     private var forgotPassWord: TextView? = null
+    private var showPassWord: ImageView? = null
     private var connectButton: Button? = null
     private var mailConnexionET: EditText? = null
     private var passwordConnectET: EditText? = null
     private var mContext: Context? = null
+
 
 
     override fun onCreateView(
@@ -55,7 +60,19 @@ class ConnexionFragment : Fragment(), View.OnClickListener {
         connectButton = view.findViewById<Button>(R.id.Connect_Button)
         mailConnexionET = view.findViewById<EditText>(R.id.Mail_Connexion)
         passwordConnectET = view.findViewById<EditText>(R.id.Password_Connexion)
+        showPassWord= view.findViewById(R.id.eyeShowPassword)
 
+        showPassWord!!.setOnClickListener {
+            if (passwordConnectET!!.getTransformationMethod()
+                    .equals(PasswordTransformationMethod.getInstance())
+            ) {
+                passwordConnectET!!.transformationMethod =
+                    HideReturnsTransformationMethod.getInstance()
+            } else {
+                passwordConnectET!!.transformationMethod =
+                    PasswordTransformationMethod.getInstance()
+            }
+        }
         inscriptionButton!!.setOnClickListener {
             var FirstInscriptionFr = InscriptionFirstPageFragment()
             requireFragmentManager().beginTransaction()
