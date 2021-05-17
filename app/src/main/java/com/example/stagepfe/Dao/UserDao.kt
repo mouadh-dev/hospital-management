@@ -23,6 +23,7 @@ class UserDao : IGestionUser {
     private val userRef = FirebaseDatabase.getInstance().getReference("users")
     private val medicamentRef = FirebaseDatabase.getInstance().getReference("Medicament")
     private val reclamationRef = database.getReference(BaseConstant.instance().reclamation)
+
 //  private val rapportRef = database.getReference(BaseConstant.instance().rapport).child(uid).child("rapports")
 
     ////////////////////////////////////////////////Insert user/////////////////////////////////////////
@@ -212,12 +213,59 @@ class UserDao : IGestionUser {
         })
     }
 
+
     //////////////////////////////////////////insertReclamation/////////////////////////////////////////
     override fun insertReclamation(reclamation: Reclamation) {
         reclamation.id = reclamationRef.push().key.toString()
         reclamationRef.child(reclamation.id!!).setValue(reclamation)
     }
+    ////////////////////////////////////////////////Insert photo/////////////////////////////////////////
+    // override fun insertPhoto(
+    //profilPhotos: ProfilPhoto,
+    //userItem: UserItem,
+    // responseCallback: ResponseCallback
+    // ) {
+    //userRef.addListenerForSingleValueEvent(object : ValueEventListener {
+    //   override fun onDataChange(snapshot: DataSnapshot) {
 
+    //    var profilPhoto = HashMap<String, ProfilPhoto>()
+    //  profilPhoto[profilPhotos.id.toString()] = profilPhotos
+    // userItem.profilPhotos = profilPhoto
+
+    //  profilPhotos.id = userRef.push().key
+    // userRef.child("ProfilPhoto").child(profilPhotos.id!!)
+    //     .setValue(profilPhotos)
+    //  responseCallback.success()
+    //  }
+    //  override fun onCancelled(error: DatabaseError) {
+    // }
+    //  })
+    //}
+    ////////////////////////////////////////////get profilPhoto ////////////////////////////////////////////
+    // fun getProfilPhoto(responseCallback: ProfilPhotoCallback ) {
+    //  userRef.addListenerForSingleValueEvent(object : ValueEventListener {
+    //      override fun onDataChange(snapshot: DataSnapshot) {
+    //          if (snapshot.exists()) {
+    //              for (ds in snapshot.children) {
+
+    //                  var userItem = ds.getValue(UserItem::class.java)
+    //                  if (userItem!!.role!!.size == 2) {
+    //                      if (userItem.profilPhotos != null) {
+    //                          var profilPhoto = userItem.profilPhotos
+    //                          for (entry in profilPhoto!!.values) {
+    //                              responseCallback.success(entry)
+    //                          }
+    //                      }
+    //                  }
+    //              }
+    //          }
+    //      }
+
+//            override fun onCancelled(error: DatabaseError) {
+    //              responseCallback.failure()
+    //      }
+    //  })
+//}
     //////////////////////////////////////////insertRapport/////////////////////////////////////////
     override fun insertRapport(
         rapports: Rapports,
@@ -240,7 +288,6 @@ class UserDao : IGestionUser {
                 userRef.child(idPatientRapport).child("rapports").child(rapports.id!!)
                     .setValue(rapports)
                 responseCallback.success()
-
 
             }
 
