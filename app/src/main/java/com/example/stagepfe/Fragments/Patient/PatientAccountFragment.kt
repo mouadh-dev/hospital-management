@@ -1,6 +1,7 @@
 package com.example.stagepfe.Fragments.Patient
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,9 +17,9 @@ import com.example.stagepfe.Activity.Patients.ProfilePatientActivity
 import com.example.stagepfe.R
 import com.sothree.slidinguppanel.ScrollableViewHelper
 
-
 class PatientAccountFragment : Fragment() {
 private var rdvImage: ImageView?=null
+private var ambulanceImage: ImageView?=null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -31,6 +32,7 @@ private var rdvImage: ImageView?=null
 
     private fun initView(view: View) {
         rdvImage=view.findViewById(R.id.RDVImg)
+        ambulanceImage=view.findViewById(R.id.ambulance)
 //        var slidingUpPanelLayout = view.findViewById(R.id.sliding_layout)
 //        slidingUpPanelLayout.setScrollableViewHelper NestedScrollableViewHelper()
         rdvImage!!.setOnClickListener {
@@ -40,7 +42,11 @@ private var rdvImage: ImageView?=null
                 startActivity(intent)
                 finish()
             }
-
+        }
+        ambulanceImage!!.setOnClickListener {
+            val dialIntent = Intent(Intent.ACTION_DIAL)
+            dialIntent.data = Uri.parse("tel:" + 198)
+            startActivity(dialIntent)
         }
 
     }

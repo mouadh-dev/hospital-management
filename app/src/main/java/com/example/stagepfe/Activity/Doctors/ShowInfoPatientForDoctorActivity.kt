@@ -65,9 +65,7 @@ class ShowInfoPatientForDoctorActivity : AppCompatActivity() {
                             datNaiss!!.text = userItem.datenaiss
 
                         }
-
                         override fun failure() {
-
                         }
                     })
                 }
