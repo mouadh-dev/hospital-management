@@ -87,7 +87,6 @@ class ProfilDoctorMyPatientFragment : Fragment() {
 
 //                requireActivity().run {
                     var intent = Intent(activity, ShowInfoPatientForDoctorActivity::class.java)
-
                     var patientNameInList = view.findViewById<TextView>(R.id.TVnamePatientListForProfilDoctor)
                     intent.putExtra("nomPatient", patientNameInList!!.text.toString())
                     startActivity(intent)

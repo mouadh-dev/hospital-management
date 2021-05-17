@@ -7,11 +7,11 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
-import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.stagepfe.Activity.Authentication.AuthenticationFragmentContainerActivity
+import com.example.stagepfe.Activity.Patients.ShowProfilDoctorToPatientActivity
 import com.example.stagepfe.Adapters.Doctor.MyAdapterListPatientForDoctors
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
@@ -77,6 +77,7 @@ class AccountDoctorActivity : AppCompatActivity() {
         notificationDoctor = findViewById(R.id.NotificationLayoutDoctor)
         txtSearch= findViewById(R.id.TxtSearch)
         imageProfilDoctor = findViewById(R.id.IVimageProfilDoctor)
+        listviewPatientForDoctor = findViewById<ListView>(R.id.listPatientForDocteur)
 
 //        reglage = findViewById(R.id.reglage_ic)
 //        reglage!!.setOnClickListener {
@@ -85,23 +86,29 @@ class AccountDoctorActivity : AppCompatActivity() {
 //            appointment.date = "test"
 //            userDao.insertappointment(appointment)
 //        }
-    listviewPatientForDoctor = findViewById<ListView>(R.id.listPatientForDocteur)
-    //listPatientForDoctor.add(ModelPatientList("Mohamed Rouahi",R.drawable.logopatient))
-    //listPatientForDoctor.add(ModelPatientList("Mohamed Rouahi",R.drawable.logopatient))
-    //listPatientForDoctor.add(ModelPatientList("Mohamed Rouahi",R.drawable.logopatient))
-    //listPatientForDoctor.add(ModelPatientList("Mohamed Rouahi",R.drawable.logopatient))
-    //listPatientForDoctor.add(ModelPatientList("Mohamed Rouahi",R.drawable.logopatient))
-    //listPatientForDoctor.add(ModelPatientList("Mohamed Rouahi",R.drawable.logopatient))
-    listviewPatientForDoctor!!.adapter = MyAdapterListPatientForDoctors(
-        this,
-        R.layout.list_patient_for_doctor,
-        listPatientForDoctor
-    )
+        var userdao = UserDao()
+        var userItem=UserItem()
+        userdao.populateSearch(object : UserCallback {
+            override fun onSuccess(userItem: UserItem) {
+                var fullNamePatient = userItem.nom + " " + userItem.prenom
+                if (userItem.role!!.contains("Patient")){
+                    listPatientForDoctor.add(ModelPatientList(fullNamePatient, R.drawable.logopatient))
+                    listviewPatientForDoctor!!.adapter = MyAdapterListPatientForDoctors(
+                        this@AccountDoctorActivity, R.layout.list_patient_for_doctor, listPatientForDoctor)}
+            }
+            override fun failure() {
+            }
+        })
+         listviewPatientForDoctor!!.setOnItemClickListener { parent, view, position, id ->
+         var intent = Intent(this, ShowInfoPatientForDoctorActivity::class.java)
+          var patintNameInList = view.findViewById<TextView>(R.id.TVnamePatientList)
+          intent.putExtra("nomPatient", patintNameInList.text.toString())
+          startActivity(intent)
+          finish() // If activity no more needed in back stack
 
+         }
 
-
-
-
+//////////////////////////////////////////////////////////////////////////////////////////////////
         imageProfilDoctor!!.setOnClickListener {
             val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
             startActivityForResult(gallery, pickImage)

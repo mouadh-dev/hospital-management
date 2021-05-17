@@ -1,6 +1,7 @@
 package com.example.stagepfe.Activity.Patients
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
@@ -24,6 +25,7 @@ class ShowProfilDoctorToPatientActivity : AppCompatActivity() {
     private var id:String? = null
     var userDao = UserDao()
     private var nameDoctorFromIntent:String? = null
+    var doctorNumber: Int?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,22 +41,49 @@ class ShowProfilDoctorToPatientActivity : AppCompatActivity() {
         contacterDoctor=findViewById(R.id.ContacterDoctor)
         timeLine = findViewById(R.id.time_lineDoctorProfil)
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-        var userDao = UserDao()
-        userDao.retrieveCurrentDataUser(
-            object : UserCallback {
-                override fun onSuccess(userItem: UserItem) {
-                    nameDoctor!!.text = userItem.nom + " " + userItem.prenom
-                    specialiteDoctor!!.text = userItem.speciality
-                    bioDoctor!!.text = userItem.bio
-                }
+
+
+
+        nameDoctorFromIntent = intent.getStringExtra("nameDoctor")
+        println("hama : " + nameDoctorFromIntent)
+        userDao.populateSearch(object : UserCallback {
+            override fun onSuccess(userItem: UserItem) {
+                var nameToCompare = userItem.prenom + " " + userItem.nom
+
+                if (nameToCompare.equals(nameDoctorFromIntent)) {
+                    id = userItem.id
+                    userDao.getUserByUid(id!!, object : UserCallback {
+                        override fun onSuccess(userItem: UserItem) {
+                            nameDoctor!!.text = userItem.nom + " " + userItem.prenom
+                            println("hama" + userItem.nom + " " + userItem.prenom + nameDoctorFromIntent)
+                            intent.putExtra("test", userItem.nom + " " + userItem.prenom)
+                            specialiteDoctor!!.text = userItem.speciality
+                            bioDoctor!!.text = userItem.bio
+                            doctorNumber = userItem.phonenumber!!.toInt()
+
+                        }
 
                         override fun failure() {
 
                         }
                     })
+                }
 
-        nameDoctor!!.setText(intent.getStringExtra("nom"))
+            }
+
+            override fun failure() {
+
+            }
+        })
+
+       // nameDoctor!!.setText(intent.getStringExtra("nom"))
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        appelerDoctor!!.setOnClickListener {
+            val dialIntent = Intent(Intent.ACTION_DIAL)
+            dialIntent.data = Uri.parse("tel:" + doctorNumber)
+            startActivity(dialIntent)
+        }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         timeLine!!.setDateLabelAdapter(DateLabelAdapter { calendar, index ->
