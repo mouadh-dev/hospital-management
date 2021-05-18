@@ -1,11 +1,13 @@
 package com.example.stagepfe.Activity.AgentLabo
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -22,16 +24,23 @@ import com.example.stagepfe.Fragments.Pharmacien.AccueilPharmacienFragment
 import com.example.stagepfe.R
 import com.example.stagepfe.entite.UserItem
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
+import java.util.*
 
 class AccueilAgentLaboActivity : AppCompatActivity() {
-
+    companion object {
+        val TAG = "AccueilAgentLaboActivity"
+    }
     var navigationAgent: BottomNavigationView? = null
-    private val pickImage = 100
-    private var imageUri: Uri? = null
+    // private val pickImage = 100
+    // private var imageUri: Uri? = null
     var imageProfilAgent: ImageView? = null
     var reclamationAgent: LinearLayout? = null
     var homeAgent: LinearLayout? = null
     var changeUser:ImageView? = null
+    var selectedPhotoUri: Uri? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,12 +58,15 @@ class AccueilAgentLaboActivity : AppCompatActivity() {
         homeAgent = findViewById(R.id.profilInformationAgent)
         changeUser = findViewById(R.id.change_user_labo)
 
-        imageProfilAgent!!.setOnClickListener {
-            val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
-            startActivityForResult(gallery, pickImage)
+          imageProfilAgent!!.setOnClickListener {
 
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        startActivityForResult(intent, 0)
+        // val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+        // startActivityForResult(gallery, pickImage)
         }
-//////////////////////////////////////////////////////////////////////////////////////////////////
+
         changeUser!!.setOnClickListener {
             dialog()
         }
@@ -127,14 +139,65 @@ class AccueilAgentLaboActivity : AppCompatActivity() {
             }
         })
     }
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == RESULT_OK && requestCode == pickImage) {
-            imageUri = data?.data
-            imageProfilAgent!!.setImageURI(imageUri)
+
+        if (requestCode == 0 && resultCode == Activity.RESULT_OK && data != null) {
+            // proceed and check what the selected image was....
+
+            selectedPhotoUri = data.data
+
+            val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, selectedPhotoUri)
+
+            //selectphoto_imageview_register.setImageBitmap(bitmap)
+
+            imageProfilAgent!!.alpha = 0f
+            uploadImageToFirebaseStorage()
+//      val bitmapDrawable = BitmapDrawable(bitmap)
+//      selectphoto_button_register.setBackgroundDrawable(bitmapDrawable)
         }
     }
+
+    private fun uploadImageToFirebaseStorage() {
+        if (selectedPhotoUri == null) return
+
+        val filename = UUID.randomUUID().toString()
+        val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
+
+        ref.putFile(selectedPhotoUri!!)
+            .addOnSuccessListener {
+                //Log.d(TAG, "Successfully uploaded image: ${it.metadata?.path}")
+
+                ref.downloadUrl.addOnSuccessListener {
+                    //Log.d(TAG, "File Location: $it")
+
+                    saveUserToFirebaseDatabase(it.toString())
+                }
+            }
+            .addOnFailureListener {
+                //Log.d(TAG, "Failed to upload image to storage: ${it.message}")
+            }
+    }
+
+    private fun saveUserToFirebaseDatabase(toString: String) {
+        val uid = FirebaseAuth.getInstance().uid ?: ""
+        val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
+        ref.setValue(uid,ref)
+            .addOnSuccessListener {
+               // Log.d(TAG, "Finally we saved the user to Firebase Database")
+            }
+            .addOnFailureListener {
+                //Log.d(TAG, "Failed to set value to database: ${it.message}")
+            }
+    }
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+    // override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    //   super.onActivityResult(requestCode, resultCode, data)
+    //  if (resultCode == RESULT_OK && requestCode == pickImage) {
+    //    imageUri = data?.data
+    //   imageProfilAgent!!.setImageURI(imageUri)
+    //}
+    // }
 }

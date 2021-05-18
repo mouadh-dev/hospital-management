@@ -58,7 +58,7 @@ class ChangeInformationAgentActivity : AppCompatActivity() {
         telephoneProfilAgentET = findViewById(R.id.TelephoneProfilAgent)
 
 
-        returnProfilAgentButton = findViewById<Button>(R.id.ReturnbuttonProfilDoctor)
+        returnProfilAgentButton = findViewById<Button>(R.id.ReturnbuttonProfilAgent)
 
 
         adresseProfilAgentET!!.isFocusable = false
@@ -141,9 +141,7 @@ class ChangeInformationAgentActivity : AppCompatActivity() {
             finish()
         }
         returnProfilAgentButton!!.setOnClickListener {
-
             finish()
-
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -59,7 +59,7 @@ class ChangeInformationPatientActivity : AppCompatActivity() {
         telephoneProfilPatientET = findViewById(R.id.TelephoneProfilPatient)
 
 
-        returnProfilButton = findViewById<Button>(R.id.ReturnbuttonProfilDoctor)
+        returnProfilButton = findViewById<Button>(R.id.ReturnbuttonProfilPatient)
 
 
         adresseProfilPatientET!!.isFocusable = false

@@ -175,12 +175,13 @@ class AccueilPharmacienActivity : AppCompatActivity() {
 
          refStorage.putFile(imageUri)
          .addOnSuccessListener(
-          OnSuccessListener<UploadTask.TaskSnapshot> { taskSnapshot ->
-          taskSnapshot.storage.downloadUrl.addOnSuccessListener {
-              val imageUrl = it.toString()
-              //saveToFirebaseDataBase(it.toString())
-           }
-          })
+             OnSuccessListener<UploadTask.TaskSnapshot> { taskSnapshot ->
+                 taskSnapshot.storage.downloadUrl.addOnSuccessListener {
+                     val imageUrl = it.toString()
+                     saveToFirebaseDataBase(fileName)
+
+                 }
+             })
 
           ?.addOnFailureListener(OnFailureListener { e ->
                print(e.message)
@@ -190,7 +191,7 @@ class AccueilPharmacienActivity : AppCompatActivity() {
 
          }
 
-    //private fun saveToFirebaseDataBase(imageUri:String) {
+   private fun saveToFirebaseDataBase(fileName:String) {
       //  val mAuth = FirebaseAuth.getInstance()
         //val userRef = FirebaseDatabase.getInstance().getReference("users")
         //userRef.setValue(mAuth, imageUri)
@@ -200,7 +201,46 @@ class AccueilPharmacienActivity : AppCompatActivity() {
             //.addOnFailureListener {
 
             //}
-    //}
+       userDao.retrieveCurrentDataUser(object : UserCallback {
+           override fun onSuccess(userItem: UserItem) {
+               var user= UserItem()
+               user.profilPhotos = userItem.profilPhotos.toString()
+               user.nom =userItem.nom.toString()
+               user.prenom=userItem.prenom.toString()
+               user.adresse=userItem.adresse.toString()
+               user.phonenumber=userItem.phonenumber.toString()
+               user.groupesanguin = userItem.groupesanguin.toString()
+               user.id = userItem.id.toString()
+               user.mail = userItem.mail.toString()
+               user.matricule = userItem.matricule.toString()
+               user.numCIN = userItem.numCIN.toString()
+               user.rendezVous = userItem.rendezVous
+               user.role = userItem.role
+               user.sexe = userItem.sexe.toString()
+               user.speciality = userItem.speciality
+               user.password = userItem.password
+               user.confirmpassword = userItem.confirmpassword
+               user.maladi = userItem.maladi.toString()
+               user.medicament = userItem.medicament
+               user.ordonance = userItem.ordonance
+               user.rapports = userItem.rapports
+               user.profilPhotos = fileName
+               userDao.updateUser(userItem.id.toString(), user,
+                   object : UserCallback {
+                       override fun onSuccess(userItem: UserItem) {
+
+                       }
+
+                       override fun failure() {
+                       }
+                   })
+           }
+
+           override fun failure() {
+           }
+       })
+
+    }
 
 
 }
