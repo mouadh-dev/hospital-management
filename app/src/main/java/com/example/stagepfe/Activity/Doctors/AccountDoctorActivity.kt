@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.stagepfe.Activity.Authentication.AuthenticationFragmentContainerActivity
 import com.example.stagepfe.Activity.Patients.ShowProfilDoctorToPatientActivity
 import com.example.stagepfe.Adapters.Doctor.MyAdapterListPatientForDoctors
+import com.example.stagepfe.Adapters.Doctor.MyAdapterPatientListForDoctorProfil
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.Fragments.Doctor.AccueilDoctorFragment
@@ -47,6 +48,7 @@ class AccountDoctorActivity : AppCompatActivity() {
     private var imageUri: Uri? = null
     var imageProfilDoctor: ImageView? = null
     var changeUser:ImageView? = null
+    var adapterListPatientforDoctorAccueil: MyAdapterListPatientForDoctors? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -85,6 +87,7 @@ class AccountDoctorActivity : AppCompatActivity() {
 //            appointment.date = "test"
 //            userDao.insertappointment(appointment)
 //        }
+        initAdapter()
         var userdao = UserDao()
         var userItem=UserItem()
         userdao.populateSearch(object : UserCallback {
@@ -217,6 +220,12 @@ class AccountDoctorActivity : AppCompatActivity() {
             search!!.visibility = View.VISIBLE
         }
         populateSearch()
+    }
+
+    private fun initAdapter() {
+        adapterListPatientforDoctorAccueil=MyAdapterListPatientForDoctors(
+            this@AccountDoctorActivity, R.layout.list_patient_for_doctor, listPatientForDoctor)
+        listviewPatientForDoctor!!.adapter =adapterListPatientforDoctorAccueil
     }
 
     private fun dialog() {

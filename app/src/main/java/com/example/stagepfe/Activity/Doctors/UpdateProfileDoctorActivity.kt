@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.stagepfe.Adapters.Doctor.MyAdapterPatientListForDoctorProfil
 import com.example.stagepfe.Adapters.Doctor.MyAdapterUpdateDoctor
 import com.example.stagepfe.Models.Doctors.ModelUpdateDoctor
 import com.example.stagepfe.R
@@ -11,6 +12,7 @@ import com.example.stagepfe.R
 class UpdateProfileDoctorActivity : AppCompatActivity() {
     var listUpdate = mutableListOf<ModelUpdateDoctor>()
     var listViewUpdate: ListView? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_update_profile_doctor)

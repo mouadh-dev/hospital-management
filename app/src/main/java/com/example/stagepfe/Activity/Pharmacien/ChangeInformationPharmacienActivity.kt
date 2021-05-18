@@ -121,7 +121,6 @@ class ChangeInformationPharmacienActivity : AppCompatActivity() {
                         override fun onSuccess(user: UserItem) {
 
                         }
-
                         override fun failure() {
 
                         }

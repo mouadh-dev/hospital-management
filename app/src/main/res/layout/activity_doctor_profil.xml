@@ -24,12 +24,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-
-
-
-
-
     <LinearLayout
         android:id="@+id/profilDoctorLayoutContainer"
             android:layout_width="match_parent"
@@ -38,27 +32,32 @@
             android:orientation="vertical"
             android:visibility="visible">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
 
                 <TextView
                     android:id="@+id/name_Doctor"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=" Dr Foulen Fouleni"
+                    android:text=" DR Foulen Fouleni"
                     android:textColor="@color/black"
-                    android:textSize="35dp" />
+                    android:textSize="25dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="40dp"/>
 
                 <ImageView
                     android:id="@+id/IVprofilDoctorUpdate"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
-                    android:layout_marginLeft="40dp"
-                    android:src="@drawable/edit" />
-            </LinearLayout>
+                    android:src="@drawable/edit"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dp" />
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/PhoneNumber_Doctor"
@@ -67,7 +66,7 @@
                 android:layout_marginTop="10dp"
                 android:text="** *** ***"
                 android:textColor="@color/gray_specific"
-                android:textSize="25dp" />
+                android:textSize="20dp" />
 
             <TextView
                 android:id="@+id/BirthDate_Doctor"
@@ -76,13 +75,13 @@
                 android:layout_marginTop="10dp"
                 android:text="21/05/1997 24ans"
                 android:textColor="@color/gray_specific"
-                android:textSize="25dp" />
+                android:textSize="20dp" />
         <TextView
             android:id="@+id/BioDoctorProfil"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="BIO"
-            android:textSize="15dp"
+            android:textSize="20dp"
             android:layout_marginTop="10dp"
             android:textColor="@color/black"
             />
