@@ -13,6 +13,7 @@ import android.view.View.VISIBLE
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.stagepfe.Activity.Authentication.AuthenticationFragmentContainerActivity
+import com.example.stagepfe.Adapters.Doctor.MyAdapterPatientListForDoctorProfil
 import com.example.stagepfe.Models.Patient.Model
 import com.example.stagepfe.Adapters.Patients.MyAdapter
 import com.example.stagepfe.Dao.AppointmentCallback
@@ -37,6 +38,7 @@ import kotlin.collections.ArrayList
 class BottomBarPatientActivity : AppCompatActivity() {
     var listview: ListView? = null
     var list = mutableListOf<Model>()
+    var adapterListMedecin: MyAdapter? = null
     var showMore: TextView? = null
     var search: ImageView? = null
     var slidPanel: SlidingUpPanelLayout? = null
@@ -78,6 +80,7 @@ class BottomBarPatientActivity : AppCompatActivity() {
         showMore = findViewById<TextView>(R.id.VoirPlus)
         changeUser = findViewById(R.id.change_user_patient)
 
+        initAdapter()
 //////////////////////////////////////////////////////////////////////////////////////////////////
         var home = PatientAccountFragment()
         supportFragmentManager.beginTransaction().replace(R.id.ContainerFragmentPatient, home)
@@ -214,6 +217,11 @@ class BottomBarPatientActivity : AppCompatActivity() {
             search!!.visibility = View.VISIBLE
         }
         populateSearch()
+    }
+
+    private fun initAdapter() {
+        adapterListMedecin= MyAdapter(this@BottomBarPatientActivity, R.layout.doctors_list, list)
+           listview !!.adapter =adapterListMedecin
     }
 
     private fun dialog() {

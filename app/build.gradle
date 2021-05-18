@@ -86,7 +86,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics-ktx'
 
     implementation 'com.google.firebase:firebase-storage:19.1.0'
-
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
     // material dialogs
     def matieral_dialogs_version = "3.1.0"
     implementation "com.afollestad.material-dialogs:core:$matieral_dialogs_version"
@@ -113,5 +113,6 @@ dependencies {
     implementation 'com.airbnb.android:lottie:3.3.6'
     //menu item
     compile 'com.nightonke:boommenu:2.1.1'
+    implementation 'com.squareup.picasso:picasso:2.71828'
 
 }

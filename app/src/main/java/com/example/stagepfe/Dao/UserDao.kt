@@ -68,14 +68,9 @@ class UserDao : IGestionUser {
                 userRef.child(id).removeValue()
                 userRef.child(id).setValue(userItem)
                 userCallback.onSuccess(userItem)
-
             }
-
             override fun onCancelled(error: DatabaseError) {
-
             }
-
-
         })
     }
 

@@ -33,7 +33,8 @@
             android:orientation="vertical"
             android:visibility="visible">
 
-            <LinearLayout
+
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -43,17 +44,21 @@
                     android:id="@+id/Full_Name_Patient"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Foulen Fouleni"
+                    android:text=" Foulen Fouleni"
                     android:textColor="@color/black"
-                    android:textSize="35dp" />
+                    android:textSize="25dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="40dp" />
 
                 <ImageView
                     android:id="@+id/update_Profile_Patient"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
-                    android:layout_marginLeft="40dp"
-                    android:src="@drawable/edit" />
-            </LinearLayout>
+                    android:src="@drawable/edit"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dp" />
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/Number_Patient"
@@ -62,7 +67,7 @@
                 android:layout_marginTop="20dp"
                 android:text="** *** ***"
                 android:textColor="@color/gray_specific"
-                android:textSize="25dp" />
+                android:textSize="20dp" />
 
             <TextView
                 android:id="@+id/Birth_Patient"
@@ -71,7 +76,7 @@
                 android:layout_marginTop="20dp"
                 android:text="21/05/1997 24ans"
                 android:textColor="@color/gray_specific"
-                android:textSize="25dp" />
+                android:textSize="20dp" />
 
 
 

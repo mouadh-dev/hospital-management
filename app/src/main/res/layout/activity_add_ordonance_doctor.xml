@@ -41,7 +41,7 @@
             android:layout_marginLeft="50dp"
             android:text="Ordonance"
             android:textColor="@color/white"
-            android:textSize="30dp"
+            android:textSize="25dp"
             android:textStyle="bold" />
 
     </LinearLayout>
