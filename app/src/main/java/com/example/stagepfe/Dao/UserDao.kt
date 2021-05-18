@@ -124,18 +124,19 @@ class UserDao : IGestionUser {
 
     //////////////////////////////////////////////////retrieve data user////////////////////////////////
     fun retrieveCurrentDataUser(userCallback: UserCallback) {
+        getUserByUid(mAuth.currentUser.uid, userCallback)
 
-        myRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-
-                getUserByUid(mAuth.currentUser.uid, userCallback)
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.w(TAG, "signInWithEmail:failure", error.toException())
-                userCallback.failure()
-            }
-        })
+//        myRef.child().addValueEventListener(object : ValueEventListener {
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//
+//
+//            }
+//
+//            override fun onCancelled(error: DatabaseError) {
+//                Log.w(TAG, "signInWithEmail:failure", error.toException())
+//                userCallback.failure()
+//            }
+//        })
     }
 
     //////////////////////////////////////////sign out methode////////////////////////////////////////
@@ -376,28 +377,19 @@ class UserDao : IGestionUser {
         userItem: UserItem,
         ordonanceCallback: OrdonanceCallback
     ) {
-        userRef.addListenerForSingleValueEvent(object : ValueEventListener {
-
-            override fun onDataChange(snapshot: DataSnapshot) {
-                ordonanceCallback.successOrdonance(ordonance)
-                ordonance.id = userRef.push().key
-                var ordonances = HashMap<String, Ordonance>()
-                ordonances[ordonance.id.toString()] = ordonance
+        ordonance.id = userRef.push().key
+        var ordonances = HashMap<String, Ordonance>()
+        ordonances[ordonance.id.toString()] = ordonance
 
 
-                userItem.ordonance = ordonances
-                userRef.child(idDoctor)
-                    .child("ordonance").child(ordonance.id.toString())
-                    .setValue(ordonance)
-                userRef.child(idPatient)
-                    .child("ordonance").child(ordonance.id.toString())
-                    .setValue(ordonance)
-
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-            }
-        })
+        userItem.ordonance = ordonances
+        userRef.child(idDoctor)
+            .child("ordonance").child(ordonance.id.toString())
+            .setValue(ordonance)
+        userRef.child(idPatient)
+            .child("ordonance").child(ordonance.id.toString())
+            .setValue(ordonance)
+        ordonanceCallback.successOrdonance(ordonance)
 
     }
 
@@ -414,11 +406,12 @@ class UserDao : IGestionUser {
                                 var ordonance = userItem.ordonance
                                 for (entry in ordonance!!.entries) {
                                     var ord = entry.value
-                                    var medicament = entry.value
-                                    var test = medicament.medicament
-                                    for (med in test) {
-                                        responseCallback.successOrdonance(ord, med)
+                                    var medicament = ord.medicament
+                                    for (med in medicament) {
+
+                                        responseCallback.successOrdonance(ord,med)
                                     }
+
                                 }
                             }
 

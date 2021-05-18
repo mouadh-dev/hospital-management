@@ -151,10 +151,9 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
                     object : OrdonanceCallback {
                         override fun successOrdonance(ordonance: Ordonance) {
 //                               startActivity(Intent(this@AddOrdonanceDoctorActivity,ShowInfoPatientForDoctorActivity::class.java))
-                            finish()
                             Toast.makeText(
                                 applicationContext,
-                                "add ordo avec succe",
+                                "add ordo avec success",
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
