@@ -60,7 +60,7 @@ class ChangeInformationPharmacienActivity : AppCompatActivity() {
         dateNaissProfilPharmacienET = findViewById(R.id.DateNaissProfilPharmacien)
         telephoneProfilPharmacienET = findViewById(R.id.TelephoneProfilPharmacien)
 
-        returnProfilButton = findViewById<Button>(R.id.ReturnbuttonProfilDoctor)
+        returnProfilButton = findViewById<Button>(R.id.ReturnbuttonProfilPharmacien)
 
 
         adresseProfilPharmacienET!!.isFocusable = false
@@ -143,9 +143,7 @@ class ChangeInformationPharmacienActivity : AppCompatActivity() {
             finish()
         }
         returnProfilButton!!.setOnClickListener {
-
             finish()
-
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////

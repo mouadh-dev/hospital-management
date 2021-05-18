@@ -8,7 +8,7 @@
     <LinearLayout
         android:id="@+id/ll"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="400dp"
         android:layout_marginTop="50dp"
         android:layout_marginBottom="50dp"
         android:orientation="vertical"
@@ -19,10 +19,22 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/descriptionOrdonance"
+            android:id="@+id/nameDoctor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="35dp"
+            android:gravity="center_horizontal"
+            android:text=""
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:visibility="visible"/>
+        <TextView
+            android:id="@+id/namePatient"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:gravity="center_horizontal"
             android:text=""
             android:textAlignment="center"
@@ -49,7 +61,7 @@
         <ListView
             android:id="@+id/List_Medicament_to_show"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="40dp"
             />
 

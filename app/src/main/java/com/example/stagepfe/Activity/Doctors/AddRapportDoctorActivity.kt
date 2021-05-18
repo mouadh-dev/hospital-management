@@ -61,6 +61,7 @@ class AddRapportDoctorActivity : AppCompatActivity() {
             override fun failure() {
             }
         })
+
         userDao.populateSearch(object : UserCallback {
             override fun onSuccess(userItem: UserItem) {
                 var fullName = userItem.nom + " " + userItem.prenom
@@ -89,24 +90,16 @@ class AddRapportDoctorActivity : AppCompatActivity() {
                 dialog.findViewById<Button>(R.id.btn_confirm).setOnClickListener {
                     dialog.dismiss()
                 }
-            } else {
-                        rapports.namPatientRapport = nameDoctorRapportET!!.text.toString()
+            }
+            else {
+                rapports.namPatientRapport = nameDoctorRapportET!!.text.toString()
                 rapports.idPatientRapport = idPatient
-                        rapports.textRapport = TextRapport!!.text.toString()
+                rapports.textRapport = TextRapport!!.text.toString()
                 rapports.nameDoctorRapport = nameDoctorRapport
                 rapports.idDoctorRapport = idDoctor
                 rapports.specialityDoctor = speciality
                 rapports.dateRapport = currentDateTime.format(DateTimeFormatter.ISO_DATE)
                 rapports.hourRapport = currentDateTime.format(DateTimeFormatter.ISO_TIME)
-                userDao.populateSearch(object : UserCallback {
-                    override fun onSuccess(userItem: UserItem) {
-
-                    }
-
-                    override fun failure() {
-
-                    }
-                })
 
                         userDao.insertRapport(rapports, userItem, idPatient!!,idDoctor!!, object : ResponseCallback {
 

@@ -10,8 +10,10 @@ import android.widget.TextView
 import com.example.stagepfe.Models.Doctors.ModelShowOrdonnancePatForDoctor
 import com.example.stagepfe.Models.Patient.ModelRDVPatient
 import com.example.stagepfe.R
+import com.example.stagepfe.entite.Ordonance
+import com.example.stagepfe.entite.Rapports
 
-class MyAdapterShowOrdonnancePatForDoc (var mCtx: Context, var resources:Int, var items:List<ModelShowOrdonnancePatForDoctor>): ArrayAdapter<ModelShowOrdonnancePatForDoctor>(mCtx,resources,items){
+class MyAdapterShowOrdonnancePatForDoc (var mCtx: Context, var resources:Int, var items:List<Ordonance>): ArrayAdapter<Ordonance>(mCtx,resources,items){
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var layoutInflater: LayoutInflater = LayoutInflater.from(mCtx)
         var view: View = layoutInflater.inflate(resources, null)
@@ -21,14 +23,18 @@ class MyAdapterShowOrdonnancePatForDoc (var mCtx: Context, var resources:Int, va
         var textHourRDV: TextView = view.findViewById(R.id.Hour_Ord_pat_doc)
 
 
-        var items: ModelShowOrdonnancePatForDoctor = items[position]
-        textDateRDV.text = items.date_Ord_pat_for_doc
-        textHourRDV.text = items.heure_Ord_pat_for_doc
+        var items: Ordonance = items[position]
+        textDateRDV.text = items.dateOrdonanceSend
+        textHourRDV.text = items.hourOrdonanceSend
 
 
 
 
         return view
 
+    }
+
+    override fun getItem(position: Int): Ordonance? {
+            return items[position]
     }
 }
