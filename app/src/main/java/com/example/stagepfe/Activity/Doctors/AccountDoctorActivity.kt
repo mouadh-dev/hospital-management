@@ -78,7 +78,6 @@ class AccountDoctorActivity : AppCompatActivity() {
         txtSearch= findViewById(R.id.TxtSearch)
         imageProfilDoctor = findViewById(R.id.IVimageProfilDoctor)
         listviewPatientForDoctor = findViewById<ListView>(R.id.listPatientForDocteur)
-
 //        reglage = findViewById(R.id.reglage_ic)
 //        reglage!!.setOnClickListener {
 //           var userDao = UserDao()
