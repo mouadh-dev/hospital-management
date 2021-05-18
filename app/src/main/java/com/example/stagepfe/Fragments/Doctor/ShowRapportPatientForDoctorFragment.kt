@@ -10,14 +10,11 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import com.example.stagepfe.Activity.Doctors.AddRapportDoctorActivity
 import com.example.stagepfe.Activity.Doctors.ShowInfoPatientForDoctorActivity
-import com.example.stagepfe.Adapters.Doctor.MyAdapterOrdonanceReading
 import com.example.stagepfe.Adapters.Doctor.MyAdapterRapport
 import com.example.stagepfe.Dao.RapportCallback
 import com.example.stagepfe.Dao.ResponseCallback
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
-import com.example.stagepfe.Models.Doctors.ModelRapport
-import com.example.stagepfe.Models.Doctors.ModelordonanceReading
 import com.example.stagepfe.R
 import com.example.stagepfe.entite.Rapports
 import com.example.stagepfe.entite.UserItem
@@ -26,14 +23,15 @@ import com.example.stagepfe.entite.UserItem
 class ShowRapportPatientForDoctorFragment : Fragment() {
 
     var listviewRapport: ListView? = null
-    var listRapport = mutableListOf<ModelRapport>()
+    var listRapport = mutableListOf<Rapports>()
     var addRapport: ImageView? = null
     var nameDoctorRapport: String? = null
     var spcialityDoctorRapport: String? = null
     private var adapterRapport: MyAdapterRapport? = null
     var userDao = UserDao()
-var fullDate:String? = null
-    var fullNameDoctor:String? = null
+    var fullDate: String? = null
+    var fullNameDoctor: String? = null
+    var fullNamePatient:String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,7 +48,6 @@ var fullDate:String? = null
         addRapport = view.findViewById(R.id.Add_Rapport)
         listviewRapport = view.findViewById<ListView>(R.id.showRapportPatForDoctorr)
 
-        listRapport = arrayListOf<ModelRapport>()
         initAdapter()
 
 
@@ -58,102 +55,104 @@ var fullDate:String? = null
             activity as ShowInfoPatientForDoctorActivity?
         val myDataFromActivity: String = activity!!.getMyData().toString()
 
+
+
+        userDao.retrieveCurrentDataUser(object : UserCallback {
+            override fun onSuccess(userItem: UserItem) {
+                fullNameDoctor = userItem.prenom + " " + userItem.nom
+
+                userDao.getRapport(object : RapportCallback {
+                    override fun success(rapport: Rapports) {
+
+                        nameDoctorRapport = rapport.nameDoctorRapport
+                        spcialityDoctorRapport = rapport.specialityDoctor
+                        if (nameDoctorRapport!!.equals(fullNameDoctor) &&
+                            myDataFromActivity.equals(rapport.namPatientRapport) &&
+                            (rapport.hourRapport + " " + rapport.hourRapport) != fullDate) {
+
+                            fullDate = rapport.hourRapport + " " + rapport.hourRapport
+                            var rapportList = Rapports()
+                            rapportList.hourRapport = rapport.hourRapport!!.substring(0,5)
+                            rapportList.dateRapport = rapport.dateRapport
+                            rapportList.textRapport = rapport.textRapport
+                            rapportList.id = rapport.id
+                            rapportList.idPatientRapport = rapport.idPatientRapport
+                            rapportList.idDoctorRapport = rapport.idDoctorRapport
+                            rapportList.nameDoctorRapport = rapport.nameDoctorRapport
+                            rapportList.namPatientRapport = rapport.namPatientRapport
+                            rapportList.specialityDoctor = rapport.specialityDoctor
+                            listRapport.add(rapportList)
+
+                            adapterRapport!!.notifyDataSetChanged()
+
+
+                        }
+
+                    }
+
+                    override fun failure() {
+                    }
+                })
+
+            }
+
+            override fun failure() {
+            }
+        })
+
+        listviewRapport!!.setOnItemClickListener { parent, view, position, id ->
+            var v = View.inflate(requireContext(), R.layout.fragment_dialog, null)
+            var builder = AlertDialog.Builder(requireContext())
+            builder.setView(v)
+
+            var dialog = builder.create()
+            dialog.show()
+            dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+            dialog.findViewById<TextView>(R.id.TitleDialog).visibility = View.GONE
+            dialog.findViewById<TextView>(R.id.msgdialog).visibility = View.GONE
+            dialog.findViewById<EditText>(R.id.TextRapport).visibility = View.VISIBLE
+            dialog.findViewById<ImageView>(R.id.CheckDialog).visibility = View.GONE
+
+            var rapportadapter: Rapports? = adapterRapport!!.getItemAt(position)
+
+            dialog.findViewById<EditText>(R.id.TextRapport).setText(rapportadapter!!.textRapport)
+            dialog.findViewById<Button>(R.id.btn_confirm).setText("Modifier")
+            dialog.findViewById<Button>(R.id.btn_confirm).setOnClickListener {
+                rapportadapter.textRapport = dialog.findViewById<EditText>(R.id.TextRapport).text.toString()
+
+                userDao.updateRapport(rapportadapter.idDoctorRapport!!,
+                    rapportadapter.idPatientRapport!!,
+                    rapportadapter.id!!,
+                    rapportadapter,
+                    object : ResponseCallback {
+                        override fun success(medicament: String) {
+
+                        }
+
+                        override fun success() {
+
+                        }
+
+                        override fun failure() {
+
+                        }
+                    })
+                dialog.dismiss()
+            }
+
+        }
+
         addRapport!!.setOnClickListener {
             var intent = Intent(activity, AddRapportDoctorActivity::class.java)
             intent.putExtra("namePatentToRapport", myDataFromActivity)
             startActivity(intent)
-
-        }
-        userDao.retrieveCurrentDataUser(object : UserCallback {
-            override fun onSuccess(userItem: UserItem) {
-                 fullNameDoctor = userItem.prenom + " " + userItem.nom
-            }
-            override fun failure() {
-            }
-        })
-
-        userDao.getRapport(object : RapportCallback {
-            override fun success(rapport: Rapports) {
-
-                nameDoctorRapport = rapport.nameDoctorRapport
-                spcialityDoctorRapport = rapport.specialityDoctor
-                if (nameDoctorRapport!!.equals(fullNameDoctor) && myDataFromActivity.equals(
-                        rapport.namPatientRapport) &&
-                    (rapport.hourRapport + " " + rapport.hourRapport)!= fullDate
-                ) {
-                    fullDate = rapport.hourRapport + " " + rapport.hourRapport
-                    listRapport.add(
-                        ModelRapport(
-                            rapport.dateRapport!!,
-                            rapport.hourRapport!!.substring(0, 5)
-                        )
-                    )
-                    adapterRapport!!.notifyDataSetChanged()
-
-
-                listviewRapport!!.setOnItemClickListener { parent, view, position, id ->
-                    var v = View.inflate(requireContext(), R.layout.fragment_dialog, null)
-                    var builder = AlertDialog.Builder(requireContext())
-                    builder.setView(v)
-
-                    var dialog = builder.create()
-                    dialog.show()
-                    dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-                    dialog.findViewById<TextView>(R.id.TitleDialog).visibility = View.GONE
-                    dialog.findViewById<TextView>(R.id.msgdialog).visibility = View.GONE
-                    dialog.findViewById<EditText>(R.id.TextRapport).visibility =
-                        View.VISIBLE
-                    dialog.findViewById<EditText>(R.id.TextRapport).setText(rapport.textRapport)
-                    dialog.findViewById<ImageView>(R.id.CheckDialog).visibility = View.GONE
-                    dialog.findViewById<Button>(R.id.btn_confirm).setOnClickListener {
-                        dialog.dismiss()
-                        var  rapporttoSend = Rapports()
-                        rapporttoSend.dateRapport = rapport.dateRapport
-                        rapporttoSend.hourRapport = rapport.hourRapport
-                        rapporttoSend.id = rapport.id
-                        rapporttoSend.idDoctorRapport = rapport.idDoctorRapport
-                        rapporttoSend.idPatientRapport = rapport.idPatientRapport
-                        rapporttoSend.namPatientRapport = rapport.namPatientRapport
-                        rapporttoSend.nameDoctorRapport = rapport.nameDoctorRapport
-                        rapporttoSend.specialityDoctor = rapport.specialityDoctor
-                        rapporttoSend.textRapport = dialog.findViewById<EditText>(R.id.TextRapport).text.toString()
-
-                        userDao.updateRapport(rapporttoSend.idDoctorRapport!!,
-                            rapporttoSend.idPatientRapport!!,
-                            rapporttoSend.id!!,
-                            rapporttoSend,
-                            object : ResponseCallback {
-                                override fun success(medicament: String) {
-
-                                }
-
-                                override fun success() {
-
-                                }
-
-                                override fun failure() {
-
-                                }
-                            })
-                    }
-                }
-                }
-            }
-
-            override fun failure() {
-            }
-        })
-
-//        listRapport.add(ModelRapport("ff", "hh"))
-
+    }
 
     }
 
     private fun initAdapter() {
-        requireActivity().run {
-            adapterRapport = MyAdapterRapport(this, R.layout.list_rapport, listRapport)
+            adapterRapport = MyAdapterRapport(requireContext(), R.layout.list_rapport, listRapport)
             listviewRapport!!.adapter = adapterRapport
-        }
     }
 
 

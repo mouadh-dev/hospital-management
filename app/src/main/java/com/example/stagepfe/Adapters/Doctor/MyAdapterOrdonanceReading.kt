@@ -8,8 +8,10 @@ import android.widget.BaseAdapter
 import android.widget.TextView
 import com.example.stagepfe.Models.Doctors.ModelordonanceReading
 import com.example.stagepfe.R
+import com.example.stagepfe.entite.MedicamentOrdonance
+import com.example.stagepfe.entite.Ordonance
 
-class MyAdapterOrdonanceReading(var mCtx: Context, var resources:Int, var items:List<ModelordonanceReading>): BaseAdapter()
+class MyAdapterOrdonanceReading(var mCtx: Context, var resources:Int, var items:List<MedicamentOrdonance>): BaseAdapter()
 {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var layoutInflater: LayoutInflater = LayoutInflater.from(mCtx)
@@ -21,11 +23,11 @@ class MyAdapterOrdonanceReading(var mCtx: Context, var resources:Int, var items:
         var descriptionOrd: TextView = view.findViewById(R.id.description_medicament_reading)
 
 
-        var mItem: ModelordonanceReading = items[position]
+        var mItem: MedicamentOrdonance = items[position]
 
         nameMedicament.text = mItem.nameMedicament
-        quantity.text = mItem.quantityUse
-        descriptionOrd.text = mItem.descriptionUsing
+        quantity.text = mItem.quantity
+        descriptionOrd.text = mItem.description
 
         return view
 
