@@ -9,8 +9,9 @@ import android.widget.TextView
 import com.example.stagepfe.Models.Patient.ModelRDVPatient
 import com.example.stagepfe.Models.Patient.ModelRapportPatient
 import com.example.stagepfe.R
+import com.example.stagepfe.entite.Rapports
 
-class MyAdapterRapportPatient(var mCtx: Context, var resources:Int, var items:List<ModelRapportPatient>) :ArrayAdapter<ModelRapportPatient>(mCtx, resources,items) {
+class MyAdapterRapportPatient(var mCtx: Context, var resources:Int, var items:List<Rapports>) :ArrayAdapter<Rapports>(mCtx, resources,items) {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var layoutInflater: LayoutInflater = LayoutInflater.from(mCtx)
         var view: View = layoutInflater.inflate(resources, null)
@@ -19,10 +20,13 @@ class MyAdapterRapportPatient(var mCtx: Context, var resources:Int, var items:Li
         var textDateRapport: TextView = view.findViewById(R.id.Date_Rapport)
         var textHourRapport: TextView = view.findViewById(R.id.Hour_Rapport)
 
-        var items: ModelRapportPatient = items[position]
-        textNameDoctor.text = items.nameDoctor
+        var items: Rapports = items[position]
+        textNameDoctor.text = items.nameDoctorRapport
         textDateRapport.text = items.dateRapport
         textHourRapport.text = items.hourRapport
         return view
+    }
+    fun getItemAt(position: Int): Rapports? {
+        return items[position]
     }
 }
