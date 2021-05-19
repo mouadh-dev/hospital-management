@@ -1,11 +1,14 @@
 package com.example.stagepfe.Fragments.Patient
 
 import android.app.AlertDialog
+import android.content.Context.WINDOW_SERVICE
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.ListView
 import android.widget.TextView
 import androidx.core.content.ContentProviderCompat.requireContext
@@ -89,35 +92,21 @@ class OrdonancePatientFragment : Fragment() {
             dialog.findViewById<TextView>(R.id.namePatient).setText(ordonanceList.namepatientOrdo)
             dialog.findViewById<Button>(R.id.btn_remove).setText("D'accord")
 
-//            listViewOrdReading = dialog.findViewById<ListView>(R.id.List_Medicament_to_show)
-//            for (medicament in ordonanceList.medicament) {
-//                listMedicament.add(medicament)
-//            }
+            var gson = Gson()
+            var jsonString = gson.toJson(adapterOrdonance)
 
-//            adapterMedicament = MyAdapterOrdonanceReading(
-//                requireContext(),
-//                R.layout.ordonance_reading_doctor,
-//                listMedicament
-//            )
-//            dialog.findViewById<ListView>(R.id.List_Medicament_to_show)!!.adapter = adapterMedicament
-//            adapterMedicament!!.notifyDataSetChanged()
-////////////////////////////////////////////////////////////////////////////////////////////////////
-            // below line is for getting
-            // the windowmanager service.
-            WindowManager manager = (WindowManager) getSystemService(WINDOW_SERVICE);
 
-            // initializing a variable for default display.
-            Display display = manager.getDefaultDisplay();
+             //WindowManager manager = (WindowManager) getSystemService(WINDOW_SERVICE)
+            //dialog.findViewById<ImageView>(R.id.QrCodeIv).setBackgroundResource()
 
-            // creating a variable for point which
-            // is to be displayed in QR Code.
-            Point point = new Point();
-            display.getSize(point);
+           // listViewOrdReading = dialog.findViewById<ListView>(R.id.List_Medicament_to_show)
+           // for (medicament in ordonanceList.medicament) {
+            //    listMedicament.add(medicament)
+           // }
 
-            // getting width and
-            // height of a point
-            int width = point.x;
-            int height = point.y;
+           // adapterMedicament = MyAdapterOrdonanceReading(requireContext(), R.layout.ordonance_reading_doctor, listMedicament)
+            //dialog.findViewById<ListView>(R.id.List_Medicament_to_show)!!.adapter = adapterMedicament
+           // adapterMedicament!!.notifyDataSetChanged()
 
             // generating dimension from width and height.
             int dimen = width < height ? width : height;
@@ -146,8 +135,6 @@ class OrdonancePatientFragment : Fragment() {
             dialog.findViewById<Button>(R.id.btn_remove).setOnClickListener {
                 dialog.dismiss()
             }
-            var gson = Gson()
-            var jsonString = gson.toJson(ordonanceAdapter)
 
         }
 

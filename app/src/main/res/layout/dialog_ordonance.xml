@@ -65,7 +65,12 @@
             android:layout_marginBottom="40dp"
             android:visibility="gone"
             />
-
+<ImageView
+    android:id="@+id/QrCodeIv"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="15dp"
+    android:visibility="visible"/>
 
 
     </LinearLayout>
