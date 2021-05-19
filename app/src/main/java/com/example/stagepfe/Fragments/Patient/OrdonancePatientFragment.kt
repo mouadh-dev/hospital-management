@@ -18,6 +18,7 @@ import com.example.stagepfe.R
 import com.example.stagepfe.entite.MedicamentOrdonance
 import com.example.stagepfe.entite.Ordonance
 import com.example.stagepfe.entite.UserItem
+import com.google.gson.Gson
 
 
 class OrdonancePatientFragment : Fragment() {
@@ -111,6 +112,10 @@ class OrdonancePatientFragment : Fragment() {
             }
 
         }
+        var gson = Gson()
+        var jsonString = gson.toJson(listOf("mouadh","mohamed"))
+
+
     }
 
     private fun fillOrdonanceList(ordonanceList: Ordonance, ordonance: Ordonance) {
