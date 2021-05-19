@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.stagepfe">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-sdk tools:overrideLibrary="com.google.zxing.client.android" />
 
     <application
         android:allowBackup="true"
@@ -12,8 +15,15 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".Activity.AgentLabo.UpdateProfileAgentActivity"></activity>
+        android:theme="@style/Theme.AppCompat.NoActionBar"
+        android:hardwareAccelerated="true">
+
+        <activity
+            android:name="com.journeyapps.barcodescanner.CaptureActivity"
+            android:screenOrientation="fullSensor"
+            tools:replace="screenOrientation" />
+
+        <activity android:name=".Activity.AgentLabo.UpdateProfileAgentActivity" />
         <activity android:name=".Activity.AgentLabo.ModifyPasswordAgentActivity" />
         <activity android:name=".Activity.AgentLabo.ChangeInformationAgentActivity" />
         <activity android:name=".Activity.Pharmacien.UpdateProfilePharmacienActivity" />

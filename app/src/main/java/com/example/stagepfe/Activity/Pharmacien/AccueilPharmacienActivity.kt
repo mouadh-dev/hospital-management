@@ -1,42 +1,35 @@
 package com.example.stagepfe.Activity.Pharmacien
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.stagepfe.Activity.Authentication.AuthenticationFragmentContainerActivity
-import com.example.stagepfe.Activity.Doctors.DoctorProfilActivity
-import com.example.stagepfe.Dao.ResponseCallback
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
-import com.example.stagepfe.Fragments.AgentLabo.AgentReclamationFragment
-import com.example.stagepfe.Fragments.Doctor.AccueilDoctorFragment
-import com.example.stagepfe.Fragments.Doctor.DoctorMessageFragment
-import com.example.stagepfe.Fragments.Doctor.DoctorNotificationFragment
-import com.example.stagepfe.Fragments.Doctor.DoctorReclamationFragment
 import com.example.stagepfe.Fragments.Pharmacien.AccueilPharmacienFragment
 import com.example.stagepfe.Fragments.Pharmacien.PharmacienReclamationFragment
 import com.example.stagepfe.R
-import com.example.stagepfe.entite.ProfilPhoto
 import com.example.stagepfe.entite.UserItem
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
+import com.google.zxing.integration.android.IntentIntegrator
 import java.util.*
 
-class AccueilPharmacienActivity : AppCompatActivity() {
+
+class AccueilPharmacienActivity : AppCompatActivity(){
 
     var navigationPharmacien: BottomNavigationView? = null
     private val pickImage = 100
@@ -47,13 +40,21 @@ class AccueilPharmacienActivity : AppCompatActivity() {
     var changeUser:ImageView? = null
     var userItem = UserItem()
     var userDao = UserDao()
+    var cameraButton:ImageView? = null
     //var profilPhotos= ProfilPhoto()
+
+
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_accueil_pharmacien)
         var homePharmacie = AccueilPharmacienFragment()
-        supportFragmentManager.beginTransaction().replace(R.id.ContainerFragmentPharmacien, homePharmacie).commit()
+        supportFragmentManager.beginTransaction().replace(
+            R.id.ContainerFragmentPharmacien,
+            homePharmacie
+        ).commit()
         initView()
     }
 
@@ -63,6 +64,12 @@ class AccueilPharmacienActivity : AppCompatActivity() {
         reclamationPharmacien = findViewById(R.id.reclamationLayoutPharmacien)
         homePharmacien = findViewById(R.id.profilInformationPharmacien)
         changeUser = findViewById(R.id.change_user_pharmacien)
+        cameraButton = findViewById(R.id.float_button_camera)
+
+
+// this paramter will make your HUAWEI phone works great!
+//        mScannerView!!.setAspectTolerance(0.5f);
+
 
         imageProfilPharmacien!!.setOnClickListener {
             val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
@@ -81,6 +88,15 @@ class AccueilPharmacienActivity : AppCompatActivity() {
 
         }
 //////////////////////////////////////////////////////////////////////////////////////////////////
+
+        cameraButton!!.setOnClickListener {
+            val scanner = IntentIntegrator(this)
+            scanner.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
+            scanner.setBeepEnabled(false)
+            scanner.initiateScan()
+        }
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////
         changeUser!!.setOnClickListener {
             dialog()
         }
@@ -137,18 +153,24 @@ class AccueilPharmacienActivity : AppCompatActivity() {
 
     private fun signout() {
         var userDao = UserDao()
-        userDao.signOut(UserItem(),object : UserCallback {
+        userDao.signOut(UserItem(), object : UserCallback {
             override fun onSuccess(userItem: UserItem) {
 
-                var intent = Intent(this@AccueilPharmacienActivity,
-                    AuthenticationFragmentContainerActivity::class.java)
+                var intent = Intent(
+                    this@AccueilPharmacienActivity,
+                    AuthenticationFragmentContainerActivity::class.java
+                )
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)//makesure user cant go back
                 startActivity(intent)
                 finish()
             }
 
             override fun failure() {
-                var toast= Toast.makeText(this@AccueilPharmacienActivity,"probleme", Toast.LENGTH_SHORT)
+                var toast = Toast.makeText(
+                    this@AccueilPharmacienActivity,
+                    "probleme",
+                    Toast.LENGTH_SHORT
+                )
                 toast.show()
             }
         })
@@ -156,14 +178,14 @@ class AccueilPharmacienActivity : AppCompatActivity() {
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == RESULT_OK && requestCode == pickImage) {
-            imageUri = data?.data
-            imageProfilPharmacien!!.setImageURI(imageUri)
-            uploadImageToFirebase(imageUri)
-        }
-    }
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//        if (resultCode == RESULT_OK && requestCode == pickImage) {
+//            imageUri = data?.data
+//            imageProfilPharmacien!!.setImageURI(imageUri)
+//            uploadImageToFirebase(imageUri)
+//        }
+//    }
     ////////////////////////////////////Storage image ///////////////////////////////////////////////////////
 
         private fun uploadImageToFirebase(imageUri: Uri?) {
@@ -184,14 +206,14 @@ class AccueilPharmacienActivity : AppCompatActivity() {
              })
 
           ?.addOnFailureListener(OnFailureListener { e ->
-               print(e.message)
-           })
+              print(e.message)
+          })
           }
 
 
          }
 
-   private fun saveToFirebaseDataBase(fileName:String) {
+   private fun saveToFirebaseDataBase(fileName: String) {
       //  val mAuth = FirebaseAuth.getInstance()
         //val userRef = FirebaseDatabase.getInstance().getReference("users")
         //userRef.setValue(mAuth, imageUri)
@@ -203,12 +225,12 @@ class AccueilPharmacienActivity : AppCompatActivity() {
             //}
        userDao.retrieveCurrentDataUser(object : UserCallback {
            override fun onSuccess(userItem: UserItem) {
-               var user= UserItem()
+               var user = UserItem()
                user.profilPhotos = userItem.profilPhotos.toString()
-               user.nom =userItem.nom.toString()
-               user.prenom=userItem.prenom.toString()
-               user.adresse=userItem.adresse.toString()
-               user.phonenumber=userItem.phonenumber.toString()
+               user.nom = userItem.nom.toString()
+               user.prenom = userItem.prenom.toString()
+               user.adresse = userItem.adresse.toString()
+               user.phonenumber = userItem.phonenumber.toString()
                user.groupesanguin = userItem.groupesanguin.toString()
                user.id = userItem.id.toString()
                user.mail = userItem.mail.toString()
@@ -243,4 +265,19 @@ class AccueilPharmacienActivity : AppCompatActivity() {
     }
 
 
+    // Get the results:
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == Activity.RESULT_OK) {
+            val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
+            if (result != null) {
+                if (result.contents == null) {
+                    Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(this, "Scanned: " + result.contents, Toast.LENGTH_LONG).show()
+                }
+            } else {
+                super.onActivityResult(requestCode, resultCode, data)
+            }
+        }
+    }
 }

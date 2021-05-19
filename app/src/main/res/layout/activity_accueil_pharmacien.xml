@@ -142,5 +142,18 @@
         android:layout_below="@+id/containertopBar"
         android:background="@drawable/rectangle_account"
         />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/float_button_camera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/blue"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="80dp"
+        app:fab_size="normal"
+        android:elevation="10dp"
+        android:src="@drawable/camera_white"
+        />
 
 </RelativeLayout>
