@@ -9,6 +9,8 @@ android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
+    buildToolsVersion '28.0.3' // Older versions may give compile errors
+
     defaultConfig {
         applicationId "com.example.stagepfe"
         minSdkVersion 23
@@ -41,6 +43,7 @@ android {
         repositories {
             maven { url 'https://jitpack.io' }
             mavenCentral() // jcenter() works as well because it pulls from Maven Central
+            jcenter()
         }
     }
     kotlinOptions {
@@ -114,6 +117,9 @@ dependencies {
     //menu item
     compile 'com.nightonke:boommenu:2.1.1'
     implementation 'com.squareup.picasso:picasso:2.71828'
+
+    implementation 'com.journeyapps:zxing-android-embedded:4.2.0'
+    implementation 'androidx.appcompat:appcompat:1.0.2'
 
     implementation 'com.google.code.gson:gson:2.8.5'
 }

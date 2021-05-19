@@ -68,7 +68,7 @@ class AccountDoctorActivity : AppCompatActivity() {
 
     private fun initView() {
         changeUser = findViewById(R.id.change_user)
-        search = findViewById(R.id.float_button)
+        search = findViewById(R.id.float_button_Medecin)
         slidPanel = findViewById(R.id.sliding_layout)
         downImg = findViewById(R.id.DownIC)
         navigationDoctor = findViewById(R.id.bottom_nav_Doctor)
