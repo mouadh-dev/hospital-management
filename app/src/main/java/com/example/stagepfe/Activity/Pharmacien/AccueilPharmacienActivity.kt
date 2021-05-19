@@ -7,17 +7,19 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.view.View.VISIBLE
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import com.example.stagepfe.Activity.Authentication.AuthenticationFragmentContainerActivity
+import com.example.stagepfe.Adapters.Doctor.MyAdapterOrdonanceReading
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.Fragments.Pharmacien.AccueilPharmacienFragment
 import com.example.stagepfe.Fragments.Pharmacien.PharmacienReclamationFragment
 import com.example.stagepfe.R
+import com.example.stagepfe.entite.MedicamentOrdonance
+import com.example.stagepfe.entite.Ordonance
 import com.example.stagepfe.entite.UserItem
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
@@ -25,6 +27,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
+import com.google.gson.Gson
 import com.google.zxing.integration.android.IntentIntegrator
 import java.util.*
 
@@ -41,6 +44,9 @@ class AccueilPharmacienActivity : AppCompatActivity(){
     var userItem = UserItem()
     var userDao = UserDao()
     var cameraButton:ImageView? = null
+    var adapterMedicament: MyAdapterOrdonanceReading? = null
+
+    val listMedicament = mutableListOf<MedicamentOrdonance>()
     //var profilPhotos= ProfilPhoto()
 
 
@@ -273,7 +279,30 @@ class AccueilPharmacienActivity : AppCompatActivity(){
                 if (result.contents == null) {
                     Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show()
                 } else {
-                    Toast.makeText(this, "Scanned: " + result.contents, Toast.LENGTH_LONG).show()
+
+                    var ordonance = Gson().fromJson(result.contents, Ordonance::class.java)
+
+                    val v = View.inflate(this, R.layout.dialog_ordonance, null)
+                    val builder = AlertDialog.Builder(this)
+                    builder.setView(v)
+                    val dialog = builder.create()
+                    dialog.show()
+                    dialog.findViewById<ListView>(R.id.List_Medicament_to_show).visibility = VISIBLE
+                    dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+                    dialog.findViewById<TextView>(R.id.nameDoctor).setText("DR" + " " + ordonance.nameDoctorOrd)
+                    dialog.findViewById<TextView>(R.id.namePatient).setText(ordonance.namepatientOrdo)
+                    dialog.findViewById<Button>(R.id.btn_remove).setText("D'accord")
+                     for (medicament in ordonance.medicament) {
+                        listMedicament.add(medicament)
+                     }
+
+                    dialog.setOnDismissListener {
+                        listMedicament.clear()
+                    }
+
+                     adapterMedicament = MyAdapterOrdonanceReading(this, R.layout.ordonance_reading_doctor, listMedicament)
+                    dialog.findViewById<ListView>(R.id.List_Medicament_to_show)!!.adapter = adapterMedicament
+                    adapterMedicament!!.notifyDataSetChanged()
                 }
             } else {
                 super.onActivityResult(requestCode, resultCode, data)
