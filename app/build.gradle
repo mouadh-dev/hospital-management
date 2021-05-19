@@ -34,7 +34,11 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
 
     }
+    repositories {
+        mavenCentral()
+        maven { url "https://jitpack.io" }
 
+    }
     allprojects {
         repositories {
             maven { url 'https://jitpack.io' }
@@ -117,4 +121,5 @@ dependencies {
     implementation 'com.journeyapps:zxing-android-embedded:4.2.0'
     implementation 'androidx.appcompat:appcompat:1.0.2'
 
+    implementation 'com.google.code.gson:gson:2.8.5'
 }

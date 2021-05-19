@@ -70,11 +70,9 @@ var listRapportPatient: ListView? = null
                             rapportList.namPatientRapport = rapport.namPatientRapport
                             rapportList.specialityDoctor = rapport.specialityDoctor
                             list.add(rapportList)
+
                             adapterRapportPatient!!.notifyDataSetChanged()
 
-                            listRapportPatient!!.setOnItemClickListener { parent, view, position, id ->
-                                dialog(rapport.textRapport)
-                            }
                         }
                     }
 
@@ -98,33 +96,16 @@ var listRapportPatient: ListView? = null
             dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
             dialog.findViewById<TextView>(R.id.TitleDialog).visibility = View.GONE
             dialog.findViewById<TextView>(R.id.msgdialog).visibility = View.GONE
-            dialog.findViewById<EditText>(R.id.TextRapport).visibility = View.VISIBLE
+            dialog.findViewById<TextView>(R.id.TextRapportView).visibility = View.VISIBLE
+            dialog.findViewById<EditText>(R.id.TextRapport).visibility = View.GONE
             dialog.findViewById<ImageView>(R.id.CheckDialog).visibility = View.GONE
 
             var patientrapportadapter: Rapports? = adapterRapportPatient!!.getItemAt(position)
 
-            dialog.findViewById<EditText>(R.id.TextRapport).setText(patientrapportadapter!!.textRapport)
-            dialog.findViewById<Button>(R.id.btn_confirm).setText("Modifier")
+
+            dialog.findViewById<TextView>(R.id.TextRapportView).setText(patientrapportadapter!!.textRapport.toString())
+            dialog.findViewById<Button>(R.id.btn_confirm).setText("D'accord")
             dialog.findViewById<Button>(R.id.btn_confirm).setOnClickListener {
-                patientrapportadapter.textRapport = dialog.findViewById<EditText>(R.id.TextRapport).text.toString()
-
-                //userDao.updateRapport(patientrapportadapter.idDoctorRapport!!,
-                  //  patientrapportadapter.idPatientRapport!!,
-                    //patientrapportadapter.id!!,
-                    //patientrapportadapter,
-                    //object : ResponseCallback {
-                      //  override fun success(medicament: String) {
-
-                        //}
-
-                        //override fun success() {
-
-                        //}
-
-                        //override fun failure() {
-
-                        //}
-                    //})
                 dialog.dismiss()
             }
 
