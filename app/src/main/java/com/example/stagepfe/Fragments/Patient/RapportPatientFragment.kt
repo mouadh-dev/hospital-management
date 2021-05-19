@@ -6,12 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.ListView
-import android.widget.TextView
+import android.widget.*
+import com.example.stagepfe.Adapters.Doctor.MyAdapterRapport
 import com.example.stagepfe.Adapters.Patients.MyAdapterRapportPatient
 import com.example.stagepfe.Dao.RapportCallback
+import com.example.stagepfe.Dao.ResponseCallback
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.Models.Patient.ModelRapportPatient
@@ -22,8 +21,13 @@ import com.example.stagepfe.entite.UserItem
 
 class RapportPatientFragment : Fragment() {
 var listRapportPatient: ListView? = null
-    var list = mutableListOf<ModelRapportPatient>()
+    var list = mutableListOf<Rapports>()
+    var namePatientRapport: String? = null
+    private var adapterRapportPatient: MyAdapterRapportPatient? = null
+    var fullNamepatient: String? = null
     var userDao = UserDao()
+    var fullDate: String? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,15 +46,32 @@ var listRapportPatient: ListView? = null
 
     private fun initView(view: View) {
         listRapportPatient = view.findViewById(R.id.List_Rapport)
-
+        initAdapter()
 
         userDao.retrieveCurrentDataUser(object : UserCallback {
             override fun onSuccess(userItem: UserItem) {
+                fullNamepatient = userItem.nom + " " + userItem.prenom
+
                 userDao.getRapport(object : RapportCallback {
                     override fun success(rapport: Rapports) {
-                        if (rapport.namPatientRapport.equals(userItem.nom + " " + userItem.prenom)){
-                            list.add(ModelRapportPatient(rapport.nameDoctorRapport.toString(), "11/04/2020","11:00"))
-                            initAdapter()
+                        namePatientRapport = rapport.namPatientRapport
+
+                        if (rapport.namPatientRapport.equals(fullNamepatient) &&
+                            (rapport.hourRapport + " " + rapport.hourRapport) != fullDate){
+                            fullDate = rapport.hourRapport + " " + rapport.hourRapport
+                            var rapportList = Rapports()
+                            rapportList.hourRapport = rapport.hourRapport!!.substring(0,5)
+                            rapportList.dateRapport = rapport.dateRapport
+                            rapportList.textRapport = rapport.textRapport
+                            rapportList.id = rapport.id
+                            rapportList.idPatientRapport = rapport.idPatientRapport
+                            rapportList.idDoctorRapport = rapport.idDoctorRapport
+                            rapportList.nameDoctorRapport = rapport.nameDoctorRapport
+                            rapportList.namPatientRapport = rapport.namPatientRapport
+                            rapportList.specialityDoctor = rapport.specialityDoctor
+                            list.add(rapportList)
+                            adapterRapportPatient!!.notifyDataSetChanged()
+
                             listRapportPatient!!.setOnItemClickListener { parent, view, position, id ->
                                 dialog(rapport.textRapport)
                             }
@@ -67,14 +88,51 @@ var listRapportPatient: ListView? = null
             }
         })
 
+        listRapportPatient!!.setOnItemClickListener { parent, view, position, id ->
+            var v = View.inflate(requireContext(), R.layout.fragment_dialog, null)
+            var builder = AlertDialog.Builder(requireContext())
+            builder.setView(v)
 
-//        list.add(ModelRapportPatient("DR Foulen", "11/04/2020","11:00"))
-//        list.add(ModelRapportPatient("DR Foulen", "11/04/2020","11:00"))
-//        list.add(ModelRapportPatient("DR Foulen", "11/04/2020","11:00"))
-//        list.add(ModelRapportPatient("DR Foulen", "11/04/2020","11:00"))
-//        list.add(ModelRapportPatient("DR Foulen", "11/04/2020","11:00"))
-//        list.add(ModelRapportPatient("DR Foulen", "11/04/2020","11:00"))
-//        list.add(ModelRapportPatient("DR Foulen", "11/04/2020","11:00"))
+            var dialog = builder.create()
+            dialog.show()
+            dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+            dialog.findViewById<TextView>(R.id.TitleDialog).visibility = View.GONE
+            dialog.findViewById<TextView>(R.id.msgdialog).visibility = View.GONE
+            dialog.findViewById<EditText>(R.id.TextRapport).visibility = View.VISIBLE
+            dialog.findViewById<ImageView>(R.id.CheckDialog).visibility = View.GONE
+
+            var patientrapportadapter: Rapports? = adapterRapportPatient!!.getItemAt(position)
+
+            dialog.findViewById<EditText>(R.id.TextRapport).setText(patientrapportadapter!!.textRapport)
+            dialog.findViewById<Button>(R.id.btn_confirm).setText("Modifier")
+            dialog.findViewById<Button>(R.id.btn_confirm).setOnClickListener {
+                patientrapportadapter.textRapport = dialog.findViewById<EditText>(R.id.TextRapport).text.toString()
+
+                //userDao.updateRapport(patientrapportadapter.idDoctorRapport!!,
+                  //  patientrapportadapter.idPatientRapport!!,
+                    //patientrapportadapter.id!!,
+                    //patientrapportadapter,
+                    //object : ResponseCallback {
+                      //  override fun success(medicament: String) {
+
+                        //}
+
+                        //override fun success() {
+
+                        //}
+
+                        //override fun failure() {
+
+                        //}
+                    //})
+                dialog.dismiss()
+            }
+
+        }
+
+
+
+
 
 //        listRapportPatient!!.adapter = MyAdapterRapportPatient(requireContext(),R.layout.rapport_list_patient,list)
 
@@ -96,7 +154,8 @@ var listRapportPatient: ListView? = null
     }
 
     private fun initAdapter() {
-        listRapportPatient!!.adapter = MyAdapterRapportPatient(requireContext(),R.layout.rapport_list_patient,list)
+        adapterRapportPatient = MyAdapterRapportPatient(requireContext(),R.layout.rapport_list_patient,list)
+        listRapportPatient!!.adapter = adapterRapportPatient
 
     }
 

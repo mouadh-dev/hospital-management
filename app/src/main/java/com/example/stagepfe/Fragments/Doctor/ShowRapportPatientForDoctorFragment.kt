@@ -149,7 +149,6 @@ class ShowRapportPatientForDoctorFragment : Fragment() {
     }
 
     }
-
     private fun initAdapter() {
             adapterRapport = MyAdapterRapport(requireContext(), R.layout.list_rapport, listRapport)
             listviewRapport!!.adapter = adapterRapport

@@ -104,26 +104,26 @@
                     android:layout_height="wrap_content"
                     android:text="Foulen Fouleni"
                     android:textColor="@color/black"
-                    android:textSize="25dp" />
+                    android:textSize="20dp" />
 
 
             <TextView
                 android:id="@+id/num_phone_patient"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="7dp"
                 android:text="** *** ***"
                 android:textColor="@color/gray_specific"
-                android:textSize="20dp" />
+                android:textSize="15dp" />
 
             <TextView
                 android:id="@+id/date_naiss_patient"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="7dp"
                 android:text="21/05/1997 24ans"
                 android:textColor="@color/gray_specific"
-                android:textSize="20dp" />
+                android:textSize="15dp" />
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabs_ViewPager_show_profil_pat"
