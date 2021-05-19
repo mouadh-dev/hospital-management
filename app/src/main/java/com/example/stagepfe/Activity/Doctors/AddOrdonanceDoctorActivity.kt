@@ -30,7 +30,7 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
     var userdao = UserDao()
     var returnBack: ImageView? = null
     var listViewOrd: ListView? = null
-    var listOrd = mutableListOf<ModelOrdonance>()
+    var listOrd = mutableListOf<MedicamentOrdonance>()
     var listMedicamentOrdonance = arrayListOf<MedicamentOrdonance>()
     var addMedicament: Button? = null
     var addOrdonance: Button? = null
@@ -66,7 +66,7 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
         addOrdonance = findViewById(R.id.Add_Ordonance_Button)
         descriptionMedicament = findViewById(R.id.description_Et)
 
-        listOrd = arrayListOf<ModelOrdonance>()
+//        listOrd = arrayListOf<ModelOrdonance>()
         initAdapter()
 
 
@@ -83,13 +83,10 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
                 var text = "veuillez ajouter des medicaments"
                 dialog(text)
             } else {
-                listOrd.add(
-                    ModelOrdonance(
-                        nameMedicament!!.text.toString(),
-                        quantity!!.text.toString(),
-                        descriptionMedicament!!.text.toString()
-                    )
-                )
+                medicamentOrdonance.nameMedicament = nameMedicament!!.text.toString()
+                medicamentOrdonance.quantity = quantity!!.text.toString()
+                medicamentOrdonance.description = descriptionMedicament!!.text.toString()
+                listOrd.add(medicamentOrdonance)
                 test!!.notifyDataSetChanged()
 
 
@@ -120,6 +117,7 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
                             ordonance.namepatientOrdo = namePatient
                             ordonance.idPatient = idPAtient
                             ordonance.medicament = listMedicamentOrdonance
+                            ordonance.taken = "pas encore"
                             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
                                 ordonance.dateOrdonanceSend =
                                     currentDateTime.format(DateTimeFormatter.ISO_DATE)

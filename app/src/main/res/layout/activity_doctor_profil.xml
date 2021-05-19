@@ -57,7 +57,7 @@
                     android:src="@drawable/edit"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="20dp" />
+                    android:layout_marginRight="15dp" />
             </RelativeLayout>
 
             <TextView
@@ -82,9 +82,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="BIO"
-            android:textSize="20dp"
+            android:textSize="15dp"
             android:layout_marginTop="10dp"
             android:textColor="@color/black"
+            android:layout_marginHorizontal="10dp"
             />
 
 

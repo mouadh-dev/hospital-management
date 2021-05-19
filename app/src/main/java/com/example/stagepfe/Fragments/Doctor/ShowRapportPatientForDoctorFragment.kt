@@ -3,6 +3,7 @@ package com.example.stagepfe.Fragments.Doctor
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.view.ContextMenu
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,6 +45,19 @@ class ShowRapportPatientForDoctorFragment : Fragment() {
         return view
     }
 
+//    override fun onCreateContextMenu(
+//        menu: ContextMenu,
+//        v: View,
+//        menuInfo: ContextMenu.ContextMenuInfo?
+//    ) {
+//        super.onCreateContextMenu(menu, v, menuInfo)
+//        val inflater = menuInflater
+//    }
+//    fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
+//        super.onCreateContextMenu(menu, v, menuInfo)
+//        val inflater = menuInflater
+//        inflater.inflate(R.menu.menu_main, menu)
+//    }
     private fun initView(view: View) {
         addRapport = view.findViewById(R.id.Add_Rapport)
         listviewRapport = view.findViewById<ListView>(R.id.showRapportPatForDoctorr)
@@ -99,6 +113,17 @@ class ShowRapportPatientForDoctorFragment : Fragment() {
             override fun failure() {
             }
         })
+
+
+    listviewRapport!!.setOnItemLongClickListener { parent, view, position, id ->
+        var rapportadapter: Rapports? = adapterRapport!!.getItemAt(position)
+
+        true
+    }
+
+
+
+
 
         listviewRapport!!.setOnItemClickListener { parent, view, position, id ->
             var v = View.inflate(requireContext(), R.layout.fragment_dialog, null)

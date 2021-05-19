@@ -9,8 +9,10 @@ import android.widget.BaseAdapter
 import android.widget.TextView
 import com.example.stagepfe.Models.Doctors.ModelOrdonance
 import com.example.stagepfe.R
+import com.example.stagepfe.entite.MedicamentOrdonance
+import com.example.stagepfe.entite.Ordonance
 
-class MyAdapterOrdonance(var mCtx: Context, var resources:Int, var items:List<ModelOrdonance>): BaseAdapter()
+class MyAdapterOrdonance(var mCtx: Context, var resources:Int, var items:List<MedicamentOrdonance>): BaseAdapter()
 //ArrayAdapter<ModelOrdonance>(mCtx, resources, items)
 {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
@@ -23,9 +25,9 @@ class MyAdapterOrdonance(var mCtx: Context, var resources:Int, var items:List<Mo
         var descriptionOrd: TextView = view.findViewById(R.id.description_ord_list)
 
 
-        var mItem: ModelOrdonance = items[position]
+        var mItem: MedicamentOrdonance = items[position]
 
-        nameMedicament.text = mItem.nomMedicament
+        nameMedicament.text = mItem.nameMedicament
         quantity.text = mItem.quantity
         descriptionOrd.text = mItem.description
 

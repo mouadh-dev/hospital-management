@@ -47,15 +47,8 @@ class OrdonancePatientFragment : Fragment() {
                     for (entry in userItem.ordonance!!.entries) {
                         var ordonance = entry.value
                         if (ordonance.namepatientOrdo.equals(userItem.nom + " " + userItem.prenom)) {
-                            list.add(
-                                ordonance
-//                            "Ordonance",
-//                            ordonance.dateOrdonanceSend!!,
-//                            ordonance.hourOrdonanceSend!!.substring(0,5),
-//                            "pas encore",
-//                            R.color.red,
-//                            R.drawable.codebar
-                            )
+
+                            list.add(ordonance)
                             adapterOrdonance!!.notifyDataSetChanged()
 
                         }
@@ -66,16 +59,6 @@ class OrdonancePatientFragment : Fragment() {
             override fun failure() {
             }
         })
-
-//        list.add(ModelOrdonancePatient("Ordonance 1","11/05/2020","11:00","pas encore",R.color.red,R.drawable.codebar))
-//        list.add(ModelOrdonancePatient("Ordonance 1","11/05/2020","11:00","pas encore",R.color.red,R.drawable.codebar))
-////        list.add(ModelOrdonancePatient("Ordonance 1","11/05/2020","11:00","termineé",R.color.green,0))
-//        list.add(ModelOrdonancePatient("Ordonance 1","11/05/2020","11:00","pas encore",R.color.red,R.drawable.codebar,))
-//        list.add(ModelOrdonancePatient("Ordonance 1","11/05/2020","11:00","pas encore",R.color.red,R.drawable.codebar))
-//        list.add(ModelOrdonancePatient("Ordonance 1","11/05/2020","11:00","pas encore",R.color.red,R.drawable.codebar))
-////        list.add(ModelOrdonancePatient("Ordonance 1","11/05/2020","11:00","pas encore",R.color.green,0))
-
-
     }
 
     private fun initAdapter() {

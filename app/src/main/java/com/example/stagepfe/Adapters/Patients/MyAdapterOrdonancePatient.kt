@@ -29,7 +29,7 @@ class MyAdapterOrdonancePatient(var mCtx: Context,var resources:Int, var items:L
         textTitleOrd.text = item.nameDoctorOrd
         textDateOrd.text = item.dateOrdonanceSend
         textHourOrd.text = item.hourOrdonanceSend
-//        textCheckOrd.text = item.checkOrdonance
+        textCheckOrd.text = item.taken
 //        colorCheckOrd.setBackgroundColor(mCtx.resources.getColor(item.colorCheckOrdonance))
 //        imageScannedOrd.setImageDrawable(mCtx.resources.getDrawable(item.imageScaned))
         return view
