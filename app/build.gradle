@@ -117,7 +117,7 @@ dependencies {
     //menu item
     compile 'com.nightonke:boommenu:2.1.1'
     implementation 'com.squareup.picasso:picasso:2.71828'
-
+    implementation 'com.google.zxing:core:3.4.0'
     implementation 'com.journeyapps:zxing-android-embedded:4.2.0'
     implementation 'androidx.appcompat:appcompat:1.0.2'
 
