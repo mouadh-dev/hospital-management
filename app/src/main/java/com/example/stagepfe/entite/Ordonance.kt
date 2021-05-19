@@ -11,7 +11,8 @@ data class Ordonance constructor(
     var medicament: ArrayList<MedicamentOrdonance> = arrayListOf<MedicamentOrdonance>(),
     var id:String? = "",
     var dateOrdonanceSend:String? = "",
-    var hourOrdonanceSend:String? = ""
+    var hourOrdonanceSend:String? = "",
+    var taken:String? = ""
 
 ):Parcelable{
     constructor(parcel: Parcel) : this(
@@ -20,6 +21,7 @@ data class Ordonance constructor(
         parcel.readString(),
         parcel.readString(),
         TODO("medicament"),
+        parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString()
@@ -34,6 +36,7 @@ data class Ordonance constructor(
         parcel.writeString(id)
         parcel.writeString(dateOrdonanceSend)
         parcel.writeString(hourOrdonanceSend)
+        parcel.writeString(taken)
     }
 
     override fun describeContents(): Int {

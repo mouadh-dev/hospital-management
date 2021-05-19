@@ -25,6 +25,7 @@ class ModifyPasswordPatientActivity : AppCompatActivity() {
     var userDao = UserDao()
     var text: String = ""
     var user = UserItem()
+    var moveBack: ImageView? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_modify_password_patient)
@@ -37,6 +38,7 @@ class ModifyPasswordPatientActivity : AppCompatActivity() {
         showNewPassworConfirmdIV = findViewById(R.id.Eye_Show_ConfirmnewPassword_PatientIV)
         modifyPassword = findViewById(R.id.modify_password_button)
         actualPassword = findViewById(R.id.actual_passwordPatient)
+        moveBack = findViewById(R.id.back_modifyProfilePatient)
 
         /////////////////////////////////////////change password////////////////////////////////////////////
         userDao.retrieveCurrentDataUser(object : UserCallback {
@@ -138,6 +140,10 @@ class ModifyPasswordPatientActivity : AppCompatActivity() {
                 confirmNewPasswordPatientET!!.transformationMethod =
                     PasswordTransformationMethod.getInstance()
             }
+        }
+
+        moveBack!!.setOnClickListener {
+            finish()
         }
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////

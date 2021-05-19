@@ -10,8 +10,9 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.stagepfe.Models.Patient.ModelOrdonancePatient
 import com.example.stagepfe.R
+import com.example.stagepfe.entite.Ordonance
 
-class MyAdapterOrdonancePatient(var mCtx: Context,var resources:Int, var items:List<ModelOrdonancePatient>): ArrayAdapter<ModelOrdonancePatient>(mCtx,resources,items){
+class MyAdapterOrdonancePatient(var mCtx: Context,var resources:Int, var items:List<Ordonance>): ArrayAdapter<Ordonance>(mCtx,resources,items){
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var layoutInflater: LayoutInflater = LayoutInflater.from(mCtx)
         var view: View = layoutInflater.inflate(resources, null)
@@ -23,14 +24,14 @@ class MyAdapterOrdonancePatient(var mCtx: Context,var resources:Int, var items:L
         var colorCheckOrd: LinearLayout = view.findViewById(R.id.Color_Check_Ordoance)
         var imageScannedOrd: ImageView = view.findViewById(R.id.Qr_Code_Ordonance)
 
-        var item: ModelOrdonancePatient = items[position]
+        var item: Ordonance = items[position]
 
-        textTitleOrd.text = item.titlOrdonance
-        textDateOrd.text = item.dateOrdonance
-        textHourOrd.text = item.hourOrdonance
-        textCheckOrd.text = item.checkOrdonance
-        colorCheckOrd.setBackgroundColor(mCtx.resources.getColor(item.colorCheckOrdonance))
-        imageScannedOrd.setImageDrawable(mCtx.resources.getDrawable(item.imageScaned))
+        textTitleOrd.text = item.nameDoctorOrd
+        textDateOrd.text = item.dateOrdonanceSend
+        textHourOrd.text = item.hourOrdonanceSend
+//        textCheckOrd.text = item.checkOrdonance
+//        colorCheckOrd.setBackgroundColor(mCtx.resources.getColor(item.colorCheckOrdonance))
+//        imageScannedOrd.setImageDrawable(mCtx.resources.getDrawable(item.imageScaned))
         return view
     }
 }

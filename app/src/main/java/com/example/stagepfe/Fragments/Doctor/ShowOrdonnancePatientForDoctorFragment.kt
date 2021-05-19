@@ -32,8 +32,6 @@ class ShowOrdonnancePatientForDoctorFragment : Fragment() {
     var addOrdonance: ImageView? = null
     var userDao = UserDao()
     var fullNameDoctor: String? = null
-    var fullDateToCompare: String = ""
-
 
     var listViewOrdReading: ListView? = null
     val listMedicament = mutableListOf<MedicamentOrdonance>()
@@ -69,70 +67,18 @@ class ShowOrdonnancePatientForDoctorFragment : Fragment() {
         userDao.retrieveCurrentDataUser(object : UserCallback {
             override fun onSuccess(userItem: UserItem) {
                 fullNameDoctor = userItem.prenom + " " + userItem.nom
-
-
-                for (entry in userItem?.ordonance!!.entries) {
+                for (entry in userItem.ordonance!!.entries) {
                     var ordonance = entry.value
-                    println(" hey firas  $ordonance")
-
-                    var fullDate =
-                        ordonance.dateOrdonanceSend.toString() + " " + ordonance.hourOrdonanceSend.toString()
                     if (myDataFromActivity == ordonance.namepatientOrdo!! &&
-                        ordonance.nameDoctorOrd!! == fullNameDoctor &&
-                        fullDateToCompare != fullDate
-                    ) {
-                        if (!listOrdoPatForDoctor.contains(ordonance)) {
-                            fullDateToCompare =
-                                ordonance.dateOrdonanceSend.toString() + " " + ordonance.hourOrdonanceSend.toString()
+                        ordonance.nameDoctorOrd!! == fullNameDoctor) {
                             val ordonanceList = Ordonance()
                             fillOrdonanceList(ordonanceList, ordonance)
                             listOrdoPatForDoctor.add(ordonanceList)
-
                             adapterOrdonance!!.notifyDataSetChanged()
-
-                        }
-
-
                     }
-
-
                 }
-
-
-//                userDao.getOrdonance(object : getOrdonanceCallback {
-//                    override fun successOrdonance(
-//                        ordonance: Ordonance,
-//                        med:MedicamentOrdonance
-//                    ) {
-//                        var fullDate = ordonance.dateOrdonanceSend.toString() + " " + ordonance.hourOrdonanceSend.toString()
-//
-//                        if (myDataFromActivity == ordonance.namepatientOrdo!! &&
-//                            ordonance.nameDoctorOrd!! == fullNameDoctor &&
-//                            fullDateToCompare != fullDate
-//                        ) {
-//                            if (listOrdoPatForDoctor.contains(ordonance)){
-//                                fullDateToCompare = ordonance.dateOrdonanceSend.toString() + " " + ordonance.hourOrdonanceSend.toString()
-//                                val ordonanceList = Ordonance()
-//                                fillOrdonanceList(ordonanceList,ordonance)
-//                                listOrdoPatForDoctor.add(ordonanceList)
-//
-//                                adapterOrdonance!!.notifyDataSetChanged()
-//
-//                            }
-//
-//
-//                        }
-//
-//
-//                    }
-//
-//                    override fun failureOrdonance() {
-//                    }
-//                })
             }
-
             override fun failure() {
-
             }
         })
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -200,10 +146,6 @@ class ShowOrdonnancePatientForDoctorFragment : Fragment() {
             intent.putExtra("namePatentToOrdonance", myDataFromActivity)
             startActivity(intent)
         }
-    }
-
-    private fun initAdapterMedicament(listViewOrdReading: ListView?) {
-
     }
 
 

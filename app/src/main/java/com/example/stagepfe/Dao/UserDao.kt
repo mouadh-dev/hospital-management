@@ -157,18 +157,15 @@ class UserDao : IGestionUser {
                 if (snapshot.exists()) {
                     for (ds in snapshot.children) {
                         var userItem = ds.getValue(UserItem::class.java)
-                        var firstNAme = userItem!!.nom
-                        var lastName = userItem.prenom
-                        var fullNAme = firstNAme + " " + lastName
+                        var fullNAme = userItem!!.nom + " " + userItem.prenom
                         if (appointment.namePatient.equals(fullNAme)) {
-                            var id = userItem.id
                             responseCallback.successAppointment(appointment)
                             var hour = HashMap<String, Appointment>()
                             var day = HashMap<String, HashMap<String, Appointment>>()
                             hour[appointment.hour.toString()] = appointment
                             day[appointment.date.toString()] = hour
                             userItem.rendezVous = day
-                            userRef.child(id.toString())
+                            userRef.child(userItem.id.toString())
                                 .child("rendezVous").child(appointment.date.toString())
                                 .child(appointment.hour.toString()).setValue(appointment)
                         }
@@ -208,7 +205,6 @@ class UserDao : IGestionUser {
             }
         })
     }
-
 
     //////////////////////////////////////////insertReclamation/////////////////////////////////////////
     override fun insertReclamation(reclamation: Reclamation) {
@@ -363,7 +359,6 @@ class UserDao : IGestionUser {
 
     }
 
-
     /////////////////////////////////////////////insert Ordonance/////////////////////////////////////
     override fun insertordonance(
         idDoctor: String,
@@ -389,36 +384,36 @@ class UserDao : IGestionUser {
     }
 
     ////////////////////////////////////////////get Ordonance///////////////////////////////////////
-    fun getOrdonance(responseCallback: getOrdonanceCallback) {
-        userRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
-                    for (ds in snapshot.children) {
-                        var userItem = ds.getValue(UserItem::class.java)
-
-
-                            if (userItem!!.ordonance != null) {
-                                var ordonance = userItem.ordonance
-                                for (entry in ordonance!!.entries) {
-                                    var ord = entry.value
-                                    var medicament = ord.medicament
-                                    for (med in medicament) {
-
-                                        responseCallback.successOrdonance(ord,med)
-                                    }
-
-                                }
-                            }
-
-                    }
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                responseCallback.failureOrdonance()
-            }
-        })
-    }
+//    fun getOrdonance(responseCallback: getOrdonanceCallback) {
+//        userRef.addListenerForSingleValueEvent(object : ValueEventListener {
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                if (snapshot.exists()) {
+//                    for (ds in snapshot.children) {
+//                        var userItem = ds.getValue(UserItem::class.java)
+//
+//
+//                            if (userItem!!.ordonance != null) {
+//                                var ordonance = userItem.ordonance
+//                                for (entry in ordonance!!.entries) {
+//                                    var ord = entry.value
+//                                    var medicament = ord.medicament
+//                                    for (med in medicament) {
+//
+//                                        responseCallback.successOrdonance(ord,med)
+//                                    }
+//
+//                                }
+//                            }
+//
+//                    }
+//                }
+//            }
+//
+//            override fun onCancelled(error: DatabaseError) {
+//                responseCallback.failureOrdonance()
+//            }
+//        })
+//    }
     ////////////////////////////////////////////remove ordonance/////////////////////////////////////
     fun removeOrdonance(iddoc: String,idPat: String,idOrdonance:String,ordonance: Ordonance, responseCallback: ResponseCallback) {
 

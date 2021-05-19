@@ -47,7 +47,8 @@
                     android:textColor="@color/black"
                     android:textSize="25dp"
                     android:layout_marginTop="20dp"
-                    android:layout_marginLeft="40dp"/>
+                    android:layout_centerHorizontal="true"
+                    />
 
                 <ImageView
                     android:id="@+id/IVprofilDoctorUpdate"
@@ -63,7 +64,7 @@
                 android:id="@+id/PhoneNumber_Doctor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:text="** *** ***"
                 android:textColor="@color/gray_specific"
                 android:textSize="20dp" />
@@ -72,7 +73,7 @@
                 android:id="@+id/BirthDate_Doctor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:text="21/05/1997 24ans"
                 android:textColor="@color/gray_specific"
                 android:textSize="20dp" />
@@ -81,7 +82,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="BIO"
-            android:textSize="20dp"
+            android:textSize="10dp"
             android:layout_marginTop="10dp"
             android:textColor="@color/black"
             />
