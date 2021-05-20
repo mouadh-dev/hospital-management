@@ -1,6 +1,7 @@
 package com.example.stagepfe.Adapters.Patients
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,7 +31,7 @@ class MyAdapterOrdonancePatient(var mCtx: Context,var resources:Int, var items:L
         textDateOrd.text = item.dateOrdonanceSend
         textHourOrd.text = item.hourOrdonanceSend
         textCheckOrd.text = item.taken
-//        colorCheckOrd.setBackgroundColor(mCtx.resources.getColor(item.colorCheckOrdonance))
+                colorCheckOrd.setBackgroundColor(mCtx.resources.getColor(item.color!!.toInt()))
 //        imageScannedOrd.setImageDrawable(mCtx.resources.getDrawable(item.imageScaned))
         return view
     }

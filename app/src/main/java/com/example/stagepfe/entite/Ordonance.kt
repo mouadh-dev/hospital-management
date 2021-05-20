@@ -12,7 +12,8 @@ data class Ordonance constructor(
     var id:String? = "",
     var dateOrdonanceSend:String? = "",
     var hourOrdonanceSend:String? = "",
-    var taken:String? = ""
+    var taken:String? = "",
+    var color:String? = ""
 
 ):Parcelable{
     constructor(parcel: Parcel) : this(
@@ -21,6 +22,7 @@ data class Ordonance constructor(
         parcel.readString(),
         parcel.readString(),
         TODO("medicament"),
+        parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
@@ -37,6 +39,7 @@ data class Ordonance constructor(
         parcel.writeString(dateOrdonanceSend)
         parcel.writeString(hourOrdonanceSend)
         parcel.writeString(taken)
+        parcel.writeString(color)
     }
 
     override fun describeContents(): Int {

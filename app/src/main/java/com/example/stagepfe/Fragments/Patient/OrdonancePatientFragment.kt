@@ -2,7 +2,7 @@ package com.example.stagepfe.Fragments.Patient
 
 import android.app.AlertDialog
 import android.content.Context
-import android.content.Context.WINDOW_SERVICE
+import android.graphics.Color
 import android.graphics.Point
 import android.os.Bundle
 import android.util.Log
@@ -10,20 +10,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.ListView
-import android.widget.TextView
+import android.widget.*
 import androidmads.library.qrgenearator.QRGContents
 import androidmads.library.qrgenearator.QRGEncoder
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
-import com.example.stagepfe.Adapters.Doctor.MyAdapterOrdonanceReading
 import com.example.stagepfe.Adapters.Patients.MyAdapterOrdonancePatient
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.R
-import com.example.stagepfe.entite.MedicamentOrdonance
 import com.example.stagepfe.entite.Ordonance
 import com.example.stagepfe.entite.UserItem
 import com.google.gson.Gson
@@ -38,7 +32,6 @@ class OrdonancePatientFragment : Fragment() {
     var fullNamePatient: String? = null
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -51,6 +44,7 @@ class OrdonancePatientFragment : Fragment() {
         // Inflate the layout for this fragment
         var view = inflater.inflate(R.layout.fragment_ordonance_patient, container, false)
         initView(view)
+        println("mouadh ::::: " + Color.GREEN.toString())
         return view
     }
 
@@ -70,8 +64,17 @@ class OrdonancePatientFragment : Fragment() {
                             fillOrdonanceList(ordonanceList, ordonance)
 
                             list.add(ordonance)
-                            adapterOrdonance!!.notifyDataSetChanged()
+                            if (ordonance.taken.equals("pas encore")) {
 
+                                view.findViewById<LinearLayout>(R.id.Color_Check_Ordoance)
+                                    .setBackgroundColor(ordonance.color!!.toInt())
+                                adapterOrdonance!!.notifyDataSetChanged()
+
+                            } else {
+                                view.findViewById<LinearLayout>(R.id.Color_Check_Ordoance)
+                                    .setBackgroundColor(ordonance.color!!.toInt())
+                                adapterOrdonance!!.notifyDataSetChanged()
+                            }
                         }
                     }
                 }
@@ -101,43 +104,42 @@ class OrdonancePatientFragment : Fragment() {
 
             var gson = Gson()
             var jsonString = gson.toJson(ordonanceList)
- // below line is for getting
-                    // the windowmanager service.
-            var myContext = requireContext()
-            val manager =  myContext.getSystemService(Context.WINDOW_SERVICE) as WindowManager?
-                    // initializing a variable for default display.
-                    val display = manager!!.defaultDisplay
+            // below line is for getting
+            // the windowmanager service.
+            val manager =
+                requireContext().getSystemService(Context.WINDOW_SERVICE) as WindowManager?
+            // initializing a variable for default display.
+            val display = manager!!.defaultDisplay
 
-                    // creating a variable for point which
-                    // is to be displayed in QR Code.
-                    val point = Point()
-                    display.getSize(point)
+            // creating a variable for point which
+            // is to be displayed in QR Code.
+            val point = Point()
+            display.getSize(point)
 
-                    // getting width and
-                    // height of a point
-                    val width = point.x
-                    val height = point.y
+            // getting width and
+            // height of a point
+            val width = point.x
+            val height = point.y
 
-                    // generating dimension from width and height.
-                    var dimen = if (width < height) width else height
-                    dimen = dimen * 3 / 4
+            // generating dimension from width and height.
+            var dimen = if (width < height) width else height
+            dimen = dimen * 3 / 4
 
-                    // setting this dimensions inside our qr code
-                    // encoder to generate our qr code.
-                    var qrgEncoder =
-                        QRGEncoder(jsonString, null, QRGContents.Type.TEXT, dimen)
-                    try {
-                        // getting our qrcode in the form of bitmap.
-                        var bitmap = qrgEncoder.encodeAsBitmap()
-                        // the bitmap is set inside our image
-                        // view using .setimagebitmap method.
-                        dialog.findViewById<ImageView>(R.id.QrCodeIv).setImageBitmap(bitmap)
-                    } catch (e: WriterException) {
-                        // this method is called for
-                        // exception handling.
-                        Log.e("Tag", e.toString())
-                    }
-
+            // setting this dimensions inside our qr code
+            // encoder to generate our qr code.
+            var qrgEncoder =
+                QRGEncoder(jsonString, null, QRGContents.Type.TEXT, dimen)
+            try {
+                // getting our qrcode in the form of bitmap.
+                var bitmap = qrgEncoder.encodeAsBitmap()
+                // the bitmap is set inside our image
+                // view using .setimagebitmap method.
+                dialog.findViewById<ImageView>(R.id.QrCodeIv).setImageBitmap(bitmap)
+            } catch (e: WriterException) {
+                // this method is called for
+                // exception handling.
+                Log.e("Tag", e.toString())
+            }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -147,7 +149,6 @@ class OrdonancePatientFragment : Fragment() {
             }
 
         }
-
 
 
     }
@@ -165,9 +166,11 @@ class OrdonancePatientFragment : Fragment() {
     }
 
     private fun initAdapter() {
+
         adapterOrdonance =
             MyAdapterOrdonancePatient(requireContext(), R.layout.ordonance_list_patient, list)
         listOrdonancePatient!!.adapter = adapterOrdonance
+
     }
 
 
