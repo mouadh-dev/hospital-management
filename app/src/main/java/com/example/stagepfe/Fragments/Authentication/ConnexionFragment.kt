@@ -60,7 +60,7 @@ class ConnexionFragment : Fragment(), View.OnClickListener {
         connectButton = view.findViewById<Button>(R.id.Connect_Button)
         mailConnexionET = view.findViewById<EditText>(R.id.Mail_Connexion)
         passwordConnectET = view.findViewById<EditText>(R.id.Password_Connexion)
-        showPassWord= view.findViewById(R.id.eyeShowPassword)
+        showPassWord= view.findViewById(R.id.eyeShowPasswordConnexion)
 
         showPassWord!!.setOnClickListener {
             if (passwordConnectET!!.getTransformationMethod()

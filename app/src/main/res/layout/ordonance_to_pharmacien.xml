@@ -14,7 +14,18 @@
         android:background="@drawable/background_list"
         android:orientation="horizontal">
 
-
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <CheckBox
+            android:id="@+id/checkBox_Pharmacien"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/bluetitle"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            />
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -24,7 +35,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/name_medicament_read"
+                android:id="@+id/name_medicament_Pharmacien"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="nom medicament"
@@ -40,7 +51,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/quantity_medicament_read"
+                    android:id="@+id/quantity_medicament_pharmacien"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Quantity"
@@ -54,7 +65,7 @@
                     android:textSize="15dp"/>
             </LinearLayout>
             <TextView
-                android:id="@+id/description_medicament_reading"
+                android:id="@+id/description_medicament_pharmacien"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -62,7 +73,7 @@
                 android:textColor="@color/black"
                 android:textSize="15dp" />
         </LinearLayout>
-
+        </LinearLayout>
 
 
     </RelativeLayout>
