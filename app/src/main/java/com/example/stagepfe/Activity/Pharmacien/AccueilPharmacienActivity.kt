@@ -8,11 +8,14 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
 import android.view.View.VISIBLE
+import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.view.iterator
 import com.example.stagepfe.Activity.Authentication.AuthenticationFragmentContainerActivity
-import com.example.stagepfe.Adapters.Doctor.MyAdapterOrdonanceReading
+import com.example.stagepfe.Adapters.Doctor.MyAdapterOrdonance
+import com.example.stagepfe.Adapters.Doctor.MyAdapterOrdonancePharmacien
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.Fragments.Pharmacien.AccueilPharmacienFragment
@@ -44,7 +47,7 @@ class AccueilPharmacienActivity : AppCompatActivity(){
     var userItem = UserItem()
     var userDao = UserDao()
     var cameraButton:ImageView? = null
-    var adapterMedicament: MyAdapterOrdonanceReading? = null
+    var adapterMedicament: MyAdapterOrdonancePharmacien? = null
 
     val listMedicament = mutableListOf<MedicamentOrdonance>()
     //var profilPhotos= ProfilPhoto()
@@ -287,22 +290,29 @@ class AccueilPharmacienActivity : AppCompatActivity(){
                     builder.setView(v)
                     val dialog = builder.create()
                     dialog.show()
-                    dialog.findViewById<ListView>(R.id.List_Medicament_to_show).visibility = VISIBLE
+                    var listView = dialog.findViewById<ListView>(R.id.List_Medicament_to_show)
+                    listView.visibility = VISIBLE
                     dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
                     dialog.findViewById<TextView>(R.id.nameDoctor).setText("DR" + " " + ordonance.nameDoctorOrd)
                     dialog.findViewById<TextView>(R.id.namePatient).setText(ordonance.namepatientOrdo)
                     dialog.findViewById<Button>(R.id.btn_remove).setText("D'accord")
+
                      for (medicament in ordonance.medicament) {
                         listMedicament.add(medicament)
                      }
+                    adapterMedicament = MyAdapterOrdonancePharmacien(this, R.layout.ord_add_list, listMedicament)
+                    dialog.findViewById<ListView>(R.id.List_Medicament_to_show)!!.adapter = adapterMedicament
+                    adapterMedicament!!.notifyDataSetChanged()
 
+                    dialog.findViewById<Button>(R.id.btn_remove).setOnClickListener {
+
+                        dialog.dismiss()
+                    }
                     dialog.setOnDismissListener {
                         listMedicament.clear()
                     }
 
-                     adapterMedicament = MyAdapterOrdonanceReading(this, R.layout.ordonance_reading_doctor, listMedicament)
-                    dialog.findViewById<ListView>(R.id.List_Medicament_to_show)!!.adapter = adapterMedicament
-                    adapterMedicament!!.notifyDataSetChanged()
+
                 }
             } else {
                 super.onActivityResult(requestCode, resultCode, data)

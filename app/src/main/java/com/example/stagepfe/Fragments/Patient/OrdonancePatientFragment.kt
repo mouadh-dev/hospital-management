@@ -76,7 +76,7 @@ class OrdonancePatientFragment : Fragment() {
 
         listOrdonancePatient!!.setOnItemClickListener { parent, view, position, id ->
             val ordonanceList = Ordonance()
-            val ordonanceAdapter: Ordonance? = adapterOrdonance!!.getItem(position)
+                val ordonanceAdapter: Ordonance? = adapterOrdonance!!.getItem(position)
             fillOrdonanceList(ordonanceList, ordonanceAdapter!!)
 
             val v = View.inflate(requireContext(), R.layout.dialog_ordonance, null)

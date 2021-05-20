@@ -5,16 +5,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.ListView
-import android.widget.TextView
+import android.widget.*
 import androidx.fragment.app.Fragment
 import com.example.stagepfe.Activity.Doctors.AddAnalyseOrdonnanceActivity
 import com.example.stagepfe.Activity.Doctors.AddOrdonanceDoctorActivity
 import com.example.stagepfe.Activity.Doctors.ShowInfoPatientForDoctorActivity
-import com.example.stagepfe.Adapters.Doctor.MyAdapterOrdonanceReading
+import com.example.stagepfe.Adapters.Doctor.MyAdapterOrdonance
 import com.example.stagepfe.Adapters.Doctor.MyAdapterShowOrdonnancePatForDoc
 import com.example.stagepfe.Dao.ResponseCallback
 import com.example.stagepfe.Dao.UserCallback
@@ -36,7 +35,7 @@ class ShowOrdonnancePatientForDoctorFragment : Fragment() {
 
     var listViewOrdReading: ListView? = null
     val listMedicament = mutableListOf<MedicamentOrdonance>()
-    var adapterMedicament: MyAdapterOrdonanceReading? = null
+    var adapterMedicament: MyAdapterOrdonance? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -101,6 +100,7 @@ class ShowOrdonnancePatientForDoctorFragment : Fragment() {
             dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
             dialog.findViewById<TextView>(R.id.nameDoctor)
                 .setText("DR" + " " + ordonanceList.nameDoctorOrd)
+            dialog.findViewById<ListView>(R.id.List_Medicament_to_show).visibility = VISIBLE
             dialog.findViewById<TextView>(R.id.namePatient).setText(ordonanceList.namepatientOrdo)
             dialog.findViewById<Button>(R.id.btn_remove).setText("Supprimer")
 
@@ -108,16 +108,14 @@ class ShowOrdonnancePatientForDoctorFragment : Fragment() {
             for (medicament in ordonanceList.medicament) {
                 listMedicament.add(medicament)
             }
-
-            adapterMedicament = MyAdapterOrdonanceReading(
+            adapterMedicament = MyAdapterOrdonance(
                 requireContext(),
-                R.layout.ordonance_reading_doctor,
+                R.layout.ord_add_list,
                 listMedicament
             )
-            dialog.findViewById<ListView>(R.id.List_Medicament_to_show)!!.adapter =
-                adapterMedicament
-            adapterMedicament!!.notifyDataSetChanged()
+            listViewOrdReading!!.adapter = adapterMedicament
 
+            adapterMedicament!!.notifyDataSetChanged()
             dialog.setOnDismissListener {
                 listMedicament.clear()
             }
@@ -142,8 +140,6 @@ class ShowOrdonnancePatientForDoctorFragment : Fragment() {
                         }
                     })
             }
-
-
         }
 ///////////////////////////////////////////////////////////////////////////////////////////////////
         addOrdonance!!.setOnClickListener {

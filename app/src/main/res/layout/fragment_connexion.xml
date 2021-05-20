@@ -60,7 +60,7 @@
             android:textColorHint="#888282"
             android:textSize="15dp" />
             <ImageView
-                android:id="@+id/eyeShowPassword"
+                android:id="@+id/eyeShowPasswordConnexion"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:src="@drawable/eye"
