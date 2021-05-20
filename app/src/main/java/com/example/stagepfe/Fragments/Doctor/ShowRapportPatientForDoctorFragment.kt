@@ -3,7 +3,6 @@ package com.example.stagepfe.Fragments.Doctor
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
-import android.view.ContextMenu
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -81,7 +80,7 @@ class ShowRapportPatientForDoctorFragment : Fragment() {
                         nameDoctorRapport = rapport.nameDoctorRapport
                         spcialityDoctorRapport = rapport.specialityDoctor
                         if (nameDoctorRapport!!.equals(fullNameDoctor) &&
-                            myDataFromActivity.equals(rapport.namPatientRapport) &&
+                            myDataFromActivity.equals(rapport.namePatientRapport) &&
                             (rapport.hourRapport + " " + rapport.hourRapport) != fullDate) {
 
                             fullDate = rapport.hourRapport + " " + rapport.hourRapport
@@ -93,7 +92,7 @@ class ShowRapportPatientForDoctorFragment : Fragment() {
                             rapportList.idPatientRapport = rapport.idPatientRapport
                             rapportList.idDoctorRapport = rapport.idDoctorRapport
                             rapportList.nameDoctorRapport = rapport.nameDoctorRapport
-                            rapportList.namPatientRapport = rapport.namPatientRapport
+                            rapportList.namePatientRapport = rapport.namePatientRapport
                             rapportList.specialityDoctor = rapport.specialityDoctor
                             listRapport.add(rapportList)
 

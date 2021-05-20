@@ -11,6 +11,7 @@ import android.widget.ImageView
 import android.widget.ListView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.example.stagepfe.Activity.Doctors.AddAnalyseOrdonnanceActivity
 import com.example.stagepfe.Activity.Doctors.AddOrdonanceDoctorActivity
 import com.example.stagepfe.Activity.Doctors.ShowInfoPatientForDoctorActivity
 import com.example.stagepfe.Adapters.Doctor.MyAdapterOrdonanceReading
@@ -145,9 +146,22 @@ class ShowOrdonnancePatientForDoctorFragment : Fragment() {
         }
 ///////////////////////////////////////////////////////////////////////////////////////////////////
         addOrdonance!!.setOnClickListener {
-            var intent = Intent(requireContext(), AddOrdonanceDoctorActivity::class.java)
+            val v = View.inflate(requireContext(), R.layout.dialog_choix_ordonnance, null)
+            val builder = AlertDialog.Builder(requireContext())
+            builder.setView(v)
+            val dialog = builder.create()
+            dialog.show()
+            dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+            dialog.findViewById<ImageView>(R.id.addMedicamentOrd).setOnClickListener {
+                var intent = Intent(requireContext(), AddOrdonanceDoctorActivity::class.java)
+                intent.putExtra("namePatentToOrdonance", myDataFromActivity)
+                startActivity(intent)
+            }
+            dialog.findViewById<ImageView>(R.id.addAnalyseOrd).setOnClickListener {
+            var intent = Intent(requireContext(), AddAnalyseOrdonnanceActivity::class.java)
             intent.putExtra("namePatentToOrdonance", myDataFromActivity)
             startActivity(intent)
+            }
         }
     }
 

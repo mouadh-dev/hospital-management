@@ -8,6 +8,7 @@ data class Ordonance constructor(
     var nameDoctorOrd:String? = "",
     var idPatient:String? = "",
     var idDoctor:String? = "",
+    var analyse: String? ="",
     var medicament: ArrayList<MedicamentOrdonance> = arrayListOf<MedicamentOrdonance>(),
     var id:String? = "",
     var dateOrdonanceSend:String? = "",
@@ -17,6 +18,7 @@ data class Ordonance constructor(
 
 ):Parcelable{
     constructor(parcel: Parcel) : this(
+        parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
@@ -35,6 +37,7 @@ data class Ordonance constructor(
         parcel.writeString(nameDoctorOrd)
         parcel.writeString(idPatient)
         parcel.writeString(idDoctor)
+        parcel.writeString(analyse)
         parcel.writeString(id)
         parcel.writeString(dateOrdonanceSend)
         parcel.writeString(hourOrdonanceSend)
