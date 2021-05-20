@@ -64,17 +64,7 @@ class OrdonancePatientFragment : Fragment() {
                             fillOrdonanceList(ordonanceList, ordonance)
 
                             list.add(ordonance)
-                            if (ordonance.taken.equals("pas encore")) {
-
-                                view.findViewById<LinearLayout>(R.id.Color_Check_Ordoance)
-                                    .setBackgroundColor(ordonance.color!!.toInt())
-                                adapterOrdonance!!.notifyDataSetChanged()
-
-                            } else {
-                                view.findViewById<LinearLayout>(R.id.Color_Check_Ordoance)
-                                    .setBackgroundColor(ordonance.color!!.toInt())
-                                adapterOrdonance!!.notifyDataSetChanged()
-                            }
+                            adapterOrdonance!!.notifyDataSetChanged()
                         }
                     }
                 }
@@ -162,15 +152,13 @@ class OrdonancePatientFragment : Fragment() {
         ordonanceList.medicament = ordonance.medicament
         ordonanceList.idDoctor = ordonance.idDoctor
         ordonanceList.id = ordonance.id
+        ordonanceList.color = ordonance.color
 
     }
 
     private fun initAdapter() {
-
-        adapterOrdonance =
-            MyAdapterOrdonancePatient(requireContext(), R.layout.ordonance_list_patient, list)
+        adapterOrdonance = MyAdapterOrdonancePatient(requireContext(), R.layout.ordonance_list_patient, list)
         listOrdonancePatient!!.adapter = adapterOrdonance
-
     }
 
 

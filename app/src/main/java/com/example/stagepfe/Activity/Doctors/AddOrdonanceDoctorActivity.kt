@@ -2,6 +2,7 @@ package com.example.stagepfe.Activity.Doctors
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -118,6 +119,7 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
                             ordonance.idPatient = idPAtient
                             ordonance.medicament = listMedicamentOrdonance
                             ordonance.taken = "pas encore"
+                            ordonance.color = Color.RED.toString()
                             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
                                 ordonance.dateOrdonanceSend =
                                     currentDateTime.format(DateTimeFormatter.ISO_DATE)

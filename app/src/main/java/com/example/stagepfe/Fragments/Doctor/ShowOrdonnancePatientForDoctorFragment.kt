@@ -67,14 +67,17 @@ class ShowOrdonnancePatientForDoctorFragment : Fragment() {
         userDao.retrieveCurrentDataUser(object : UserCallback {
             override fun onSuccess(userItem: UserItem) {
                 fullNameDoctor = userItem.prenom + " " + userItem.nom
+                if (userItem.ordonance != null){
                 for (entry in userItem.ordonance!!.entries) {
+
                     var ordonance = entry.value
                     if (myDataFromActivity == ordonance.namepatientOrdo!! &&
                         ordonance.nameDoctorOrd!! == fullNameDoctor) {
-                            val ordonanceList = Ordonance()
-                            fillOrdonanceList(ordonanceList, ordonance)
-                            listOrdoPatForDoctor.add(ordonanceList)
-                            adapterOrdonance!!.notifyDataSetChanged()
+                        val ordonanceList = Ordonance()
+                        fillOrdonanceList(ordonanceList, ordonance)
+                        listOrdoPatForDoctor.add(ordonanceList)
+                        adapterOrdonance!!.notifyDataSetChanged()
+                    }
                     }
                 }
             }
