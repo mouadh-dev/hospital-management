@@ -7,13 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import com.example.stagepfe.Adapters.Doctor.MyAdapterRapport
 import com.example.stagepfe.Adapters.Patients.MyAdapterRapportPatient
 import com.example.stagepfe.Dao.RapportCallback
-import com.example.stagepfe.Dao.ResponseCallback
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
-import com.example.stagepfe.Models.Patient.ModelRapportPatient
 import com.example.stagepfe.R
 import com.example.stagepfe.entite.Rapports
 import com.example.stagepfe.entite.UserItem
@@ -54,9 +51,9 @@ var listRapportPatient: ListView? = null
 
                 userDao.getRapport(object : RapportCallback {
                     override fun success(rapport: Rapports) {
-                        namePatientRapport = rapport.namPatientRapport
+                        namePatientRapport = rapport.namePatientRapport
 
-                        if (rapport.namPatientRapport.equals(fullNamepatient) &&
+                        if (rapport.namePatientRapport.equals(fullNamepatient) &&
                             (rapport.hourRapport + " " + rapport.hourRapport) != fullDate){
                             fullDate = rapport.hourRapport + " " + rapport.hourRapport
                             var rapportList = Rapports()
@@ -67,7 +64,7 @@ var listRapportPatient: ListView? = null
                             rapportList.idPatientRapport = rapport.idPatientRapport
                             rapportList.idDoctorRapport = rapport.idDoctorRapport
                             rapportList.nameDoctorRapport = rapport.nameDoctorRapport
-                            rapportList.namPatientRapport = rapport.namPatientRapport
+                            rapportList.namePatientRapport = rapport.namePatientRapport
                             rapportList.specialityDoctor = rapport.specialityDoctor
                             list.add(rapportList)
 

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blue"
+    android:orientation="vertical"
+    tools:context=".Activity.Doctors.AddAnalyseOrdonnanceActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@color/blue"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/whiteellipse" />
+
+            <ImageView
+                android:id="@+id/return_back_Ord"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:src="@drawable/forward" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="70dp"
+            android:text="Analyse"
+            android:textColor="@color/white"
+            android:textSize="30dp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/container_AnalyseOrdonnance"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/rectangle_account">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/Name_Doctor_analyse"
+                android:layout_width="290dp"
+                android:layout_height="50dp"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/edit_text_style"
+                android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                android:drawableRight="@drawable/nom_util"
+                android:hint="nom et prenom"
+                android:paddingLeft="20dp"
+                android:paddingRight="10dp"
+                android:textColor="@color/black"
+                android:textColorHint="#888282"
+                android:textSize="15dp"
+                android:inputType="textPersonName"/>
+
+
+            <TextView
+                android:id="@+id/Description_wrong_Patient"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Veuillez ecrire ici votre ordonnance "
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="50dp"
+                />
+
+            <EditText
+                android:id="@+id/text_Analyse_Et"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:layout_marginTop="10dp"
+                android:padding="15dp"
+                android:background="@drawable/edit_text_style"
+                android:layout_gravity="center"
+                />
+
+
+            <Button
+                android:id="@+id/Add_Analyse_Button"
+                android:layout_width="290dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/button_style_smaller"
+                android:text="envoyer"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+</LinearLayout>

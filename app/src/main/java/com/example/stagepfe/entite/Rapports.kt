@@ -5,7 +5,7 @@ import android.os.Parcelable
 
 class Rapports (
     var id:String? = "",
-    var namPatientRapport: String? = "",
+    var namePatientRapport: String? = "",
     var idPatientRapport:String? = "",
     var nameDoctorRapport:String? = "",
     var idDoctorRapport:String? = "",
@@ -27,7 +27,7 @@ class Rapports (
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(id)
-        parcel.writeString(namPatientRapport)
+        parcel.writeString(namePatientRapport)
         parcel.writeString(idPatientRapport)
         parcel.writeString(nameDoctorRapport)
         parcel.writeString(idDoctorRapport)

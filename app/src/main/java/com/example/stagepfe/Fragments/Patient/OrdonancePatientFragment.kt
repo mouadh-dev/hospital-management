@@ -44,7 +44,6 @@ class OrdonancePatientFragment : Fragment() {
         // Inflate the layout for this fragment
         var view = inflater.inflate(R.layout.fragment_ordonance_patient, container, false)
         initView(view)
-        println("mouadh ::::: " + Color.GREEN.toString())
         return view
     }
 
@@ -65,6 +64,7 @@ class OrdonancePatientFragment : Fragment() {
 
                             list.add(ordonance)
                             adapterOrdonance!!.notifyDataSetChanged()
+
                         }
                     }
                 }
@@ -115,21 +115,21 @@ class OrdonancePatientFragment : Fragment() {
             var dimen = if (width < height) width else height
             dimen = dimen * 3 / 4
 
-            // setting this dimensions inside our qr code
-            // encoder to generate our qr code.
-            var qrgEncoder =
-                QRGEncoder(jsonString, null, QRGContents.Type.TEXT, dimen)
-            try {
-                // getting our qrcode in the form of bitmap.
-                var bitmap = qrgEncoder.encodeAsBitmap()
-                // the bitmap is set inside our image
-                // view using .setimagebitmap method.
-                dialog.findViewById<ImageView>(R.id.QrCodeIv).setImageBitmap(bitmap)
-            } catch (e: WriterException) {
-                // this method is called for
-                // exception handling.
-                Log.e("Tag", e.toString())
-            }
+                    // setting this dimensions inside our qr code
+                    // encoder to generate our qr code.
+                    var qrgEncoder = QRGEncoder(jsonString, null, QRGContents.Type.TEXT, dimen)
+                    try {
+                        // getting our qrcode in the form of bitmap.
+                        var bitmap = qrgEncoder.encodeAsBitmap()
+                        // the bitmap is set inside our image
+                        // view using .setimagebitmap method.
+                        dialog.findViewById<ImageView>(R.id.QrCodeIv).setImageBitmap(bitmap)
+                    } catch (e: WriterException) {
+                        // this method is called for
+                        // exception handling.
+                        Log.e("Tag", e.toString())
+                    }
+
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -139,6 +139,7 @@ class OrdonancePatientFragment : Fragment() {
             }
 
         }
+
 
 
     }

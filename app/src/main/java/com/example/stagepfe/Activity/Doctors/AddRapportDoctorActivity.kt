@@ -92,7 +92,7 @@ class AddRapportDoctorActivity : AppCompatActivity() {
                 }
             }
             else {
-                rapports.namPatientRapport = nameDoctorRapportET!!.text.toString()
+                rapports.namePatientRapport = nameDoctorRapportET!!.text.toString()
                 rapports.idPatientRapport = idPatient
                 rapports.textRapport = TextRapport!!.text.toString()
                 rapports.nameDoctorRapport = nameDoctorRapport
