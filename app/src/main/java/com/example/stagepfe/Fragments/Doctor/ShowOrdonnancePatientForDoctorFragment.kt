@@ -78,6 +78,7 @@ class ShowOrdonnancePatientForDoctorFragment : Fragment() {
                         fillOrdonanceList(ordonanceList, ordonance)
                         listOrdoPatForDoctor.add(ordonanceList)
                         adapterOrdonance!!.notifyDataSetChanged()
+
                     }
                     }
                 }
@@ -164,7 +165,6 @@ class ShowOrdonnancePatientForDoctorFragment : Fragment() {
             }
         }
     }
-
 
     private fun fillOrdonanceList(ordonanceList: Ordonance, ordonance: Ordonance) {
         ordonanceList.dateOrdonanceSend = ordonance.dateOrdonanceSend

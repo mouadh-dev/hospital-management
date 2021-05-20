@@ -26,7 +26,7 @@
                 android:background="@drawable/whiteellipse" />
 
             <ImageView
-                android:id="@+id/return_back_Ord"
+                android:id="@+id/return_back_Ord_analyse"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
@@ -75,7 +75,7 @@
 
 
             <TextView
-                android:id="@+id/Description_wrong_Patient"
+                android:id="@+id/Description_analyse_TV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Veuillez ecrire ici votre ordonnance "
@@ -98,14 +98,36 @@
 
 
             <Button
-                android:id="@+id/Add_Analyse_Button"
+                android:id="@+id/Confirmer_Analyse_Button"
                 android:layout_width="290dp"
                 android:layout_height="40dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/button_style_smaller"
-                android:text="envoyer"
+                android:text="Confirmer"
                 android:layout_gravity="center"
                 android:layout_marginBottom="20dp"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/Confirmer_Analyse_Button"
+                android:layout_marginTop="20dp">
+            <ListView
+                android:id="@+id/ListOrdoAnalyse"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            </ListView>
+                <Button
+                    android:id="@+id/Add_Analyse_Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_style_smaller"
+                    android:text="envoyer"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="20dp"/>
+
+            </RelativeLayout>
         </LinearLayout>
 
     </RelativeLayout>

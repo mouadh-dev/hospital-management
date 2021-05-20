@@ -8,9 +8,10 @@ data class Ordonance constructor(
     var nameDoctorOrd:String? = "",
     var idPatient:String? = "",
     var idDoctor:String? = "",
-    var analyse: String? ="",
     var medicament: ArrayList<MedicamentOrdonance> = arrayListOf<MedicamentOrdonance>(),
+    var analyse: ArrayList<AnalyseOrdonnance> = arrayListOf<AnalyseOrdonnance>(),
     var id:String? = "",
+    var typeOrdonnance:String? ="",
     var dateOrdonanceSend:String? = "",
     var hourOrdonanceSend:String? = "",
     var taken:String? = "",
@@ -22,8 +23,9 @@ data class Ordonance constructor(
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
-        parcel.readString(),
         TODO("medicament"),
+        TODO("analyse"),
+        parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
@@ -37,8 +39,8 @@ data class Ordonance constructor(
         parcel.writeString(nameDoctorOrd)
         parcel.writeString(idPatient)
         parcel.writeString(idDoctor)
-        parcel.writeString(analyse)
         parcel.writeString(id)
+        parcel.writeString(typeOrdonnance)
         parcel.writeString(dateOrdonanceSend)
         parcel.writeString(hourOrdonanceSend)
         parcel.writeString(taken)

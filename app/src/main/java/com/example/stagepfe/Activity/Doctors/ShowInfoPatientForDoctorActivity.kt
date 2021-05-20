@@ -82,7 +82,7 @@ class ShowInfoPatientForDoctorActivity : AppCompatActivity() {
 
 
         var adapter = ViewPagerAdapter(supportFragmentManager)
-        adapter.addFragment(ShowOrdonnancePatientForDoctorFragment(), "Les ordonnances ")
+        adapter.addFragment(ShowOrdonnancePatientForDoctorFragment(), "Ordonnances ")
         adapter.addFragment(ShowRapportPatientForDoctorFragment(), " Rapport ")
         viewPager!!.adapter = adapter
 //        search!!.setOnClickListener {
