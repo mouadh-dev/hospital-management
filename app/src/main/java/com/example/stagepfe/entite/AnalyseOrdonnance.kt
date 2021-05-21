@@ -1,5 +1,5 @@
 package com.example.stagepfe.entite
 
-//class AnalyseOrdonnance {
-// var descriptionAnalyse:String? = ""
-//}
+class AnalyseOrdonnance {
+var descriptionAnalyse:String? = ""
+}

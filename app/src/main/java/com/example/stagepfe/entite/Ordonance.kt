@@ -9,7 +9,7 @@ data class Ordonance constructor(
     var idPatient:String? = "",
     var idDoctor:String? = "",
     var medicament: ArrayList<MedicamentOrdonance> = arrayListOf<MedicamentOrdonance>(),
-    var analyse: ArrayList<String> = arrayListOf<String>(),
+    var analyse: ArrayList<AnalyseOrdonnance> = arrayListOf<AnalyseOrdonnance>(),
     var id:String? = "",
     var typeOrdonnance:String? ="",
     var dateOrdonanceSend:String? = "",
