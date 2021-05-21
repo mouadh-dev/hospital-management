@@ -9,15 +9,11 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
-import androidx.core.view.isEmpty
 import com.example.stagepfe.Adapters.Doctor.MyAdapterAnalyseReading
-import com.example.stagepfe.Adapters.Doctor.MyAdapterOrdonance
-import com.example.stagepfe.Dao.OrdonanceCallback
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.R
-import com.example.stagepfe.entite.AnalyseOrdonnance
-import com.example.stagepfe.entite.MedicamentOrdonance
+
 import com.example.stagepfe.entite.Ordonance
 import com.example.stagepfe.entite.UserItem
 import java.time.LocalDateTime
@@ -30,9 +26,9 @@ class AddAnalyseOrdonnanceActivity : AppCompatActivity() {
     var returnBack: ImageView? = null
     var descriptionAnalyses: EditText? = null
     var listViewOrdAnalyse: ListView? = null
-    var listOrdAnalyse = mutableListOf<AnalyseOrdonnance>()
-    var listMedicamentOrdonanceAnalyse = arrayListOf<AnalyseOrdonnance>()
-    var analyseOrdonnanace = AnalyseOrdonnance()
+    var listOrdAnalyse = mutableListOf<String>()
+    var listMedicamentOrdonanceAnalyse = arrayListOf<String>()
+    var analyseOrdonnanace = String
     var nameDoctorAnaylse: String? = null
     var userItem = UserItem()
     var idDoctor: String? = null
@@ -44,9 +40,11 @@ class AddAnalyseOrdonnanceActivity : AppCompatActivity() {
     var user = UserItem()
     var envoyerAnalyse: Button? = null
     var ordonance = Ordonance()
+    var idPatient:String? = null
     @RequiresApi(Build.VERSION_CODES.O)
     val currentDateTime = LocalDateTime.now()
-    private var testAnalyse: MyAdapterAnalyseReading? = null
+    private var analyseAdapter: MyAdapterAnalyseReading? = null
+    var descriptionAnalyse:String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,10 +60,22 @@ class AddAnalyseOrdonnanceActivity : AppCompatActivity() {
         descriptionAnalyses = findViewById(R.id.text_Analyse_Et)
         confirmerAnalyse = findViewById(R.id.Confirmer_Analyse_Button)
         envoyerAnalyse = findViewById(R.id.Add_Analyse_Button)
-
+        listViewOrdAnalyse = findViewById(R.id.ListOrdoAnalyse)
         initAdapter()
         var patient = intent.getStringExtra("namePatentToOrdonance")
-        nameDoctorAnalyseET!!.setText(patient)
+        userDao.populateSearch(object : UserCallback {
+            override fun onSuccess(userItem: UserItem) {
+                var fullName = userItem.nom + " " + userItem.prenom
+                nameDoctorAnalyseET!!.setText(fullName)
+                if (patient.equals(fullName)) {
+                    idPatient = userItem.id
+                }
+            }
+
+            override fun failure() {
+            }
+        })
+
         nameDoctorAnalyseET!!.isFocusable = false
 
         returnBack!!.setOnClickListener {
@@ -89,96 +99,95 @@ class AddAnalyseOrdonnanceActivity : AppCompatActivity() {
                 dialog(text)
             } else {
 
-                analyseOrdonnanace.descriptionAnalyse = descriptionAnalyses!!.text.toString()
-                listOrdAnalyse.add(analyseOrdonnanace)
-                testAnalyse!!.notifyDataSetChanged()
+                descriptionAnalyse = descriptionAnalyses!!.text.toString()
+                listOrdAnalyse.add(descriptionAnalyse!!)
+                analyseAdapter!!.notifyDataSetChanged()
 
                 descriptionAnalyses!!.text.clear()
             }
         }
 
 
-    ////////////////////////////////////////////add ordonance tofirebase////////////////////////////////
-
-    userDao.retrieveCurrentDataUser(
-    object : UserCallback {
-        override fun onSuccess(userItem: UserItem) {
-            idDoctor = userItem.id.toString()
+        ////////////////////////////////////////////add ordonance tofirebase////////////////////////////////
+         userDao.retrieveCurrentDataUser(
+          object : UserCallback {
+            override fun onSuccess(userItem: UserItem) {
+                idDoctor = userItem.id.toString()
             nameDoctorAnaylse = userItem.prenom + " " + userItem.nom
-            userDao.populateSearch(object : UserCallback {
-                @SuppressLint("NewApi")
-                override fun onSuccess(userItem: UserItem) {
-                    var patient = intent.getStringExtra("namePatentToOrdonance")
-                    var fullname = userItem.nom + " " + userItem.prenom
-                    if (patient.equals(fullname)) {
-                        namePatientAnaylse = patient
-                        idPAtient = userItem.id.toString()
-                        println("mouadh :: " + namePatientAnaylse + " !! " + idPAtient)
-                        ordonance.idDoctor = idDoctor
-                        ordonance.nameDoctorOrd = nameDoctorAnaylse
-                        ordonance.namepatientOrdo = namePatientAnaylse
-                        ordonance.idPatient = idPAtient
-                        ordonance.analyse = listMedicamentOrdonanceAnalyse
-                        ordonance.taken = "pas encore"
-                        ordonance.color = Color.RED.toString()
-                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                            ordonance.dateOrdonanceSend =
-                                currentDateTime.format(DateTimeFormatter.ISO_DATE)
-                        }
-                        ordonance.hourOrdonanceSend =
-                            currentDateTime.format(DateTimeFormatter.ISO_TIME)
-                    }
+          userDao.populateSearch(object : UserCallback {
+             @SuppressLint("NewApi")
+              override fun onSuccess(userItem: UserItem) {
+                 var patient = intent.getStringExtra("namePatentToOrdonance")
+                 var fullname = userItem.nom + " " + userItem.prenom
+                 if (patient.equals(fullname)) {
+                     namePatientAnaylse = patient
+                     idPAtient = userItem.id.toString()
+                     println("mouadh :: " + namePatientAnaylse + " !! " + idPAtient)
+                     ordonance.idDoctor = idDoctor
+                      ordonance.nameDoctorOrd = nameDoctorAnaylse
+                      ordonance.namepatientOrdo = namePatientAnaylse
+                     ordonance.idPatient = idPAtient
+                     ordonance.analyse = listMedicamentOrdonanceAnalyse
+                      ordonance.taken = "pas encore"
+                      ordonance.color = Color.RED.toString()
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                        ordonance.dateOrdonanceSend =
+                           currentDateTime.format(DateTimeFormatter.ISO_DATE)
+                     }
+                      ordonance.hourOrdonanceSend =
+                          currentDateTime.format(DateTimeFormatter.ISO_TIME)
+                }
 
                 }
 
-                override fun failure() {
+              override fun failure() {
 
-                }
-            })
+                      }
+         })
+    }
+
+         override fun failure() {
         }
+        })
+       // envoyerAnalyse!!.setOnClickListener {
+          //  if (listViewOrdAnalyse!!.isEmpty()) {
+           //     var text = "veuillez ajouter des medicaments"
+            //    dialog(text)
 
-        override fun failure() {
-        }
-    })
-        envoyerAnalyse!!.setOnClickListener {
-            if (listViewOrdAnalyse!!.isEmpty()) {
-                var text = "veuillez ajouter des medicaments"
-                dialog(text)
-
-            } else {
-                filAnalyse()
-                userDao.insertordonance(idDoctor!!, idPAtient!!, ordonance, user,
-                    object : OrdonanceCallback {
-                        override fun successOrdonance(ordonance: Ordonance) {
-//                               startActivity(Intent(this@AddOrdonanceDoctorActivity,ShowInfoPatientForDoctorActivity::class.java))
-                            Toast.makeText(
-                                applicationContext,
-                                "add ordo avec success",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-
-                        override fun failureOrdonance() {
-
-                        }
-                    })
-            }
-        }
+            //} else {
+             //   filAnalyse()
+                // userDao.insertordonance(idDoctor!!, idPAtient!!, ordonance, user,
+                //  object : OrdonanceCallback {
+                //      override fun successOrdonance(ordonance: Ordonance) {
+//                //               startActivity(Intent(this@AddOrdonanceDoctorActivity,ShowInfoPatientForDoctorActivity::class.java))
+                //        Toast.makeText(
+                //              applicationContext,
+                //              "add ordo avec success",
+                //              Toast.LENGTH_SHORT
+                //          ).show()
+                //      }
+//
+                //                      override fun failureOrdonance() {
+//
+                //                      }
+                //  })
+              //  }
+               // }
 }
 
     private fun filAnalyse() {
-        for (i in 0 until testAnalyse!!.count) {
-            val item = AnalyseOrdonnance() // new one
-            testAnalyse!!.getItem(i)
-            var view = testAnalyse!!.getView(
+        for (i in 0 until analyseAdapter!!.count) {
+            val item = descriptionAnalyse // new one
+            analyseAdapter!!.getItem(i)
+            var view = analyseAdapter!!.getView(
                 i,
                 findViewById<TextView>(R.id.name_medicament_list),
                 listViewOrdAnalyse!!
             )
 
-            item.descriptionAnalyse =
+            descriptionAnalyse =
                 view.findViewById<TextView>(R.id.description_analyse_list).text.toString()
-            listMedicamentOrdonanceAnalyse.add(item)
+            listMedicamentOrdonanceAnalyse.add(item!!)
         }
     }
 
@@ -199,7 +208,7 @@ class AddAnalyseOrdonnanceActivity : AppCompatActivity() {
     }
 
     private fun initAdapter() {
-        testAnalyse = MyAdapterAnalyseReading(this, R.layout.analyse_add_list, listOrdAnalyse)
-        listViewOrdAnalyse!!.adapter = testAnalyse
+        analyseAdapter = MyAdapterAnalyseReading(this, R.layout.analyse_add_list, listOrdAnalyse)
+        listViewOrdAnalyse!!.adapter = analyseAdapter
     }
 }
