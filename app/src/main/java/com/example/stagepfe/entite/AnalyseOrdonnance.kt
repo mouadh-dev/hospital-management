@@ -1,4 +1,4 @@
-//package com.example.stagepfe.entite
+package com.example.stagepfe.entite
 
 //class AnalyseOrdonnance {
 // var descriptionAnalyse:String? = ""

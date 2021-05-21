@@ -101,7 +101,7 @@ class UserDao : IGestionUser {
         var jLoginDatabase = database.reference.child("users").child(uid)
         jLoginDatabase.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val userItem = dataSnapshot.getValue(UserItem::class.java)
+                var userItem = dataSnapshot.getValue(UserItem::class.java)
                 if (userItem != null) {
                     responseCallback.onSuccess(userItem)
                 }
