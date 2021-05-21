@@ -37,7 +37,7 @@ class MyAdapterOrdonancePharmacien(
         checkBox.setFocusable(false)
         checkBox.setFocusableInTouchMode(false);
         checkBox.isChecked = false
-        checkBox.setChecked(MedicamentOrdonance .isChecked());
+//        checkBox.setChecked(MedicamentOrdonance .isChecked());
 
 
         return view
