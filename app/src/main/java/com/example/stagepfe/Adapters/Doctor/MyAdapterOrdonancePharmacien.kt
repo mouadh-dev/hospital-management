@@ -1,19 +1,22 @@
 package com.example.stagepfe.Adapters.Doctor
 
 import android.content.Context
+import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.CheckBox
 import android.widget.TextView
-import com.example.stagepfe.Models.Doctors.ModelordonanceReading
 import com.example.stagepfe.R
 import com.example.stagepfe.entite.MedicamentOrdonance
-import com.example.stagepfe.entite.Ordonance
 
-class MyAdapterOrdonancePharmacien(var mCtx: Context, var resources:Int, var items:List<MedicamentOrdonance>): BaseAdapter()
+
+class MyAdapterOrdonancePharmacien(
+    var mCtx: Context,
+    var resources: Int,
+    var items: List<MedicamentOrdonance>
+): BaseAdapter()
 {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var layoutInflater: LayoutInflater = LayoutInflater.from(mCtx)
@@ -31,11 +34,16 @@ class MyAdapterOrdonancePharmacien(var mCtx: Context, var resources:Int, var ite
         nameMedicament.text = mItem.nameMedicament
         quantity.text = mItem.quantity
         descriptionOrd.text = mItem.description
+        checkBox.setFocusable(false)
+        checkBox.setFocusableInTouchMode(false);
+        checkBox.isChecked = false
+        checkBox.setChecked(MedicamentOrdonance .isChecked());
 
 
         return view
 
     }
+
 
     override fun getCount(): Int {
         return items.size
