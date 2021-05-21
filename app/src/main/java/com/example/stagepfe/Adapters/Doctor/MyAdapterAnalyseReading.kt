@@ -7,10 +7,9 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import com.example.stagepfe.R
-import com.example.stagepfe.entite.AnalyseOrdonnance
 
 
-class MyAdapterAnalyseReading (var mCtx: Context, var resources:Int, var items:List<AnalyseOrdonnance>): BaseAdapter()
+class MyAdapterAnalyseReading (var mCtx: Context, var resources:Int, var items:List<String>): BaseAdapter()
 {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var layoutInflater: LayoutInflater = LayoutInflater.from(mCtx)
@@ -19,8 +18,8 @@ class MyAdapterAnalyseReading (var mCtx: Context, var resources:Int, var items:L
         var descriptionAnalyse: TextView = view.findViewById(R.id.description_analyse_list)
 
 
-        var mItem: AnalyseOrdonnance = items[position]
-        descriptionAnalyse.text = mItem.descriptionAnalyse
+        var mItem: String = items[position]
+        descriptionAnalyse.text = descriptionAnalyse.text.toString()
         return view
 
     }
