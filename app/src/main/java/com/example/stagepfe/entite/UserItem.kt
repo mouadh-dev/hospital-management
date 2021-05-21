@@ -49,8 +49,9 @@ var rapports: HashMap<String,Rapports>? = null
         parcel.readString(),
         parcel.readString(),
         TODO("rendezVous"),
-        //TODO("profilPhotos"),
-        TODO("ordonance")
+        TODO("ordonance"),
+        parcel.readString(),
+        TODO("rapports")
     ) {
     }
 
@@ -72,6 +73,7 @@ var rapports: HashMap<String,Rapports>? = null
         parcel.writeString(speciality)
         parcel.writeString(bio)
         parcel.writeString(id)
+        parcel.writeString(profilPhotos)
     }
 
     override fun describeContents(): Int {
@@ -87,6 +89,7 @@ var rapports: HashMap<String,Rapports>? = null
             return arrayOfNulls(size)
         }
     }
+
 
 }
 

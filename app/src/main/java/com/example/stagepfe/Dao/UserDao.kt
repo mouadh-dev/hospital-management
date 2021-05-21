@@ -383,37 +383,6 @@ class UserDao : IGestionUser {
 
     }
 
-    ////////////////////////////////////////////get Ordonance///////////////////////////////////////
-//    fun getOrdonance(responseCallback: getOrdonanceCallback) {
-//        userRef.addListenerForSingleValueEvent(object : ValueEventListener {
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//                if (snapshot.exists()) {
-//                    for (ds in snapshot.children) {
-//                        var userItem = ds.getValue(UserItem::class.java)
-//
-//
-//                            if (userItem!!.ordonance != null) {
-//                                var ordonance = userItem.ordonance
-//                                for (entry in ordonance!!.entries) {
-//                                    var ord = entry.value
-//                                    var medicament = ord.medicament
-//                                    for (med in medicament) {
-//
-//                                        responseCallback.successOrdonance(ord,med)
-//                                    }
-//
-//                                }
-//                            }
-//
-//                    }
-//                }
-//            }
-//
-//            override fun onCancelled(error: DatabaseError) {
-//                responseCallback.failureOrdonance()
-//            }
-//        })
-//    }
     ////////////////////////////////////////////remove ordonance/////////////////////////////////////
     fun removeOrdonance(iddoc: String,idPat: String,idOrdonance:String,ordonance: Ordonance, responseCallback: ResponseCallback) {
 
@@ -427,6 +396,7 @@ class UserDao : IGestionUser {
             }
         })
     }
+
 
     ////////////////////////////////////////////change password/////////////////////////////////////
     fun changePassword(
