@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.CheckBox
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.example.stagepfe.R
+import com.example.stagepfe.entite.CheckedModel
 import com.example.stagepfe.entite.MedicamentOrdonance
 
 
@@ -29,14 +31,19 @@ class MyAdapterOrdonancePharmacien(
         var checkBox:CheckBox = view.findViewById(R.id.checkBox_Pharmacien)
 
 
+
+
+
         var mItem: MedicamentOrdonance = items[position]
 
         nameMedicament.text = mItem.nameMedicament
         quantity.text = mItem.quantity
         descriptionOrd.text = mItem.description
-        checkBox.setFocusable(false)
-        checkBox.setFocusableInTouchMode(false);
-        checkBox.isChecked = false
+        mItem.isSelected = !checkBox.isChecked
+//        checkBox.setFocusable(false)
+//        checkBox.setFocusableInTouchMode(false);
+//        checkBox.isChecked = false
+
 //        checkBox.setChecked(MedicamentOrdonance .isChecked());
 
 
