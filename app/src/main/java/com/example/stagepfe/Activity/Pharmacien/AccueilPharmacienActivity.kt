@@ -8,13 +8,9 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
 import android.view.View.VISIBLE
-import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.view.iterator
 import com.example.stagepfe.Activity.Authentication.AuthenticationFragmentContainerActivity
-import com.example.stagepfe.Adapters.Doctor.MyAdapterOrdonance
 import com.example.stagepfe.Adapters.Doctor.MyAdapterOrdonancePharmacien
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
@@ -284,7 +280,6 @@ class AccueilPharmacienActivity : AppCompatActivity(){
                 } else {
 
                     var ordonance = Gson().fromJson(result.contents, Ordonance::class.java)
-
                     val v = View.inflate(this, R.layout.dialog_ordonance, null)
                     val builder = AlertDialog.Builder(this)
                     builder.setView(v)
@@ -296,23 +291,32 @@ class AccueilPharmacienActivity : AppCompatActivity(){
                     dialog.findViewById<TextView>(R.id.nameDoctor).setText("DR" + " " + ordonance.nameDoctorOrd)
                     dialog.findViewById<TextView>(R.id.namePatient).setText(ordonance.namepatientOrdo)
                     dialog.findViewById<Button>(R.id.btn_remove).setText("D'accord")
-
                      for (medicament in ordonance.medicament) {
                         listMedicament.add(medicament)
                      }
-                    adapterMedicament = MyAdapterOrdonancePharmacien(this, R.layout.ord_add_list, listMedicament)
+                    adapterMedicament = MyAdapterOrdonancePharmacien(
+                        this,
+                        R.layout.ordonance_to_pharmacien,
+                        listMedicament
+                    )
                     dialog.findViewById<ListView>(R.id.List_Medicament_to_show)!!.adapter = adapterMedicament
                     adapterMedicament!!.notifyDataSetChanged()
-
                     dialog.findViewById<Button>(R.id.btn_remove).setOnClickListener {
-
+                        for (i in 0 until adapterMedicament!!.getCount()) {
+                            val medicament = adapterMedicament!!.getItem(i)
+                            println("mouad :::: " + medicament)
+//                            if (planet.isChecked()) {
+                                Toast.makeText(
+                                    this, medicament.toString() + " is Checked!!",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+//                            }
+                        }
                         dialog.dismiss()
                     }
                     dialog.setOnDismissListener {
                         listMedicament.clear()
                     }
-
-
                 }
             } else {
                 super.onActivityResult(requestCode, resultCode, data)
