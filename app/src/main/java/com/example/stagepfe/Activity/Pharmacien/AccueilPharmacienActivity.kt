@@ -6,14 +6,11 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.View
 import android.view.View.VISIBLE
 import android.widget.*
-import android.widget.AdapterView.OnItemClickListener
 import androidx.appcompat.app.AppCompatActivity
 import com.example.stagepfe.Activity.Authentication.AuthenticationFragmentContainerActivity
-import com.example.stagepfe.Adapters.Doctor.MyAdapterOrdonance
 import com.example.stagepfe.Adapters.Doctor.MyAdapterOrdonancePharmacien
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
@@ -311,20 +308,31 @@ class AccueilPharmacienActivity : AppCompatActivity(){
 
                     }
                     dialog.findViewById<Button>(R.id.btn_remove).setOnClickListener {
-
                         for (i in 0 until adapterMedicament!!.count) {
-                            adapterMedicament!!.getItem(i)
-                            val item = MedicamentOrdonance() // new one
-//                            item.isSelected = findViewById<CheckBox>(R.id.checkBox_Pharmacien).isChecked
-                            adapterMedicament!!.items[i].isSelected
-//                            if (adapterMedicament!!.items[i].isSelected!!) {
-                                item.nameMedicament = findViewById<TextView>(R.id.name_medicament_Pharmacien).text.toString()
+                            var view = adapterMedicament!!.getView(
+                                i,
+                                findViewById<LinearLayout>(R.id.checkBox_Pharmacien),
+                                listView!!
+                            )
+                            val medicmaent: MedicamentOrdonance = listMedicament.get(i)
+                            if (medicmaent.isSelected!! ) {
+
+                            val medicament: MedicamentOrdonance = adapterMedicament!!.getItem(i) as MedicamentOrdonance
+                            Toast.makeText(
+                                applicationContext,
+                                "Clicked on Row: " + medicament.nameMedicament,
+                                Toast.LENGTH_LONG
+                            ).show()
+
+                            view.findViewById<CheckBox>(R.id.checkBox_Pharmacien).setChecked(medicmaent.isSelected!!)
+                            view.findViewById<CheckBox>(R.id.checkBox_Pharmacien).setTag(medicmaent)
+                        }else{
                                 Toast.makeText(
-                                    this, item.nameMedicament + " is Checked!!",
-                                    Toast.LENGTH_SHORT
+                                    applicationContext,
+                                    "Clicked on Row: nothing",
+                                    Toast.LENGTH_LONG
                                 ).show()
-                                println("mouadh ::::" + item.nameMedicament.toString())
-//                            }
+                            }
                         }
                         dialog.dismiss()
                     }

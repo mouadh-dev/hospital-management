@@ -189,8 +189,6 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
                 findViewById<TextView>(R.id.name_medicament_list),
                 listViewOrd!!
             )
-
-
             item.nameMedicament =
                 view.findViewById<TextView>(R.id.name_medicament_list).text.toString()
             item.quantity =

@@ -1,24 +1,23 @@
 package com.example.stagepfe.Adapters.Doctor
 
 import android.content.Context
-import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.CheckBox
 import android.widget.TextView
-import androidx.recyclerview.widget.RecyclerView
+import android.widget.Toast
 import com.example.stagepfe.R
-import com.example.stagepfe.entite.CheckedModel
 import com.example.stagepfe.entite.MedicamentOrdonance
 
 
 class MyAdapterOrdonancePharmacien(
     var mCtx: Context,
     var resources: Int,
-    var items: List<MedicamentOrdonance>
-): BaseAdapter()
+    var items: List<MedicamentOrdonance>,
+
+    ): BaseAdapter()
 {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var layoutInflater: LayoutInflater = LayoutInflater.from(mCtx)
@@ -39,13 +38,22 @@ class MyAdapterOrdonancePharmacien(
         nameMedicament.text = mItem.nameMedicament
         quantity.text = mItem.quantity
         descriptionOrd.text = mItem.description
-        mItem.isSelected = !checkBox.isChecked
+        checkBox.setOnClickListener(View.OnClickListener { v ->
+            Toast.makeText(
+                mCtx,
+                "Clicked on Checkbox: " + " is " + checkBox.isChecked,
+                Toast.LENGTH_LONG
+            ).show()
+            mItem.isSelected = checkBox.isChecked
+        })
+//        checkBox.setFocusableInTouchMode(false)
 //        checkBox.setFocusable(false)
-//        checkBox.setFocusableInTouchMode(false);
-//        checkBox.isChecked = false
 
-//        checkBox.setChecked(MedicamentOrdonance .isChecked());
+//        mItem.isSelected = checkBox.isChecked
 
+//        val listViewItemDto: ListViewItemDTO = listViewItemDtoList.get(itemIndex)
+//        view.getItemCheckbox().setChecked(listViewItemDto.isChecked())
+//        view.getItemTextView().setText(listViewItemDto.getItemText())
 
         return view
 
@@ -64,4 +72,5 @@ class MyAdapterOrdonancePharmacien(
     override fun getItemId(position: Int): Long {
         return position.toLong()
     }
+
 }
