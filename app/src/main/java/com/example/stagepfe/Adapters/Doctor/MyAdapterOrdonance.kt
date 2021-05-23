@@ -23,11 +23,10 @@ class MyAdapterOrdonance(
         var layoutInflater: LayoutInflater = LayoutInflater.from(mCtx)
         var view: View = layoutInflater.inflate(resources, null)
 
-
         var nameMedicament: TextView = view.findViewById(R.id.name_medicament_list)
         var quantity: TextView = view.findViewById(R.id.quantity_medicament_list)
         var descriptionOrd: TextView = view.findViewById(R.id.description_ord_list)
-        var checkBox: CheckBox = view.findViewById(R.id.checkBox_Pharmacien)
+//       var checkBox: CheckBox = view.findViewById(R.id.checkBox_Pharmacien)
 
 
         var mItem: MedicamentOrdonance = items[position]
@@ -35,8 +34,6 @@ class MyAdapterOrdonance(
         nameMedicament.text = mItem.nameMedicament
         quantity.text = mItem.quantity
         descriptionOrd.text = mItem.description
-
-
 
         return view
 

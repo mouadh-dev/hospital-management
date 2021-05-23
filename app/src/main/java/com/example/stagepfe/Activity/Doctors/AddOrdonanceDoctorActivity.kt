@@ -70,7 +70,6 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
 //        listOrd = arrayListOf<ModelOrdonance>()
         initAdapter()
 
-
         returnBack!!.setOnClickListener {
 
 //            var intent = Intent(this, ShowInfoPatientForDoctorActivity::class.java)

@@ -2,6 +2,7 @@ package com.example.stagepfe.Activity.Doctors
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -9,10 +10,13 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
+import androidx.core.view.isEmpty
 import com.example.stagepfe.Adapters.Doctor.MyAdapterAnalyseReading
+import com.example.stagepfe.Dao.OrdonanceCallback
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.R
+import com.example.stagepfe.entite.AnalyseOrdonnance
 
 import com.example.stagepfe.entite.Ordonance
 import com.example.stagepfe.entite.UserItem
@@ -24,11 +28,11 @@ class AddAnalyseOrdonnanceActivity : AppCompatActivity() {
     private var addAnalyse: Button? = null
     private var nameDoctorAnalyseET: EditText? = null
     var returnBack: ImageView? = null
-    var descriptionAnalyses: EditText? = null
+    var textAnalyses: EditText? = null
     var listViewOrdAnalyse: ListView? = null
-    var listOrdAnalyse = mutableListOf<String>()
-    var listMedicamentOrdonanceAnalyse = arrayListOf<String>()
-    var analyseOrdonnanace = String
+    var listOrdAnalyse = mutableListOf<AnalyseOrdonnance>()
+    var listMedicamentOrdonanceAnalyse = arrayListOf<AnalyseOrdonnance>()
+    var analyseOrdonnance = AnalyseOrdonnance()
     var nameDoctorAnaylse: String? = null
     var userItem = UserItem()
     var idDoctor: String? = null
@@ -57,7 +61,7 @@ class AddAnalyseOrdonnanceActivity : AppCompatActivity() {
         addAnalyse = findViewById(R.id.Add_Analyse_Button)
         nameDoctorAnalyseET = findViewById(R.id.Name_Doctor_analyse)
         returnBack = findViewById(R.id.return_back_Ord_analyse)
-        descriptionAnalyses = findViewById(R.id.text_Analyse_Et)
+        textAnalyses = findViewById(R.id.text_Analyse_Et)
         confirmerAnalyse = findViewById(R.id.Confirmer_Analyse_Button)
         envoyerAnalyse = findViewById(R.id.Add_Analyse_Button)
         listViewOrdAnalyse = findViewById(R.id.ListOrdoAnalyse)
@@ -94,20 +98,18 @@ class AddAnalyseOrdonnanceActivity : AppCompatActivity() {
         })
         ////////////////////////////////////////////listView Analyse////////////////////////////////////
         confirmerAnalyse!!.setOnClickListener {
-            if (descriptionAnalyses!!.text.isEmpty()) {
+            if (textAnalyses!!.text.isEmpty()) {
                 var text = "veuillez ajouter des analyses"
                 dialog(text)
             } else {
+                analyseOrdonnance.descriptionAnalyse = textAnalyses!!.text.toString()
+                listOrdAnalyse.add(analyseOrdonnance)
 
-                descriptionAnalyse = descriptionAnalyses!!.text.toString()
-                listOrdAnalyse.add(descriptionAnalyse!!)
                 analyseAdapter!!.notifyDataSetChanged()
 
-                descriptionAnalyses!!.text.clear()
+                textAnalyses!!.text.clear()
             }
         }
-
-
         ////////////////////////////////////////////add ordonance tofirebase////////////////////////////////
          userDao.retrieveCurrentDataUser(
           object : UserCallback {
@@ -149,45 +151,45 @@ class AddAnalyseOrdonnanceActivity : AppCompatActivity() {
          override fun failure() {
         }
         })
-       // envoyerAnalyse!!.setOnClickListener {
-          //  if (listViewOrdAnalyse!!.isEmpty()) {
-           //     var text = "veuillez ajouter des medicaments"
-            //    dialog(text)
+        envoyerAnalyse!!.setOnClickListener {
+            if (listViewOrdAnalyse!!.isEmpty()) {
+           var text = "veuillez ajouter des analyses"
+                dialog(text)
 
-            //} else {
-             //   filAnalyse()
-                // userDao.insertordonance(idDoctor!!, idPAtient!!, ordonance, user,
-                //  object : OrdonanceCallback {
-                //      override fun successOrdonance(ordonance: Ordonance) {
-//                //               startActivity(Intent(this@AddOrdonanceDoctorActivity,ShowInfoPatientForDoctorActivity::class.java))
-                //        Toast.makeText(
-                //              applicationContext,
-                //              "add ordo avec success",
-                //              Toast.LENGTH_SHORT
-                //          ).show()
-                //      }
+            } else {
+                filAnalyse()
+                 userDao.insertordonance(idDoctor!!, idPAtient!!, ordonance, user,
+                 object : OrdonanceCallback {
+                     override fun successOrdonance(ordonance: Ordonance) {
+                               startActivity(Intent(this@AddAnalyseOrdonnanceActivity,ShowInfoPatientForDoctorActivity::class.java))
+                        Toast.makeText(
+                              applicationContext,
+                              "add ordo avec success",
+                              Toast.LENGTH_SHORT
+                         ).show()
+                      }
 //
-                //                      override fun failureOrdonance() {
+                                      override fun failureOrdonance() {
 //
-                //                      }
-                //  })
-              //  }
-               // }
+                                      }
+                  })
+               }
+                }
 }
 
     private fun filAnalyse() {
         for (i in 0 until analyseAdapter!!.count) {
-            val item = descriptionAnalyse // new one
+            val item = AnalyseOrdonnance() // new one
             analyseAdapter!!.getItem(i)
             var view = analyseAdapter!!.getView(
                 i,
-                findViewById<TextView>(R.id.name_medicament_list),
+                findViewById<TextView>(R.id.description_analyse_list),
                 listViewOrdAnalyse!!
             )
 
-            descriptionAnalyse =
+            item.descriptionAnalyse =
                 view.findViewById<TextView>(R.id.description_analyse_list).text.toString()
-            listMedicamentOrdonanceAnalyse.add(item!!)
+            listMedicamentOrdonanceAnalyse.add(item)
         }
     }
 
