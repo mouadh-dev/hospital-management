@@ -1,5 +1,6 @@
 package com.example.stagepfe.Activity.Pharmacien
 
+import android.R.attr.data
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
@@ -31,7 +32,7 @@ import com.google.zxing.integration.android.IntentIntegrator
 import java.util.*
 
 
-class AccueilPharmacienActivity : AppCompatActivity(){
+class AccueilPharmacienActivity : AppCompatActivity() {
 
     var navigationPharmacien: BottomNavigationView? = null
     private val pickImage = 100
@@ -39,19 +40,88 @@ class AccueilPharmacienActivity : AppCompatActivity(){
     var imageProfilPharmacien: ImageView? = null
     var reclamationPharmacien: LinearLayout? = null
     var homePharmacien: LinearLayout? = null
-    var changeUser:ImageView? = null
+    var changeUser: ImageView? = null
     var userItem = UserItem()
     var userDao = UserDao()
-    var cameraButton:ImageView? = null
+    var cameraButton: ImageView? = null
     var adapterMedicament: MyAdapterOrdonancePharmacien? = null
+    var text: String? = ""
 
     val listMedicament = mutableListOf<MedicamentOrdonance>()
     //var profilPhotos= ProfilPhoto()
 
+    // Get the results:
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == Activity.RESULT_OK) {
+            val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
+            if (result != null) {
+                if (result.contents == null) {
+                    Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show()
+                } else {
+
+                    var ordonance = Gson().fromJson(result.contents, Ordonance::class.java)
+                    val v = View.inflate(this, R.layout.dialog_ordonance, null)
+                    val builder = AlertDialog.Builder(this)
+                    builder.setView(v)
+                    val dialog = builder.create()
+                    dialog.show()
+                    var listView = dialog.findViewById<ListView>(R.id.List_Medicament_to_show)
+                    listView.visibility = VISIBLE
+                    dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+                    dialog.findViewById<TextView>(R.id.nameDoctor)
+                        .setText("DR" + " " + ordonance.nameDoctorOrd)
+                    dialog.findViewById<TextView>(R.id.namePatient)
+                        .setText(ordonance.namepatientOrdo)
+                    dialog.findViewById<Button>(R.id.btn_remove).setText("D'accord")
+                    for (medicament in ordonance.medicament) {
+                        listMedicament.add(medicament)
+                    }
+                    adapterMedicament = MyAdapterOrdonancePharmacien(
+                        this,
+                        R.layout.ordonance_to_pharmacien,
+                        listMedicament
+                    )
+                    dialog.findViewById<ListView>(R.id.List_Medicament_to_show)!!.adapter =
+                        adapterMedicament
+                    adapterMedicament!!.notifyDataSetChanged()
+                    listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE)
+                    listView.setOnItemClickListener { parent, view, position, id ->
 
 
+                    }
+                    dialog.setCancelable(false)
+                    dialog.findViewById<Button>(R.id.btn_remove).setOnClickListener {
+                        for (i in 0 until adapterMedicament!!.count) {
+                            var view = adapterMedicament!!.getView(
+                                i,
+                                findViewById<LinearLayout>(R.id.checkBox_Pharmacien),
+                                listView!!
+                            )
+                            val medicmaent: MedicamentOrdonance = listMedicament.get(i)
+                            if (!medicmaent.isSelected!!) {
+                                val medicament: MedicamentOrdonance =
+                                    adapterMedicament!!.getItem(i) as MedicamentOrdonance
+                                text += medicament.nameMedicament + "\n" + medicament.quantity + " " + "fois par jours" + "\n" + medicament.description + "\n"
+                            }
 
-
+                        }
+                        Toast.makeText(
+                            applicationContext,
+                            text,
+                            Toast.LENGTH_LONG
+                        ).show()
+                        text = ""
+                        dialog.dismiss()
+                    }
+                    dialog.setOnDismissListener {
+                        listMedicament.clear()
+                    }
+                }
+            } else {
+                super.onActivityResult(requestCode, resultCode, data)
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,19 +146,21 @@ class AccueilPharmacienActivity : AppCompatActivity(){
 // this paramter will make your HUAWEI phone works great!
 //        mScannerView!!.setAspectTolerance(0.5f);
 
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
+//////////////////////////////////////////////////////////////////////////////////////////////////
         imageProfilPharmacien!!.setOnClickListener {
             val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
             startActivityForResult(gallery, pickImage)
             //updateImageProfil()
 
-           // userDao.insertPhoto(profilPhotos, userItem, object : ResponseCallback {
+            // userDao.insertPhoto(profilPhotos, userItem, object : ResponseCallback {
             //   override fun success() {
             //      dialog()
-           //  }
+            //  }
             //  override fun success(medicament: String) {
             //  }
-        //  override fun failure() {
+            //  override fun failure() {
             //  }
             //   })
 
@@ -194,155 +266,82 @@ class AccueilPharmacienActivity : AppCompatActivity(){
 //    }
     ////////////////////////////////////Storage image ///////////////////////////////////////////////////////
 
-        private fun uploadImageToFirebase(imageUri: Uri?) {
+    private fun uploadImageToFirebase(imageUri: Uri?) {
         if (imageUri != null) {
-        val fileName = UUID.randomUUID().toString() +".jpg"
+            val fileName = UUID.randomUUID().toString() + ".jpg"
 
-         val database = FirebaseDatabase.getInstance()
-         val refStorage = FirebaseStorage.getInstance().reference.child("images/$fileName")
+            val database = FirebaseDatabase.getInstance()
+            val refStorage = FirebaseStorage.getInstance().reference.child("images/$fileName")
 
-         refStorage.putFile(imageUri)
-         .addOnSuccessListener(
-             OnSuccessListener<UploadTask.TaskSnapshot> { taskSnapshot ->
-                 taskSnapshot.storage.downloadUrl.addOnSuccessListener {
-                     val imageUrl = it.toString()
-                     saveToFirebaseDataBase(fileName)
+            refStorage.putFile(imageUri)
+                .addOnSuccessListener(
+                    OnSuccessListener<UploadTask.TaskSnapshot> { taskSnapshot ->
+                        taskSnapshot.storage.downloadUrl.addOnSuccessListener {
+                            val imageUrl = it.toString()
+                            saveToFirebaseDataBase(fileName)
 
-                 }
-             })
+                        }
+                    })
 
-          ?.addOnFailureListener(OnFailureListener { e ->
-              print(e.message)
-          })
-          }
+                ?.addOnFailureListener(OnFailureListener { e ->
+                    print(e.message)
+                })
+        }
 
 
-         }
+    }
 
-   private fun saveToFirebaseDataBase(fileName: String) {
-      //  val mAuth = FirebaseAuth.getInstance()
+    private fun saveToFirebaseDataBase(fileName: String) {
+        //  val mAuth = FirebaseAuth.getInstance()
         //val userRef = FirebaseDatabase.getInstance().getReference("users")
         //userRef.setValue(mAuth, imageUri)
-          //  .addOnSuccessListener {
+        //  .addOnSuccessListener {
 
-            //}
-            //.addOnFailureListener {
+        //}
+        //.addOnFailureListener {
 
-            //}
-       userDao.retrieveCurrentDataUser(object : UserCallback {
-           override fun onSuccess(userItem: UserItem) {
-               var user = UserItem()
-               user.profilPhotos = userItem.profilPhotos.toString()
-               user.nom = userItem.nom.toString()
-               user.prenom = userItem.prenom.toString()
-               user.adresse = userItem.adresse.toString()
-               user.phonenumber = userItem.phonenumber.toString()
-               user.groupesanguin = userItem.groupesanguin.toString()
-               user.id = userItem.id.toString()
-               user.mail = userItem.mail.toString()
-               user.matricule = userItem.matricule.toString()
-               user.numCIN = userItem.numCIN.toString()
-               user.rendezVous = userItem.rendezVous
-               user.role = userItem.role
-               user.sexe = userItem.sexe.toString()
-               user.speciality = userItem.speciality
-               user.password = userItem.password
-               user.confirmpassword = userItem.confirmpassword
-               user.maladi = userItem.maladi.toString()
-               user.medicament = userItem.medicament
-               user.ordonance = userItem.ordonance
-               user.rapports = userItem.rapports
-               user.profilPhotos = fileName
-               userDao.updateUser(userItem.id.toString(), user,
-                   object : UserCallback {
-                       override fun onSuccess(userItem: UserItem) {
+        //}
+        userDao.retrieveCurrentDataUser(object : UserCallback {
+            override fun onSuccess(userItem: UserItem) {
+                var user = UserItem()
+                user.profilPhotos = userItem.profilPhotos.toString()
+                user.nom = userItem.nom.toString()
+                user.prenom = userItem.prenom.toString()
+                user.adresse = userItem.adresse.toString()
+                user.phonenumber = userItem.phonenumber.toString()
+                user.groupesanguin = userItem.groupesanguin.toString()
+                user.id = userItem.id.toString()
+                user.mail = userItem.mail.toString()
+                user.matricule = userItem.matricule.toString()
+                user.numCIN = userItem.numCIN.toString()
+                user.rendezVous = userItem.rendezVous
+                user.role = userItem.role
+                user.sexe = userItem.sexe.toString()
+                user.speciality = userItem.speciality
+                user.password = userItem.password
+                user.confirmpassword = userItem.confirmpassword
+                user.maladi = userItem.maladi.toString()
+                user.medicament = userItem.medicament
+                user.ordonance = userItem.ordonance
+                user.rapports = userItem.rapports
+                user.profilPhotos = fileName
+                userDao.updateUser(userItem.id.toString(), user,
+                    object : UserCallback {
+                        override fun onSuccess(userItem: UserItem) {
 
-                       }
-
-                       override fun failure() {
-                       }
-                   })
-           }
-
-           override fun failure() {
-           }
-       })
-
-    }
-
-
-    // Get the results:
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (resultCode == Activity.RESULT_OK) {
-            val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
-            if (result != null) {
-                if (result.contents == null) {
-                    Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show()
-                } else {
-
-                    var ordonance = Gson().fromJson(result.contents, Ordonance::class.java)
-                    val v = View.inflate(this, R.layout.dialog_ordonance, null)
-                    val builder = AlertDialog.Builder(this)
-                    builder.setView(v)
-                    val dialog = builder.create()
-                    dialog.show()
-                    var listView = dialog.findViewById<ListView>(R.id.List_Medicament_to_show)
-                    listView.visibility = VISIBLE
-                    dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-                    dialog.findViewById<TextView>(R.id.nameDoctor).setText("DR" + " " + ordonance.nameDoctorOrd)
-                    dialog.findViewById<TextView>(R.id.namePatient).setText(ordonance.namepatientOrdo)
-                    dialog.findViewById<Button>(R.id.btn_remove).setText("D'accord")
-                     for (medicament in ordonance.medicament) {
-                        listMedicament.add(medicament)
-                     }
-                    adapterMedicament = MyAdapterOrdonancePharmacien(
-                        this,
-                        R.layout.ordonance_to_pharmacien,
-                        listMedicament
-                    )
-                    dialog.findViewById<ListView>(R.id.List_Medicament_to_show)!!.adapter = adapterMedicament
-                    adapterMedicament!!.notifyDataSetChanged()
-                    listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE)
-                    listView.setOnItemClickListener{ parent, view, position, id ->
-
-
-                    }
-                    dialog.findViewById<Button>(R.id.btn_remove).setOnClickListener {
-                        for (i in 0 until adapterMedicament!!.count) {
-                            var view = adapterMedicament!!.getView(
-                                i,
-                                findViewById<LinearLayout>(R.id.checkBox_Pharmacien),
-                                listView!!
-                            )
-                            val medicmaent: MedicamentOrdonance = listMedicament.get(i)
-                            if (medicmaent.isSelected!! ) {
-
-                            val medicament: MedicamentOrdonance = adapterMedicament!!.getItem(i) as MedicamentOrdonance
-                            Toast.makeText(
-                                applicationContext,
-                                "Clicked on Row: " + medicament.nameMedicament,
-                                Toast.LENGTH_LONG
-                            ).show()
-
-                            view.findViewById<CheckBox>(R.id.checkBox_Pharmacien).setChecked(medicmaent.isSelected!!)
-                            view.findViewById<CheckBox>(R.id.checkBox_Pharmacien).setTag(medicmaent)
-                        }else{
-                                Toast.makeText(
-                                    applicationContext,
-                                    "Clicked on Row: nothing",
-                                    Toast.LENGTH_LONG
-                                ).show()
-                            }
                         }
-                        dialog.dismiss()
-                    }
-                    dialog.setOnDismissListener {
-                        listMedicament.clear()
-                    }
-                }
-            } else {
-                super.onActivityResult(requestCode, resultCode, data)
+
+                        override fun failure() {
+                        }
+                    })
             }
-        }
+
+            override fun failure() {
+            }
+        })
+
     }
+
+
+
 }

@@ -39,21 +39,8 @@ class MyAdapterOrdonancePharmacien(
         quantity.text = mItem.quantity
         descriptionOrd.text = mItem.description
         checkBox.setOnClickListener(View.OnClickListener { v ->
-            Toast.makeText(
-                mCtx,
-                "Clicked on Checkbox: " + " is " + checkBox.isChecked,
-                Toast.LENGTH_LONG
-            ).show()
             mItem.isSelected = checkBox.isChecked
         })
-//        checkBox.setFocusableInTouchMode(false)
-//        checkBox.setFocusable(false)
-
-//        mItem.isSelected = checkBox.isChecked
-
-//        val listViewItemDto: ListViewItemDTO = listViewItemDtoList.get(itemIndex)
-//        view.getItemCheckbox().setChecked(listViewItemDto.isChecked())
-//        view.getItemTextView().setText(listViewItemDto.getItemText())
 
         return view
 
