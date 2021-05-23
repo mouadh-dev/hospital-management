@@ -32,7 +32,7 @@ class AddAnalyseOrdonnanceActivity : AppCompatActivity() {
     var listViewOrdAnalyse: ListView? = null
     var listOrdAnalyse = mutableListOf<AnalyseOrdonnance>()
     var listMedicamentOrdonanceAnalyse = arrayListOf<AnalyseOrdonnance>()
-    var analyseOrdonnance = AnalyseOrdonnance()
+
     var nameDoctorAnaylse: String? = null
     var userItem = UserItem()
     var idDoctor: String? = null
@@ -102,6 +102,7 @@ class AddAnalyseOrdonnanceActivity : AppCompatActivity() {
                 var text = "veuillez ajouter des analyses"
                 dialog(text)
             } else {
+                var analyseOrdonnance = AnalyseOrdonnance()
                 analyseOrdonnance.descriptionAnalyse = textAnalyses!!.text.toString()
                 listOrdAnalyse.add(analyseOrdonnance)
 

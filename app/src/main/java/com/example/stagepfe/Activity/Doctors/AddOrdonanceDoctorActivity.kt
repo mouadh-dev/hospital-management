@@ -14,7 +14,6 @@ import com.example.stagepfe.Adapters.Doctor.MyAdapterOrdonance
 import com.example.stagepfe.Dao.OrdonanceCallback
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
-import com.example.stagepfe.Models.Doctors.ModelOrdonance
 import com.example.stagepfe.R
 import com.example.stagepfe.entite.MedicamentOrdonance
 import com.example.stagepfe.entite.Ordonance
@@ -30,22 +29,22 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
     var adapter: ArrayAdapter<String>? = null
     var userdao = UserDao()
     var returnBack: ImageView? = null
-    var listViewOrd: ListView? = null
-    var listOrd = mutableListOf<MedicamentOrdonance>()
+    var listViewMedicament: ListView? = null
+    var listMedicament = mutableListOf<MedicamentOrdonance>()
     var listMedicamentOrdonance = arrayListOf<MedicamentOrdonance>()
     var addMedicament: Button? = null
     var addOrdonance: Button? = null
     var userDao = UserDao()
     var user = UserItem()
     var ordonance = Ordonance()
-    var medicamentOrdonance = MedicamentOrdonance()
+
     var quantity: TextView? = null
     var descriptionMedicament: EditText? = null
     var idDoctor: String? = null
     var nameDoctor: String? = null
     var namePatient: String? = null
     var idPAtient: String? = null
-    private var test: MyAdapterOrdonance? = null
+    private var adapterMedicament: MyAdapterOrdonance? = null
     @RequiresApi(Build.VERSION_CODES.O)
     val currentDateTime = LocalDateTime.now()
 
@@ -62,12 +61,12 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
         quantity = findViewById(R.id.quantity_medicament)
         nameMedicament = findViewById<AutoCompleteTextView>(R.id.medicament_EditText)
         returnBack = findViewById(R.id.return_back_Ord)
-        listViewOrd = findViewById(R.id.List_Ordonance_add)
+        listViewMedicament = findViewById(R.id.List_Ordonance_add)
         addMedicament = findViewById(R.id.add_medicament_button)
         addOrdonance = findViewById(R.id.Add_Ordonance_Button)
         descriptionMedicament = findViewById(R.id.description_Et)
 
-//        listOrd = arrayListOf<ModelOrdonance>()
+//        listMedicament = arrayListOf<MedicamentOrdonance>()
         initAdapter()
 
         returnBack!!.setOnClickListener {
@@ -83,12 +82,12 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
                 var text = "veuillez ajouter des medicaments"
                 dialog(text)
             } else {
+                var medicamentOrdonance = MedicamentOrdonance()
                 medicamentOrdonance.nameMedicament = nameMedicament!!.text.toString()
                 medicamentOrdonance.quantity = quantity!!.text.toString()
                 medicamentOrdonance.description = descriptionMedicament!!.text.toString()
-                listOrd.add(medicamentOrdonance)
-                test!!.notifyDataSetChanged()
-
+                listMedicament.add(medicamentOrdonance)
+                adapterMedicament!!.notifyDataSetChanged()
 
                 quantity!!.setText("0")
                 descriptionMedicament!!.text.clear()
@@ -98,7 +97,6 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
 
 
 ////////////////////////////////////////////add ordonance tofirebase////////////////////////////////
-
         userDao.retrieveCurrentDataUser(object : UserCallback {
             override fun onSuccess(userItem: UserItem) {
                 idDoctor = userItem.id.toString()
@@ -138,9 +136,8 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
             override fun failure() {
             }
         })
-
         addOrdonance!!.setOnClickListener {
-            if (listViewOrd!!.isEmpty()) {
+            if (listViewMedicament!!.isEmpty()) {
                 var text = "veuillez ajouter des medicaments"
                 dialog(text)
 
@@ -176,17 +173,16 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
                 quantity!!.text = count.toString()
             }
         }
-
     }
 //////////////////////////////////////////////////////////////////////////////////////////////////
     private fun filMedicament() {
-        for (i in 0 until test!!.count) {
+        for (i in 0 until adapterMedicament!!.count) {
             val item = MedicamentOrdonance() // new one
-            test!!.getItem(i)
-            var view = test!!.getView(
+            adapterMedicament!!.getItem(i)
+            var view = adapterMedicament!!.getView(
                 i,
                 findViewById<TextView>(R.id.name_medicament_list),
-                listViewOrd!!
+                listViewMedicament!!
             )
             item.nameMedicament =
                 view.findViewById<TextView>(R.id.name_medicament_list).text.toString()
@@ -216,8 +212,8 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
 
 
     private fun initAdapter() {
-        test = MyAdapterOrdonance(this, R.layout.ord_add_list, listOrd)
-        listViewOrd!!.adapter = test
+        adapterMedicament = MyAdapterOrdonance(this, R.layout.ord_add_list, listMedicament)
+        listViewMedicament!!.adapter = adapterMedicament
 
 
     }
