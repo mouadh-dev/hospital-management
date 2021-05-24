@@ -87,9 +87,17 @@
         app:layout_constraintStart_toStartOf="@id/ll"
         app:layout_constraintEnd_toEndOf="@id/ll"/>
 
+   <LinearLayout
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:weightSum="2"
+       app:layout_constraintStart_toStartOf="@id/ll"
+       app:layout_constraintEnd_toEndOf="@id/ll"
+       app:layout_constraintTop_toBottomOf="@id/ll"
+       app:layout_constraintBottom_toBottomOf="@id/ll">
     <Button
         android:id="@+id/btn_confirm"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:text="Confirmer"
         android:background="@drawable/button_style"
@@ -98,12 +106,22 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@id/ll"
-        app:layout_constraintEnd_toEndOf="@id/ll"
-        app:layout_constraintTop_toBottomOf="@id/ll"
-        app:layout_constraintBottom_toBottomOf="@id/ll"
+        android:layout_weight="1"
         />
-
-
+    <Button
+        android:id="@+id/btn_Delete_rapport"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="Supprimer"
+        android:background="@drawable/button_style"
+        android:textColor="@color/white"
+        android:textAllCaps="false"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:textSize="16sp"
+        android:layout_weight="1"
+        android:visibility="gone"
+        />
+   </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

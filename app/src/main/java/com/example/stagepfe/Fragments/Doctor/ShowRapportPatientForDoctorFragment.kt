@@ -136,6 +136,7 @@ class ShowRapportPatientForDoctorFragment : Fragment() {
             dialog.findViewById<TextView>(R.id.msgdialog).visibility = View.GONE
             dialog.findViewById<EditText>(R.id.TextRapport).visibility = View.VISIBLE
             dialog.findViewById<ImageView>(R.id.CheckDialog).visibility = View.GONE
+            dialog.findViewById<Button>(R.id.btn_Delete_rapport).visibility = View.VISIBLE
 
             var rapportadapter: Rapports? = adapterRapport!!.getItemAt(position)
 
@@ -164,6 +165,24 @@ class ShowRapportPatientForDoctorFragment : Fragment() {
                 dialog.dismiss()
             }
 
+            dialog.findViewById<Button>(R.id.btn_Delete_rapport).setOnClickListener{
+                userDao.removeRapport(rapportadapter.idDoctorRapport!!,rapportadapter.idPatientRapport!!,rapportadapter.id!!
+                    ,rapportadapter,object : ResponseCallback{
+                        override fun success(medicament: String) {
+
+                        }
+
+                        override fun success() {
+
+                        }
+
+                        override fun failure() {
+
+                        }
+
+                    })
+                dialog.dismiss()
+            }
         }
 
         addRapport!!.setOnClickListener {
