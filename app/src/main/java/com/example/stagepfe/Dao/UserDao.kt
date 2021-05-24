@@ -321,6 +321,20 @@ class UserDao : IGestionUser {
 
         })
     }
+    //////////////////////////////////////////RemoveRapport/////////////////////////////////////////
+    fun removeRapport(iddoc:String, idPat:String, idRapport:String, rapports:Rapports, responseCallback: ResponseCallback){
+        userRef.addListenerForSingleValueEvent(object :ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                userRef.child(iddoc).child("rapports").child(idRapport).removeValue()
+                userRef.child(idPat).child("rapports").child(idRapport).removeValue()
+                responseCallback.success()
+
+            }
+            override fun onCancelled(error: DatabaseError) {
+            }
+
+        })
+    }
 
     /////////////////////////////////////////////PopulateSearch/////////////////////////////////////
     fun populateSearch(responseCallback: UserCallback) {

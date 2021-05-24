@@ -117,6 +117,7 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
                             ordonance.medicament = listMedicamentOrdonance
                             ordonance.taken = "pas encore"
                             ordonance.color = Color.RED.toString()
+                            ordonance.typeOrdonnance= "Ordonnance médicament"
                             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
                                 ordonance.dateOrdonanceSend =
                                     currentDateTime.format(DateTimeFormatter.ISO_DATE)

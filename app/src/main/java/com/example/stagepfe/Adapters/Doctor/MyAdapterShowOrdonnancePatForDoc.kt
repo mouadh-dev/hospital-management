@@ -21,11 +21,13 @@ class MyAdapterShowOrdonnancePatForDoc (var mCtx: Context, var resources:Int, va
 
         var textDateRDV: TextView = view.findViewById(R.id.Date_Ord_pat_doc)
         var textHourRDV: TextView = view.findViewById(R.id.Hour_Ord_pat_doc)
+        var typeOrdonnances: TextView = view.findViewById(R.id.type_ordonnance_TV)
 
 
         var items: Ordonance = items[position]
         textDateRDV.text = items.dateOrdonanceSend
         textHourRDV.text = items.hourOrdonanceSend
+        typeOrdonnances.text= items.typeOrdonnance
 
 
 
