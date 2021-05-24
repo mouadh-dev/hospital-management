@@ -368,7 +368,30 @@ class UserDao : IGestionUser {
         ordonanceCallback.successOrdonance(ordonance)
 
     }
+    ////////////////////////////////////////////get rapport ////////////////////////////////////////////
+    fun getOrdonance(responseCallback: OrdonanceCallback) {
+        userRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    for (ds in snapshot.children) {
 
+                        var userItem = ds.getValue(UserItem::class.java)
+
+                            if (userItem!!.ordonance != null) {
+                                var ordonance = userItem.ordonance
+                                for (entry in ordonance!!.values) {
+                                    responseCallback.successOrdonance(entry)
+                                }
+                        }
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                responseCallback.failureOrdonance()
+            }
+        })
+    }
     ////////////////////////////////////////////remove ordonance/////////////////////////////////////
     fun removeOrdonance(iddoc: String,idPat: String,idOrdonance:String,ordonance: Ordonance, responseCallback: ResponseCallback) {
 

@@ -8,10 +8,12 @@ import android.widget.ListView
 import androidx.fragment.app.Fragment
 import com.example.stagepfe.Activity.Pharmacien.AccueilPharmacienActivity
 import com.example.stagepfe.Adapters.Pharmacien.MyAdapterNewOrdonnancePharmacien
+import com.example.stagepfe.Dao.OrdonanceCallback
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.Models.Pharmacien.ModelNewOrdonnancePharmacien
 import com.example.stagepfe.R
+import com.example.stagepfe.entite.Ordonance
 import com.example.stagepfe.entite.UserItem
 
 
@@ -39,6 +41,37 @@ class AccueilPharmacienFragment : Fragment() {
         val myDataFromActivity: String? = activity!!.getMyDataPharmacien()
         println("mouadh :: " + myDataFromActivity)
         var userDao = UserDao()
+        userDao.getOrdonance(object : OrdonanceCallback {
+            override fun successOrdonance(ordonance: Ordonance) {
+//                for (entry in ordonance!!.entries) {
+//                    var medicament = entry.value
+
+                    if (ordonance.taken.equals("termineé")) {
+
+
+                        userDao.populateSearch(object : UserCallback {
+                            override fun onSuccess(userItem: UserItem) {
+                                if (ordonance.idPatient.equals(userItem.id.toString())) {
+                                    listNewOrdonnanceParmacien.add(
+                                        ModelNewOrdonnancePharmacien(
+                                            ordonance.namepatientOrdo.toString(),
+                                            ordonance.dateOrdonanceSend.toString(),
+                                            ordonance.hourOrdonanceSend.toString().substring(1, 5),
+                                            R.drawable.logopatient
+//                                userItem.profilPhotos!!.toInt()
+                                        ))
+                                    adapterPharmacien!!.notifyDataSetChanged()
+                                }
+                            }
+                            override fun failure() {
+                            }
+                        })
+                    }
+            }
+
+            override fun failureOrdonance() {
+            }
+        })
         userDao.populateSearch(object : UserCallback {
             override fun onSuccess(userItem: UserItem) {
                 if (myDataFromActivity.equals(userItem.id.toString())) {
