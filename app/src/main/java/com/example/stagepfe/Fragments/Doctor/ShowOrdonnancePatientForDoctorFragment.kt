@@ -30,6 +30,8 @@ class ShowOrdonnancePatientForDoctorFragment : Fragment() {
     var listviewOrdoPatForDoctor: ListView? = null
     var listOrdoPatForDoctor = mutableListOf<Ordonance>()
     private var adapterOrdonance: MyAdapterShowOrdonnancePatForDoc? = null
+
+
     var adapterAnalyseOrdonance:MyAdapterAnalyseReading? = null
     val listAnalyse = mutableListOf<AnalyseOrdonnance>()
 
@@ -104,41 +106,41 @@ class ShowOrdonnancePatientForDoctorFragment : Fragment() {
             dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
             dialog.findViewById<TextView>(R.id.nameDoctor)
                 .setText("DR" + " " + ordonanceList.nameDoctorOrd)
-            dialog.findViewById<ListView>(R.id.List_Medicament_to_show).visibility = VISIBLE
+            listViewOrdReading = dialog.findViewById<ListView>(R.id.List_Medicament_to_show)
+            listViewOrdReading!!.visibility = VISIBLE
+
             dialog.findViewById<TextView>(R.id.namePatient).setText(ordonanceList.namepatientOrdo)
             dialog.findViewById<Button>(R.id.btn_remove).setText("Supprimer")
 
-            listViewOrdReading = dialog.findViewById<ListView>(R.id.List_Medicament_to_show)
-            if (ordonanceList.analyse != null){
-                for (analyse in ordonanceList.analyse) {
-                    listAnalyse.add(analyse)
-                    adapterAnalyseOrdonance = MyAdapterAnalyseReading(
-                        requireContext(),
-                        R.layout.analyse_add_list,
-                        listAnalyse
-                    )
-                    listViewOrdReading!!.adapter = adapterAnalyseOrdonance
-
-                    adapterAnalyseOrdonance!!.notifyDataSetChanged()
-                }
-            }else if (ordonanceList.medicament != null){
-                for (medicament in ordonanceList.medicament) {
-                    listMedicament.add(medicament)
-                }
-                adapterMedicament = MyAdapterOrdonance(
-                    requireContext(),
-                    R.layout.ord_add_list,
-                    listMedicament
-                )
-                listViewOrdReading!!.adapter = adapterMedicament
-
-                adapterMedicament!!.notifyDataSetChanged()
+            for (medicament in ordonanceList.medicament) {
+                listMedicament.add(medicament)
             }
-
+            listViewOrdReading!!.adapter = MyAdapterOrdonance(
+                requireContext(),
+                R.layout.ord_add_list,
+                listMedicament
+            )
 
             dialog.setOnDismissListener {
                 listMedicament.clear()
             }
+            for (analyse in ordonanceList.analyse) {
+
+                listAnalyse.add(analyse)
+                listViewOrdReading!!.adapter = MyAdapterAnalyseReading(
+                    requireContext(),
+                    R.layout.analyse_add_list,
+                    listAnalyse
+                )
+
+                dialog.setOnDismissListener {
+                    listAnalyse.clear()
+                }
+            }
+
+
+
+
 
             dialog.findViewById<Button>(R.id.btn_remove).setOnClickListener {
                 dialog.dismiss()
@@ -197,17 +199,11 @@ class ShowOrdonnancePatientForDoctorFragment : Fragment() {
     }
 
     private fun initAdapter() {
-        adapterAnalyseOrdonance = MyAdapterAnalyseReading(
-            requireContext(),
-            R.layout.show_ordonnance_patient_to_doctor,
-            listAnalyse
-        )
         adapterOrdonance = MyAdapterShowOrdonnancePatForDoc(
             requireContext(),
             R.layout.show_ordonnance_patient_to_doctor,
             listOrdoPatForDoctor
         )
-        listviewOrdoPatForDoctor!!.adapter = adapterOrdonance
         listviewOrdoPatForDoctor!!.adapter = adapterOrdonance
     }
 
