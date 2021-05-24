@@ -9,12 +9,11 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import com.example.stagepfe.Activity.Authentication.AuthenticationFragmentContainerActivity
 import com.example.stagepfe.Activity.Pharmacien.ProfilPharmacienActivity
+import com.example.stagepfe.Adapters.Doctor.MyAdapterAnalyseReading
+import com.example.stagepfe.Adapters.Doctor.MyAdapterOrdonancePharmacien
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.Fragments.AgentLabo.AgentAccueilFragment
@@ -22,11 +21,16 @@ import com.example.stagepfe.Fragments.AgentLabo.AgentReclamationFragment
 import com.example.stagepfe.Fragments.Doctor.DoctorReclamationFragment
 import com.example.stagepfe.Fragments.Pharmacien.AccueilPharmacienFragment
 import com.example.stagepfe.R
+import com.example.stagepfe.entite.AnalyseOrdonnance
+import com.example.stagepfe.entite.MedicamentOrdonance
+import com.example.stagepfe.entite.Ordonance
 import com.example.stagepfe.entite.UserItem
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
+import com.google.gson.Gson
+import com.google.zxing.integration.android.IntentIntegrator
 import java.util.*
 
 class AccueilAgentLaboActivity : AppCompatActivity() {
@@ -41,7 +45,83 @@ class AccueilAgentLaboActivity : AppCompatActivity() {
     var homeAgent: LinearLayout? = null
     var changeUser:ImageView? = null
     var selectedPhotoUri: Uri? = null
+    var cameraButtonAnalyse: ImageView? = null
+    var text: String? = ""
+    val listAnalyse = mutableListOf<AnalyseOrdonnance>()
+    var adapterAnalyse: MyAdapterAnalyseReading? = null
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == Activity.RESULT_OK) {
+            val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
+            if (result != null) {
+                if (result.contents == null) {
+                    Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show()
+                } else {
+
+                    var ordonance = Gson().fromJson(result.contents, Ordonance::class.java)
+                    val v = View.inflate(this, R.layout.dialog_ordonance, null)
+                    val builder = AlertDialog.Builder(this)
+                    builder.setView(v)
+                    val dialog = builder.create()
+                    dialog.show()
+                    var listView = dialog.findViewById<ListView>(R.id.List_Medicament_to_show)
+
+                    listView.visibility = View.VISIBLE
+                    dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+                    dialog.findViewById<TextView>(R.id.nameDoctor)
+                        .setText("DR" + " " + ordonance.nameDoctorOrd)
+                    dialog.findViewById<TextView>(R.id.namePatient)
+                        .setText(ordonance.namepatientOrdo)
+                    dialog.findViewById<Button>(R.id.btn_remove).setText("D'accord")
+                    for (analyse in ordonance.analyse) {
+                        println("mouadh :: "+ analyse.descriptionAnalyse.toString())
+                        listAnalyse.add(analyse)
+                    }
+                    adapterAnalyse = MyAdapterAnalyseReading(
+                        this,
+                        R.layout.analyse_add_list,
+                        listAnalyse
+                    )
+                    listView!!.adapter = adapterAnalyse
+                    adapterAnalyse!!.notifyDataSetChanged()
+                    listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE)
+                    listView.setOnItemClickListener { parent, view, position, id ->
+
+
+                    }
+                    dialog.setCancelable(false)
+                    dialog.findViewById<Button>(R.id.btn_remove).setOnClickListener {
+                        //for (i in 0 until adapterAnalyse!!.count) {
+                            //var view = adapterAnalyse!!.getView(
+                              //  i,
+                              //  findViewById<LinearLayout>(R.id.checkBox_Agent),
+                               // listView!!
+                           // )
+                            //val analyse: AnalyseOrdonnance = listAnalyse.get(i)
+                            //if (!analyse.isSelectedAnalyse!!) {
+                               // val analyse: AnalyseOrdonnance =
+                                //    adapterAnalyse!!.getItem(i) as AnalyseOrdonnance
+                               // text +=  analyse.descriptionAnalyse
+                           // }
+
+                       // }
+                        Toast.makeText(
+                            applicationContext,
+                            text,
+                            Toast.LENGTH_LONG
+                        ).show()
+                        text = ""
+                        dialog.dismiss()
+                    }
+                    dialog.setOnDismissListener {
+                        listAnalyse.clear()
+                    }
+                }
+            } else {
+                super.onActivityResult(requestCode, resultCode, data)
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,14 +137,13 @@ class AccueilAgentLaboActivity : AppCompatActivity() {
         reclamationAgent = findViewById(R.id.reclamationLayoutAgent)
         homeAgent = findViewById(R.id.profilInformationAgent)
         changeUser = findViewById(R.id.change_user_labo)
+        cameraButtonAnalyse = findViewById(R.id.float_button_camera_agent)
 
           imageProfilAgent!!.setOnClickListener {
 
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
         startActivityForResult(intent, 0)
-        // val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
-        // startActivityForResult(gallery, pickImage)
         }
 
         changeUser!!.setOnClickListener {
@@ -106,6 +185,12 @@ class AccueilAgentLaboActivity : AppCompatActivity() {
             }
             true
         })
+        cameraButtonAnalyse!!.setOnClickListener {
+            val scanner = IntentIntegrator(this)
+            scanner.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
+            scanner.setBeepEnabled(false)
+            scanner.initiateScan()
+        }
     }
 
     private fun dialog() {
@@ -140,38 +225,26 @@ class AccueilAgentLaboActivity : AppCompatActivity() {
         })
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
+   // override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+     //   super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == 0 && resultCode == Activity.RESULT_OK && data != null) {
-            // proceed and check what the selected image was....
-
-            selectedPhotoUri = data.data
-
-            val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, selectedPhotoUri)
-
-            //selectphoto_imageview_register.setImageBitmap(bitmap)
-
-            imageProfilAgent!!.alpha = 0f
-            uploadImageToFirebaseStorage()
-//      val bitmapDrawable = BitmapDrawable(bitmap)
-//      selectphoto_button_register.setBackgroundDrawable(bitmapDrawable)
-        }
-    }
+       // if (requestCode == 0 && resultCode == Activity.RESULT_OK && data != null) {
+         //   selectedPhotoUri = data.data
+           // val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, selectedPhotoUri)
+            //imageProfilAgent!!.alpha = 0f
+           // uploadImageToFirebaseStorage()
+       // }
+    //}
 
     private fun uploadImageToFirebaseStorage() {
         if (selectedPhotoUri == null) return
-
         val filename = UUID.randomUUID().toString()
         val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
-
         ref.putFile(selectedPhotoUri!!)
             .addOnSuccessListener {
                 //Log.d(TAG, "Successfully uploaded image: ${it.metadata?.path}")
-
                 ref.downloadUrl.addOnSuccessListener {
                     //Log.d(TAG, "File Location: $it")
-
                     saveUserToFirebaseDatabase(it.toString())
                 }
             }
