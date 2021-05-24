@@ -62,7 +62,7 @@ class OrdonancePatientFragment : Fragment() {
                             val ordonanceList = Ordonance()
                             fillOrdonanceList(ordonanceList, ordonance)
 
-                            list.add(ordonance)
+                            list.add(ordonanceList)
                             adapterOrdonance!!.notifyDataSetChanged()
 
                         }
@@ -154,7 +154,7 @@ class OrdonancePatientFragment : Fragment() {
         ordonanceList.idDoctor = ordonance.idDoctor
         ordonanceList.id = ordonance.id
         ordonanceList.color = ordonance.color
-
+        ordonanceList.analyse = ordonance.analyse
     }
 
     private fun initAdapter() {

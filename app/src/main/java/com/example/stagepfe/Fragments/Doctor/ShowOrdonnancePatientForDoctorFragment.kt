@@ -13,12 +13,14 @@ import androidx.fragment.app.Fragment
 import com.example.stagepfe.Activity.Doctors.AddAnalyseOrdonnanceActivity
 import com.example.stagepfe.Activity.Doctors.AddOrdonanceDoctorActivity
 import com.example.stagepfe.Activity.Doctors.ShowInfoPatientForDoctorActivity
+import com.example.stagepfe.Adapters.Doctor.MyAdapterAnalyseReading
 import com.example.stagepfe.Adapters.Doctor.MyAdapterOrdonance
 import com.example.stagepfe.Adapters.Doctor.MyAdapterShowOrdonnancePatForDoc
 import com.example.stagepfe.Dao.ResponseCallback
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.R
+import com.example.stagepfe.entite.AnalyseOrdonnance
 import com.example.stagepfe.entite.MedicamentOrdonance
 import com.example.stagepfe.entite.Ordonance
 import com.example.stagepfe.entite.UserItem
@@ -28,6 +30,8 @@ class ShowOrdonnancePatientForDoctorFragment : Fragment() {
     var listviewOrdoPatForDoctor: ListView? = null
     var listOrdoPatForDoctor = mutableListOf<Ordonance>()
     private var adapterOrdonance: MyAdapterShowOrdonnancePatForDoc? = null
+    var adapterAnalyseOrdonance:MyAdapterAnalyseReading? = null
+    val listAnalyse = mutableListOf<AnalyseOrdonnance>()
 
     var addOrdonance: ImageView? = null
     var userDao = UserDao()
@@ -105,17 +109,33 @@ class ShowOrdonnancePatientForDoctorFragment : Fragment() {
             dialog.findViewById<Button>(R.id.btn_remove).setText("Supprimer")
 
             listViewOrdReading = dialog.findViewById<ListView>(R.id.List_Medicament_to_show)
-            for (medicament in ordonanceList.medicament) {
-                listMedicament.add(medicament)
-            }
-            adapterMedicament = MyAdapterOrdonance(
-                requireContext(),
-                R.layout.ord_add_list,
-                listMedicament
-            )
-            listViewOrdReading!!.adapter = adapterMedicament
+            if (ordonanceList.analyse != null){
+                for (analyse in ordonanceList.analyse) {
+                    listAnalyse.add(analyse)
+                    adapterAnalyseOrdonance = MyAdapterAnalyseReading(
+                        requireContext(),
+                        R.layout.analyse_add_list,
+                        listAnalyse
+                    )
+                    listViewOrdReading!!.adapter = adapterAnalyseOrdonance
 
-            adapterMedicament!!.notifyDataSetChanged()
+                    adapterAnalyseOrdonance!!.notifyDataSetChanged()
+                }
+            }else if (ordonanceList.medicament != null){
+                for (medicament in ordonanceList.medicament) {
+                    listMedicament.add(medicament)
+                }
+                adapterMedicament = MyAdapterOrdonance(
+                    requireContext(),
+                    R.layout.ord_add_list,
+                    listMedicament
+                )
+                listViewOrdReading!!.adapter = adapterMedicament
+
+                adapterMedicament!!.notifyDataSetChanged()
+            }
+
+
             dialog.setOnDismissListener {
                 listMedicament.clear()
             }
@@ -162,6 +182,8 @@ class ShowOrdonnancePatientForDoctorFragment : Fragment() {
         }
     }
 
+
+
     private fun fillOrdonanceList(ordonanceList: Ordonance, ordonance: Ordonance) {
         ordonanceList.dateOrdonanceSend = ordonance.dateOrdonanceSend
         ordonanceList.hourOrdonanceSend = ordonance.hourOrdonanceSend!!.substring(0, 5)
@@ -171,14 +193,21 @@ class ShowOrdonnancePatientForDoctorFragment : Fragment() {
         ordonanceList.medicament = ordonance.medicament
         ordonanceList.idDoctor = ordonance.idDoctor
         ordonanceList.id = ordonance.id
+        ordonanceList.analyse = ordonance.analyse
     }
 
     private fun initAdapter() {
+        adapterAnalyseOrdonance = MyAdapterAnalyseReading(
+            requireContext(),
+            R.layout.show_ordonnance_patient_to_doctor,
+            listAnalyse
+        )
         adapterOrdonance = MyAdapterShowOrdonnancePatForDoc(
             requireContext(),
             R.layout.show_ordonnance_patient_to_doctor,
             listOrdoPatForDoctor
         )
+        listviewOrdoPatForDoctor!!.adapter = adapterOrdonance
         listviewOrdoPatForDoctor!!.adapter = adapterOrdonance
     }
 

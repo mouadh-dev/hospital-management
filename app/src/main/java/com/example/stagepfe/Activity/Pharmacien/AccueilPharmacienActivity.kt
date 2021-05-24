@@ -377,7 +377,4 @@ class AccueilPharmacienActivity : AppCompatActivity() {
         })
 
     }
-
-
-
 }
