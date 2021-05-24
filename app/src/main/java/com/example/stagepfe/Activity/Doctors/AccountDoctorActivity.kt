@@ -89,7 +89,6 @@ class AccountDoctorActivity : AppCompatActivity() {
 //        }
         initAdapter()
         var userdao = UserDao()
-        var userItem=UserItem()
         userdao.populateSearch(object : UserCallback {
             override fun onSuccess(userItem: UserItem) {
                 var fullNamePatient = userItem.nom + " " + userItem.prenom

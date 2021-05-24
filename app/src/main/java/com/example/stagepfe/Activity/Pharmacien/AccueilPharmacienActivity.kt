@@ -4,6 +4,7 @@ import android.R.attr.data
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -13,6 +14,8 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.stagepfe.Activity.Authentication.AuthenticationFragmentContainerActivity
 import com.example.stagepfe.Adapters.Doctor.MyAdapterOrdonancePharmacien
+import com.example.stagepfe.Dao.OrdonanceCallback
+import com.example.stagepfe.Dao.ResponseCallback
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.Fragments.Pharmacien.AccueilPharmacienFragment
@@ -45,7 +48,8 @@ class AccueilPharmacienActivity : AppCompatActivity() {
     var userDao = UserDao()
     var cameraButton: ImageView? = null
     var adapterMedicament: MyAdapterOrdonancePharmacien? = null
-    var text: String? = ""
+    var nonCheck: Ordonance? = null
+    var ordonanceToChange = Ordonance()
 
     val listMedicament = mutableListOf<MedicamentOrdonance>()
     //var profilPhotos= ProfilPhoto()
@@ -60,6 +64,7 @@ class AccueilPharmacienActivity : AppCompatActivity() {
                 } else {
 
                     var ordonance = Gson().fromJson(result.contents, Ordonance::class.java)
+                    nonCheck = Gson().fromJson(result.contents, Ordonance::class.java)
                     val v = View.inflate(this, R.layout.dialog_ordonance, null)
                     val builder = AlertDialog.Builder(this)
                     builder.setView(v)
@@ -91,6 +96,7 @@ class AccueilPharmacienActivity : AppCompatActivity() {
                     }
                     dialog.setCancelable(false)
                     dialog.findViewById<Button>(R.id.btn_remove).setOnClickListener {
+                        var text = ""
                         for (i in 0 until adapterMedicament!!.count) {
                             var view = adapterMedicament!!.getView(
                                 i,
@@ -102,14 +108,40 @@ class AccueilPharmacienActivity : AppCompatActivity() {
                                 val medicament: MedicamentOrdonance =
                                     adapterMedicament!!.getItem(i) as MedicamentOrdonance
                                 text += medicament.nameMedicament + "\n" + medicament.quantity + " " + "fois par jours" + "\n" + medicament.description + "\n"
+//                                nonCheck += medicament.nameMedicament + "\n" + medicament.quantity + " " + "fois par jours" + "\n" + medicament.description + "\n"
                             }
 
                         }
-                        Toast.makeText(
-                            applicationContext,
-                            text,
-                            Toast.LENGTH_LONG
-                        ).show()
+
+                        ordonanceToChange.color = Color.GREEN.toString()
+                        ordonanceToChange.taken = "termineé"
+                        ordonanceToChange.namepatientOrdo = ordonance.namepatientOrdo
+                        ordonanceToChange.medicament = ordonance.medicament
+                        ordonanceToChange.id = ordonance.id
+                        ordonanceToChange.idDoctor = ordonance.idDoctor
+                        ordonanceToChange.idPatient = ordonance.idPatient
+                        ordonanceToChange.nameDoctorOrd = ordonance.nameDoctorOrd
+                        ordonanceToChange.hourOrdonanceSend = ordonance.hourOrdonanceSend
+                        ordonanceToChange.dateOrdonanceSend = ordonance.dateOrdonanceSend
+                        ordonanceToChange.analyse = ordonance.analyse
+                        ordonanceToChange.typeOrdonnance = ordonance.typeOrdonnance
+
+                        userDao.updateOrdonance(ordonance.idDoctor.toString(),
+                            ordonance.idPatient.toString(),
+                            ordonance.id.toString(),
+                            ordonanceToChange,
+                            object : ResponseCallback {
+                                override fun success(medicament: String) {
+
+                                }
+
+                                override fun success() {
+                                }
+
+                                override fun failure() {
+                                }
+
+                            })
                         text = ""
                         dialog.dismiss()
                     }
@@ -121,6 +153,7 @@ class AccueilPharmacienActivity : AppCompatActivity() {
                 super.onActivityResult(requestCode, resultCode, data)
             }
         }
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -147,6 +180,7 @@ class AccueilPharmacienActivity : AppCompatActivity() {
 //        mScannerView!!.setAspectTolerance(0.5f);
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
+        println("mouadh ::::" + nonCheck)
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
         imageProfilPharmacien!!.setOnClickListener {
@@ -215,7 +249,9 @@ class AccueilPharmacienActivity : AppCompatActivity() {
         })
     }
 
-
+    fun getMyDataPharmacien(): String? {
+        return ordonanceToChange.idPatient
+    }
     private fun dialog() {
         var v = View.inflate(this, R.layout.dialogchangeuser, null)
         var builder = AlertDialog.Builder(this)

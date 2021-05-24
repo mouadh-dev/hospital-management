@@ -73,8 +73,6 @@ class UserDao : IGestionUser {
             }
         })
     }
-
-
     ///////////////////////////////////////////Sign in//////////////////////////////////////////////////
     fun signIn(activity: Activity, userItem: UserItem, userCallback: UserCallback) {
         mAuth.signInWithEmailAndPassword(userItem.mail, userItem.password)
@@ -120,18 +118,6 @@ class UserDao : IGestionUser {
     //////////////////////////////////////////////////retrieve data user////////////////////////////////
     fun retrieveCurrentDataUser(userCallback: UserCallback) {
         getUserByUid(mAuth.currentUser.uid, userCallback)
-
-//        myRef.child().addValueEventListener(object : ValueEventListener {
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//
-//
-//            }
-//
-//            override fun onCancelled(error: DatabaseError) {
-//                Log.w(TAG, "signInWithEmail:failure", error.toException())
-//                userCallback.failure()
-//            }
-//        })
     }
 
     //////////////////////////////////////////sign out methode////////////////////////////////////////
@@ -410,8 +396,23 @@ class UserDao : IGestionUser {
             }
         })
     }
+    ////////////////////////////////////////////remove ordonance/////////////////////////////////////
+    fun updateOrdonance(iddoc: String,idPat: String,idOrdonance:String,ordonance: Ordonance, responseCallback: ResponseCallback) {
 
+        userRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
 
+                userRef.child(iddoc).child("ordonance").child(idOrdonance).removeValue()
+                userRef.child(iddoc).child("ordonance").child(idOrdonance).setValue(ordonance)
+
+                userRef.child(idPat).child("ordonance").child(idOrdonance).removeValue()
+                userRef.child(idPat).child("ordonance").child(idOrdonance).setValue(ordonance)
+                responseCallback.success()
+            }
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
+    }
     ////////////////////////////////////////////change password/////////////////////////////////////
     fun changePassword(
         password: String,
