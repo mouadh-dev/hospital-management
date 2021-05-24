@@ -196,6 +196,7 @@ class ShowOrdonnancePatientForDoctorFragment : Fragment() {
         ordonanceList.idDoctor = ordonance.idDoctor
         ordonanceList.id = ordonance.id
         ordonanceList.analyse = ordonance.analyse
+        ordonanceList.typeOrdonnance = ordonance.typeOrdonnance
     }
 
     private fun initAdapter() {
