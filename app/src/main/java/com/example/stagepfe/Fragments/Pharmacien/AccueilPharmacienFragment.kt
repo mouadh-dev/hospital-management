@@ -21,6 +21,7 @@ class AccueilPharmacienFragment : Fragment() {
     var listviewNewOrdonnanceParmacien: ListView? = null
     var listNewOrdonnanceParmacien = mutableListOf<ModelNewOrdonnancePharmacien>()
     var adapterPharmacien: MyAdapterNewOrdonnancePharmacien? = null
+    var date = ""
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,62 +42,63 @@ class AccueilPharmacienFragment : Fragment() {
         val myDataFromActivity: String? = activity!!.getMyDataPharmacien()
         println("mouadh :: " + myDataFromActivity)
         var userDao = UserDao()
-        userDao.getOrdonance(object : OrdonanceCallback {
-            override fun successOrdonance(ordonance: Ordonance) {
-//                for (entry in ordonance!!.entries) {
-//                    var medicament = entry.value
-
-                    if (ordonance.taken.equals("termineé")) {
-
 
                         userDao.populateSearch(object : UserCallback {
                             override fun onSuccess(userItem: UserItem) {
-                                if (ordonance.idPatient.equals(userItem.id.toString())) {
-                                    listNewOrdonnanceParmacien.add(
-                                        ModelNewOrdonnancePharmacien(
-                                            ordonance.namepatientOrdo.toString(),
-                                            ordonance.dateOrdonanceSend.toString(),
-                                            ordonance.hourOrdonanceSend.toString().substring(1, 5),
-                                            R.drawable.logopatient
+                                if (userItem.ordonance != null) {
+                                    for (ordo in userItem.ordonance!!.entries) {
+                                        var ordonance = ordo.value
+                                        if (ordonance.idPatient.equals(userItem.id.toString())) {
+                                            if (ordonance.taken.equals("termineé") && ordonance.dateOrdonanceSend + ordonance.hourOrdonanceSend != date) {
+                                                date = ordonance.dateOrdonanceSend + ordonance.hourOrdonanceSend
+                                                listNewOrdonnanceParmacien.add(
+                                                    ModelNewOrdonnancePharmacien(
+                                                        ordonance.namepatientOrdo.toString(),
+                                                        ordonance.dateOrdonanceSend.toString(),
+                                                        ordonance.hourOrdonanceSend.toString()
+                                                            .substring(1, 5),
+                                                        R.drawable.logopatient
 //                                userItem.profilPhotos!!.toInt()
-                                        ))
-                                    adapterPharmacien!!.notifyDataSetChanged()
+                                                    )
+                                                )
+                                                adapterPharmacien!!.notifyDataSetChanged()
+                                                date =
+                                                    ordonance.dateOrdonanceSend + ordonance.hourOrdonanceSend
+                                            }
+                                        }
+                                    }
                                 }
+
                             }
                             override fun failure() {
                             }
                         })
-                    }
-            }
 
-            override fun failureOrdonance() {
-            }
-        })
-        userDao.populateSearch(object : UserCallback {
-            override fun onSuccess(userItem: UserItem) {
-                if (myDataFromActivity.equals(userItem.id.toString())) {
-
-                    for (entry in userItem.ordonance!!.entries) {
-                        var medicament = entry.value
-                        if (medicament != null) {
-                            listNewOrdonnanceParmacien.add(
-                                ModelNewOrdonnancePharmacien(
-                                    medicament.namepatientOrdo.toString(),
-                                    medicament.dateOrdonanceSend.toString(),
-                                    medicament.hourOrdonanceSend.toString().substring(1, 5),
-//                                R.drawable.logopatient
-                                    userItem.profilPhotos!!.toInt()
-                                )
-                            )
-                            adapterPharmacien!!.notifyDataSetChanged()
-                        }
-                    }
-                }
-            }
-
-            override fun failure() {
-            }
-        })
+//        userDao.populateSearch(object : UserCallback {
+//            override fun onSuccess(userItem: UserItem) {
+//                if (myDataFromActivity.equals(userItem.id.toString())) {
+//
+//                    for (entry in userItem.ordonance!!.entries) {
+//                        var medicament = entry.value
+//                        if (medicament != null) {
+//                            listNewOrdonnanceParmacien.add(
+//                                ModelNewOrdonnancePharmacien(
+//                                    medicament.namepatientOrdo.toString(),
+//                                    medicament.dateOrdonanceSend.toString(),
+//                                    medicament.hourOrdonanceSend.toString().substring(1, 5),
+////                                R.drawable.logopatient
+//                                    userItem.profilPhotos!!.toInt()
+//                                )
+//                            )
+//                            adapterPharmacien!!.notifyDataSetChanged()
+//                        }
+//                    }
+//                }
+//            }
+//
+//            override fun failure() {
+//            }
+//        })
 
 
 //        listNewOrdonnanceParmacien.add(ModelNewOrdonnancePharmacien("Mohamed","12/12/2021","12:12",R.drawable.logopatient))

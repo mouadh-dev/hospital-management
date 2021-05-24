@@ -2,10 +2,13 @@ package com.example.stagepfe.Dao
 
 import android.app.Activity
 import android.content.ContentValues.TAG
+import android.net.Uri
 import android.util.Log
 import com.example.stagepfe.entite.*
 import com.example.stagepfe.util.BaseConstant
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.OnFailureListener
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
@@ -13,6 +16,10 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.UploadTask
+import java.util.*
+import kotlin.collections.HashMap
 
 
 class UserDao : IGestionUser {
@@ -23,6 +30,7 @@ class UserDao : IGestionUser {
     private val userRef = FirebaseDatabase.getInstance().getReference("users")
     private val medicamentRef = FirebaseDatabase.getInstance().getReference("Medicament")
     private val reclamationRef = database.getReference(BaseConstant.instance().reclamation)
+    private val storageReference = FirebaseStorage.getInstance().reference
 
 //  private val rapportRef = database.getReference(BaseConstant.instance().rapport).child(uid).child("rapports")
 
@@ -382,30 +390,7 @@ class UserDao : IGestionUser {
         ordonanceCallback.successOrdonance(ordonance)
 
     }
-    ////////////////////////////////////////////get rapport ////////////////////////////////////////////
-    fun getOrdonance(responseCallback: OrdonanceCallback) {
-        userRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
-                    for (ds in snapshot.children) {
 
-                        var userItem = ds.getValue(UserItem::class.java)
-
-                            if (userItem!!.ordonance != null) {
-                                var ordonance = userItem.ordonance
-                                for (entry in ordonance!!.values) {
-                                    responseCallback.successOrdonance(entry)
-                                }
-                        }
-                    }
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                responseCallback.failureOrdonance()
-            }
-        })
-    }
     ////////////////////////////////////////////remove ordonance/////////////////////////////////////
     fun removeOrdonance(iddoc: String,idPat: String,idOrdonance:String,ordonance: Ordonance, responseCallback: ResponseCallback) {
 
@@ -505,7 +490,40 @@ class UserDao : IGestionUser {
 //        }
 //
 //
+    fun uploadImageToFirebase(imageUri: Uri?) {
+        if (imageUri != null) {
+            val fileName = UUID.randomUUID().toString() + ".jpg"
 
+            val database = FirebaseDatabase.getInstance()
+            val refStorage = FirebaseStorage.getInstance().reference.child("images/$fileName")
+
+            refStorage.putFile(imageUri)
+                .addOnSuccessListener(
+                    OnSuccessListener<UploadTask.TaskSnapshot> { taskSnapshot ->
+                        taskSnapshot.storage.downloadUrl.addOnSuccessListener {
+                            val imageUrl = it.toString()
+                            saveToFirebaseDataBase(fileName)
+
+                        }
+                    })
+
+                ?.addOnFailureListener(OnFailureListener { e ->
+                    print(e.message)
+                })
+        }
+
+
+    }
+    private fun saveToFirebaseDataBase(fileName: String) {
+          val mAuth = FirebaseAuth.getInstance()
+        val userRef = FirebaseDatabase.getInstance().getReference("users")
+        userRef.setValue(mAuth, imageUri)
+          .addOnSuccessListener {
+
+        }
+        .addOnFailureListener {
+
+        }
 
 }
 

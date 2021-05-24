@@ -1,6 +1,6 @@
 package com.example.stagepfe.Activity.Pharmacien
 
-import android.R.attr.data
+import android.R.attr
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
@@ -14,7 +14,6 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.stagepfe.Activity.Authentication.AuthenticationFragmentContainerActivity
 import com.example.stagepfe.Adapters.Doctor.MyAdapterOrdonancePharmacien
-import com.example.stagepfe.Dao.OrdonanceCallback
 import com.example.stagepfe.Dao.ResponseCallback
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
@@ -57,6 +56,12 @@ class AccueilPharmacienActivity : AppCompatActivity() {
     // Get the results:
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK) {
+            //profile photo
+                if (requestCode == 1000) {
+                    imageUri = data?.data
+                    imageProfilPharmacien!!.setImageURI(imageUri)
+                }
+            //qrCode
             val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
             if (result != null) {
                 if (result.contents == null) {
@@ -180,12 +185,11 @@ class AccueilPharmacienActivity : AppCompatActivity() {
 //        mScannerView!!.setAspectTolerance(0.5f);
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
-        println("mouadh ::::" + nonCheck)
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
         imageProfilPharmacien!!.setOnClickListener {
             val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
-            startActivityForResult(gallery, pickImage)
+            startActivityForResult(gallery, 1000)
             //updateImageProfil()
 
             // userDao.insertPhoto(profilPhotos, userItem, object : ResponseCallback {
