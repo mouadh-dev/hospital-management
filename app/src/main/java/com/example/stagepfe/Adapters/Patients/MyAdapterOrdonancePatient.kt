@@ -22,6 +22,7 @@ class MyAdapterOrdonancePatient(var mCtx: Context,var resources:Int, var items:L
         var textDateOrd: TextView = view.findViewById(R.id.Date_Ordonance)
         var textHourOrd: TextView = view.findViewById(R.id.Hour_Ordonance)
         var textCheckOrd: TextView = view.findViewById(R.id.Check_Ordonance)
+        var textTypekOrd: TextView = view.findViewById(R.id.type_Ordonance_patient)
         var colorCheckOrd: LinearLayout = view.findViewById(R.id.Color_Check_Ordoance)
         var imageScannedOrd: ImageView = view.findViewById(R.id.Qr_Code_Ordonance)
 
@@ -30,6 +31,7 @@ class MyAdapterOrdonancePatient(var mCtx: Context,var resources:Int, var items:L
         textTitleOrd.text = item.nameDoctorOrd
         textDateOrd.text = item.dateOrdonanceSend
         textHourOrd.text = item.hourOrdonanceSend
+        textTypekOrd.text = item.typeOrdonnance
         textCheckOrd.text = item.taken
         colorCheckOrd.setBackgroundColor(item.color!!.toInt())
 //        imageScannedOrd.setImageDrawable(mCtx.resources.getDrawable(item.imageScaned))

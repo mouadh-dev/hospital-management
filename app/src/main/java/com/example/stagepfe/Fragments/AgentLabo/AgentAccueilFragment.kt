@@ -6,17 +6,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
+import com.example.stagepfe.Activity.AgentLabo.AccueilAgentLaboActivity
+import com.example.stagepfe.Activity.Pharmacien.AccueilPharmacienActivity
 import com.example.stagepfe.Adapters.AgentLabo.MyAdapterAnalyses
 import com.example.stagepfe.Adapters.Pharmacien.MyAdapterNewOrdonnancePharmacien
+import com.example.stagepfe.Dao.UserCallback
+import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.Models.AgentLabo.ModelAnalyses
 import com.example.stagepfe.Models.Pharmacien.ModelNewOrdonnancePharmacien
 import com.example.stagepfe.R
+import com.example.stagepfe.entite.UserItem
 
 
 class AgentAccueilFragment : Fragment() {
 
     var listviewNewAnalyses: ListView? = null
     var listAnalyses= mutableListOf<ModelAnalyses>()
+    var adapterLaboratoire: MyAdapterAnalyses? = null
+    var date = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,10 +37,51 @@ class AgentAccueilFragment : Fragment() {
 
     private fun initView(view: View) {
         listviewNewAnalyses = view.findViewById<ListView>(R.id.listAnalyses)
-        listAnalyses.add(ModelAnalyses("Mohamed","06/07/2021","12:46",R.drawable.logopatient))
-        listviewNewAnalyses!!.adapter = MyAdapterAnalyses(requireContext(), R.layout.analyses_list, listAnalyses)
+        initAdapter()
+
+        val activity: AccueilAgentLaboActivity? =
+            activity as AccueilAgentLaboActivity?
+        val myDataFromActivity: String? = activity!!.getMyDataAgentLabo()
+
+        var userDao = UserDao()
+
+        userDao.populateSearch(object : UserCallback {
+            override fun onSuccess(userItem: UserItem) {
+                if (userItem.ordonance != null) {
+                    for (ordo in userItem.ordonance!!.entries) {
+                        var ordonance = ordo.value
+                        if (ordonance.idPatient.equals(userItem.id.toString())) {
+                            if (ordonance.taken.equals("termineé") && ordonance.typeOrdonnance.equals("Ordonnance analyse") &&ordonance.dateOrdonanceSend + ordonance.hourOrdonanceSend != date) {
+                                date = ordonance.dateOrdonanceSend + ordonance.hourOrdonanceSend
+                                listAnalyses.add(
+                                    ModelAnalyses(
+                                        ordonance.namepatientOrdo.toString(),
+                                        ordonance.dateOrdonanceSend.toString(),
+                                        ordonance.hourOrdonanceSend.toString()
+                                            .substring(0, 5),
+                                        R.drawable.logopatient
+//                                userItem.profilPhotos!!.toInt()
+                                    )
+                                )
+                                adapterLaboratoire!!.notifyDataSetChanged()
+                                date =
+                                    ordonance.dateOrdonanceSend + ordonance.hourOrdonanceSend
+                            }
+                        }
+                    }
+                }
+
+            }
+            override fun failure() {
+            }
+        })
 
 
+    }
+
+    private fun initAdapter() {
+        adapterLaboratoire = MyAdapterAnalyses(requireContext(),R.layout.analyses_list,listAnalyses)
+        listviewNewAnalyses!!.adapter =adapterLaboratoire
     }
 
 

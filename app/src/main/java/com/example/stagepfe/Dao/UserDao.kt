@@ -502,7 +502,7 @@ class UserDao : IGestionUser {
                     OnSuccessListener<UploadTask.TaskSnapshot> { taskSnapshot ->
                         taskSnapshot.storage.downloadUrl.addOnSuccessListener {
                             val imageUrl = it.toString()
-                            saveToFirebaseDataBase(fileName)
+                            //saveToFirebaseDataBase(fileName)
 
                         }
                     })
@@ -514,16 +514,16 @@ class UserDao : IGestionUser {
 
 
     }
-    private fun saveToFirebaseDataBase(fileName: String) {
-          val mAuth = FirebaseAuth.getInstance()
-        val userRef = FirebaseDatabase.getInstance().getReference("users")
-        userRef.setValue(mAuth, imageUri)
-          .addOnSuccessListener {
+    //private fun saveToFirebaseDataBase(fileName: String) {
+      //    val mAuth = FirebaseAuth.getInstance()
+        //val userRef = FirebaseDatabase.getInstance().getReference("users")
+        //userRef.setValue(mAuth, imageUri)
+          //.addOnSuccessListener {
 
-        }
-        .addOnFailureListener {
+        //}
+        //.addOnFailureListener {
 
-        }
+        //}
 
 }
 

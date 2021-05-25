@@ -62,6 +62,7 @@ class AccueilPharmacienActivity : AppCompatActivity() {
                     imageProfilPharmacien!!.setImageURI(imageUri)
                 }
             //qrCode
+
             val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
             if (result != null) {
                 if (result.contents == null) {

@@ -155,6 +155,8 @@ class OrdonancePatientFragment : Fragment() {
         ordonanceList.id = ordonance.id
         ordonanceList.color = ordonance.color
         ordonanceList.analyse = ordonance.analyse
+        ordonanceList.typeOrdonnance=ordonance.typeOrdonnance
+        ordonanceList.taken=ordonance.taken
     }
 
     private fun initAdapter() {

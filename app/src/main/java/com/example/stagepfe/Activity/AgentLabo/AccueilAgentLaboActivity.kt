@@ -3,6 +3,7 @@ package com.example.stagepfe.Activity.AgentLabo
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -14,6 +15,8 @@ import com.example.stagepfe.Activity.Authentication.AuthenticationFragmentContai
 import com.example.stagepfe.Activity.Pharmacien.ProfilPharmacienActivity
 import com.example.stagepfe.Adapters.Doctor.MyAdapterAnalyseReading
 import com.example.stagepfe.Adapters.Doctor.MyAdapterOrdonancePharmacien
+import com.example.stagepfe.Adapters.Doctor.MyAdapterOrdonnanceAgentLabo
+import com.example.stagepfe.Dao.ResponseCallback
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.Fragments.AgentLabo.AgentAccueilFragment
@@ -48,7 +51,9 @@ class AccueilAgentLaboActivity : AppCompatActivity() {
     var cameraButtonAnalyse: ImageView? = null
     var text: String? = ""
     val listAnalyse = mutableListOf<AnalyseOrdonnance>()
-    var adapterAnalyse: MyAdapterAnalyseReading? = null
+    var adapterAnalyse: MyAdapterOrdonnanceAgentLabo? = null
+    var ordonanceToChange = Ordonance()
+    var userDao = UserDao()
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK) {
@@ -77,9 +82,9 @@ class AccueilAgentLaboActivity : AppCompatActivity() {
                         println("mouadh :: "+ analyse.descriptionAnalyse.toString())
                         listAnalyse.add(analyse)
                     }
-                    adapterAnalyse = MyAdapterAnalyseReading(
+                    adapterAnalyse = MyAdapterOrdonnanceAgentLabo(
                         this,
-                        R.layout.analyse_add_list,
+                        R.layout.ordonnance_analyse_to_agent,
                         listAnalyse
                     )
                     listView!!.adapter = adapterAnalyse
@@ -91,25 +96,53 @@ class AccueilAgentLaboActivity : AppCompatActivity() {
                     }
                     dialog.setCancelable(false)
                     dialog.findViewById<Button>(R.id.btn_remove).setOnClickListener {
-                        //for (i in 0 until adapterAnalyse!!.count) {
-                            //var view = adapterAnalyse!!.getView(
-                              //  i,
-                              //  findViewById<LinearLayout>(R.id.checkBox_Agent),
-                               // listView!!
-                           // )
-                            //val analyse: AnalyseOrdonnance = listAnalyse.get(i)
-                            //if (!analyse.isSelectedAnalyse!!) {
-                               // val analyse: AnalyseOrdonnance =
-                                //    adapterAnalyse!!.getItem(i) as AnalyseOrdonnance
-                               // text +=  analyse.descriptionAnalyse
-                           // }
 
-                       // }
-                        Toast.makeText(
-                            applicationContext,
-                            text,
-                            Toast.LENGTH_LONG
-                        ).show()
+                        var text = ""
+                        for (i in 0 until adapterAnalyse!!.count) {
+                            var view = adapterAnalyse!!.getView(
+                                i,
+                                findViewById<LinearLayout>(R.id.checkBox_Agent),
+                                listView!!
+                            )
+                            val analyse: AnalyseOrdonnance = listAnalyse.get(i)
+                            if (!analyse.isSelectedAnalyse!!) {
+                                val analyse: AnalyseOrdonnance =
+                                    adapterAnalyse!!.getItem(i) as AnalyseOrdonnance
+                                text += analyse.descriptionAnalyse + "\n"
+//                                nonCheck += medicament.nameMedicament + "\n" + medicament.quantity + " " + "fois par jours" + "\n" + medicament.description + "\n"
+                            }
+
+                        }
+
+                        ordonanceToChange.color = Color.GREEN.toString()
+                        ordonanceToChange.taken = "termineé"
+                        ordonanceToChange.namepatientOrdo = ordonance.namepatientOrdo
+                        ordonanceToChange.medicament = ordonance.medicament
+                        ordonanceToChange.id = ordonance.id
+                        ordonanceToChange.idDoctor = ordonance.idDoctor
+                        ordonanceToChange.idPatient = ordonance.idPatient
+                        ordonanceToChange.nameDoctorOrd = ordonance.nameDoctorOrd
+                        ordonanceToChange.hourOrdonanceSend = ordonance.hourOrdonanceSend
+                        ordonanceToChange.dateOrdonanceSend = ordonance.dateOrdonanceSend
+                        ordonanceToChange.analyse = ordonance.analyse
+                        ordonanceToChange.typeOrdonnance = ordonance.typeOrdonnance
+
+                        userDao.updateOrdonance(ordonance.idDoctor.toString(),
+                            ordonance.idPatient.toString(),
+                            ordonance.id.toString(),
+                            ordonanceToChange,
+                            object : ResponseCallback {
+                                override fun success(medicament: String) {
+
+                                }
+
+                                override fun success() {
+                                }
+
+                                override fun failure() {
+                                }
+
+                            })
                         text = ""
                         dialog.dismiss()
                     }
@@ -263,6 +296,10 @@ class AccueilAgentLaboActivity : AppCompatActivity() {
             .addOnFailureListener {
                 //Log.d(TAG, "Failed to set value to database: ${it.message}")
             }
+    }
+
+    fun getMyDataAgentLabo(): String? {
+        return ordonanceToChange.idPatient
     }
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
