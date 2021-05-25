@@ -489,6 +489,63 @@ class UserDao : IGestionUser {
 //            }
 //        }
 //
+
+//    fun uploadImageToFirebase(contentUri: Uri) {
+//        val fileName = UUID.randomUUID().toString() + ".jpg"
+//        val image = storageReference.child("pictures/$fileName")
+//
+//        image.putFile(contentUri).addOnSuccessListener {
+//            image.downloadUrl.addOnSuccessListener { uri ->
+//                Log.d("tag", "onSuccess: Uploaded Image URl is $uri")
+//
+//            }
+//        }.addOnFailureListener {
+//
+//        }
+//    }
+//    fun uploadImageToFirebase(contentUri: Uri,responseCallback: ResponseCallback) {
+//        val fileName = UUID.randomUUID().toString() + ".jpg"
+//        val image = storageReference.child("pictures/$fileName")
+//
+//        image.putFile(contentUri).addOnSuccessListener {
+//            image.downloadUrl.addOnSuccessListener { uri ->
+//                Log.d("tag", "onSuccess: Uploaded Image URl is $uri")
+//
+//            }
+//        }.addOnFailureListener {
+//
+//        }
+
+//    fun uploadImageToFirebase(imageUri: Uri?,uid: String) {
+//        val fileName = UUID.randomUUID().toString() + ".jpg"
+//        val image = storageReference.child("pictures/$fileName")
+//        image.putFile(imageUri!!).addOnSuccessListener {
+//            image.downloadUrl.addOnSuccessListener { uri ->
+//                // save in user
+//                // send callback success insert image
+//                Log.d("tag", "onSuccess: Uploaded Image URl is $uri")
+//                userRef.child(uid).child("profilPhotos").setValue(uri.toString())
+//                    .addOnSuccessListener {
+//                        //notify success
+//                        Log.d("tag", "onSuccess: get Image URl is $uri")
+//                    }.addOnFailureListener {
+//                        //notify failure  update user
+//                    }
+//            }
+//        }.addOnFailureListener {
+//            println("error : " + it)
+//            //notify failure error insert image
+//        }
+//
+//    }
+
+    fun insertProfilePhoto(imageUri: Uri?, rsponseCallback: ResponseCallback) {
+
+    }
+
+//    fun uploadImageToFirebase(imageUri: Uri?) {
+//        if (imageUri != null) {
+//            val fileName = UUID.randomUUID().toString() + ".jpg"
 //
     fun uploadImageToFirebase(imageUri: Uri?) {
         if (imageUri != null) {
@@ -502,7 +559,7 @@ class UserDao : IGestionUser {
                     OnSuccessListener<UploadTask.TaskSnapshot> { taskSnapshot ->
                         taskSnapshot.storage.downloadUrl.addOnSuccessListener {
                             val imageUrl = it.toString()
-                            //saveToFirebaseDataBase(fileName)
+                            saveToFirebaseDataBase(fileName)
 
                         }
                     })
