@@ -49,7 +49,7 @@ class AccueilPharmacienFragment : Fragment() {
                                     for (ordo in userItem.ordonance!!.entries) {
                                         var ordonance = ordo.value
                                         if (ordonance.idPatient.equals(userItem.id.toString())) {
-                                            if (ordonance.taken.equals("termineé") && ordonance.dateOrdonanceSend + ordonance.hourOrdonanceSend != date) {
+                                            if (ordonance.taken.equals("termineé") && ordonance.typeOrdonnance.equals("Ordonnance médicament") && ordonance.dateOrdonanceSend + ordonance.hourOrdonanceSend != date) {
                                                 date = ordonance.dateOrdonanceSend + ordonance.hourOrdonanceSend
                                                 listNewOrdonnanceParmacien.add(
                                                     ModelNewOrdonnancePharmacien(

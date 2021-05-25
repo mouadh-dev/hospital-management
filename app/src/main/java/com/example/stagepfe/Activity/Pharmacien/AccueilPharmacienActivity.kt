@@ -3,15 +3,25 @@ package com.example.stagepfe.Activity.Pharmacien
 import android.R.attr
 import android.app.Activity
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.net.UrlQuerySanitizer
 import android.os.Bundle
 import android.provider.MediaStore
+import android.transition.Transition
 import android.view.View
 import android.view.View.VISIBLE
 import android.widget.*
+import androidmads.library.qrgenearator.QRGSaver.save
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.target.Target.SIZE_ORIGINAL
 import com.example.stagepfe.Activity.Authentication.AuthenticationFragmentContainerActivity
 import com.example.stagepfe.Adapters.Doctor.MyAdapterOrdonancePharmacien
 import com.example.stagepfe.Dao.ResponseCallback
@@ -32,6 +42,9 @@ import com.google.firebase.storage.UploadTask
 import com.google.gson.Gson
 import com.google.zxing.integration.android.IntentIntegrator
 import java.util.*
+import com.bumptech.glide.request.target.Target
+import com.example.stagepfe.Dao.ImageCallback
+import com.squareup.picasso.Picasso
 
 
 class AccueilPharmacienActivity : AppCompatActivity() {
@@ -59,7 +72,60 @@ class AccueilPharmacienActivity : AppCompatActivity() {
             //profile photo
                 if (requestCode == 1000) {
                     imageUri = data?.data
-                    imageProfilPharmacien!!.setImageURI(imageUri)
+
+                    userDao.uploadImageToFirebase(imageUri!!, object : ImageCallback {
+                        override fun success(uri: Uri) {
+                            Picasso.get().load(uri).into(imageProfilPharmacien)
+                        }
+
+                        override fun failure() {
+                        }
+                    })
+
+                    userDao.retrieveCurrentDataUser(object : UserCallback {
+                        override fun onSuccess(userItem: UserItem) {
+//                            userDao.uploadImageToFirebase(imageUri!!,userItem.id.toString())
+
+
+                        }
+
+                        override fun failure() {
+                        }
+                    })
+
+                    userDao.retrieveCurrentDataUser(object : UserCallback {
+                        override fun onSuccess(userItem: UserItem) {
+
+
+//                            imageProfilPharmacien!!.setImageURI(Glide.get(imageUri))
+//                            Glide
+//                                .with(this@AccueilPharmacienActivity)
+//                                .asBitmap()
+//                                .load(userItem.profilPhotos)
+//                                .diskCacheStrategy(DiskCacheStrategy.NONE)
+//                                .into(object : CustomTarget<Bitmap>(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL) {
+//
+//
+//
+//                                    override fun onLoadCleared(placeholder: Drawable?) {}
+//                                    override fun onResourceReady(
+//                                        resource: Bitmap,
+//                                        transition: com.bumptech.glide.request.transition.Transition<in Bitmap>?
+//                                    ) {
+//
+//                                            //Save image file
+//                                            save(userItem.profilPhotos,userItem.profilPhotos,resource,1)
+//                                            //Load into imageview if needed
+//
+//                                    }
+//
+//                                })
+                        }
+
+                        override fun failure() {
+                        }
+                    })
+
                 }
             //qrCode
             val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
@@ -185,22 +251,28 @@ class AccueilPharmacienActivity : AppCompatActivity() {
 //        mScannerView!!.setAspectTolerance(0.5f);
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
-
+        Glide
+            .with(this@AccueilPharmacienActivity)
+            .load(userItem.profilPhotos)
+            .centerCrop()
+            .placeholder(R.drawable.logopatient)
+            .into(imageProfilPharmacien!!)
 //////////////////////////////////////////////////////////////////////////////////////////////////
         imageProfilPharmacien!!.setOnClickListener {
             val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
             startActivityForResult(gallery, 1000)
+//            userDao.uploadImageToFirebase(imageUri!!)
             //updateImageProfil()
 
-            // userDao.insertPhoto(profilPhotos, userItem, object : ResponseCallback {
-            //   override fun success() {
-            //      dialog()
-            //  }
-            //  override fun success(medicament: String) {
-            //  }
-            //  override fun failure() {
-            //  }
-            //   })
+//             userDao.insertPhoto(profilPhotos, userItem, object : ResponseCallback {
+//               override fun success() {
+//                  dialog()
+//              }
+//              override fun success(medicament: String) {
+//              }
+//              override fun failure() {
+//              }
+//               })
 
         }
 //////////////////////////////////////////////////////////////////////////////////////////////////

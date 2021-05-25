@@ -4,11 +4,10 @@ import android.app.Activity
 import android.content.ContentValues.TAG
 import android.net.Uri
 import android.util.Log
+import android.widget.Toast
 import com.example.stagepfe.entite.*
 import com.example.stagepfe.util.BaseConstant
 import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.OnFailureListener
-import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
@@ -17,7 +16,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.UploadTask
+import com.squareup.picasso.Picasso
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -77,10 +76,12 @@ class UserDao : IGestionUser {
                 userRef.child(id).setValue(userItem)
                 userCallback.onSuccess(userItem)
             }
+
             override fun onCancelled(error: DatabaseError) {
             }
         })
     }
+
     ///////////////////////////////////////////Sign in//////////////////////////////////////////////////
     fun signIn(activity: Activity, userItem: UserItem, userCallback: UserCallback) {
         mAuth.signInWithEmailAndPassword(userItem.mail, userItem.password)
@@ -247,7 +248,7 @@ class UserDao : IGestionUser {
     //          }
     //      }
 
-//            override fun onCancelled(error: DatabaseError) {
+    //            override fun onCancelled(error: DatabaseError) {
     //              responseCallback.failure()
     //      }
     //  })
@@ -309,11 +310,17 @@ class UserDao : IGestionUser {
     }
 
     //////////////////////////////////////////updateRapport/////////////////////////////////////////
-    fun updateRapport(iddoc: String,idPat: String,idRapport:String,rapports: Rapports, responseCallback: ResponseCallback) {
+    fun updateRapport(
+        iddoc: String,
+        idPat: String,
+        idRapport: String,
+        rapports: Rapports,
+        responseCallback: ResponseCallback
+    ) {
 
         userRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-             userRef.child(iddoc).child("rapports").child(idRapport).removeValue()
+                userRef.child(iddoc).child("rapports").child(idRapport).removeValue()
                 userRef.child(iddoc).child("rapports").child(idRapport).setValue(rapports)
 
                 userRef.child(idPat).child("rapports").child(idRapport).removeValue()
@@ -329,15 +336,23 @@ class UserDao : IGestionUser {
 
         })
     }
+
     //////////////////////////////////////////RemoveRapport/////////////////////////////////////////
-    fun removeRapport(iddoc:String, idPat:String, idRapport:String, rapports:Rapports, responseCallback: ResponseCallback){
-        userRef.addListenerForSingleValueEvent(object :ValueEventListener{
+    fun removeRapport(
+        iddoc: String,
+        idPat: String,
+        idRapport: String,
+        rapports: Rapports,
+        responseCallback: ResponseCallback
+    ) {
+        userRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 userRef.child(iddoc).child("rapports").child(idRapport).removeValue()
                 userRef.child(idPat).child("rapports").child(idRapport).removeValue()
                 responseCallback.success()
 
             }
+
             override fun onCancelled(error: DatabaseError) {
             }
 
@@ -392,7 +407,13 @@ class UserDao : IGestionUser {
     }
 
     ////////////////////////////////////////////remove ordonance/////////////////////////////////////
-    fun removeOrdonance(iddoc: String,idPat: String,idOrdonance:String,ordonance: Ordonance, responseCallback: ResponseCallback) {
+    fun removeOrdonance(
+        iddoc: String,
+        idPat: String,
+        idOrdonance: String,
+        ordonance: Ordonance,
+        responseCallback: ResponseCallback
+    ) {
 
         userRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -400,12 +421,20 @@ class UserDao : IGestionUser {
                 userRef.child(idPat).child("ordonance").child(idOrdonance).removeValue()
                 responseCallback.success()
             }
+
             override fun onCancelled(error: DatabaseError) {
             }
         })
     }
+
     ////////////////////////////////////////////remove ordonance/////////////////////////////////////
-    fun updateOrdonance(iddoc: String,idPat: String,idOrdonance:String,ordonance: Ordonance, responseCallback: ResponseCallback) {
+    fun updateOrdonance(
+        iddoc: String,
+        idPat: String,
+        idOrdonance: String,
+        ordonance: Ordonance,
+        responseCallback: ResponseCallback
+    ) {
 
         userRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -417,10 +446,12 @@ class UserDao : IGestionUser {
                 userRef.child(idPat).child("ordonance").child(idOrdonance).setValue(ordonance)
                 responseCallback.success()
             }
+
             override fun onCancelled(error: DatabaseError) {
             }
         })
     }
+
     ////////////////////////////////////////////change password/////////////////////////////////////
     fun changePassword(
         password: String,
@@ -464,6 +495,7 @@ class UserDao : IGestionUser {
 
 
     }
+
     ///////////////////////////////////////////update Photo////////////////////////////////////////
 //    private fun updateProfile() {
 //        val user = mAuth.currentUser
@@ -489,42 +521,119 @@ class UserDao : IGestionUser {
 //            }
 //        }
 //
+
+//    fun uploadImageToFirebase(contentUri: Uri) {
+//        val fileName = UUID.randomUUID().toString() + ".jpg"
+//        val image = storageReference.child("pictures/$fileName")
 //
-    fun uploadImageToFirebase(imageUri: Uri?) {
-        if (imageUri != null) {
-            val fileName = UUID.randomUUID().toString() + ".jpg"
+//        image.putFile(contentUri).addOnSuccessListener {
+//            image.downloadUrl.addOnSuccessListener { uri ->
+//                Log.d("tag", "onSuccess: Uploaded Image URl is $uri")
+//
+//            }
+//        }.addOnFailureListener {
+//
+//        }
+//    }
+//    fun uploadImageToFirebase(contentUri: Uri,responseCallback: ResponseCallback) {
+//        val fileName = UUID.randomUUID().toString() + ".jpg"
+//        val image = storageReference.child("pictures/$fileName")
+//
+//        image.putFile(contentUri).addOnSuccessListener {
+//            image.downloadUrl.addOnSuccessListener { uri ->
+//                Log.d("tag", "onSuccess: Uploaded Image URl is $uri")
+//
+//            }
+//        }.addOnFailureListener {
+//
+//        }
 
-            val database = FirebaseDatabase.getInstance()
-            val refStorage = FirebaseStorage.getInstance().reference.child("images/$fileName")
+//    fun uploadImageToFirebase(imageUri: Uri?,uid: String) {
+//        val fileName = UUID.randomUUID().toString() + ".jpg"
+//        val image = storageReference.child("pictures/$fileName")
+//        image.putFile(imageUri!!).addOnSuccessListener {
+//            image.downloadUrl.addOnSuccessListener { uri ->
+//                // save in user
+//                // send callback success insert image
+//                Log.d("tag", "onSuccess: Uploaded Image URl is $uri")
+//                userRef.child(uid).child("profilPhotos").setValue(uri.toString())
+//                    .addOnSuccessListener {
+//                        //notify success
+//                        Log.d("tag", "onSuccess: get Image URl is $uri")
+//                    }.addOnFailureListener {
+//                        //notify failure  update user
+//                    }
+//            }
+//        }.addOnFailureListener {
+//            println("error : " + it)
+//            //notify failure error insert image
+//        }
+//
+//    }
 
-            refStorage.putFile(imageUri)
-                .addOnSuccessListener(
-                    OnSuccessListener<UploadTask.TaskSnapshot> { taskSnapshot ->
-                        taskSnapshot.storage.downloadUrl.addOnSuccessListener {
-                            val imageUrl = it.toString()
-                            saveToFirebaseDataBase(fileName)
-
-                        }
-                    })
-
-                ?.addOnFailureListener(OnFailureListener { e ->
-                    print(e.message)
-                })
-        }
-
+    fun insertProfilePhoto(imageUri: Uri?, rsponseCallback: ResponseCallback) {
 
     }
-    private fun saveToFirebaseDataBase(fileName: String) {
-          val mAuth = FirebaseAuth.getInstance()
-        val userRef = FirebaseDatabase.getInstance().getReference("users")
-        userRef.setValue(mAuth, imageUri)
-          .addOnSuccessListener {
+
+//    fun uploadImageToFirebase(imageUri: Uri?) {
+//        if (imageUri != null) {
+//            val fileName = UUID.randomUUID().toString() + ".jpg"
+//
+//            val database = FirebaseDatabase.getInstance()
+//            val refStorage = FirebaseStorage.getInstance().reference.child("images/$fileName")
+//
+//            refStorage.putFile(imageUri)
+//                .addOnSuccessListener(
+//                    OnSuccessListener<UploadTask.TaskSnapshot> { taskSnapshot ->
+//                        taskSnapshot.storage.downloadUrl.addOnSuccessListener {
+//                            val imageUrl = it.toString()
+//                            saveToFirebaseDataBase(fileName)
+//
+//                        }
+//                    })
+//
+//                ?.addOnFailureListener(OnFailureListener { e ->
+//                    print(e.message)
+//                })
+//        }
+//
+//
+//    }
+
+//    private fun saveToFirebaseDataBase(fileName: String) {
+//        val mAuth = FirebaseAuth.getInstance()
+//        val userRef = FirebaseDatabase.getInstance().getReference("users")
+//        userRef.setValue(mAuth, fileName)
+//            .addOnSuccessListener {
+//
+//            }
+//            .addOnFailureListener {
+//
+//            }
+//
+//    }
+  fun uploadImageToFirebase(contentUri: Uri,imageCallback: ImageCallback) {
+    val fileName = UUID.randomUUID().toString() + ".jpg"
+    val image = storageReference.child("pictures/$fileName")
+    image.putFile(contentUri).addOnSuccessListener {
+        image.downloadUrl.addOnSuccessListener { uri ->
+            userRef.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+
+                    imageCallback.success(uri)
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    imageCallback.failure()
+                }
+
+            })
+            Log.d("tag", "onSuccess: Uploaded Image URl is $uri")
 
         }
-        .addOnFailureListener {
-
-        }
-
+    }.addOnFailureListener {
+    }
+}
 }
 
 
