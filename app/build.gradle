@@ -54,7 +54,7 @@ android {
 
 dependencies {
 
-    implementation 'com.github.badoualy:datepicker-timeline:c6dcd05737'
+    implementation 'com.github.badoualy:datepicker-line:c6dcd05737'
     implementation 'com.github.mybringback22:HorizontalCalendarView-Android-:0.1.0'
     //noinspection GradleCompatible
     implementation 'com.android.support:design:27.1.1'
