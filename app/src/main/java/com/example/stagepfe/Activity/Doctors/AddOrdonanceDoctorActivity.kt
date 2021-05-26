@@ -2,22 +2,31 @@ package com.example.stagepfe.Activity.Doctors
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.ContentValues
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isEmpty
 import com.example.stagepfe.Adapters.Doctor.MyAdapterOrdonance
+import com.example.stagepfe.Adapters.Patients.MyAdapter
 import com.example.stagepfe.Dao.OrdonanceCallback
+import com.example.stagepfe.Dao.ResponseCallback
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
+import com.example.stagepfe.Models.Patient.Model
 import com.example.stagepfe.R
 import com.example.stagepfe.entite.MedicamentOrdonance
 import com.example.stagepfe.entite.Ordonance
 import com.example.stagepfe.entite.UserItem
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -75,6 +84,7 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
 //            startActivity(intent)
             finish()
         }
+
 
         ////////////////////////////////////////////listView Medicament////////////////////////////////////
         addMedicament!!.setOnClickListener {
@@ -174,8 +184,52 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
                 quantity!!.text = count.toString()
             }
         }
+
+
+        userdao.MedicamenteSearch(object : ResponseCallback{
+            override fun success(medicament: String) {
+
+            }
+
+            override fun success() {
+                TODO("Not yet implemented")
+            }
+
+            override fun failure() {
+                TODO("Not yet implemented")
+            }
+
+        })
+        MedicamenteSearch()
+
     }
-//////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private fun MedicamenteSearch() {
+        val ref =  FirebaseDatabase.getInstance().getReference("Medicament")
+        val eventListener: ValueEventListener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    var namesMedicament: ArrayList<String?> = ArrayList()
+                    for (ds in snapshot.children) {
+                    var nomMedicament=ds.child("medicament").getValue(String::class.java)
+                        var names= "$nomMedicament"
+                        namesMedicament.add(names)
+                    }
+                    val adapter: ArrayAdapter<*> = ArrayAdapter<String>(this@AddOrdonanceDoctorActivity,
+                        android.R.layout.simple_list_item_1,
+                       namesMedicament
+                    )
+                    nameMedicament!!.setAdapter(adapter)
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        }
+        ref.addListenerForSingleValueEvent(eventListener)
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////
     private fun filMedicament() {
         for (i in 0 until adapterMedicament!!.count) {
             val item = MedicamentOrdonance() // new one

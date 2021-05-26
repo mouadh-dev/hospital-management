@@ -122,6 +122,7 @@ class UserDao : IGestionUser {
 
         })
     }
+    //////////////////////////////////////////////////forgotPassword////////////////////////////////
 
     //////////////////////////////////////////////////retrieve data user////////////////////////////////
     fun retrieveCurrentDataUser(userCallback: UserCallback) {
@@ -333,6 +334,28 @@ class UserDao : IGestionUser {
 
 
     }
+    /////////////////////////////////////////////medicamentSearch/////////////////////////////////////
+    fun MedicamenteSearch(responseCallback: ResponseCallback) {
+        medicamentRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    for (ds in snapshot.children) {
+                        var medicament = ds.getValue(String::class.java)
+                        responseCallback.success(medicament!!)
+                    }
+
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                responseCallback.failure()
+            }
+
+        })
+
+
+    }
+
 
     /////////////////////////////////////////////insert Ordonance/////////////////////////////////////
     override fun insertordonance(
@@ -424,27 +447,7 @@ class UserDao : IGestionUser {
         }
     }
 
-    /////////////////////////////////////////////medicamentSearch/////////////////////////////////////
-//    fun MedicamenteSearch(responseCallback: ResponseCallback) {
-//        medicamentRef.addListenerForSingleValueEvent(object : ValueEventListener {
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//                if (snapshot.exists()) {
-//                    for (ds in snapshot.children) {
-//                        var medicament = ds.getValue(String::class.java)
-//                        responseCallback.success(medicament!!)
-//                    }
-//
-//                }
-//            }
-//
-//            override fun onCancelled(error: DatabaseError) {
-//                responseCallback.failure()
-//            }
-//
-//        })
-//
-//
-//    }
+
 
     fun uploadImageToFirebase(uid: String, contentUri: Uri) {
         val fileName = UUID.randomUUID().toString() + ".jpg"
