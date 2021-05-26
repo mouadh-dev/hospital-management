@@ -65,7 +65,7 @@ class ShowRapportPatientForDoctorFragment : Fragment() {
 
 
         val activity: ShowInfoPatientForDoctorActivity? =
-            activity as ShowInfoPatientForDoctorActivity?
+            requireActivity() as ShowInfoPatientForDoctorActivity?
         val myDataFromActivity: String = activity!!.getMyData().toString()
 
 

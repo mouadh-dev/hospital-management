@@ -81,13 +81,11 @@ class AccueilPharmacienActivity : AppCompatActivity() {
 
                     userDao.retrieveCurrentDataUser(object : UserCallback {
                         override fun onSuccess(userItem: UserItem) {
+                            Glide
+                                .with(this@AccueilPharmacienActivity)
+                                .load(userItem.profilPhotos)
+                                .into(imageProfilPharmacien!!)
 
-//                            Glide
-//                                .with(this@AccueilPharmacienActivity)
-//                                .load("https://www.google.com/imgres?imgurl=https%3A%2F%2Fhelpx.adobe.com%2Fcontent%2Fdam%2Fhelp%2Fen%2Fphotoshop%2Fusing%2Fconvert-color-image-black-white%2Fjcr_content%2Fmain-pars%2Fbefore_and_after%2Fimage-before%2FLandscape-Color.jpg&imgrefurl=https%3A%2F%2Fhelpx.adobe.com%2Ffr%2Fphotoshop%2Fusing%2Fconvert-color-image-black-white.html&tbnid=2DNOEjVi-CBaYM&vet=12ahUKEwi3k_-Z9-XwAhUFYBoKHcizAjYQMygIegUIARDgAQ..i&docid=H501o2XBa9olJM&w=1601&h=664&q=image&client=opera-gx&ved=2ahUKEwi3k_-Z9-XwAhUFYBoKHcizAjYQMygIegUIARDgAQ")
-//                                .centerCrop()
-//                                .placeholder(imageProfilPharmacien)
-//                                .into(imageProfilPharmacien!!)
                         }
 
                         override fun failure() {
@@ -220,10 +218,6 @@ class AccueilPharmacienActivity : AppCompatActivity() {
 //        mScannerView!!.setAspectTolerance(0.5f);
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
-            Glide
-                .with(this)
-                .load("https://firebasestorage.googleapis.com/v0/b/stage-pfe-d3eeb.appspot.com/o/pictures%2F19483dc5-fdab-4629-a124-2a4859e921aa.jpg?alt=media&token=45a49e0d-4009-4f2a-ab3f-8ba4c88bc05b")
-                .into(imageProfilPharmacien!!)
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
         imageProfilPharmacien!!.setOnClickListener {

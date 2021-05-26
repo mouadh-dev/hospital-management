@@ -40,7 +40,7 @@ class AgentAccueilFragment : Fragment() {
         initAdapter()
 
         val activity: AccueilAgentLaboActivity? =
-            activity as AccueilAgentLaboActivity?
+            requireActivity() as AccueilAgentLaboActivity?
         val myDataFromActivity: String? = activity!!.getMyDataAgentLabo()
 
         var userDao = UserDao()

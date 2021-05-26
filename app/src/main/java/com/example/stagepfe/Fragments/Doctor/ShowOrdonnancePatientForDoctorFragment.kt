@@ -67,7 +67,7 @@ class ShowOrdonnancePatientForDoctorFragment : Fragment() {
         initAdapter()
 ////////////////////////////////////////////addOrdonance////////////////////////////////////////////
         val activity: ShowInfoPatientForDoctorActivity? =
-            activity as ShowInfoPatientForDoctorActivity?
+            requireActivity()  as ShowInfoPatientForDoctorActivity?
         val myDataFromActivity: String = activity!!.getMyData().toString()
 
         userDao.retrieveCurrentDataUser(object : UserCallback {
