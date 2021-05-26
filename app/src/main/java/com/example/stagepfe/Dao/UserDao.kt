@@ -26,7 +26,7 @@ class UserDao : IGestionUser {
     private val mAuth = FirebaseAuth.getInstance()
     private val userRef = FirebaseDatabase.getInstance().getReference("users")
 
-    //    private val medicamentRef = FirebaseDatabase.getInstance().getReference("Medicament")
+    private val medicamentRef = FirebaseDatabase.getInstance().getReference("Medicament")
     private val reclamationRef = database.getReference(BaseConstant.instance().reclamation)
     private val storageReference = FirebaseStorage.getInstance().reference
 
@@ -334,6 +334,7 @@ class UserDao : IGestionUser {
 
 
     }
+
     /////////////////////////////////////////////medicamentSearch/////////////////////////////////////
     fun MedicamenteSearch(responseCallback: ResponseCallback) {
         medicamentRef.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -448,17 +449,14 @@ class UserDao : IGestionUser {
     }
 
 
-
     fun uploadImageToFirebase(uid: String, contentUri: Uri) {
         val fileName = UUID.randomUUID().toString() + ".jpg"
         val image = storageReference.child("pictures/$fileName")
-//        image.putFile(contentUri).addOnSuccessListener {
-//            image.downloadUrl.addOnSuccessListener { uri ->
-        image.putFile(contentUri)
-            .addOnSuccessListener { taskSnapshot ->
-                taskSnapshot.storage.downloadUrl.addOnSuccessListener {
-                    Log.d("tag", "onSuccess: Uploaded Image URl is $contentUri")
+        image.putFile(contentUri).addOnSuccessListener {
+            image.downloadUrl.addOnSuccessListener { uri ->
+                    Log.d("tag", "onSuccess: Uploaded Image URl is $uri")
                     userRef.child(uid).child("profilPhotos").setValue(contentUri.toString())
+
                 }.addOnFailureListener {
                     Log.d("tag", "onFailureMessage is $it")
                 }

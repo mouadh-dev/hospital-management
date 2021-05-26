@@ -60,16 +60,7 @@ class AccueilPharmacienActivity : AppCompatActivity() {
                     override fun onSuccess(userItem: UserItem) {
                         userDao.uploadImageToFirebase(
                             userItem.id.toString(),
-                            imageUri!!,
-                            object : ImageCallback {
-                                override fun success(uri: Uri) {
-
-
-                                }
-
-                                override fun failure() {
-                                }
-                            })
+                            imageUri!!)
                     }
 
                     override fun failure() {
