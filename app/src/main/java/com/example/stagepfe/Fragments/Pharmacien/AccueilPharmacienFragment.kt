@@ -37,9 +37,9 @@ class AccueilPharmacienFragment : Fragment() {
             view.findViewById<ListView>(R.id.listNewOrdonnance_Pharmacien)
         initAdapter()
 
-        val activity: AccueilPharmacienActivity? =
-            activity as AccueilPharmacienActivity?
-        val myDataFromActivity: String? = activity!!.getMyDataPharmacien()
+        val activity: AccueilPharmacienActivity =
+            requireActivity() as AccueilPharmacienActivity
+        val myDataFromActivity: String? = activity.getMyDataPharmacien()
         println("mouadh :: " + myDataFromActivity)
         var userDao = UserDao()
 
