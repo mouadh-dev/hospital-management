@@ -10,9 +10,11 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -23,7 +25,8 @@ class UserDao : IGestionUser {
     private val myRef = database.getReference(BaseConstant.instance().userRef)
     private val mAuth = FirebaseAuth.getInstance()
     private val userRef = FirebaseDatabase.getInstance().getReference("users")
-    private val medicamentRef = FirebaseDatabase.getInstance().getReference("Medicament")
+
+    //    private val medicamentRef = FirebaseDatabase.getInstance().getReference("Medicament")
     private val reclamationRef = database.getReference(BaseConstant.instance().reclamation)
     private val storageReference = FirebaseStorage.getInstance().reference
 
@@ -202,53 +205,7 @@ class UserDao : IGestionUser {
         reclamation.id = reclamationRef.push().key.toString()
         reclamationRef.child(reclamation.id!!).setValue(reclamation)
     }
-    ////////////////////////////////////////////////Insert photo/////////////////////////////////////////
-    // override fun insertPhoto(
-    //profilPhotos: ProfilPhoto,
-    //userItem: UserItem,
-    // responseCallback: ResponseCallback
-    // ) {
-    //userRef.addListenerForSingleValueEvent(object : ValueEventListener {
-    //   override fun onDataChange(snapshot: DataSnapshot) {
 
-    //    var profilPhoto = HashMap<String, ProfilPhoto>()
-    //  profilPhoto[profilPhotos.id.toString()] = profilPhotos
-    // userItem.profilPhotos = profilPhoto
-
-    //  profilPhotos.id = userRef.push().key
-    // userRef.child("ProfilPhoto").child(profilPhotos.id!!)
-    //     .setValue(profilPhotos)
-    //  responseCallback.success()
-    //  }
-    //  override fun onCancelled(error: DatabaseError) {
-    // }
-    //  })
-    //}
-    ////////////////////////////////////////////get profilPhoto ////////////////////////////////////////////
-    // fun getProfilPhoto(responseCallback: ProfilPhotoCallback ) {
-    //  userRef.addListenerForSingleValueEvent(object : ValueEventListener {
-    //      override fun onDataChange(snapshot: DataSnapshot) {
-    //          if (snapshot.exists()) {
-    //              for (ds in snapshot.children) {
-
-    //                  var userItem = ds.getValue(UserItem::class.java)
-    //                  if (userItem!!.role!!.size == 2) {
-    //                      if (userItem.profilPhotos != null) {
-    //                          var profilPhoto = userItem.profilPhotos
-    //                          for (entry in profilPhoto!!.values) {
-    //                              responseCallback.success(entry)
-    //                          }
-    //                      }
-    //                  }
-    //              }
-    //          }
-    //      }
-
-    //            override fun onCancelled(error: DatabaseError) {
-    //              responseCallback.failure()
-    //      }
-    //  })
-//}
     //////////////////////////////////////////insertRapport/////////////////////////////////////////
     override fun insertRapport(
         rapports: Rapports,
@@ -338,7 +295,6 @@ class UserDao : IGestionUser {
         iddoc: String,
         idPat: String,
         idRapport: String,
-        rapports: Rapports,
         responseCallback: ResponseCallback
     ) {
         userRef.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -407,7 +363,6 @@ class UserDao : IGestionUser {
         iddoc: String,
         idPat: String,
         idOrdonance: String,
-        ordonance: Ordonance,
         responseCallback: ResponseCallback
     ) {
 
@@ -452,7 +407,6 @@ class UserDao : IGestionUser {
     fun changePassword(
         password: String,
         userItem: UserItem,
-        activity: Activity,
         responseCallback: ResponseCallback
     ) {
         val user = FirebaseAuth.getInstance().currentUser
@@ -492,144 +446,22 @@ class UserDao : IGestionUser {
 //
 //    }
 
-    ///////////////////////////////////////////update Photo////////////////////////////////////////
-//    private fun updateProfile() {
-//        val user = mAuth.currentUser
-//        user?.let { user ->
-//            val photoURI = Uri.parse("android.resource://$packageName/${R.drawable.logopatient}")
-//            val profileUpdates = UserProfileChangeRequest.Builder()
-//                .setPhotoUri(photoURI)
-//                .build()
-//
-//            CoroutineScope(Dispatchers.IO).launch {
-//                try {
-//                    user.updateProfile(profileUpdates).await()
-//                    withContext(Dispatchers.Main) {
-//                        Toast.makeText(this@MainActivity, "Successfully updated profile",
-//                            Toast.LENGTH_LONG).show()
-//                    }
-//                } catch(e: Exception) {
-//                    withContext(Dispatchers.Main) {
-//                        Toast.makeText(this@MainActivity, e.message, Toast.LENGTH_LONG).show()
-//                    }
-//                }
-//
-//            }
-//        }
-//
-
-//    fun uploadImageToFirebase(contentUri: Uri) {
-//        val fileName = UUID.randomUUID().toString() + ".jpg"
-//        val image = storageReference.child("pictures/$fileName")
-//
-//        image.putFile(contentUri).addOnSuccessListener {
-//            image.downloadUrl.addOnSuccessListener { uri ->
-//                Log.d("tag", "onSuccess: Uploaded Image URl is $uri")
-//
-//            }
-//        }.addOnFailureListener {
-//
-//        }
-//    }
-//    fun uploadImageToFirebase(contentUri: Uri,responseCallback: ResponseCallback) {
-//        val fileName = UUID.randomUUID().toString() + ".jpg"
-//        val image = storageReference.child("pictures/$fileName")
-//
-//        image.putFile(contentUri).addOnSuccessListener {
-//            image.downloadUrl.addOnSuccessListener { uri ->
-//                Log.d("tag", "onSuccess: Uploaded Image URl is $uri")
-//
-//            }
-//        }.addOnFailureListener {
-//
-//        }
-
-//    fun uploadImageToFirebase(imageUri: Uri?,uid: String) {
-//        val fileName = UUID.randomUUID().toString() + ".jpg"
-//        val image = storageReference.child("pictures/$fileName")
-//        image.putFile(imageUri!!).addOnSuccessListener {
-//            image.downloadUrl.addOnSuccessListener { uri ->
-//                // save in user
-//                // send callback success insert image
-//                Log.d("tag", "onSuccess: Uploaded Image URl is $uri")
-//                userRef.child(uid).child("profilPhotos").setValue(uri.toString())
-//                    .addOnSuccessListener {
-//                        //notify success
-//                        Log.d("tag", "onSuccess: get Image URl is $uri")
-//                    }.addOnFailureListener {
-//                        //notify failure  update user
-//                    }
-//            }
-//        }.addOnFailureListener {
-//            println("error : " + it)
-//            //notify failure error insert image
-//        }
-//
-//    }
-
-
-//    fun uploadImageToFirebase(imageUri: Uri?) {
-//        if (imageUri != null) {
-//            val fileName = UUID.randomUUID().toString() + ".jpg"
-//
-//            val database = FirebaseDatabase.getInstance()
-//            val refStorage = FirebaseStorage.getInstance().reference.child("images/$fileName")
-//
-//            refStorage.putFile(imageUri)
-//                .addOnSuccessListener(
-//                    OnSuccessListener<UploadTask.TaskSnapshot> { taskSnapshot ->
-//                        taskSnapshot.storage.downloadUrl.addOnSuccessListener {
-//                            val imageUrl = it.toString()
-//                            saveToFirebaseDataBase(fileName)
-//
-//                        }
-//                    })
-//
-//                ?.addOnFailureListener(OnFailureListener { e ->
-//                    print(e.message)
-//                })
-//        }
-//
-//
-//    }
-
-
-    fun uploadImageToFirebase(uid:String,contentUri: Uri,imageCallback: ImageCallback) {
+    fun uploadImageToFirebase(uid: String, contentUri: Uri) {
         val fileName = UUID.randomUUID().toString() + ".jpg"
         val image = storageReference.child("pictures/$fileName")
-        image.putFile(contentUri).addOnSuccessListener {
-            image.downloadUrl.addOnSuccessListener { uri ->
-//                userRef.addValueEventListener(object : ValueEventListener {
-//                    override fun onDataChange(snapshot: DataSnapshot) {
-//
-//                        imageCallback.success(uri)
-////                        insertImage(uid,fileName)
-//                    }
-//
-//
-//
-//                    override fun onCancelled(error: DatabaseError) {
-//                        imageCallback.failure()
-//                    }
-//
-//                })
-                Log.d("tag", "onSuccess: Uploaded Image URl is $uri")
-
+//        image.putFile(contentUri).addOnSuccessListener {
+//            image.downloadUrl.addOnSuccessListener { uri ->
+        image.putFile(contentUri)
+            .addOnSuccessListener { taskSnapshot ->
+                taskSnapshot.storage.downloadUrl.addOnSuccessListener {
+                    Log.d("tag", "onSuccess: Uploaded Image URl is $contentUri")
+                    userRef.child(uid).child("profilPhotos").setValue(contentUri.toString())
+                }.addOnFailureListener {
+                    Log.d("tag", "onFailureMessage is $it")
+                }
             }
-        }.addOnFailureListener {
-        }
     }
 
-    private fun saveToFirebaseDataBase(fileName: String, image: StorageReference) {
-        userRef.setValue(database, image)
-          .addOnSuccessListener {
-
-        }
-        .addOnFailureListener {}
-    }
-    private fun insertImage(uid: String,fileName:String){
-        userRef.child(uid).child("profilPhotos").setValue(fileName)
-    }
 }
 
 

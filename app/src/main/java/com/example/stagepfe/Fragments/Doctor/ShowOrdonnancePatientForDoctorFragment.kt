@@ -147,7 +147,6 @@ class ShowOrdonnancePatientForDoctorFragment : Fragment() {
                 userDao.removeOrdonance(ordonanceAdapter.idDoctor!!,
                     ordonanceAdapter.idPatient!!,
                     ordonanceAdapter.id!!,
-                    ordonanceAdapter,
                     object : ResponseCallback {
                         override fun success(medicament: String) {
 

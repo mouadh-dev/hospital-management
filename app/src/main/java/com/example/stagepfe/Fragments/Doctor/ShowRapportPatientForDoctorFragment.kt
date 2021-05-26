@@ -167,7 +167,7 @@ class ShowRapportPatientForDoctorFragment : Fragment() {
 
             dialog.findViewById<Button>(R.id.btn_Delete_rapport).setOnClickListener{
                 userDao.removeRapport(rapportadapter.idDoctorRapport!!,rapportadapter.idPatientRapport!!,rapportadapter.id!!
-                    ,rapportadapter,object : ResponseCallback{
+                    ,object : ResponseCallback{
                         override fun success(medicament: String) {
 
                         }

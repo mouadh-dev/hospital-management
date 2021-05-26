@@ -56,7 +56,7 @@ class ModifyPasswordPatientActivity : AppCompatActivity() {
                         } else {
                             var newPassword = confirmNewPasswordPatientET!!.text.toString()
                             userDao.changePassword(newPassword,
-                                userItem, this@ModifyPasswordPatientActivity, object : ResponseCallback {
+                                userItem, object : ResponseCallback {
                                     override fun success(medicament: String) {
 
                                     }

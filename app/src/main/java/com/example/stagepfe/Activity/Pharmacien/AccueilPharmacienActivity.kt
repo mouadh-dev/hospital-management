@@ -2,7 +2,6 @@ package com.example.stagepfe.Activity.Pharmacien
 
 import android.app.Activity
 import android.app.AlertDialog
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
@@ -25,15 +24,9 @@ import com.example.stagepfe.R
 import com.example.stagepfe.entite.MedicamentOrdonance
 import com.example.stagepfe.entite.Ordonance
 import com.example.stagepfe.entite.UserItem
-import com.google.android.gms.tasks.OnFailureListener
-import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.UploadTask
 import com.google.gson.Gson
 import com.google.zxing.integration.android.IntentIntegrator
-import com.squareup.picasso.Picasso
 import java.util.*
 
 
@@ -54,45 +47,37 @@ class AccueilPharmacienActivity : AppCompatActivity() {
     var ordonanceToChange = Ordonance()
 
     val listMedicament = mutableListOf<MedicamentOrdonance>()
-    //var profilPhotos= ProfilPhoto()
 
     // Get the results:
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK) {
             //profile photo
-                if (requestCode == 1000) {
-                    imageUri = data?.data
-                    imageProfilPharmacien!!.setImageURI(imageUri)
-                    userDao.retrieveCurrentDataUser(object : UserCallback {
-                        override fun onSuccess(userItem: UserItem) {
-                    userDao.uploadImageToFirebase(userItem.id.toString(),imageUri!!, object : ImageCallback {
-                        override fun success(uri: Uri) {
+            if (requestCode == 1000) {
+                imageUri = data?.data
+                imageProfilPharmacien!!.setImageURI(imageUri)
 
-                        }
+                userDao.retrieveCurrentDataUser(object : UserCallback {
+                    override fun onSuccess(userItem: UserItem) {
+                        userDao.uploadImageToFirebase(
+                            userItem.id.toString(),
+                            imageUri!!,
+                            object : ImageCallback {
+                                override fun success(uri: Uri) {
 
-                        override fun failure() {
-                        }
-                    })
-                        }
 
-                        override fun failure() {
-                        }
-                    })
+                                }
 
-                    userDao.retrieveCurrentDataUser(object : UserCallback {
-                        override fun onSuccess(userItem: UserItem) {
-                            Glide
-                                .with(this@AccueilPharmacienActivity)
-                                .load(userItem.profilPhotos)
-                                .into(imageProfilPharmacien!!)
+                                override fun failure() {
+                                }
+                            })
+                    }
 
-                        }
+                    override fun failure() {
+                    }
+                })
 
-                        override fun failure() {
-                        }
-                    })
 
-                }
+            }
             //qrCode
 
             val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
@@ -136,17 +121,11 @@ class AccueilPharmacienActivity : AppCompatActivity() {
                     dialog.findViewById<Button>(R.id.btn_remove).setOnClickListener {
                         var text = ""
                         for (i in 0 until adapterMedicament!!.count) {
-                            var view = adapterMedicament!!.getView(
-                                i,
-                                findViewById<LinearLayout>(R.id.checkBox_Pharmacien),
-                                listView!!
-                            )
                             val medicmaent: MedicamentOrdonance = listMedicament.get(i)
                             if (!medicmaent.isSelected!!) {
                                 val medicament: MedicamentOrdonance =
                                     adapterMedicament!!.getItem(i) as MedicamentOrdonance
                                 text += medicament.nameMedicament + "\n" + medicament.quantity + " " + "fois par jours" + "\n" + medicament.description + "\n"
-//                                nonCheck += medicament.nameMedicament + "\n" + medicament.quantity + " " + "fois par jours" + "\n" + medicament.description + "\n"
                             }
 
                         }
@@ -214,11 +193,20 @@ class AccueilPharmacienActivity : AppCompatActivity() {
         cameraButton = findViewById(R.id.float_button_camera)
 
 
-// this paramter will make your HUAWEI phone works great!
-//        mScannerView!!.setAspectTolerance(0.5f);
-
 //////////////////////////////////////////////////////////////////////////////////////////////////
+        userDao.retrieveCurrentDataUser(object : UserCallback {
+            override fun onSuccess(userItem: UserItem) {
+                val test = userItem.profilPhotos
+                Glide
+                    .with(this@AccueilPharmacienActivity)
+                    .load(userItem.profilPhotos)
+                    .into(imageProfilPharmacien!!)
 
+            }
+
+            override fun failure() {
+            }
+        })
 //////////////////////////////////////////////////////////////////////////////////////////////////
         imageProfilPharmacien!!.setOnClickListener {
             val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
@@ -231,7 +219,6 @@ class AccueilPharmacienActivity : AppCompatActivity() {
             scanner.setBeepEnabled(false)
             scanner.initiateScan()
         }
-
         /////////////////////////////////////////////////////////////////////////////////////////////////
         changeUser!!.setOnClickListener {
             dialog()
@@ -275,6 +262,7 @@ class AccueilPharmacienActivity : AppCompatActivity() {
     fun getMyDataPharmacien(): String? {
         return ordonanceToChange.idPatient
     }
+
     private fun dialog() {
         var v = View.inflate(this, R.layout.dialogchangeuser, null)
         var builder = AlertDialog.Builder(this)
@@ -287,6 +275,7 @@ class AccueilPharmacienActivity : AppCompatActivity() {
             signout()
         }
     }
+
     private fun signout() {
         var userDao = UserDao()
         userDao.signOut(UserItem(), object : UserCallback {
@@ -311,84 +300,6 @@ class AccueilPharmacienActivity : AppCompatActivity() {
             }
         })
     }
-
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////Storage image ///////////////////////////////////////////////////////
-
-    private fun uploadImageToFirebase(imageUri: Uri?) {
-        if (imageUri != null) {
-            val fileName = UUID.randomUUID().toString() + ".jpg"
-
-            val database = FirebaseDatabase.getInstance()
-            val refStorage = FirebaseStorage.getInstance().reference.child("images/$fileName")
-
-            refStorage.putFile(imageUri)
-                .addOnSuccessListener(
-                    OnSuccessListener<UploadTask.TaskSnapshot> { taskSnapshot ->
-                        taskSnapshot.storage.downloadUrl.addOnSuccessListener {
-                            val imageUrl = it.toString()
-                            saveToFirebaseDataBase(fileName)
-
-                        }
-                    })
-
-                ?.addOnFailureListener(OnFailureListener { e ->
-                    print(e.message)
-                })
-        }
-
-
-    }
-
-    private fun saveToFirebaseDataBase(fileName: String) {
-        //  val mAuth = FirebaseAuth.getInstance()
-        //val userRef = FirebaseDatabase.getInstance().getReference("users")
-        //userRef.setValue(mAuth, imageUri)
-        //  .addOnSuccessListener {
-
-        //}
-        //.addOnFailureListener {
-
-        //}
-        userDao.retrieveCurrentDataUser(object : UserCallback {
-            override fun onSuccess(userItem: UserItem) {
-                var user = UserItem()
-                user.profilPhotos = userItem.profilPhotos.toString()
-                user.nom = userItem.nom.toString()
-                user.prenom = userItem.prenom.toString()
-                user.adresse = userItem.adresse.toString()
-                user.phonenumber = userItem.phonenumber.toString()
-                user.groupesanguin = userItem.groupesanguin.toString()
-                user.id = userItem.id.toString()
-                user.mail = userItem.mail.toString()
-                user.matricule = userItem.matricule.toString()
-                user.numCIN = userItem.numCIN.toString()
-                user.rendezVous = userItem.rendezVous
-                user.role = userItem.role
-                user.sexe = userItem.sexe.toString()
-                user.speciality = userItem.speciality
-                user.password = userItem.password
-                user.confirmpassword = userItem.confirmpassword
-                user.maladi = userItem.maladi.toString()
-                user.medicament = userItem.medicament
-                user.ordonance = userItem.ordonance
-                user.rapports = userItem.rapports
-                user.profilPhotos = fileName
-                userDao.updateUser(userItem.id.toString(), user,
-                    object : UserCallback {
-                        override fun onSuccess(userItem: UserItem) {
-
-                        }
-
-                        override fun failure() {
-                        }
-                    })
-            }
-
-            override fun failure() {
-            }
-        })
-
-    }
 }
