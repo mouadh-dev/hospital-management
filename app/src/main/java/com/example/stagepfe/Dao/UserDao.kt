@@ -4,19 +4,15 @@ import android.app.Activity
 import android.content.ContentValues.TAG
 import android.net.Uri
 import android.util.Log
-import android.widget.Toast
 import com.example.stagepfe.entite.*
 import com.example.stagepfe.util.BaseConstant
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
-import com.squareup.picasso.Picasso
+import com.google.firebase.storage.StorageReference
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -474,27 +470,27 @@ class UserDao : IGestionUser {
         }
     }
 
-    /////////////////////////////////////////////PopulateSearch/////////////////////////////////////
-    fun MedicamenteSearch(responseCallback: ResponseCallback) {
-        medicamentRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
-                    for (ds in snapshot.children) {
-                        var medicament = ds.getValue(String::class.java)
-                        responseCallback.success(medicament!!)
-                    }
-
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                responseCallback.failure()
-            }
-
-        })
-
-
-    }
+    /////////////////////////////////////////////medicamentSearch/////////////////////////////////////
+//    fun MedicamenteSearch(responseCallback: ResponseCallback) {
+//        medicamentRef.addListenerForSingleValueEvent(object : ValueEventListener {
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                if (snapshot.exists()) {
+//                    for (ds in snapshot.children) {
+//                        var medicament = ds.getValue(String::class.java)
+//                        responseCallback.success(medicament!!)
+//                    }
+//
+//                }
+//            }
+//
+//            override fun onCancelled(error: DatabaseError) {
+//                responseCallback.failure()
+//            }
+//
+//        })
+//
+//
+//    }
 
     ///////////////////////////////////////////update Photo////////////////////////////////////////
 //    private fun updateProfile() {
@@ -571,9 +567,6 @@ class UserDao : IGestionUser {
 //
 //    }
 
-    fun insertProfilePhoto(imageUri: Uri?, rsponseCallback: ResponseCallback) {
-
-    }
 
 //    fun uploadImageToFirebase(imageUri: Uri?) {
 //        if (imageUri != null) {
@@ -600,39 +593,42 @@ class UserDao : IGestionUser {
 //
 //    }
 
-    //    private fun saveToFirebaseDataBase(fileName: String) {
-//        val mAuth = FirebaseAuth.getInstance()
-//        val userRef = FirebaseDatabase.getInstance().getReference("users")
-//        userRef.setValue(mAuth, fileName)
-//            .addOnSuccessListener {
-//
-//            }
-//            .addOnFailureListener {
-//
-//            }
-//
-//    }
-    fun uploadImageToFirebase(contentUri: Uri,imageCallback: ImageCallback) {
+
+    fun uploadImageToFirebase(uid:String,contentUri: Uri,imageCallback: ImageCallback) {
         val fileName = UUID.randomUUID().toString() + ".jpg"
         val image = storageReference.child("pictures/$fileName")
         image.putFile(contentUri).addOnSuccessListener {
             image.downloadUrl.addOnSuccessListener { uri ->
-                userRef.addListenerForSingleValueEvent(object : ValueEventListener {
-                    override fun onDataChange(snapshot: DataSnapshot) {
-
-                        imageCallback.success(uri)
-                    }
-
-                    override fun onCancelled(error: DatabaseError) {
-                        imageCallback.failure()
-                    }
-
-                })
+//                userRef.addValueEventListener(object : ValueEventListener {
+//                    override fun onDataChange(snapshot: DataSnapshot) {
+//
+//                        imageCallback.success(uri)
+////                        insertImage(uid,fileName)
+//                    }
+//
+//
+//
+//                    override fun onCancelled(error: DatabaseError) {
+//                        imageCallback.failure()
+//                    }
+//
+//                })
                 Log.d("tag", "onSuccess: Uploaded Image URl is $uri")
 
             }
         }.addOnFailureListener {
         }
+    }
+
+    private fun saveToFirebaseDataBase(fileName: String, image: StorageReference) {
+        userRef.setValue(database, image)
+          .addOnSuccessListener {
+
+        }
+        .addOnFailureListener {}
+    }
+    private fun insertImage(uid: String,fileName:String){
+        userRef.child(uid).child("profilPhotos").setValue(fileName)
     }
 }
 

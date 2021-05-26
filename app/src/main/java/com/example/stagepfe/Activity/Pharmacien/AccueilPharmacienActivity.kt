@@ -1,29 +1,21 @@
 package com.example.stagepfe.Activity.Pharmacien
 
-import android.R.attr
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.Color
-import android.graphics.drawable.Drawable
 import android.net.Uri
-import android.net.UrlQuerySanitizer
 import android.os.Bundle
 import android.provider.MediaStore
-import android.transition.Transition
 import android.view.View
 import android.view.View.VISIBLE
 import android.widget.*
-import androidmads.library.qrgenearator.QRGSaver.save
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.target.Target.SIZE_ORIGINAL
 import com.example.stagepfe.Activity.Authentication.AuthenticationFragmentContainerActivity
 import com.example.stagepfe.Adapters.Doctor.MyAdapterOrdonancePharmacien
+import com.example.stagepfe.Dao.ImageCallback
 import com.example.stagepfe.Dao.ResponseCallback
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
@@ -41,10 +33,8 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
 import com.google.gson.Gson
 import com.google.zxing.integration.android.IntentIntegrator
-import java.util.*
-import com.bumptech.glide.request.target.Target
-import com.example.stagepfe.Dao.ImageCallback
 import com.squareup.picasso.Picasso
+import java.util.*
 
 
 class AccueilPharmacienActivity : AppCompatActivity() {
@@ -72,10 +62,17 @@ class AccueilPharmacienActivity : AppCompatActivity() {
             //profile photo
                 if (requestCode == 1000) {
                     imageUri = data?.data
-
-                    userDao.uploadImageToFirebase(imageUri!!, object : ImageCallback {
+                    imageProfilPharmacien!!.setImageURI(imageUri)
+                    userDao.retrieveCurrentDataUser(object : UserCallback {
+                        override fun onSuccess(userItem: UserItem) {
+                    userDao.uploadImageToFirebase(userItem.id.toString(),imageUri!!, object : ImageCallback {
                         override fun success(uri: Uri) {
-                            Picasso.get().load(uri).into(imageProfilPharmacien)
+
+                        }
+
+                        override fun failure() {
+                        }
+                    })
                         }
 
                         override fun failure() {
@@ -84,42 +81,13 @@ class AccueilPharmacienActivity : AppCompatActivity() {
 
                     userDao.retrieveCurrentDataUser(object : UserCallback {
                         override fun onSuccess(userItem: UserItem) {
-//                            userDao.uploadImageToFirebase(imageUri!!,userItem.id.toString())
 
-
-                        }
-
-                        override fun failure() {
-                        }
-                    })
-
-                    userDao.retrieveCurrentDataUser(object : UserCallback {
-                        override fun onSuccess(userItem: UserItem) {
-
-
-//                            imageProfilPharmacien!!.setImageURI(Glide.get(imageUri))
 //                            Glide
 //                                .with(this@AccueilPharmacienActivity)
-//                                .asBitmap()
-//                                .load(userItem.profilPhotos)
-//                                .diskCacheStrategy(DiskCacheStrategy.NONE)
-//                                .into(object : CustomTarget<Bitmap>(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL) {
-//
-//
-//
-//                                    override fun onLoadCleared(placeholder: Drawable?) {}
-//                                    override fun onResourceReady(
-//                                        resource: Bitmap,
-//                                        transition: com.bumptech.glide.request.transition.Transition<in Bitmap>?
-//                                    ) {
-//
-//                                            //Save image file
-//                                            save(userItem.profilPhotos,userItem.profilPhotos,resource,1)
-//                                            //Load into imageview if needed
-//
-//                                    }
-//
-//                                })
+//                                .load("https://www.google.com/imgres?imgurl=https%3A%2F%2Fhelpx.adobe.com%2Fcontent%2Fdam%2Fhelp%2Fen%2Fphotoshop%2Fusing%2Fconvert-color-image-black-white%2Fjcr_content%2Fmain-pars%2Fbefore_and_after%2Fimage-before%2FLandscape-Color.jpg&imgrefurl=https%3A%2F%2Fhelpx.adobe.com%2Ffr%2Fphotoshop%2Fusing%2Fconvert-color-image-black-white.html&tbnid=2DNOEjVi-CBaYM&vet=12ahUKEwi3k_-Z9-XwAhUFYBoKHcizAjYQMygIegUIARDgAQ..i&docid=H501o2XBa9olJM&w=1601&h=664&q=image&client=opera-gx&ved=2ahUKEwi3k_-Z9-XwAhUFYBoKHcizAjYQMygIegUIARDgAQ")
+//                                .centerCrop()
+//                                .placeholder(imageProfilPharmacien)
+//                                .into(imageProfilPharmacien!!)
                         }
 
                         override fun failure() {
@@ -252,32 +220,17 @@ class AccueilPharmacienActivity : AppCompatActivity() {
 //        mScannerView!!.setAspectTolerance(0.5f);
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
-        Glide
-            .with(this@AccueilPharmacienActivity)
-            .load(userItem.profilPhotos)
-            .centerCrop()
-            .placeholder(R.drawable.logopatient)
-            .into(imageProfilPharmacien!!)
+            Glide
+                .with(this)
+                .load("https://firebasestorage.googleapis.com/v0/b/stage-pfe-d3eeb.appspot.com/o/pictures%2F19483dc5-fdab-4629-a124-2a4859e921aa.jpg?alt=media&token=45a49e0d-4009-4f2a-ab3f-8ba4c88bc05b")
+                .into(imageProfilPharmacien!!)
+
 //////////////////////////////////////////////////////////////////////////////////////////////////
         imageProfilPharmacien!!.setOnClickListener {
             val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
             startActivityForResult(gallery, 1000)
-//            userDao.uploadImageToFirebase(imageUri!!)
-            //updateImageProfil()
-
-//             userDao.insertPhoto(profilPhotos, userItem, object : ResponseCallback {
-//               override fun success() {
-//                  dialog()
-//              }
-//              override fun success(medicament: String) {
-//              }
-//              override fun failure() {
-//              }
-//               })
-
         }
 //////////////////////////////////////////////////////////////////////////////////////////////////
-
         cameraButton!!.setOnClickListener {
             val scanner = IntentIntegrator(this)
             scanner.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
@@ -290,7 +243,6 @@ class AccueilPharmacienActivity : AppCompatActivity() {
             dialog()
         }
         //////////////////////////////////////////////////////////////////////////////////////////////////
-
         navigationPharmacien!!.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_home_phar -> {
@@ -341,7 +293,6 @@ class AccueilPharmacienActivity : AppCompatActivity() {
             signout()
         }
     }
-
     private fun signout() {
         var userDao = UserDao()
         userDao.signOut(UserItem(), object : UserCallback {
@@ -369,14 +320,6 @@ class AccueilPharmacienActivity : AppCompatActivity() {
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//        if (resultCode == RESULT_OK && requestCode == pickImage) {
-//            imageUri = data?.data
-//            imageProfilPharmacien!!.setImageURI(imageUri)
-//            uploadImageToFirebase(imageUri)
-//        }
-//    }
     ////////////////////////////////////Storage image ///////////////////////////////////////////////////////
 
     private fun uploadImageToFirebase(imageUri: Uri?) {
