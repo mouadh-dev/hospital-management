@@ -1,6 +1,7 @@
 package com.example.stagepfe.Fragments.Authentication
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -9,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import com.example.stagepfe.Activity.Authentication.AuthenticationFragmentContainerActivity
 import com.example.stagepfe.R
 import com.google.firebase.auth.FirebaseAuth
 
@@ -56,6 +58,12 @@ class ForgotPasswordFragment : Fragment() {
                         if (task.isSuccessful) {
                             Toast.makeText(requireContext(), "Email sent.", Toast.LENGTH_SHORT)
                                 .show()
+                            requireActivity().run {
+                                var intent =
+                                    Intent(this, AuthenticationFragmentContainerActivity::class.java)
+                                startActivity(intent)
+                                finish()
+                            }
                         }
                     }
                 mailForgotPassword!!.addTextChangedListener(object : TextWatcher {
