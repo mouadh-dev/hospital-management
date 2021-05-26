@@ -10,12 +10,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.example.stagepfe.R
+import com.google.firebase.auth.FirebaseAuth
 
 class ForgotPasswordFragment : Fragment() {
     private var backIcon: ImageView? = null
     var nextButton: Button? = null
      var mailForgotPassword: EditText? = null
-
+    val mAuth = FirebaseAuth.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -35,6 +36,7 @@ class ForgotPasswordFragment : Fragment() {
         backIcon = view.findViewById<ImageView>(R.id.IconReturnBack)
         nextButton = view.findViewById<Button>(R.id.NextForgotPassword)
         mailForgotPassword = view.findViewById(R.id.MailForgotPassword)
+
         nextButton!!.setOnClickListener {
             if (mailForgotPassword!!.text.isEmpty()) {
                 var v = View.inflate(requireContext(), R.layout.fragment_dialog, null)
@@ -49,27 +51,45 @@ class ForgotPasswordFragment : Fragment() {
                     dialog.dismiss()
                 }
             } else {
-                var TapTheCode = TapTheCodeFragment()
-                requireFragmentManager().beginTransaction()!!
-                    .replace(R.id.ContainerForgotPassword, TapTheCode)!!.commit()
+                mAuth.sendPasswordResetEmail(mailForgotPassword!!.text.toString())
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            Toast.makeText(requireContext(), "Email sent.", Toast.LENGTH_SHORT)
+                                .show()
+                        }
+                    }
+                mailForgotPassword!!.addTextChangedListener(object : TextWatcher {
+                    override fun beforeTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        count: Int,
+                        after: Int
+                    ) {
+                    }
+
+                    override fun onTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        before: Int,
+                        count: Int
+                    ) {
+                    }
+
+                    override fun afterTextChanged(s: Editable?) {
+                        if (android.util.Patterns.EMAIL_ADDRESS.matcher(mailForgotPassword!!.text.toString())
+                                .matches()
+                        )
+                            nextButton!!.isEnabled = true
+                        else {
+                            nextButton!!.isEnabled = false
+                            mailForgotPassword!!.error = "invalide Email"
+                        }
+                    }
+
+
+                })
             }
         }
-        mailForgotPassword!!.addTextChangedListener(object :  TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                if (android.util.Patterns.EMAIL_ADDRESS.matcher(mailForgotPassword!!.text.toString()).matches())
-                    nextButton!!.isEnabled = true
-                else{
-                    nextButton!!.isEnabled = false
-                    mailForgotPassword!!.error = "invalide Email"
-                }}
-
-
-        })
     }
 
 }
