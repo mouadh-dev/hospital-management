@@ -33,8 +33,7 @@ private var ambulanceImage: ImageView?=null
     private fun initView(view: View) {
         rdvImage=view.findViewById(R.id.RDVImg)
         ambulanceImage=view.findViewById(R.id.ambulance)
-//        var slidingUpPanelLayout = view.findViewById(R.id.sliding_layout)
-//        slidingUpPanelLayout.setScrollableViewHelper NestedScrollableViewHelper()
+
         rdvImage!!.setOnClickListener {
             requireActivity().run {
                 var intent =
@@ -50,24 +49,7 @@ private var ambulanceImage: ImageView?=null
         }
 
     }
-//    class NestedScrollableViewHelper : ScrollableViewHelper() {
-//        override fun getScrollableViewScrollPosition(
-//            scrollableView: View,
-//            isSlidingUp: Boolean
-//        ): Int {
-//            return if (mScrollableView is NestedScrollView) {
-//                if (isSlidingUp) {
-//                    mScrollableView.getScrollY()
-//                } else {
-//                    val nsv = mScrollableView as NestedScrollView
-//                    val child = nsv.getChildAt(0)
-//                    child.bottom - (nsv.height + nsv.scrollY)
-//                }
-//            } else {
-//                0
-//            }
-//        }
-//    }
+
 }
 
 

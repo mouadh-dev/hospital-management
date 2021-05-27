@@ -40,15 +40,14 @@ class AddAnalyseOrdonnanceActivity : AppCompatActivity() {
     var idPAtient: String? = null
     var userDao = UserDao()
     var speciality: String? = null
-    var confirmerAnalyse: Button? = null
+    private var confirmerAnalyse: Button? = null
     var user = UserItem()
-    var envoyerAnalyse: Button? = null
+    private var envoyerAnalyse: Button? = null
     var ordonance = Ordonance()
     var idPatient:String? = null
     @RequiresApi(Build.VERSION_CODES.O)
     val currentDateTime = LocalDateTime.now()
     private var analyseAdapter: MyAdapterAnalyseReading? = null
-    var descriptionAnalyse:String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -204,6 +203,7 @@ class AddAnalyseOrdonnanceActivity : AppCompatActivity() {
         var dialog = builder.create()
         dialog.show()
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
         dialog.findViewById<TextView>(R.id.TitleDialog).text = text
         dialog.findViewById<TextView>(R.id.msgdialog).visibility = View.GONE
         dialog.findViewById<Button>(R.id.btn_confirm).setOnClickListener {

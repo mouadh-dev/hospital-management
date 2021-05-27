@@ -54,13 +54,9 @@
                     android:text="Contacter"
                     android:textStyle="bold"
                     android:textColor="@color/blue"
-                    android:textSize="25dp" />
+                    android:textSize="25dp"
+                    android:drawableRight="@drawable/message"/>
 
-                    <ImageView
-                        android:id="@+id/ContacterDoctorIV"
-                        android:layout_width="50dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/message"/>
 
                     <TextView
                         android:id="@+id/AppelerDoctor"
@@ -70,12 +66,9 @@
                         android:layout_marginLeft="40dp"
                         android:textColor="@color/blue"
                         android:textSize="25dp"
-                        android:textStyle="bold"/>
-                    <ImageView
-                        android:id="@+id/AppelerDoctorIV"
-                        android:layout_width="50dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/telephon"/>
+                        android:textStyle="bold"
+                        android:drawableRight="@drawable/telephon"/>
+
 
             </LinearLayout>
                     <TextView

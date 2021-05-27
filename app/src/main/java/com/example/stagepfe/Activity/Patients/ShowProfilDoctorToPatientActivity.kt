@@ -1,19 +1,26 @@
 package com.example.stagepfe.Activity.Patients
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import com.example.stagepfe.Activity.Doctors.CheckRDVActivity
+import com.example.stagepfe.Activity.Patients.chat.ChatPtientActivity
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.R
+import com.example.stagepfe.entite.Message
 import com.example.stagepfe.entite.UserItem
 import com.github.badoualy.datepicker.DatePickerTimeline
 import com.github.badoualy.datepicker.MonthView
 import java.util.*
 import com.github.badoualy.datepicker.MonthView.DateLabelAdapter
+import com.github.badoualy.datepicker.MonthView.GONE
 
 class ShowProfilDoctorToPatientActivity : AppCompatActivity() {
     var nameDoctor: TextView? = null
@@ -75,10 +82,43 @@ class ShowProfilDoctorToPatientActivity : AppCompatActivity() {
 
             }
         })
+////////////////////////////////////////////////////////////////////////////////////////////////////
+        contacterDoctor!!.setOnClickListener {
+            var v = View.inflate(this, R.layout.dialog_ordonance, null)
+            var builder = AlertDialog.Builder(this)
+            builder.setView(v)
+            var dialog = builder.create()
+            dialog.show()
+            dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+            dialog.findViewById<TextView>(R.id.nameDoctor).visibility = GONE
+            dialog.findViewById<ImageView>(R.id.QrCodeIv).visibility = GONE
+            dialog.findViewById<TextView>(R.id.namePatient).visibility = View.GONE
+            dialog.findViewById<TextView>(R.id.editText_message).visibility = View.VISIBLE
+            dialog.findViewById<Button>(R.id.btn_remove).setOnClickListener {
+                dialog.dismiss()
+                var intent = Intent(this, ChatPtientActivity::class.java)
+                startActivity(intent)
+                finish()
+                var message = Message()
+                userDao.retrieveCurrentDataUser(object : UserCallback {
+                    override fun onSuccess(userItem: UserItem) {
+                        message.sender = userItem.id
+                        message.reciever = "test"
+                        message.message = dialog.findViewById<TextView>(R.id.editText_message).text.toString()
+                        userDao.sendMesage(message)
+                    }
 
-       // nameDoctor!!.setText(intent.getStringExtra("nom"))
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
+                    override fun failure() {
 
+                    }
+                })
+
+
+
+
+            }
+        }
+////////////////////////////////////////////////////////////////////////////////////////////////////
         appelerDoctor!!.setOnClickListener {
             val dialIntent = Intent(Intent.ACTION_DIAL)
             dialIntent.data = Uri.parse("tel:" + doctorNumber)

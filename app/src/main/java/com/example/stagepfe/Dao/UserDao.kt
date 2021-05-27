@@ -25,6 +25,7 @@ class UserDao : IGestionUser {
     private val myRef = database.getReference(BaseConstant.instance().userRef)
     private val mAuth = FirebaseAuth.getInstance()
     private val userRef = FirebaseDatabase.getInstance().getReference("users")
+    private val messageRef = FirebaseDatabase.getInstance().getReference("Message")
 
     private val medicamentRef = FirebaseDatabase.getInstance().getReference("Medicament")
     private val reclamationRef = database.getReference(BaseConstant.instance().reclamation)
@@ -353,11 +354,7 @@ class UserDao : IGestionUser {
             }
 
         })
-
-
     }
-
-
     /////////////////////////////////////////////insert Ordonance/////////////////////////////////////
     override fun insertordonance(
         idDoctor: String,
@@ -461,6 +458,30 @@ class UserDao : IGestionUser {
                     Log.d("tag", "onFailureMessage is $it")
                 }
             }
+    }
+
+///////////////////////////////////////Send Message/////////////////////////////////////////////////
+    fun sendMesage(message:Message){
+    message.id = messageRef.push().key.toString()
+    messageRef.child(message.id!!).setValue(message)
+
+    }
+
+    fun getMessage( messageCallback: MessageCallback){
+        messageRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                   for (ds in snapshot.children){
+                       var msg = ds.getValue(Message::class.java)
+
+                      messageCallback.success(msg!!)
+                   }
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+                messageCallback.failure()
+            }
+        })
     }
 
 }

@@ -66,7 +66,7 @@ class BottomBarPatientActivity : AppCompatActivity() {
 
     private fun initView() {
         search = findViewById(R.id.float_button)
-        slidPanel = findViewById(R.id.sliding_layout)
+        slidPanel = findViewById(R.id.sliding_layout_Patient)
         downImg = findViewById(R.id.DownIC)
         navigation = findViewById(R.id.bottom_nav)
         titlelTV = findViewById(R.id.TitleActivityBottomnavigation)
@@ -90,18 +90,9 @@ class BottomBarPatientActivity : AppCompatActivity() {
             dialog()
         }
 //////////////////////////////////////////////////////////////////////////////////////////////////
-//        list.add(Model("Dr Foulen Fouleni", "Generaliste", R.drawable.doctor_ic))
-//        list.add(Model("Dr Foulen Fouleni", "Generaliste", R.drawable.doctor_ic))
-//        list.add(Model("Dr Foulen Fouleni", "Generaliste", R.drawable.doctor_ic))
-//        list.add(Model("Dr Foulen Fouleni", "Generaliste", R.drawable.doctor_ic))
-//        list.add(Model("Dr Foulen Fouleni", "Generaliste", R.drawable.doctor_ic))
-//        list.add(Model("Dr Foulen Fouleni", "Generaliste", R.drawable.doctor_ic))
-//        list.add(Model("Dr Foulen Fouleni", "Generaliste", R.drawable.doctor_ic))
-//        listview!!.adapter = MyAdapter(this, R.layout.doctors_list, list)
-        //////////////////////////////////////////////////////////////////////////////////////////////////
+
 
         var userdao = UserDao()
-        var userItem=UserItem()
         userdao.populateSearch(object : UserCallback {
           override fun onSuccess(userItem: UserItem) {
          var fullNameDoctor = userItem.prenom + " " + userItem.nom
@@ -125,7 +116,7 @@ class BottomBarPatientActivity : AppCompatActivity() {
                 var doctorNameInList = view.findViewById<TextView>(R.id.name_doctor_list)
                 intent.putExtra("nameDoctor", doctorNameInList.text.toString())
                 startActivity(intent)
-                finish() // If activity no more needed in back stack
+//                finish() // If activity no more needed in back stack
 
         }
 
@@ -134,14 +125,8 @@ class BottomBarPatientActivity : AppCompatActivity() {
         imageProfilPatient!!.setOnClickListener {
             val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
             startActivityForResult(gallery, pickImage)
-            //   updateImageProfil()
-
         }
 //////////////////////////////////////////////////////////////////////////////////////////////////
-        //////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
         navigation!!.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_reclamation -> {
@@ -149,6 +134,8 @@ class BottomBarPatientActivity : AppCompatActivity() {
                     homeLayout!!.visibility = GONE
                     messageLayout!!.visibility = GONE
                     notificatioLayout!!.visibility = GONE
+                    slidPanel!!.visibility = GONE
+                    search!!.visibility = GONE
 
                     var reclamationnav = PatientReclamationFragment()
                     supportFragmentManager.beginTransaction()
@@ -162,6 +149,8 @@ class BottomBarPatientActivity : AppCompatActivity() {
                     reclamationLayout!!.visibility = GONE
                     homeLayout!!.visibility = GONE
                     messageLayout!!.visibility = GONE
+                    slidPanel!!.visibility = GONE
+                    search!!.visibility = GONE
 
                     var notificationnav = NotificationPatintFragment()
                     supportFragmentManager.beginTransaction()
@@ -177,6 +166,8 @@ class BottomBarPatientActivity : AppCompatActivity() {
                     notificatioLayout!!.visibility = GONE
                     reclamationLayout!!.visibility = GONE
                     homeLayout!!.visibility = GONE
+                    slidPanel!!.visibility = GONE
+                    search!!.visibility = VISIBLE
 
                     var messagenav = MessagePatientFragment()
                     supportFragmentManager.beginTransaction()
@@ -190,6 +181,8 @@ class BottomBarPatientActivity : AppCompatActivity() {
                     messageLayout!!.visibility = GONE
                     notificatioLayout!!.visibility = GONE
                     reclamationLayout!!.visibility = GONE
+                    slidPanel!!.visibility = GONE
+                    search!!.visibility = VISIBLE
 
                     var home = PatientAccountFragment()
                     supportFragmentManager.beginTransaction().replace(R.id.ContainerFragmentPatient, home)
@@ -200,7 +193,7 @@ class BottomBarPatientActivity : AppCompatActivity() {
 
                     var intent = Intent(this, ProfilePatientActivity::class.java)
                     startActivity(intent)
-                    finish()
+//                    finish()
 
                 }
 
@@ -257,29 +250,6 @@ class BottomBarPatientActivity : AppCompatActivity() {
         })
     }
 
-    // private fun updateImageProfil() {
-    //  val user = auth.currentUser
-   // user?.let { user ->
-   //  val photoURI = Uri.parse("android.resource://$packageName/${R.drawable.logopatient}")
-    //  val profileUpdates = UserProfileChangeRequest.Builder()
-    //     .setPhotoUri(photoURI)
-    //    .build()
-    //  CoroutineScope(Dispatchers.IO).launch {
-    //   try {
-    //      user.updateProfile(profileUpdates).await()
-    //      withContext(Dispatchers.Main) {
-    //         Toast.makeText(this@BottomBarPatientActivity, "Successfully updated profile",
-    //   Toast.LENGTH_LONG).show()
-    //        }
-    //    } catch(e: Exception) {
-    //        withContext(Dispatchers.Main) {
-    //          Toast.makeText(this@BottomBarPatientActivity, e.message, Toast.LENGTH_LONG).show()
-    //      }
-    //     }
-
-    //    }
-//  }
-    //  }
 
     private fun populateSearch() {
         val ref = FirebaseDatabase.getInstance().getReference("users")
@@ -296,7 +266,6 @@ class BottomBarPatientActivity : AppCompatActivity() {
                         var test2 = "$role"
                         names.add(test)
                         names.add(test2)
-//                        names.add(p)
                     }
                     val adapter: ArrayAdapter<*> = ArrayAdapter<String>(
                         this@BottomBarPatientActivity,
@@ -320,31 +289,8 @@ class BottomBarPatientActivity : AppCompatActivity() {
         if (resultCode == RESULT_OK && requestCode == pickImage) {
             imageUri = data?.data
             imageProfilPatient!!.setImageURI(imageUri)
-            // uploadImageToFirebase(imageUri)
         }
     }
 ///////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////Storage image ///////////////////////////////////////////////////////
-   // private fun uploadImageToFirebase(imageUri: Uri?) {
-   // if (imageUri != null) {
-    // val fileName = UUID.randomUUID().toString() +".jpg"
 
-    // val database = FirebaseDatabase.getInstance()
-    // val refStorage = FirebaseStorage.getInstance().reference.child("images/$fileName")
-
-    // refStorage.putFile(imageUri)
-    //  .addOnSuccessListener(
-    //  OnSuccessListener<UploadTask.TaskSnapshot> { taskSnapshot ->
-        //    taskSnapshot.storage.downloadUrl.addOnSuccessListener {
-    //         val imageUrl = it.toString()
-    //     }
-    //  })
-
-    //  ?.addOnFailureListener(OnFailureListener { e ->
-    //       print(e.message)
-    //   })
-    //  }
-    // }
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////
 }

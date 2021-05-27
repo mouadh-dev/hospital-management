@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragments.Patient.MessgesPatientFragment">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <ListView
+        android:id="@+id/Messages"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:weightSum="10"
+    android:layout_alignParentBottom="true"
+    android:layout_marginBottom="10dp"
+    android:layout_marginHorizontal="20dp"
+
+    >
+    <EditText
+        android:id="@+id/Message_text_Patient"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_text_style"
+        android:layout_weight="7"
+        android:paddingStart="20dp"
+        android:textColor="@color/black"
+        android:hint="Aa"
+        android:textColorHint="@color/gray"
+        android:textSize="15dp"
+        />
+<!--    <RelativeLayout-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_weight="3"-->
+<!--        >-->
+    <ImageView
+        android:id="@+id/sendMessageIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/send_message"
+        android:layout_weight="3"
+        android:layout_gravity="center"
+        />
+<!--    </RelativeLayout>-->
+</LinearLayout>
+</RelativeLayout>
+</FrameLayout>
