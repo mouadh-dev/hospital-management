@@ -4,9 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ListView
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.stagepfe.Activity.Patients.chat.ChatPtientActivity
 import com.example.stagepfe.Adapters.Patients.MyAdapterMessagePatient
@@ -21,8 +23,13 @@ import com.example.stagepfe.entite.UserItem
 
 class MessagePatientFragment : Fragment() {
     var listMessagePatient: ListView? = null
-    var list = mutableListOf<ModelMessagePatient>()
+
     var adapter: MyAdapterMessagePatient? = null
+    var list = mutableListOf<ModelMessagePatient>()
+
+    var idDoctor:String? = null
+
+    var empty :TextView? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,23 +42,26 @@ class MessagePatientFragment : Fragment() {
 
     private fun initView(view: View) {
         listMessagePatient = view.findViewById<ListView>(R.id.Message__Patient)
+        empty =view.findViewById<TextView>(R.id.aucun_Message)
         initAdapter()
         listMessagePatient!!.visibility = VISIBLE
 
        var userDao = UserDao()
         userDao.retrieveCurrentDataUser(object : UserCallback {
             override fun onSuccess(userItem: UserItem) {
-                userDao.getMessage(object : MessageCallback {
-                    override fun success(message: Message) {
-                        if (userItem.id.equals(message.sender) || userItem.id.equals(message.reciever)){
-                            list.add(ModelMessagePatient(message.message!!, message.message!!, "12:44", R.drawable.doctor_ic))
-                            adapter!!.notifyDataSetChanged()
-                        }
-                    }
-
-                    override fun failure() {
-                    }
-                })
+//                userDao.getMessage(object : MessageCallback {
+//                    override fun success(message: Message) {
+//                        if (userItem.id.equals(message.sender) || userItem.id.equals(message.reciever)){
+//                            list.add(ModelMessagePatient(message.message!!, message.message!!, "12:44", R.drawable.doctor_ic))
+//                            idDoctor = message.reciever
+//                            adapter!!.notifyDataSetChanged()
+//                            empty!!.visibility = GONE
+//                        }
+//                    }
+//
+//                    override fun failure() {
+//                    }
+//                })
             }
 
             override fun failure() {
@@ -71,6 +81,7 @@ class MessagePatientFragment : Fragment() {
             requireActivity().run {
                 var intent =
                     Intent(this, ChatPtientActivity::class.java)
+                intent.putExtra("idDoctor",idDoctor)
                 startActivity(intent)
 //                finish()
             }

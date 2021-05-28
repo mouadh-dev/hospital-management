@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import com.example.stagepfe.Activity.Doctors.CheckRDVActivity
 import com.example.stagepfe.Activity.Patients.chat.ChatPtientActivity
 import com.example.stagepfe.Dao.UserCallback
@@ -29,7 +30,7 @@ class ShowProfilDoctorToPatientActivity : AppCompatActivity() {
     var appelerDoctor: TextView? = null
     var contacterDoctor: TextView? = null
     var timeLine: DatePickerTimeline? = null
-    private var id:String? = null
+     var id:String? = null
     var userDao = UserDao()
     private var nameDoctorFromIntent:String? = null
     var doctorNumber: Int?=null
@@ -52,7 +53,6 @@ class ShowProfilDoctorToPatientActivity : AppCompatActivity() {
 
 
         nameDoctorFromIntent = intent.getStringExtra("nameDoctor")
-        println("hama : " + nameDoctorFromIntent)
         userDao.populateSearch(object : UserCallback {
             override fun onSuccess(userItem: UserItem) {
                 var nameToCompare = userItem.prenom + " " + userItem.nom
@@ -95,17 +95,30 @@ class ShowProfilDoctorToPatientActivity : AppCompatActivity() {
             dialog.findViewById<TextView>(R.id.namePatient).visibility = View.GONE
             dialog.findViewById<TextView>(R.id.editText_message).visibility = View.VISIBLE
             dialog.findViewById<Button>(R.id.btn_remove).setOnClickListener {
-                dialog.dismiss()
-                var intent = Intent(this, ChatPtientActivity::class.java)
-                startActivity(intent)
-                finish()
+
                 var message = Message()
                 userDao.retrieveCurrentDataUser(object : UserCallback {
                     override fun onSuccess(userItem: UserItem) {
-                        message.sender = userItem.id
-                        message.reciever = "test"
-                        message.message = dialog.findViewById<TextView>(R.id.editText_message).text.toString()
-                        userDao.sendMesage(message)
+                        var msg =
+                            dialog.findViewById<TextView>(R.id.editText_message).text.toString()
+                        if (!msg.equals("")) {
+                            message.sender = userItem.id
+                            message.reciever = id
+                            println("mouadh :: " + id)
+                            message.message = msg
+                            userDao.sendMesage(message)
+                            dialog.dismiss()
+                            var intent = Intent(this@ShowProfilDoctorToPatientActivity, ChatPtientActivity::class.java)
+                                intent.putExtra("id",id)
+                            startActivity(intent)
+                            finish()
+                        } else {
+                            Toast.makeText(
+                                this@ShowProfilDoctorToPatientActivity,
+                                "vous ne pouvez pas envoyer un message vide",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     }
 
                     override fun failure() {
