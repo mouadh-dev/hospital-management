@@ -471,11 +471,9 @@ class UserDao : IGestionUser {
         messageRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
-                   for (ds in snapshot.children){
-                       var msg = ds.getValue(Message::class.java)
+                       var msg = snapshot.getValue(Message::class.java)
 
                       messageCallback.success(msg!!)
-                   }
                 }
             }
             override fun onCancelled(error: DatabaseError) {

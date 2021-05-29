@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.stagepfe.Activity.Patients.CheckRDVPatientActivity
 import com.example.stagepfe.Models.Patient.ModelAddRDVPatient
 import com.example.stagepfe.R
+import com.example.stagepfe.entite.Message
 
 class MyAdapterAddRDVPatient(private val dataList: ArrayList<ModelAddRDVPatient>, private val mCtx: Context,
                              var clickListner:OnItemClickListner

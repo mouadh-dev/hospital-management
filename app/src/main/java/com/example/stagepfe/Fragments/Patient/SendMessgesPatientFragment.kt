@@ -12,28 +12,27 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.stagepfe.Activity.Patients.chat.ChatPtientActivity
-import com.example.stagepfe.Adapters.Patients.adapterMessageText
+import com.example.stagepfe.Adapters.Patients.AdapterMessageText
 import com.example.stagepfe.Dao.MessageCallback
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.R
 import com.example.stagepfe.entite.Message
 import com.example.stagepfe.entite.UserItem
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 
 class SendMessgesPatientFragment : Fragment() {
     var recyclerViewMessages: RecyclerView? = null
-    var listMessage = ArrayList<Message>()
-    var adapterChat: adapterMessageText? = null
+    var mMsg = ArrayList<Message>()
+    var adapterChat: AdapterMessageText? = null
     var userDao = UserDao()
     var messageText: EditText? = null
     var sendMessage: ImageView? = null
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
+    var test:String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,56 +50,29 @@ class SendMessgesPatientFragment : Fragment() {
         messageText = view.findViewById(R.id.Message_text_Patient)
 
         recyclerViewMessages!!.setHasFixedSize(true)
-        var linearLayoutManager:LinearLayoutManager =  LinearLayoutManager(Application())
+        var linearLayoutManager: LinearLayoutManager =  LinearLayoutManager(Application())
         linearLayoutManager.stackFromEnd = true
-        recyclerViewMessages!!.setLayoutManager(linearLayoutManager)
+        recyclerViewMessages!!.layoutManager = linearLayoutManager
 
 
-//        initAdapter()
+        val activity: ChatPtientActivity? =
+            requireActivity() as ChatPtientActivity?
+        val id: String = activity!!.getID()
 
 
-
-        var message = Message()
         userDao.retrieveCurrentDataUser(object : UserCallback {
             override fun onSuccess(userItem: UserItem) {
-                userDao.getMessage(object : MessageCallback {
-                    override fun success(msg: Message) {
-
-                        if (msg.sender.equals(userItem.id) || msg.reciever.equals(userItem.id)) {
-                            adapterChat = adapterMessageText(requireContext())
-                            recyclerViewMessages!!.adapter = adapterChat
-
-//                            listMessage.add(msg)
-//                            listViewMessages!!.adapter = adapterMessageText(requireContext(), R.layout.chat_item_right, listMessage)
-//                            Collections.sort(listMessage,
-//                                Comparator<Any?> { o1, o2 ->
-//                                    o1.getDateTime().compareTo(o2.getDateTime())
-//                                })
-//                            adapter!!.notifyDataSetChanged()
-
-                        }
-
-                    }
-
-                    override fun failure() {
-                    }
-                })
+                readMessage(userItem.id!!,id)
             }
 
             override fun failure() {
             }
         })
 
-//
-//        if (messageText!!.text.toString() != "") {
-//            sendMessage!!.visibility = VISIBLE
-//        }else {
-//            sendMessage!!.visibility = INVISIBLE
-//        }
 
-        val activity: ChatPtientActivity? =
-            requireActivity() as ChatPtientActivity?
-        val id: String = activity!!.getID()
+
+
+
 
         sendMessage!!.setOnClickListener {
             var text = messageText!!.text.toString()
@@ -136,8 +108,36 @@ class SendMessgesPatientFragment : Fragment() {
     }
 
 //    private fun initAdapter() {
-//        adapter = adapterMessageText(requireContext(), R.layout.chat_item_right, listMessage)
-//        listViewMessages!!.adapter = adapter
+//        adapterChat = AdapterMessageText(requireContext(),listMessage)
+//        recyclerViewMessages!!.adapter = adapterChat
 //    }
+private fun readMessage(myid: String, userid: String) {
+    mMsg = ArrayList()
+    val reference = FirebaseDatabase.getInstance().getReference("Message")
+    reference.addValueEventListener(object : ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            mMsg.clear()
+            for (snapshot in dataSnapshot.children) {
+                val msg = snapshot.getValue(Message::class.java)
+                if (
+//                    msg!!.reciever.equals(myid)
+//                    &&
+//                                    msg!!.sender.equals(userid)
+//                                    || msg.reciever.equals(
+//                        userid
+//                    ) &&
+                    msg!!.sender.equals(myid)
+                ) {
+                    mMsg.add(msg)
+                }
+                adapterChat = AdapterMessageText(requireContext(), mMsg)
+                recyclerViewMessages!!.adapter = adapterChat
+            }
+        }
 
+        override fun onCancelled(error: DatabaseError) {
+
+        }
+    })
+}
 }
