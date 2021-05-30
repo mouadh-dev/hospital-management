@@ -477,7 +477,8 @@ class UserDao : IGestionUser {
                 }
             }
             override fun onCancelled(error: DatabaseError) {
-                messageCallback.failure()
+                Log.d("tag","mouadh  $error")
+                messageCallback.failure(error)
             }
         })
     }

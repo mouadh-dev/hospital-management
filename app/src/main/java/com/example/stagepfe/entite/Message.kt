@@ -6,13 +6,21 @@ data class Message constructor(
     var id: String? = "",
     var sender: String? = "",
     var reciever: String? = "",
-    var message: String? = ""
+    var message: String? = "",
+    var nameSender: String? = "",
+    var nameReciever:String?= "",
+    var timemsg: String? = "",
+    var imgmsgPatient: Int? = null
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
-        parcel.readString()
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readValue(Int::class.java.classLoader) as? Int
     ) {
     }
 
@@ -21,6 +29,10 @@ data class Message constructor(
         parcel.writeString(sender)
         parcel.writeString(reciever)
         parcel.writeString(message)
+        parcel.writeString(nameSender)
+        parcel.writeString(nameReciever)
+        parcel.writeString(timemsg)
+        parcel.writeValue(imgmsgPatient)
     }
 
     override fun describeContents(): Int {
@@ -36,6 +48,7 @@ data class Message constructor(
             return arrayOfNulls(size)
         }
     }
+
 
 }
 

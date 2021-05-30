@@ -20,7 +20,7 @@ class ChatPtientActivity : AppCompatActivity() {
 
 
     }
-    fun getID():String{
+    fun getIDReciever():String{
         return intent.getStringExtra("id")!!
     }
 //    fun getIDDoctor():String{

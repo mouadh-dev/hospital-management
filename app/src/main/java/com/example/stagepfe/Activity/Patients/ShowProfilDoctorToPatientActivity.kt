@@ -3,6 +3,7 @@ package com.example.stagepfe.Activity.Patients
 import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -10,6 +11,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import com.example.stagepfe.Activity.Doctors.CheckRDVActivity
 import com.example.stagepfe.Activity.Patients.chat.ChatPtientActivity
 import com.example.stagepfe.Dao.UserCallback
@@ -22,6 +24,8 @@ import com.github.badoualy.datepicker.MonthView
 import java.util.*
 import com.github.badoualy.datepicker.MonthView.DateLabelAdapter
 import com.github.badoualy.datepicker.MonthView.GONE
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class ShowProfilDoctorToPatientActivity : AppCompatActivity() {
     var nameDoctor: TextView? = null
@@ -34,6 +38,8 @@ class ShowProfilDoctorToPatientActivity : AppCompatActivity() {
     var userDao = UserDao()
     private var nameDoctorFromIntent:String? = null
     var doctorNumber: Int?=null
+    @RequiresApi(Build.VERSION_CODES.O)
+    val currentDateTime: LocalDateTime = LocalDateTime.now()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -99,26 +105,42 @@ class ShowProfilDoctorToPatientActivity : AppCompatActivity() {
                 var message = Message()
                 userDao.retrieveCurrentDataUser(object : UserCallback {
                     override fun onSuccess(userItem: UserItem) {
-                        var msg =
-                            dialog.findViewById<TextView>(R.id.editText_message).text.toString()
-                        if (!msg.equals("")) {
-                            message.sender = userItem.id
-                            message.reciever = id
-                            println("mouadh :: " + id)
-                            message.message = msg
-                            userDao.sendMesage(message)
-                            dialog.dismiss()
-                            var intent = Intent(this@ShowProfilDoctorToPatientActivity, ChatPtientActivity::class.java)
-                                intent.putExtra("id",id)
-                            startActivity(intent)
-                            finish()
-                        } else {
-                            Toast.makeText(
-                                this@ShowProfilDoctorToPatientActivity,
-                                "vous ne pouvez pas envoyer un message vide",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
+                        userDao.populateSearch(object : UserCallback {
+                            @RequiresApi(Build.VERSION_CODES.O)
+                            override fun onSuccess(user: UserItem) {
+                                if (id.equals(user.id)) {
+                                    var msg =
+                                        dialog.findViewById<TextView>(R.id.editText_message).text.toString()
+                                    if (!msg.equals("")) {
+                                        message.sender = userItem.id
+                                        message.reciever = id
+                                        message.message = msg
+                                        message.nameSender = userItem.prenom + " " + userItem.nom
+                                        message.nameReciever = user.prenom + " " + user.nom
+                                        message.timemsg = currentDateTime.format(DateTimeFormatter.ISO_TIME)
+                                            userDao.sendMesage(message)
+                                        dialog.dismiss()
+                                        var intent = Intent(
+                                            this@ShowProfilDoctorToPatientActivity,
+                                            ChatPtientActivity::class.java
+                                        )
+                                        intent.putExtra("id", id)
+                                        startActivity(intent)
+                                        finish()
+                                    } else {
+                                        Toast.makeText(
+                                            this@ShowProfilDoctorToPatientActivity,
+                                            "vous ne pouvez pas envoyer un message vide",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                                }
+                            }
+
+                            override fun failure() {
+                            }
+                        })
+
                     }
 
                     override fun failure() {
