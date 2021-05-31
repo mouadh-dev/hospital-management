@@ -58,7 +58,7 @@ class OrdonancePatientFragment : Fragment() {
 
                     for (entry in userItem.ordonance!!.entries) {
                         var ordonance = entry.value
-                        if (ordonance.namepatientOrdo!! == fullNamePatient) {
+                        if (ordonance.idPatient!! == userItem.id) {
                             val ordonanceList = Ordonance()
                             fillOrdonanceList(ordonanceList, ordonance)
 

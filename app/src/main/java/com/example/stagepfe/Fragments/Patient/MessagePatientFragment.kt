@@ -12,6 +12,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.stagepfe.Activity.Patients.chat.ChatPtientActivity
 import com.example.stagepfe.Adapters.Patients.MyAdapterMessagePatient
+import com.example.stagepfe.Adapters.Patients.adapterSendMessage
 import com.example.stagepfe.Dao.MessageCallback
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
@@ -50,25 +51,53 @@ class MessagePatientFragment : Fragment() {
             override fun onSuccess(userItem: UserItem) {
                 userDao.getMessage(object : MessageCallback {
                     override fun success(message: Message) {
-//                        if (message.sender.equals(userItem.id) || message.reciever.equals(userItem.id)) {
-                        var test = Message()
-                        test.message = message.message
-                        test.id = message.id
-                        test.reciever = message.reciever
-                        test.sender = message.sender
-                        test.nameReciever = message.nameReciever
-                        test.nameSender = message.nameSender
-                        test.timemsg = message.timemsg
+                        if (userItem.id.equals(message.sender)
+                            || message.reciever.equals(userItem.id)
+                        ) {
+//                            if (message.reciever != idDoctor && message.sender!= userItem.id || message.sender != idDoctor && message.reciever != userItem.id) {
+                                var test = Message()
+                                test.message = message.message
+                                test.id = message.id
+                                test.reciever = message.reciever
+                                test.sender = message.sender
+                                test.nameReciever = message.nameReciever
+                                test.nameSender = message.nameSender
+                                test.timemsg = message.timemsg
 //                            var hh = message.sender
 //                            var hh2 = message.reciever
 //                            if(!test.sender.equals(hh) || !test.reciever.equals(hh2)) {
-                        list.add(test)
-                        idDoctor = message.reciever
-                        adapter!!.notifyDataSetChanged()
-                        empty!!.visibility = GONE
+                                list.add(test)
+//                                idDoctor =
+                                adapter!!.notifyDataSetChanged()
+                                empty!!.visibility = GONE
 //                        }
 
 //                        }
+//                                listMessagePatient!!.setOnItemClickListener { parent, view, position, id ->
+//
+////                    userDao.getMessage(object : MessageCallback {
+////                        override fun success(message: Message) {
+//////                            if (message.sender.equals(userItem.id)) {
+////
+//////                finish()
+////                                }
+//////                            }
+////                        }
+////
+////                        override fun failure(error: DatabaseError) {
+////
+////                        }
+////                    })
+//                                    requireActivity().run {
+//                                        var ss = adapter!!.getItem(position)
+//                                        var intent =
+//                                            Intent(this, ChatPtientActivity::class.java)
+//                                        intent.putExtra("id", ss.nameReciever)
+//                                        startActivity(intent)
+//                                    }
+//                                }
+//                            }
+                        }
                     }
 
                     override fun failure(error: DatabaseError) {
@@ -91,30 +120,6 @@ class MessagePatientFragment : Fragment() {
 //        list.add(ModelMessagePatient("Mouadh", "merci docteur", "12:44", R.drawable.doctor_ic))
 
 
-        listMessagePatient!!.setOnItemClickListener { parent, view, position, id ->
-
-//                    userDao.getMessage(object : MessageCallback {
-//                        override fun success(message: Message) {
-////                            if (message.sender.equals(userItem.id)) {
-//
-////                finish()
-//                                }
-////                            }
-//                        }
-//
-//                        override fun failure(error: DatabaseError) {
-//
-//                        }
-//                    })
-            requireActivity().run {
-                var intent =
-                    Intent(this, ChatPtientActivity::class.java)
-                intent.putExtra("id", idDoctor)
-                startActivity(intent)
-
-
-            }
-        }
     }
 
     private fun initAdapter() {

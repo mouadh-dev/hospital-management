@@ -53,8 +53,9 @@ var listRapportPatient: ListView? = null
                     override fun success(rapport: Rapports) {
                         namePatientRapport = rapport.namePatientRapport
 
-                        if (rapport.namePatientRapport.equals(fullNamepatient) &&
-                            (rapport.hourRapport + " " + rapport.hourRapport) != fullDate){
+                        if (rapport.idPatientRapport.equals(userItem.id) &&
+                            (rapport.hourRapport + " " + rapport.hourRapport) != fullDate
+                        ){
                             fullDate = rapport.hourRapport + " " + rapport.hourRapport
                             var rapportList = Rapports()
                             rapportList.hourRapport = rapport.hourRapport!!.substring(0,5)

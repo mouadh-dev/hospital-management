@@ -23,11 +23,12 @@ class AddRDVToFbDoctorActivity : AppCompatActivity() {
     var hourRDV: TextView? = null
     var confirmButton: TextView? = null
     var namePatient: AutoCompleteTextView? = null
-    var phonePatient: EditText? = null
-    var numberPatient: String? = null
+    var idPatient: String? = null
+    var idDoctor: String? = null
     var cancelButton: Button? = null
     var adapter: ArrayAdapter<String>?=null
     var names: ArrayList<String?>?=null
+    var ids: ArrayList<String?>?=null
     var userdao = UserDao()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,28 +73,40 @@ class AddRDVToFbDoctorActivity : AppCompatActivity() {
                 speciality!!.text = userItem.speciality
                 dateRDV!!.text = "$day-$month-$year"
                 hourRDV!!.text = time
+                idDoctor = userItem.id
+
             }
 
             override fun failure() {}
         })
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+        userdao.populateSearch(object : UserCallback {
+            override fun onSuccess(user: UserItem) {
+                if ((user.nom + " " + user.prenom).equals(namePatient!!.text.toString().trim())){
+                    idPatient = user.id
+                }
 
+            }
+
+            override fun failure() {
+            }
+        })
 ///////////////////////////////////////////////////////////////////////////////////////////////////
         confirmButton!!.setOnClickListener {
 
             var appointment = Appointment()
             var userItem = UserItem()
-            appointment.nameDoctor = nameDoctor!!.text.toString()
+            appointment.idDoctor = idDoctor
             appointment.date = dateRDV!!.text.toString()
-            appointment.namePatient = namePatient!!.text.toString().trim()
+//                    appointment.namePatient = namePatient!!.text.toString().trim()
+            appointment.idPatient = idPatient
             appointment.dispo = "reserveé"
             appointment.FinishOrNot = "Pas encore"
             appointment.hour = hourRDV!!.text.toString()
-            appointment
+
 
             userdao.insertappointment(
                 appointment,
-                userItem,
                 FirebaseAuth.getInstance().uid.toString(),
                 object : AppointmentCallback {
                     override fun successAppointment(appointment: Appointment) {
@@ -111,6 +124,7 @@ class AddRDVToFbDoctorActivity : AppCompatActivity() {
 
 
                 })
+
         }
 
 
@@ -128,18 +142,18 @@ class AddRDVToFbDoctorActivity : AppCompatActivity() {
 
         userdao.populateSearch(object : UserCallback {
             override fun onSuccess(userItem: UserItem) {
-                var nom = userItem.nom
-                var prenom = userItem.prenom
-                var fullName = "$nom $prenom"
+                var idPatient = userItem.id
+                var fullName = "${userItem.nom} ${userItem.prenom}"
                 names!!.add(fullName)
-                var id = userItem.id.toString()
+//                ids!!.add(idPatient)
+//                var id = userItem.id.toString()
 
             }
 
             override fun failure() {
 
             }
-           })
+        })
         adapter!!.notifyDataSetChanged()
 
     }

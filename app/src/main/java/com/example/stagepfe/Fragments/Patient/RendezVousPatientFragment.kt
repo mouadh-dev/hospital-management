@@ -22,7 +22,7 @@ class RendezVousPatientFragment : Fragment() {
     var listRDVPatient: ListView? = null
     var list = mutableListOf<ModelRDVPatient>()
     var namePatient: String? = null
-
+    var adapter: MyAdapterRdvPatient? =null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -41,19 +41,20 @@ initView(view)
 
     private fun initView(view: View) {
         listRDVPatient = view.findViewById<ListView>(R.id.List_RDV)
-
+        initAdapter()
         var userdao = UserDao()
 
        // list.add(ModelRDVPatient("11/05/2021","11:00", "termineé", R.color.green))
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         userdao.getAppointment(object : AppointmentCallback {
             override fun successAppointment(appointment: Appointment) {
+                list.clear()
                 userdao.retrieveCurrentDataUser(
                     object : UserCallback {
                         override fun onSuccess(userItem: UserItem) {
-                            var namePatient = userItem.nom + " " + userItem.prenom
-                            println("mouadh" + namePatient)
-                            if (appointment.namePatient!!.equals(namePatient)) {
+
+                            var id = userItem.id
+                            if (appointment.idPatient!! == id) {
                                 if (appointment.FinishOrNot.equals("Pas encore")) {
                                     list.add(
                                         ModelRDVPatient(
@@ -64,7 +65,7 @@ initView(view)
                                             appointment.nameDoctor.toString()
                                         )
                                     )
-                                    listRDVPatient!!.adapter = MyAdapterRdvPatient(requireContext(),R.layout.rdv_list_patient,list)
+                                    adapter!!.notifyDataSetChanged()
                                 } else {
                                     list.add(
                                         ModelRDVPatient(
@@ -75,7 +76,7 @@ initView(view)
                                             appointment.nameDoctor.toString()
                                         )
                                     )
-                                    listRDVPatient!!.adapter = MyAdapterRdvPatient(requireContext(),R.layout.rdv_list_patient,list)
+                                    adapter!!.notifyDataSetChanged()
 
                                 }
                             }
@@ -95,6 +96,11 @@ initView(view)
 
 
 
+    }
+
+    private fun initAdapter() {
+         adapter = MyAdapterRdvPatient(requireContext(),R.layout.rdv_list_patient,list)
+        listRDVPatient!!.adapter = adapter
     }
 
 

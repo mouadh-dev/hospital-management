@@ -10,9 +10,11 @@ data class Appointment constructor(
     var hour: String? = "",
     var dispo: String? = "",
     var FinishOrNot: String? = "",
-    var idPatient: String? = ""
+    var idPatient: String? = "",
+    var idDoctor:String?= ""
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
+        parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
@@ -31,6 +33,7 @@ data class Appointment constructor(
         parcel.writeString(dispo)
         parcel.writeString(FinishOrNot)
         parcel.writeString(idPatient)
+        parcel.writeString(idDoctor)
     }
 
     override fun describeContents(): Int {
@@ -46,5 +49,6 @@ data class Appointment constructor(
             return arrayOfNulls(size)
         }
     }
+
 
 }

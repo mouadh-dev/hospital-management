@@ -142,7 +142,6 @@ class UserDao : IGestionUser {
     //////////////////////////////////////////Insert appointment////////////////////////////////////////
     override fun insertappointment(
         appointment: Appointment,
-        userItem: UserItem,
         uid: String,
         responseCallback: AppointmentCallback
     ) {
@@ -170,7 +169,7 @@ class UserDao : IGestionUser {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Log.w(TAG, "signInWithEmail:failure", error.toException())
+                println( "signInWithEmail:failure" + error.toException())
             }
         })
     }
@@ -471,9 +470,11 @@ class UserDao : IGestionUser {
         messageRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
-                       var msg = snapshot.getValue(Message::class.java)
 
+                    for(ds in snapshot.children){
+                        var msg = ds.getValue(Message::class.java)
                       messageCallback.success(msg!!)
+                      }
                 }
             }
             override fun onCancelled(error: DatabaseError) {

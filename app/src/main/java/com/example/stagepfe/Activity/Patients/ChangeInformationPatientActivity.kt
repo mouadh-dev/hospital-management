@@ -117,7 +117,7 @@ class ChangeInformationPatientActivity : AppCompatActivity() {
                     dialog(text)
                     userDao.updateUser(user.id.toString(),user, object : UserCallback {
                         override fun onSuccess(user: UserItem) {
-
+finish()
                         }
 
                         override fun failure() {
@@ -228,8 +228,9 @@ class ChangeInformationPatientActivity : AppCompatActivity() {
                 dialog.dismiss()
 
 
-                finish()
+
             }
+//        finish()
     }
     //////////////////////////////////////////////////Location/////////////////////////////////////////
     private fun updateLabel() {

@@ -24,6 +24,8 @@ class AddRDVToPatientActivity : AppCompatActivity() {
     var day: String? = null
     var time: String? = null
     var namePatient: TextView? = null
+    var idPatient:String? = null
+    var idDoctor:String? = null
     var dateRDV: TextView? = null
     var hourRDV: TextView? = null
     var confirmButton: TextView? = null
@@ -68,39 +70,60 @@ class AddRDVToPatientActivity : AppCompatActivity() {
                 namePatient!!.text = userItem.nom + " " + userItem.prenom
                 dateRDV!!.text = "$day-$month-$year"
                 hourRDV!!.text = time
+                idPatient = userItem.id
             }
 
             override fun failure() {}
         })
+
         ///////////////////////////////////////////confirmButton////////////////////////////////////////////
         confirmButton!!.setOnClickListener {
-
             var appointment = Appointment()
-            var userItem = UserItem()
-            appointment.namePatient = namePatient!!.text.toString()
             appointment.date = dateRDV!!.text.toString()
-            appointment.nameDoctor = nameDoctor!!.text.toString().trim()
             appointment.dispo = "reserveé"
             appointment.FinishOrNot = "Pas encore"
             appointment.hour = hourRDV!!.text.toString()
+            appointment.idPatient = idPatient
+            userdao.populateSearch(object : UserCallback {
+                override fun onSuccess(user: UserItem) {
+                    if ((user.nom + " " + user.prenom).equals(nameDoctor!!.text.toString().trim())){
+                        appointment.idDoctor = user.id
+                        userdao.retrieveCurrentDataUser(object : UserCallback {
+                            override fun onSuccess(userItem: UserItem) {
+                                userdao.insertappointment(appointment, userItem.id!!, object :
+                                    AppointmentCallback {
+                                    override fun successAppointment(appointment: Appointment) {
+                                        var toast = Toast.makeText(
+                                            applicationContext,
+                                            "Rendez-vous ajoute avec succès",
+                                            Toast.LENGTH_SHORT)
+                                        toast.show()
+                                        finish()
+                                    }
 
-            userdao.insertappointment(appointment, userItem, FirebaseAuth.getInstance().uid.toString(), object :
-                AppointmentCallback {
-                override fun successAppointment(appointment: Appointment) {
-                    var toast = Toast.makeText(
-                        applicationContext,
-                        "Rendez-vous ajoute avec succès",
-                        Toast.LENGTH_SHORT
-                    )
-                    toast.show()
+                                    override fun failureAppointment() {
+                                        var toast = Toast.makeText(
+                                            applicationContext,
+                                            "il y a une probleme",
+                                            Toast.LENGTH_SHORT)
+                                        toast.show()
+                                    }
+
+
+                                })
+                            }
+
+                            override fun failure() {
+                            }
+                        })
+                    }
                 }
 
-                override fun failureAppointment() {
-
+                override fun failure() {
                 }
-
-
             })
+
+
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////Suggestion Search//////////////////////////////////////////

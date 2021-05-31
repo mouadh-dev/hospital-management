@@ -56,7 +56,7 @@ class ProfilDoctorMyPatientFragment : Fragment() {
 
 
                             nameCurrentUser = userItem.nom + " " + userItem.prenom
-                            if (appointment.nameDoctor!!.equals(nameCurrentUser) && appointment.namePatient != nameCurrentUser
+                            if (appointment.idDoctor!!.equals(userItem.id) && appointment.namePatient != nameCurrentUser
                                 && testOnRepeatingPatientName != appointment.namePatient
                             ) {
                                 testOnRepeatingPatientName = appointment.namePatient.toString()

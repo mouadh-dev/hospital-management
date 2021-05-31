@@ -192,11 +192,9 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
             }
 
             override fun success() {
-                TODO("Not yet implemented")
             }
 
             override fun failure() {
-                TODO("Not yet implemented")
             }
 
         })
