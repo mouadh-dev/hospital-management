@@ -46,7 +46,7 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
     var userDao = UserDao()
     var user = UserItem()
     var ordonance = Ordonance()
-
+    var namesMedicament : ArrayList<String>? = null
     var quantity: TextView? = null
     var descriptionMedicament: EditText? = null
     var idDoctor: String? = null
@@ -186,47 +186,32 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
         }
 
 
-        userdao.MedicamenteSearch(object : ResponseCallback{
-            override fun success(medicament: String) {
 
-            }
-
-            override fun success() {
-                TODO("Not yet implemented")
-            }
-
-            override fun failure() {
-                TODO("Not yet implemented")
-            }
-
-        })
         MedicamenteSearch()
 
     }
 
     private fun MedicamenteSearch() {
-        val ref =  FirebaseDatabase.getInstance().getReference("Medicament")
-        val eventListener: ValueEventListener = object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
-                    var namesMedicament: ArrayList<String?> = ArrayList()
-                    for (ds in snapshot.children) {
-                    var nomMedicament=ds.child("medicament").getValue(String::class.java)
-                        var names= "$nomMedicament"
-                        namesMedicament.add(names)
-                    }
-                    val adapter: ArrayAdapter<*> = ArrayAdapter<String>(this@AddOrdonanceDoctorActivity,
-                        android.R.layout.simple_list_item_1,
-                       namesMedicament
-                    )
-                    nameMedicament!!.setAdapter(adapter)
-                }
-            }
-            override fun onCancelled(error: DatabaseError) {
+        val ref =  FirebaseDatabase.getInstance().getReference("medicament")
+        //val eventListener: ValueEventListener = object : ValueEventListener {
+            ref.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
 
-            }
-        }
-        ref.addListenerForSingleValueEvent(eventListener)
+                            for (ds in snapshot.children) {
+                            var nomMedicament=ds.child("medicament").getValue(String::class.java)
+
+                            var names= ds.key.toString()
+                                namesMedicament!!.add(names)
+                        }
+                        adapter!!.notifyDataSetChanged()
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                }
+            })
+        //ref.addListenerForSingleValueEvent(eventListener)
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -270,6 +255,12 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
         adapterMedicament = MyAdapterOrdonance(this, R.layout.ord_add_list, listMedicament)
         listViewMedicament!!.adapter = adapterMedicament
 
-
+        namesMedicament = ArrayList()
+        adapter = ArrayAdapter<String>(
+            this@AddOrdonanceDoctorActivity,
+            android.R.layout.simple_list_item_1,
+            namesMedicament!!
+        )
+        nameMedicament!!.setAdapter(adapter)
     }
 }

@@ -8,7 +8,7 @@
     tools:context=".Activity.AgentLabo.AccueilAgentLaboActivity">
 
     <LinearLayout
-        android:id="@+id/containertopBar"
+        android:id="@+id/containertopBarAgent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -148,7 +148,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/bottom_nav_Agent"
-        android:layout_below="@+id/containertopBar"
+        android:layout_below="@+id/containertopBarAgent"
         android:background="@drawable/rectangle_account"
         />
     <com.google.android.material.floatingactionbutton.FloatingActionButton

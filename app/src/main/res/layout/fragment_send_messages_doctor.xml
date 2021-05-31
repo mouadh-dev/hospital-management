@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragments.Patient.SendMessgesPatientFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/MessagesDoctorRV"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/space_towrite_doctor"
+            />
+        <LinearLayout
+            android:id="@+id/space_towrite_doctor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="10"
+            android:layout_alignParentBottom="true"
+            android:padding="10dp"
+            android:background="@color/white"
+            >
+            <EditText
+                android:id="@+id/Message_text_Doctor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_text_style"
+                android:layout_weight="7"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:hint="Aa"
+                android:textColorHint="@color/gray"
+                android:textSize="15dp"
+                />
+            <!--    <RelativeLayout-->
+            <!--        android:layout_width="wrap_content"-->
+            <!--        android:layout_height="wrap_content"-->
+            <!--        android:layout_weight="3"-->
+            <!--        >-->
+            <ImageView
+                android:id="@+id/sendMessageIconDoctor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/send_message"
+                android:layout_weight="3"
+                android:layout_gravity="center"
+
+                />
+            <!--    </RelativeLayout>-->
+        </LinearLayout>
+    </RelativeLayout>
+</FrameLayout>
