@@ -8,7 +8,7 @@
     tools:context=".Activity.Doctors.AccountDoctorActivity">
 
     <LinearLayout
-        android:id="@+id/containertopBar"
+        android:id="@+id/containertopBarMedecin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -226,7 +226,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/bottom_nav_Doctor"
-        android:layout_below="@+id/containertopBar"
+        android:layout_below="@+id/containertopBarMedecin"
         android:background="@drawable/rectangle_account"
         />
     <com.google.android.material.bottomnavigation.BottomNavigationView

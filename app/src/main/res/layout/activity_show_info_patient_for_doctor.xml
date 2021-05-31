@@ -107,14 +107,7 @@
                     android:textSize="20dp" />
 
 
-            <TextView
-                android:id="@+id/num_phone_patient"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
-                android:text="** *** ***"
-                android:textColor="@color/gray_specific"
-                android:textSize="15dp" />
+
 
             <TextView
                 android:id="@+id/date_naiss_patient"
@@ -124,6 +117,37 @@
                 android:text="21/05/1997 24ans"
                 android:textColor="@color/gray_specific"
                 android:textSize="15dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/ContacterPatient"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Contacter"
+                    android:textStyle="bold"
+                    android:textColor="@color/blue"
+                    android:textSize="25dp"
+                    android:drawableRight="@drawable/message"/>
+
+
+                <TextView
+                    android:id="@+id/AppelerPatient"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Appeler"
+                    android:layout_marginLeft="40dp"
+                    android:textColor="@color/blue"
+                    android:textSize="25dp"
+                    android:textStyle="bold"
+                    android:drawableRight="@drawable/telephon"/>
+
+
+            </LinearLayout>
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabs_ViewPager_show_profil_pat"

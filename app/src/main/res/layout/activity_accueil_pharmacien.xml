@@ -7,7 +7,7 @@
     android:background="@color/blue"
     tools:context=".Activity.Pharmacien.AccueilPharmacienActivity">
     <LinearLayout
-        android:id="@+id/containertopBar"
+        android:id="@+id/containertopBarPharmacien"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -141,7 +141,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/bottom_nav_Pharmacien"
-        android:layout_below="@+id/containertopBar"
+        android:layout_below="@+id/containertopBarPharmacien"
         android:background="@drawable/rectangle_account"
         />
     <com.google.android.material.floatingactionbutton.FloatingActionButton
