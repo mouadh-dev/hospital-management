@@ -61,25 +61,26 @@ class AgentAccueilFragment : Fragment() {
                                     override fun onSuccess(userItem: UserItem) {
                                         if (ordonance.idPatient.equals(userItem.id)){
                                             namepatientOrdo = userItem.nom + " " + userItem.prenom
+                                            listAnalyses.add(
+                                                ModelAnalyses(
+                                                    namepatientOrdo,
+                                                    ordonance.dateOrdonanceSend.toString(),
+                                                    ordonance.hourOrdonanceSend.toString()
+                                                        .substring(0, 5),
+                                                    R.drawable.logopatient
+//                                userItem.profilPhotos!!.toInt()
+                                                )
+                                            )
+                                            adapterLaboratoire!!.notifyDataSetChanged()
+                                            date =
+                                                ordonance.dateOrdonanceSend + ordonance.hourOrdonanceSend
                                         }
                                     }
 
                                     override fun failure() {
                                     }
                                 })
-                                listAnalyses.add(
-                                    ModelAnalyses(
-                                        namepatientOrdo,
-                                        ordonance.dateOrdonanceSend.toString(),
-                                        ordonance.hourOrdonanceSend.toString()
-                                            .substring(0, 5),
-                                        R.drawable.logopatient
-//                                userItem.profilPhotos!!.toInt()
-                                    )
-                                )
-                                adapterLaboratoire!!.notifyDataSetChanged()
-                                date =
-                                    ordonance.dateOrdonanceSend + ordonance.hourOrdonanceSend
+
                             }
                         }
                     }

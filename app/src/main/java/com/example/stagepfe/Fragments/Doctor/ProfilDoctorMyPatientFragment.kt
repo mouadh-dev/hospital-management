@@ -57,10 +57,10 @@ class ProfilDoctorMyPatientFragment : Fragment() {
                                 override fun onSuccess(userPatient: UserItem) {
                                     if (appointment.idPatient.equals(userPatient.id)){
                                         nameCurrentUser = userItem.nom + " " + userItem.prenom
-                                        if (appointment.idDoctor!! != userItem.id && appointment.idPatient == userPatient.id
+                                        if (appointment.idDoctor!! == userItem.id && appointment.idPatient == userPatient.id
                                             && testOnRepeatingPatientName != userItem.nom + " " + userItem.prenom
                                         ) {
-                                            testOnRepeatingPatientName = userItem.nom + " " + userItem.prenom
+                                            testOnRepeatingPatientName = userPatient.nom + " " + userPatient.prenom
                                             listDoctorProfilMyPatient.add(
                                                 ModelPatientListForDoctorProfil(
                                                     testOnRepeatingPatientName,
