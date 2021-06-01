@@ -49,27 +49,43 @@ class AccueilPharmacienFragment : Fragment() {
                                     for (ordo in userItem.ordonance!!.entries) {
                                         var ordonance = ordo.value
                                         if (ordonance.idPatient.equals(userItem.id.toString())) {
-                                            if (ordonance.taken.equals("termineé") && ordonance.typeOrdonnance.equals("Ordonnance médicament") && ordonance.dateOrdonanceSend + ordonance.hourOrdonanceSend != date) {
-                                                date = ordonance.dateOrdonanceSend + ordonance.hourOrdonanceSend
-                                                listNewOrdonnanceParmacien.add(
-                                                    ModelNewOrdonnancePharmacien(
-                                                        ordonance.namepatientOrdo.toString(),
-                                                        ordonance.dateOrdonanceSend.toString(),
-                                                        ordonance.hourOrdonanceSend.toString()
-                                                            .substring(1, 5),
-                                                        R.drawable.logopatient
-//                                userItem.profilPhotos!!.toInt()
-                                                    )
-                                                )
-                                                adapterPharmacien!!.notifyDataSetChanged()
+                                            if (ordonance.taken.equals("termineé") && ordonance.typeOrdonnance.equals(
+                                                    "Ordonnance médicament"
+                                                ) && ordonance.dateOrdonanceSend + ordonance.hourOrdonanceSend != date
+                                            ) {
                                                 date =
                                                     ordonance.dateOrdonanceSend + ordonance.hourOrdonanceSend
+                                                userDao.populateSearch(object : UserCallback {
+                                                    override fun onSuccess(user: UserItem) {
+                                                        if (ordonance.idPatient.equals(user.id)){
+                                                            listNewOrdonnanceParmacien.add(
+                                                                ModelNewOrdonnancePharmacien(
+                                                                    user.nom + " " + user.prenom,
+                                                                    ordonance.dateOrdonanceSend.toString(),
+                                                                    ordonance.hourOrdonanceSend.toString()
+                                                                        .substring(1, 5),
+                                                                    R.drawable.logopatient
+//                                userItem.profilPhotos!!.toInt()
+                                                                )
+                                                            )
+                                                            adapterPharmacien!!.notifyDataSetChanged()
+                                                            date =
+                                                                ordonance.dateOrdonanceSend + ordonance.hourOrdonanceSend
+                                                        }
+                                                    }
+
+                                                    override fun failure() {
+
+                                                    }
+                                                })
+
                                             }
                                         }
                                     }
                                 }
 
                             }
+
                             override fun failure() {
                             }
                         })

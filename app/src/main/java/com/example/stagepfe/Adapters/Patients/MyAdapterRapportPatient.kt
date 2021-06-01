@@ -21,7 +21,7 @@ class MyAdapterRapportPatient(var mCtx: Context, var resources:Int, var items:Li
         var textHourRapport: TextView = view.findViewById(R.id.Hour_Rapport)
 
         var items: Rapports = items[position]
-        textNameDoctor.text = items.nameDoctorRapport
+//        textNameDoctor.text = items.nameDoctorRapport
         textDateRapport.text = items.dateRapport
         textHourRapport.text = items.hourRapport
         return view

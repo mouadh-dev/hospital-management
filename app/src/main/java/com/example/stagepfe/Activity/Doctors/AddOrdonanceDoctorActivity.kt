@@ -121,8 +121,8 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
                             idPAtient = userItem.id.toString()
                             println("mouadh :: " + namePatient + " !! " + idPAtient)
                             ordonance.idDoctor = idDoctor
-                            ordonance.nameDoctorOrd = nameDoctor
-                            ordonance.namepatientOrdo = namePatient
+//                            ordonance.nameDoctorOrd = nameDoctor
+//                            ordonance.namepatientOrdo = namePatient
                             ordonance.idPatient = idPAtient
                             ordonance.medicament = listMedicamentOrdonance
                             ordonance.taken = "pas encore"

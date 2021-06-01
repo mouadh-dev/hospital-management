@@ -115,8 +115,8 @@ class ShowProfilDoctorToPatientActivity : AppCompatActivity() {
                                         message.sender = userItem.id
                                         message.reciever = id
                                         message.message = msg
-                                        message.nameSender = userItem.prenom + " " + userItem.nom
-                                        message.nameReciever = user.prenom + " " + user.nom
+//                                        message.nameSender = userItem.prenom + " " + userItem.nom
+//                                        message.nameReciever = user.prenom + " " + user.nom
                                         message.timemsg = currentDateTime.format(DateTimeFormatter.ISO_TIME)
                                             userDao.sendMesage(message)
                                         dialog.dismiss()

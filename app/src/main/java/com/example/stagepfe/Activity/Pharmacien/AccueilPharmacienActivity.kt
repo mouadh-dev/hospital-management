@@ -87,10 +87,27 @@ class AccueilPharmacienActivity : AppCompatActivity() {
                     var listView = dialog.findViewById<ListView>(R.id.List_Medicament_to_show)
                     listView.visibility = VISIBLE
                     dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-                    dialog.findViewById<TextView>(R.id.nameDoctor)
-                        .setText("DR" + " " + ordonance.nameDoctorOrd)
-                    dialog.findViewById<TextView>(R.id.namePatient)
-                        .setText(ordonance.namepatientOrdo)
+                    userDao.populateSearch(object : UserCallback {
+                        override fun onSuccess(userItem: UserItem) {
+                            if (userItem.id.equals(ordonance.idDoctor))
+                            dialog.findViewById<TextView>(R.id.nameDoctor)
+                                .setText("DR" + " " + userItem.nom + " " + userItem.prenom)
+                        }
+
+                        override fun failure() {
+                        }
+                    })
+                    userDao.populateSearch(object : UserCallback {
+                        override fun onSuccess(userItem: UserItem) {
+                            if (userItem.id.equals(ordonance.idPatient))
+                                dialog.findViewById<TextView>(R.id.namePatient)
+                                    .setText(userItem.nom + " " + userItem.prenom)
+                        }
+
+                        override fun failure() {
+                        }
+                    })
+
                     dialog.findViewById<Button>(R.id.btn_remove).setText("D'accord")
                     for (medicament in ordonance.medicament) {
                         listMedicament.add(medicament)
@@ -123,12 +140,12 @@ class AccueilPharmacienActivity : AppCompatActivity() {
 
                         ordonanceToChange.color = Color.GREEN.toString()
                         ordonanceToChange.taken = "termineé"
-                        ordonanceToChange.namepatientOrdo = ordonance.namepatientOrdo
+//                        ordonanceToChange.namepatientOrdo = ordonance.namepatientOrdo
                         ordonanceToChange.medicament = ordonance.medicament
                         ordonanceToChange.id = ordonance.id
                         ordonanceToChange.idDoctor = ordonance.idDoctor
                         ordonanceToChange.idPatient = ordonance.idPatient
-                        ordonanceToChange.nameDoctorOrd = ordonance.nameDoctorOrd
+//                        ordonanceToChange.nameDoctorOrd = ordonance.nameDoctorOrd
                         ordonanceToChange.hourOrdonanceSend = ordonance.hourOrdonanceSend
                         ordonanceToChange.dateOrdonanceSend = ordonance.dateOrdonanceSend
                         ordonanceToChange.analyse = ordonance.analyse

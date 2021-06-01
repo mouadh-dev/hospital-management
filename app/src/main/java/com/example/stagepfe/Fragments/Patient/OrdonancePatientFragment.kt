@@ -85,9 +85,27 @@ class OrdonancePatientFragment : Fragment() {
             val dialog = builder.create()
             dialog.show()
             dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-            dialog.findViewById<TextView>(R.id.nameDoctor)
-                .setText("DR" + " " + ordonanceList.nameDoctorOrd)
-            dialog.findViewById<TextView>(R.id.namePatient).setText(ordonanceList.namepatientOrdo)
+            userDao.populateSearch(object : UserCallback {
+                override fun onSuccess(user: UserItem) {
+                    if (ordonanceList.idDoctor.equals(user.id)){
+                        dialog.findViewById<TextView>(R.id.nameDoctor)
+                            .setText("DR" + " " + user.nom + " " + user.prenom)
+                    }
+                }
+
+                override fun failure() {
+                }
+            })
+            userDao.retrieveCurrentDataUser(object : UserCallback {
+                override fun onSuccess(userItem: UserItem) {
+                    dialog.findViewById<TextView>(R.id.namePatient).setText(userItem.nom + " " + userItem.prenom)
+                }
+
+                override fun failure() {
+                }
+            })
+
+
             dialog.findViewById<Button>(R.id.btn_remove).setText("D'accord")
             dialog.findViewById<ImageView>(R.id.QrCodeIv)
 
@@ -147,9 +165,9 @@ class OrdonancePatientFragment : Fragment() {
     private fun fillOrdonanceList(ordonanceList: Ordonance, ordonance: Ordonance) {
         ordonanceList.dateOrdonanceSend = ordonance.dateOrdonanceSend
         ordonanceList.hourOrdonanceSend = ordonance.hourOrdonanceSend!!.substring(0, 5)
-        ordonanceList.nameDoctorOrd = ordonance.nameDoctorOrd
+//        ordonanceList.nameDoctorOrd = ordonance.nameDoctorOrd
         ordonanceList.idPatient = ordonance.idPatient
-        ordonanceList.namepatientOrdo = ordonance.namepatientOrdo
+//        ordonanceList.namepatientOrdo = ordonance.namepatientOrdo
         ordonanceList.medicament = ordonance.medicament
         ordonanceList.idDoctor = ordonance.idDoctor
         ordonanceList.id = ordonance.id

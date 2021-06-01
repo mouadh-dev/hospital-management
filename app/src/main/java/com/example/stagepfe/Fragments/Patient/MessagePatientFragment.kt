@@ -60,8 +60,8 @@ class MessagePatientFragment : Fragment() {
                                 test.id = message.id
                                 test.reciever = message.reciever
                                 test.sender = message.sender
-                                test.nameReciever = message.nameReciever
-                                test.nameSender = message.nameSender
+//                                test.nameReciever = message.nameReciever
+//                                test.nameSender = message.nameSender
                                 test.timemsg = message.timemsg
 //                            var hh = message.sender
 //                            var hh2 = message.reciever

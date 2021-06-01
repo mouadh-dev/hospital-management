@@ -52,7 +52,7 @@ class ProfilDoctorMyRdvFragment : Fragment() {
                         override fun onSuccess(userItem: UserItem) {
                             var nameDoctor = userItem.nom + " " + userItem.prenom
                             println("mouadh" + nameDoctor)
-                            if (appointment.nameDoctor!!.equals(nameDoctor)) {
+                            if (appointment.idDoctor!!.equals(userItem.id)) {
                                 if (appointment.FinishOrNot.equals("Pas encore")) {
                                     listDoctorProfilRdv.add(
                                         ModelRdvDoctor(
@@ -60,7 +60,7 @@ class ProfilDoctorMyRdvFragment : Fragment() {
                                             appointment.hour.toString(),
                                             appointment.FinishOrNot.toString(),
                                             R.color.green,
-                                            appointment.namePatient.toString()
+                                            userItem.nom + " " + userItem.prenom
                                         )
                                     )
                                     context?.let {
@@ -77,7 +77,7 @@ class ProfilDoctorMyRdvFragment : Fragment() {
                                             appointment.hour.toString(),
                                             appointment.FinishOrNot.toString(),
                                             R.color.red,
-                                            appointment.namePatient.toString()
+                                            userItem.nom + " " + userItem.prenom
                                         )
                                     )
                                     listviewDoctorProfilRdv!!.adapter = MyAdapterRdvDoctor(

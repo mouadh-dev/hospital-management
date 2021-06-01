@@ -51,11 +51,25 @@ class AgentAccueilFragment : Fragment() {
                     for (ordo in userItem.ordonance!!.entries) {
                         var ordonance = ordo.value
                         if (ordonance.idPatient.equals(userItem.id.toString())) {
-                            if (ordonance.taken.equals("termineé") && ordonance.typeOrdonnance.equals("Ordonnance analyse") &&ordonance.dateOrdonanceSend + ordonance.hourOrdonanceSend != date) {
+                            if (ordonance.taken.equals("termineé") && ordonance.typeOrdonnance.equals(
+                                    "Ordonnance analyse"
+                                ) && ordonance.dateOrdonanceSend + ordonance.hourOrdonanceSend != date
+                            ) {
                                 date = ordonance.dateOrdonanceSend + ordonance.hourOrdonanceSend
+                                var namepatientOrdo =""
+                                userDao.populateSearch(object : UserCallback {
+                                    override fun onSuccess(userItem: UserItem) {
+                                        if (ordonance.idPatient.equals(userItem.id)){
+                                            namepatientOrdo = userItem.nom + " " + userItem.prenom
+                                        }
+                                    }
+
+                                    override fun failure() {
+                                    }
+                                })
                                 listAnalyses.add(
                                     ModelAnalyses(
-                                        ordonance.namepatientOrdo.toString(),
+                                        namepatientOrdo,
                                         ordonance.dateOrdonanceSend.toString(),
                                         ordonance.hourOrdonanceSend.toString()
                                             .substring(0, 5),
@@ -72,6 +86,7 @@ class AgentAccueilFragment : Fragment() {
                 }
 
             }
+
             override fun failure() {
             }
         })

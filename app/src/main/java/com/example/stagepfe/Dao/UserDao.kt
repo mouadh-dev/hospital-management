@@ -153,7 +153,8 @@ class UserDao : IGestionUser {
                     for (ds in snapshot.children) {
                         var userItem = ds.getValue(UserItem::class.java)
                         var fullNAme = userItem!!.nom + " " + userItem.prenom
-                        if (appointment.namePatient.equals(fullNAme)) {
+                        var idUser = userItem.id
+                        if (appointment.idPatient.equals(idUser)) {
                             responseCallback.successAppointment(appointment)
                             var hour = HashMap<String, Appointment>()
                             var day = HashMap<String, HashMap<String, Appointment>>()
@@ -327,7 +328,6 @@ class UserDao : IGestionUser {
 
             override fun onCancelled(error: DatabaseError) {
                 responseCallback.failure()
-                println("mouadh : " + error)
             }
 
         })

@@ -83,7 +83,7 @@ class SendMessagesDoctorFragment : Fragment() {
 
                 override fun onSuccess(user: UserItem) {
                     if(user.id.equals(idReciever)){
-                        message.nameReciever = user.prenom + " " + user.nom
+//                        message.nameReciever = user.prenom + " " + user.nom
                         message.reciever = idReciever
                     }
                 }
@@ -100,7 +100,7 @@ class SendMessagesDoctorFragment : Fragment() {
 
                         message.sender = userItem.id
 
-                        message.nameSender = userItem.prenom + " " + userItem.nom
+//                        message.nameSender = userItem.prenom + " " + userItem.nom
 //
                         message.timemsg = currentDateTime.format(DateTimeFormatter.ISO_TIME)
                         message.message = messageTextDoctor!!.text.toString()

@@ -34,6 +34,7 @@ class AddRDVToPatientActivity : AppCompatActivity() {
     var cancelButton: Button? = null
     var adapter: ArrayAdapter<String>?=null
     var names: ArrayList<String?>?=null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_r_d_v_to_patient)

@@ -56,10 +56,10 @@ class ProfilDoctorMyPatientFragment : Fragment() {
 
 
                             nameCurrentUser = userItem.nom + " " + userItem.prenom
-                            if (appointment.idDoctor!!.equals(userItem.id) && appointment.namePatient != nameCurrentUser
-                                && testOnRepeatingPatientName != appointment.namePatient
+                            if (appointment.idDoctor!!.equals(userItem.id) && appointment.idPatient != userItem.id
+                                && testOnRepeatingPatientName != userItem.nom + " " + userItem.prenom
                             ) {
-                                testOnRepeatingPatientName = appointment.namePatient.toString()
+                                testOnRepeatingPatientName = userItem.nom + " " + userItem.prenom
                                 listDoctorProfilMyPatient.add(
                                     ModelPatientListForDoctorProfil(
                                         testOnRepeatingPatientName,

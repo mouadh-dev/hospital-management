@@ -77,10 +77,11 @@ class ShowRapportPatientForDoctorFragment : Fragment() {
                 userDao.getRapport(object : RapportCallback {
                     override fun success(rapport: Rapports) {
 
-                        nameDoctorRapport = rapport.nameDoctorRapport
+//                        nameDoctorRapport = rapport.nameDoctorRapport
                         spcialityDoctorRapport = rapport.specialityDoctor
-                        if (nameDoctorRapport!!.equals(fullNameDoctor) &&
-                            myDataFromActivity.equals(rapport.namePatientRapport) &&
+                        if (
+//                            nameDoctorRapport!!.equals(fullNameDoctor) &&
+//                            myDataFromActivity.equals(rapport.namePatientRapport) &&
                             (rapport.hourRapport + " " + rapport.hourRapport) != fullDate) {
 
                             fullDate = rapport.hourRapport + " " + rapport.hourRapport
@@ -91,8 +92,8 @@ class ShowRapportPatientForDoctorFragment : Fragment() {
                             rapportList.id = rapport.id
                             rapportList.idPatientRapport = rapport.idPatientRapport
                             rapportList.idDoctorRapport = rapport.idDoctorRapport
-                            rapportList.nameDoctorRapport = rapport.nameDoctorRapport
-                            rapportList.namePatientRapport = rapport.namePatientRapport
+//                            rapportList.nameDoctorRapport = rapport.nameDoctorRapport
+//                            rapportList.namePatientRapport = rapport.namePatientRapport
                             rapportList.specialityDoctor = rapport.specialityDoctor
                             listRapport.add(rapportList)
 

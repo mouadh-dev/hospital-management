@@ -92,10 +92,10 @@ class AddRapportDoctorActivity : AppCompatActivity() {
                 }
             }
             else {
-                rapports.namePatientRapport = nameDoctorRapportET!!.text.toString()
+//                rapports.namePatientRapport = nameDoctorRapportET!!.text.toString()
                 rapports.idPatientRapport = idPatient
                 rapports.textRapport = TextRapport!!.text.toString()
-                rapports.nameDoctorRapport = nameDoctorRapport
+//                rapports.nameDoctorRapport = nameDoctorRapport
                 rapports.idDoctorRapport = idDoctor
                 rapports.specialityDoctor = speciality
                 rapports.dateRapport = currentDateTime.format(DateTimeFormatter.ISO_DATE)

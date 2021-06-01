@@ -24,7 +24,7 @@ class MyAdapterMessagePatient(var mCtx:Context, var resources:Int, var items:Lis
         var mItemPatient: Message = items[position]
 //        imageMsgPatient.setImageDrawable(mCtx.resources.getDrawable(mItemPatient.imgmsgPatient!!))
         Glide.with(mCtx).load(mItemPatient.imgmsgPatient).into(imageMsgPatient)
-        nameMessagePatient.text = mItemPatient.nameReciever
+//        nameMessagePatient.text = mItemPatient.nameReciever
 //        messageRecievedPatient.text = mItemPatient.message
         timeMessagePatient.text = mItemPatient.timemsg!!.substring(0,5)
 

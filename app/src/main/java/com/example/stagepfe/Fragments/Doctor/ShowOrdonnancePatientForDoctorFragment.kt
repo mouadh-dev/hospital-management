@@ -77,8 +77,10 @@ class ShowOrdonnancePatientForDoctorFragment : Fragment() {
                 for (entry in userItem.ordonance!!.entries) {
 
                     var ordonance = entry.value
-                    if (myDataFromActivity == ordonance.namepatientOrdo!! &&
-                        ordonance.nameDoctorOrd!! == fullNameDoctor) {
+                    if (myDataFromActivity == userItem.nom + " " + userItem.prenom
+//                        &&
+//                        ordonance.nameDoctorOrd!! == fullNameDoctor
+                    ) {
                         val ordonanceList = Ordonance()
                         fillOrdonanceList(ordonanceList, ordonance)
                         listOrdoPatForDoctor.add(ordonanceList)
@@ -104,12 +106,33 @@ class ShowOrdonnancePatientForDoctorFragment : Fragment() {
             val dialog = builder.create()
             dialog.show()
             dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-            dialog.findViewById<TextView>(R.id.nameDoctor)
-                .setText("DR" + " " + ordonanceList.nameDoctorOrd)
+            userDao.populateSearch(object : UserCallback {
+                override fun onSuccess(userItem: UserItem) {
+                    if (ordonanceList.idDoctor.equals(userItem.id)){
+                        dialog.findViewById<TextView>(R.id.nameDoctor)
+                            .setText("DR" + " " + userItem.prenom + " " + userItem.nom)
+                    }
+
+                }
+
+                override fun failure() {
+                }
+            })
+
             listViewOrdReading = dialog.findViewById<ListView>(R.id.List_Medicament_to_show)
             listViewOrdReading!!.visibility = VISIBLE
+            userDao.populateSearch(object : UserCallback {
+                override fun onSuccess(userItem: UserItem) {
+                  if (ordonanceList.idPatient.equals(userItem.id)){
+                      dialog.findViewById<TextView>(R.id.namePatient).setText(userItem.prenom + " " + userItem.nom)
+                  }
+                }
 
-            dialog.findViewById<TextView>(R.id.namePatient).setText(ordonanceList.namepatientOrdo)
+                override fun failure() {
+                }
+            })
+
+
             dialog.findViewById<Button>(R.id.btn_remove).setText("Supprimer")
 
             for (medicament in ordonanceList.medicament) {
@@ -188,9 +211,9 @@ class ShowOrdonnancePatientForDoctorFragment : Fragment() {
     private fun fillOrdonanceList(ordonanceList: Ordonance, ordonance: Ordonance) {
         ordonanceList.dateOrdonanceSend = ordonance.dateOrdonanceSend
         ordonanceList.hourOrdonanceSend = ordonance.hourOrdonanceSend!!.substring(0, 5)
-        ordonanceList.nameDoctorOrd = ordonance.nameDoctorOrd
+//        ordonanceList.nameDoctorOrd = ordonance.nameDoctorOrd
         ordonanceList.idPatient = ordonance.idPatient
-        ordonanceList.namepatientOrdo = ordonance.namepatientOrdo
+//        ordonanceList.namepatientOrdo = ordonance.namepatientOrdo
         ordonanceList.medicament = ordonance.medicament
         ordonanceList.idDoctor = ordonance.idDoctor
         ordonanceList.id = ordonance.id

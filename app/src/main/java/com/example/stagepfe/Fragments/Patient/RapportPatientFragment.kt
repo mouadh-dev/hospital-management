@@ -51,7 +51,7 @@ var listRapportPatient: ListView? = null
 
                 userDao.getRapport(object : RapportCallback {
                     override fun success(rapport: Rapports) {
-                        namePatientRapport = rapport.namePatientRapport
+                        namePatientRapport = userItem.nom + " " + userItem.prenom
 
                         if (rapport.idPatientRapport.equals(userItem.id) &&
                             (rapport.hourRapport + " " + rapport.hourRapport) != fullDate
@@ -64,8 +64,8 @@ var listRapportPatient: ListView? = null
                             rapportList.id = rapport.id
                             rapportList.idPatientRapport = rapport.idPatientRapport
                             rapportList.idDoctorRapport = rapport.idDoctorRapport
-                            rapportList.nameDoctorRapport = rapport.nameDoctorRapport
-                            rapportList.namePatientRapport = rapport.namePatientRapport
+//                            rapportList.nameDoctorRapport = rapport.nameDoctorRapport
+//                            rapportList.namePatientRapport = rapport.namePatientRapport
                             rapportList.specialityDoctor = rapport.specialityDoctor
                             list.add(rapportList)
 

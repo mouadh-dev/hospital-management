@@ -4,8 +4,6 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class Ordonance constructor(
-    var namepatientOrdo:String? = "",
-    var nameDoctorOrd:String? = "",
     var idPatient:String? = "",
     var idDoctor:String? = "",
     var medicament: ArrayList<MedicamentOrdonance> = arrayListOf<MedicamentOrdonance>(),
@@ -21,8 +19,6 @@ data class Ordonance constructor(
     constructor(parcel: Parcel) : this(
         parcel.readString(),
         parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
         TODO("medicament"),
         TODO("analyse"),
         parcel.readString(),
@@ -35,8 +31,6 @@ data class Ordonance constructor(
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(namepatientOrdo)
-        parcel.writeString(nameDoctorOrd)
         parcel.writeString(idPatient)
         parcel.writeString(idDoctor)
         parcel.writeString(id)

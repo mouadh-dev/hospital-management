@@ -28,7 +28,7 @@ class MyAdapterOrdonancePatient(var mCtx: Context,var resources:Int, var items:L
 
         var item: Ordonance = items[position]
 
-        textTitleOrd.text = item.nameDoctorOrd
+//        textTitleOrd.text = item.nameDoctorOrd
         textDateOrd.text = item.dateOrdonanceSend
         textHourOrd.text = item.hourOrdonanceSend
         textTypekOrd.text = item.typeOrdonnance

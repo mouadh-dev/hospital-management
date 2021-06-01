@@ -55,30 +55,41 @@ initView(view)
 
                             var id = userItem.id
                             if (appointment.idPatient!! == id) {
-                                if (appointment.FinishOrNot.equals("Pas encore")) {
-                                    list.add(
-                                        ModelRDVPatient(
-                                            appointment.date.toString(),
-                                            appointment.hour.toString(),
-                                            appointment.FinishOrNot.toString(),
-                                            R.color.green,
-                                            appointment.nameDoctor.toString()
-                                        )
-                                    )
-                                    adapter!!.notifyDataSetChanged()
-                                } else {
-                                    list.add(
-                                        ModelRDVPatient(
-                                            appointment.date.toString(),
-                                            appointment.hour.toString(),
-                                            appointment.FinishOrNot.toString(),
-                                            R.color.red,
-                                            appointment.nameDoctor.toString()
-                                        )
-                                    )
-                                    adapter!!.notifyDataSetChanged()
+                                userdao.populateSearch(object : UserCallback {
+                                    override fun onSuccess(user: UserItem) {
+                                       if (appointment.idDoctor.equals(user.id)){
+                                           if (appointment.FinishOrNot.equals("Pas encore")) {
+                                               list.add(
+                                                   ModelRDVPatient(
+                                                       appointment.date.toString(),
+                                                       appointment.hour.toString(),
+                                                       appointment.FinishOrNot.toString(),
+                                                       R.color.green,
+                                                       user.nom + " " + user.prenom
+                                                   )
+                                               )
+                                               adapter!!.notifyDataSetChanged()
+                                           }
+                                           else {
+                                               list.add(
+                                                   ModelRDVPatient(
+                                                       appointment.date.toString(),
+                                                       appointment.hour.toString(),
+                                                       appointment.FinishOrNot.toString(),
+                                                       R.color.red,
+                                                       user.nom + " " + user.prenom
+                                                   )
+                                               )
+                                               adapter!!.notifyDataSetChanged()
 
-                                }
+                                           }
+                                       }
+                                    }
+
+                                    override fun failure() {
+                                    }
+                                })
+
                             }
 
                         }
