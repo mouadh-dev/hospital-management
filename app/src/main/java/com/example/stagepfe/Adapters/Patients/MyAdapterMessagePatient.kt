@@ -19,13 +19,13 @@ class MyAdapterMessagePatient(var mCtx:Context, var resources:Int, var items:Lis
 
         var imageMsgPatient: ImageView = view.findViewById(R.id.Image_Message__Patient)
         var nameMessagePatient: TextView = view.findViewById(R.id.Name_Message_Patient)
-//        var messageRecievedPatient: TextView = view.findViewById(R.id.Message_Recieved_Patient)
+        var messageRecievedPatient: TextView = view.findViewById(R.id.Message_Recieved_Patient)
         var timeMessagePatient: TextView = view.findViewById(R.id.Time_Message_Patient)
         var mItemPatient: Message = items[position]
 //        imageMsgPatient.setImageDrawable(mCtx.resources.getDrawable(mItemPatient.imgmsgPatient!!))
         Glide.with(mCtx).load(mItemPatient.imgmsgPatient).into(imageMsgPatient)
 //        nameMessagePatient.text = mItemPatient.nameReciever
-//        messageRecievedPatient.text = mItemPatient.message
+        messageRecievedPatient.text = mItemPatient.message
         timeMessagePatient.text = mItemPatient.timemsg!!.substring(0,5)
 
 
