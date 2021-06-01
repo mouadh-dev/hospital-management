@@ -53,21 +53,28 @@ class ProfilDoctorMyPatientFragment : Fragment() {
                 userdao.retrieveCurrentDataUser(
                     object : UserCallback {
                         override fun onSuccess(userItem: UserItem) {
+                            userdao.populateSearch(object : UserCallback {
+                                override fun onSuccess(userPatient: UserItem) {
+                                    if (appointment.idPatient.equals(userPatient.id)){
+                                        nameCurrentUser = userItem.nom + " " + userItem.prenom
+                                        if (appointment.idDoctor!! != userItem.id && appointment.idPatient == userPatient.id
+                                            && testOnRepeatingPatientName != userItem.nom + " " + userItem.prenom
+                                        ) {
+                                            testOnRepeatingPatientName = userItem.nom + " " + userItem.prenom
+                                            listDoctorProfilMyPatient.add(
+                                                ModelPatientListForDoctorProfil(
+                                                    testOnRepeatingPatientName,
+                                                    R.drawable.logopatient))
+                                            adapterListPatient!!.notifyDataSetChanged()
+                                        }
+                                    }
+                                }
 
-
-                            nameCurrentUser = userItem.nom + " " + userItem.prenom
-                            if (appointment.idDoctor!!.equals(userItem.id) && appointment.idPatient != userItem.id
-                                && testOnRepeatingPatientName != userItem.nom + " " + userItem.prenom
-                            ) {
-                                testOnRepeatingPatientName = userItem.nom + " " + userItem.prenom
-                                listDoctorProfilMyPatient.add(
-                                    ModelPatientListForDoctorProfil(
-                                        testOnRepeatingPatientName,
-                                        R.drawable.logopatient))
-                                adapterListPatient!!.notifyDataSetChanged()
-                            }
-                            //
+                                override fun failure() {
+                                }
+                            })
                         }
+
                         override fun failure() {}
                     })
 

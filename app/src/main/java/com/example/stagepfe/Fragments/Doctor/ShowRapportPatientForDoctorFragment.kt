@@ -80,7 +80,7 @@ class ShowRapportPatientForDoctorFragment : Fragment() {
 //                        nameDoctorRapport = rapport.nameDoctorRapport
                         spcialityDoctorRapport = rapport.specialityDoctor
                         if (
-//                            nameDoctorRapport!!.equals(fullNameDoctor) &&
+                            rapport.idDoctorRapport.equals(userItem.id) &&
 //                            myDataFromActivity.equals(rapport.namePatientRapport) &&
                             (rapport.hourRapport + " " + rapport.hourRapport) != fullDate) {
 
@@ -92,8 +92,7 @@ class ShowRapportPatientForDoctorFragment : Fragment() {
                             rapportList.id = rapport.id
                             rapportList.idPatientRapport = rapport.idPatientRapport
                             rapportList.idDoctorRapport = rapport.idDoctorRapport
-//                            rapportList.nameDoctorRapport = rapport.nameDoctorRapport
-//                            rapportList.namePatientRapport = rapport.namePatientRapport
+
                             rapportList.specialityDoctor = rapport.specialityDoctor
                             listRapport.add(rapportList)
 

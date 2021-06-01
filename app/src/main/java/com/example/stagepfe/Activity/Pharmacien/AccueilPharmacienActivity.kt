@@ -88,20 +88,20 @@ class AccueilPharmacienActivity : AppCompatActivity() {
                     listView.visibility = VISIBLE
                     dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
                     userDao.populateSearch(object : UserCallback {
-                        override fun onSuccess(userItem: UserItem) {
+                        override fun onSuccess(userDoctor: UserItem) {
                             if (userItem.id.equals(ordonance.idDoctor))
                             dialog.findViewById<TextView>(R.id.nameDoctor)
-                                .setText("DR" + " " + userItem.nom + " " + userItem.prenom)
+                                .setText("DR" + " " + userDoctor.nom + " " + userDoctor.prenom)
                         }
 
                         override fun failure() {
                         }
                     })
                     userDao.populateSearch(object : UserCallback {
-                        override fun onSuccess(userItem: UserItem) {
+                        override fun onSuccess(userPatient: UserItem) {
                             if (userItem.id.equals(ordonance.idPatient))
                                 dialog.findViewById<TextView>(R.id.namePatient)
-                                    .setText(userItem.nom + " " + userItem.prenom)
+                                    .setText(userPatient.nom + " " + userPatient.prenom)
                         }
 
                         override fun failure() {

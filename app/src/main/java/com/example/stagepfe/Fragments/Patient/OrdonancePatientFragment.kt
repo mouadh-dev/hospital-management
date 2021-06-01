@@ -2,7 +2,6 @@ package com.example.stagepfe.Fragments.Patient
 
 import android.app.AlertDialog
 import android.content.Context
-import android.graphics.Color
 import android.graphics.Point
 import android.os.Bundle
 import android.util.Log
@@ -10,7 +9,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.*
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.ListView
+import android.widget.TextView
 import androidmads.library.qrgenearator.QRGContents
 import androidmads.library.qrgenearator.QRGEncoder
 import androidx.fragment.app.Fragment
@@ -76,7 +78,7 @@ class OrdonancePatientFragment : Fragment() {
 
         listOrdonancePatient!!.setOnItemClickListener { parent, view, position, id ->
             val ordonanceList = Ordonance()
-                val ordonanceAdapter: Ordonance? = adapterOrdonance!!.getItem(position)
+            val ordonanceAdapter: Ordonance? = adapterOrdonance!!.getItem(position)
             fillOrdonanceList(ordonanceList, ordonanceAdapter!!)
 
             val v = View.inflate(requireContext(), R.layout.dialog_ordonance, null)
@@ -87,7 +89,7 @@ class OrdonancePatientFragment : Fragment() {
             dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
             userDao.populateSearch(object : UserCallback {
                 override fun onSuccess(user: UserItem) {
-                    if (ordonanceList.idDoctor.equals(user.id)){
+                    if (ordonanceList.idDoctor.equals(user.id)) {
                         dialog.findViewById<TextView>(R.id.nameDoctor)
                             .setText("DR" + " " + user.nom + " " + user.prenom)
                     }
@@ -98,7 +100,8 @@ class OrdonancePatientFragment : Fragment() {
             })
             userDao.retrieveCurrentDataUser(object : UserCallback {
                 override fun onSuccess(userItem: UserItem) {
-                    dialog.findViewById<TextView>(R.id.namePatient).setText(userItem.nom + " " + userItem.prenom)
+                    dialog.findViewById<TextView>(R.id.namePatient)
+                        .setText(userItem.nom + " " + userItem.prenom)
                 }
 
                 override fun failure() {
@@ -133,21 +136,20 @@ class OrdonancePatientFragment : Fragment() {
             var dimen = if (width < height) width else height
             dimen = dimen * 3 / 4
 
-                    // setting this dimensions inside our qr code
-                    // encoder to generate our qr code.
-                    var qrgEncoder = QRGEncoder(jsonString, null, QRGContents.Type.TEXT, dimen)
-                    try {
-                        // getting our qrcode in the form of bitmap.
-                        var bitmap = qrgEncoder.encodeAsBitmap()
-                        // the bitmap is set inside our image
-                        // view using .setimagebitmap method.
-                        dialog.findViewById<ImageView>(R.id.QrCodeIv).setImageBitmap(bitmap)
-                    } catch (e: WriterException) {
-                        // this method is called for
-                        // exception handling.
-                        Log.e("Tag", e.toString())
-                    }
-
+            // setting this dimensions inside our qr code
+            // encoder to generate our qr code.
+            var qrgEncoder = QRGEncoder(jsonString, null, QRGContents.Type.TEXT, dimen)
+            try {
+                // getting our qrcode in the form of bitmap.
+                var bitmap = qrgEncoder.encodeAsBitmap()
+                // the bitmap is set inside our image
+                // view using .setimagebitmap method.
+                dialog.findViewById<ImageView>(R.id.QrCodeIv).setImageBitmap(bitmap)
+            } catch (e: WriterException) {
+                // this method is called for
+                // exception handling.
+                Log.e("Tag", e.toString())
+            }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -159,26 +161,24 @@ class OrdonancePatientFragment : Fragment() {
         }
 
 
-
     }
 
     private fun fillOrdonanceList(ordonanceList: Ordonance, ordonance: Ordonance) {
         ordonanceList.dateOrdonanceSend = ordonance.dateOrdonanceSend
         ordonanceList.hourOrdonanceSend = ordonance.hourOrdonanceSend!!.substring(0, 5)
-//        ordonanceList.nameDoctorOrd = ordonance.nameDoctorOrd
         ordonanceList.idPatient = ordonance.idPatient
-//        ordonanceList.namepatientOrdo = ordonance.namepatientOrdo
         ordonanceList.medicament = ordonance.medicament
         ordonanceList.idDoctor = ordonance.idDoctor
         ordonanceList.id = ordonance.id
         ordonanceList.color = ordonance.color
         ordonanceList.analyse = ordonance.analyse
-        ordonanceList.typeOrdonnance=ordonance.typeOrdonnance
-        ordonanceList.taken=ordonance.taken
+        ordonanceList.typeOrdonnance = ordonance.typeOrdonnance
+        ordonanceList.taken = ordonance.taken
     }
 
     private fun initAdapter() {
-        adapterOrdonance = MyAdapterOrdonancePatient(requireContext(), R.layout.ordonance_list_patient, list)
+        adapterOrdonance =
+            MyAdapterOrdonancePatient(requireContext(), R.layout.ordonance_list_patient, list)
         listOrdonancePatient!!.adapter = adapterOrdonance
     }
 

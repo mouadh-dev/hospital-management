@@ -1,6 +1,5 @@
 package com.example.stagepfe.Fragments.Patient
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,9 +9,7 @@ import android.view.ViewGroup
 import android.widget.ListView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.example.stagepfe.Activity.Patients.chat.ChatPtientActivity
 import com.example.stagepfe.Adapters.Patients.MyAdapterMessagePatient
-import com.example.stagepfe.Adapters.Patients.adapterSendMessage
 import com.example.stagepfe.Dao.MessageCallback
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
@@ -25,7 +22,7 @@ import com.google.firebase.database.DatabaseError
 class MessagePatientFragment : Fragment() {
     var listMessagePatient: ListView? = null
     var adapter: MyAdapterMessagePatient? = null
-    var list = mutableListOf<Message>()
+    var list = mutableListOf<String>()
 
     var idDoctor: String? = null
 
@@ -54,25 +51,33 @@ class MessagePatientFragment : Fragment() {
                         if (userItem.id.equals(message.sender)
                             || message.reciever.equals(userItem.id)
                         ) {
-//                            if (message.reciever != idDoctor && message.sender!= userItem.id || message.sender != idDoctor && message.reciever != userItem.id) {
-                                var test = Message()
-                                test.message = message.message
-                                test.id = message.id
-                                test.reciever = message.reciever
-                                test.sender = message.sender
+                            if (message.sender.equals(userItem.id)) {
+                                list.add(message.reciever!!)
+                            }
+                            if (message.reciever.equals(userItem.id)) {
+                                list.add(message.sender!!)
+                            }
+
+//                            var test = Message()
+//                            test.message = message.message
+//                            test.id = message.id
+//                            test.reciever = message.reciever
+//                            test.sender = message.sender
 //                                test.nameReciever = message.nameReciever
 //                                test.nameSender = message.nameSender
-                                test.timemsg = message.timemsg
-//                            var hh = message.sender
-//                            var hh2 = message.reciever
-//                            if(!test.sender.equals(hh) || !test.reciever.equals(hh2)) {
-                                list.add(test)
+//                            test.timemsg = message.timemsg
+//
+//                            list.add(test)
 //                                idDoctor =
-                                adapter!!.notifyDataSetChanged()
-                                empty!!.visibility = GONE
+                            adapter!!.notifyDataSetChanged()
+                            empty!!.visibility = GONE
 //                        }
 
 //                        }
+
+
+
+
 //                                listMessagePatient!!.setOnItemClickListener { parent, view, position, id ->
 //
 ////                    userDao.getMessage(object : MessageCallback {
@@ -124,8 +129,8 @@ class MessagePatientFragment : Fragment() {
 
     private fun initAdapter() {
 
-        adapter = MyAdapterMessagePatient(requireContext(), R.layout.message_patient, list)
-        listMessagePatient!!.adapter = adapter
+//        adapter = MyAdapterMessagePatient(requireContext(), R.layout.message_patient, list)
+//        listMessagePatient!!.adapter = adapter
     }
 
 
