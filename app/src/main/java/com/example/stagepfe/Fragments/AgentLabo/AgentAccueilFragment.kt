@@ -58,9 +58,9 @@ class AgentAccueilFragment : Fragment() {
                                 date = ordonance.dateOrdonanceSend + ordonance.hourOrdonanceSend
                                 var namepatientOrdo =""
                                 userDao.populateSearch(object : UserCallback {
-                                    override fun onSuccess(userItem: UserItem) {
-                                        if (ordonance.idPatient.equals(userItem.id)){
-                                            namepatientOrdo = userItem.nom + " " + userItem.prenom
+                                    override fun onSuccess(userPatient: UserItem) {
+                                        if (ordonance.idPatient.equals(userPatient.id)){
+                                            namepatientOrdo = userPatient.nom + " " + userPatient.prenom
                                             listAnalyses.add(
                                                 ModelAnalyses(
                                                     namepatientOrdo,
@@ -68,7 +68,6 @@ class AgentAccueilFragment : Fragment() {
                                                     ordonance.hourOrdonanceSend.toString()
                                                         .substring(0, 5),
                                                     R.drawable.logopatient
-//                                userItem.profilPhotos!!.toInt()
                                                 )
                                             )
                                             adapterLaboratoire!!.notifyDataSetChanged()

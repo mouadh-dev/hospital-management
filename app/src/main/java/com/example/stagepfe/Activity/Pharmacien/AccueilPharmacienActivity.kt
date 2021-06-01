@@ -14,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.stagepfe.Activity.Authentication.AuthenticationFragmentContainerActivity
 import com.example.stagepfe.Adapters.Doctor.MyAdapterOrdonancePharmacien
-import com.example.stagepfe.Dao.ImageCallback
 import com.example.stagepfe.Dao.ResponseCallback
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
@@ -204,10 +203,10 @@ class AccueilPharmacienActivity : AppCompatActivity() {
 //////////////////////////////////////////////////////////////////////////////////////////////////
         userDao.retrieveCurrentDataUser(object : UserCallback {
             override fun onSuccess(userItem: UserItem) {
-                val test = userItem.profilPhotos
+                val photo = userItem.profilPhotos
                 Glide
                     .with(this@AccueilPharmacienActivity)
-                    .load(userItem.profilPhotos)
+                    .load(photo)
                     .into(imageProfilPharmacien!!)
 
             }
