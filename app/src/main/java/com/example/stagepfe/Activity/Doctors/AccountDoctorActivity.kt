@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.example.stagepfe.Activity.Authentication.AuthenticationFragmentContainerActivity
 import com.example.stagepfe.Activity.Patients.ShowProfilDoctorToPatientActivity
 import com.example.stagepfe.Adapters.Doctor.MyAdapterListPatientForDoctors
@@ -49,6 +50,8 @@ class AccountDoctorActivity : AppCompatActivity() {
     var imageProfilDoctor: ImageView? = null
     var changeUser:ImageView? = null
     var adapterListPatientforDoctorAccueil: MyAdapterListPatientForDoctors? = null
+    var userDao = UserDao()
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,10 +63,6 @@ class AccountDoctorActivity : AppCompatActivity() {
         initView()
 //
     }
-
-
-
-
 
 
     private fun initView() {
@@ -80,14 +79,9 @@ class AccountDoctorActivity : AppCompatActivity() {
         txtSearch= findViewById(R.id.TxtSearch)
         imageProfilDoctor = findViewById(R.id.IVimageProfilDoctor)
         listviewPatientForDoctor = findViewById<ListView>(R.id.listPatientForDocteur)
-//        reglage = findViewById(R.id.reglage_ic)
-//        reglage!!.setOnClickListener {
-//           var userDao = UserDao()
-//            var appointment: Appointment = Appointment()
-//            appointment.date = "test"
-//            userDao.insertappointment(appointment)
-//        }
+
         initAdapter()
+
         var userdao = UserDao()
         userdao.populateSearch(object : UserCallback {
             override fun onSuccess(userItem: UserItem) {
@@ -108,29 +102,28 @@ class AccountDoctorActivity : AppCompatActivity() {
           finish() // If activity no more needed in back stack
 
          }
-
 //////////////////////////////////////////////////////////////////////////////////////////////////
         imageProfilDoctor!!.setOnClickListener {
             val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
-            startActivityForResult(gallery, pickImage)
-
+            startActivityForResult(gallery, 1000)
         }
+        //////////////////////////////////////////////////////////////////////////////////////////////////
+        userDao.retrieveCurrentDataUser(object : UserCallback {
+            override fun onSuccess(userItem: UserItem) {
+                val photoPatientt = userItem.profilPhotos
+                Glide
+                    .with(this@AccountDoctorActivity)
+                    .load(photoPatientt)
+                    .into(imageProfilDoctor!!)
+
+            }
+            override fun failure() {
+            }
+        })
 //////////////////////////////////////////////////////////////////////////////////////////////////
         changeUser!!.setOnClickListener {
             dialog()
         }
-
-
-
-
-//                FirebaseAuth.getInstance().signOut()
-//                val intent = Intent(this@currentActivity, MainActivity::class.java)
-//
-//                startActivity(intent)
-
-
-//////////////////////////////////////////////////////////////////////////////////////////////////
-
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
         navigationDoctor!!.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { item ->
@@ -277,18 +270,34 @@ class AccountDoctorActivity : AppCompatActivity() {
 
         }
         ref.addListenerForSingleValueEvent(eventListener)
-////////////////////////////////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////////////////////////////
+
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == RESULT_OK && requestCode == pickImage) {
+        if (resultCode == RESULT_OK && requestCode == 1000) {
             imageUri = data?.data
             imageProfilDoctor!!.setImageURI(imageUri)
+            imageUri = data?.data
+            imageProfilDoctor!!.setImageURI(imageUri)
+
+            userDao.retrieveCurrentDataUser(object : UserCallback {
+                override fun onSuccess(userItem: UserItem) {
+                    userDao.uploadImageToFirebase(
+                        userItem.id.toString(),
+                        imageUri!!)
+                }
+
+                override fun failure() {
+                }
+            })
+
+        }else {
+            super.onActivityResult(requestCode, resultCode, data)
         }
     }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
     private fun signout() {
         var userDao = UserDao()
         userDao.signOut(UserItem(),object : UserCallback {

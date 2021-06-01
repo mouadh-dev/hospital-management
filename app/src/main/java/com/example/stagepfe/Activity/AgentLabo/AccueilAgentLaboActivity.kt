@@ -11,6 +11,7 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.widget.*
+import com.bumptech.glide.Glide
 import com.example.stagepfe.Activity.Authentication.AuthenticationFragmentContainerActivity
 import com.example.stagepfe.Activity.Pharmacien.ProfilPharmacienActivity
 import com.example.stagepfe.Adapters.Doctor.MyAdapterAnalyseReading
@@ -42,12 +43,11 @@ class AccueilAgentLaboActivity : AppCompatActivity() {
     }
     var navigationAgent: BottomNavigationView? = null
     // private val pickImage = 100
-    // private var imageUri: Uri? = null
+    private var imageUri: Uri? = null
     var imageProfilAgent: ImageView? = null
     var reclamationAgent: LinearLayout? = null
     var homeAgent: LinearLayout? = null
     var changeUser:ImageView? = null
-    var selectedPhotoUri: Uri? = null
     var cameraButtonAnalyse: ImageView? = null
     var text: String? = ""
     val listAnalyse = mutableListOf<AnalyseOrdonnance>()
@@ -56,6 +56,25 @@ class AccueilAgentLaboActivity : AppCompatActivity() {
     var userDao = UserDao()
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+          //profile photo
+            if (requestCode == 1000) {
+                imageUri = data?.data
+                imageProfilAgent!!.setImageURI(imageUri)
+
+                userDao.retrieveCurrentDataUser(object : UserCallback {
+                    override fun onSuccess(userItem: UserItem) {
+                        userDao.uploadImageToFirebase(
+                            userItem.id.toString(),
+                            imageUri!!)
+                    }
+
+                    override fun failure() {
+                    }
+                })
+
+
+            }
+            //qrCode
         if (resultCode == Activity.RESULT_OK) {
             val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
             if (result != null) {
@@ -191,12 +210,27 @@ class AccueilAgentLaboActivity : AppCompatActivity() {
         changeUser = findViewById(R.id.change_user_labo)
         cameraButtonAnalyse = findViewById(R.id.float_button_camera_agent)
 
-          imageProfilAgent!!.setOnClickListener {
 
-        val intent = Intent(Intent.ACTION_PICK)
-        intent.type = "image/*"
-        startActivityForResult(intent, 0)
-        }
+        //////////////////////////////////////////////////////////////////////////////////////////////////
+        userDao.retrieveCurrentDataUser(object : UserCallback {
+            override fun onSuccess(userItem: UserItem) {
+                val PhotoAgent = userItem.profilPhotos
+                Glide
+                    .with(this@AccueilAgentLaboActivity)
+                    .load(PhotoAgent)
+                    .into(imageProfilAgent!!)
+
+            }
+
+            override fun failure() {
+            }
+        })
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+          imageProfilAgent!!.setOnClickListener {
+              val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+              startActivityForResult(gallery, 1000)
+          }
 
         changeUser!!.setOnClickListener {
             dialog()
@@ -277,56 +311,12 @@ class AccueilAgentLaboActivity : AppCompatActivity() {
         })
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////
-   // override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-     //   super.onActivityResult(requestCode, resultCode, data)
 
-       // if (requestCode == 0 && resultCode == Activity.RESULT_OK && data != null) {
-         //   selectedPhotoUri = data.data
-           // val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, selectedPhotoUri)
-            //imageProfilAgent!!.alpha = 0f
-           // uploadImageToFirebaseStorage()
-       // }
-    //}
 
-    private fun uploadImageToFirebaseStorage() {
-        if (selectedPhotoUri == null) return
-        val filename = UUID.randomUUID().toString()
-        val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
-        ref.putFile(selectedPhotoUri!!)
-            .addOnSuccessListener {
-                //Log.d(TAG, "Successfully uploaded image: ${it.metadata?.path}")
-                ref.downloadUrl.addOnSuccessListener {
-                    //Log.d(TAG, "File Location: $it")
-                    saveUserToFirebaseDatabase(it.toString())
-                }
-            }
-            .addOnFailureListener {
-                //Log.d(TAG, "Failed to upload image to storage: ${it.message}")
-            }
-    }
 
-    private fun saveUserToFirebaseDatabase(toString: String) {
-        val uid = FirebaseAuth.getInstance().uid ?: ""
-        val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
-        ref.setValue(uid,ref)
-            .addOnSuccessListener {
-               // Log.d(TAG, "Finally we saved the user to Firebase Database")
-            }
-            .addOnFailureListener {
-                //Log.d(TAG, "Failed to set value to database: ${it.message}")
-            }
-    }
 
     fun getMyDataAgentLabo(): String? {
         return ordonanceToChange.idPatient
     }
-//////////////////////////////////////////////////////////////////////////////////////////////////
 
-    // override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-    //   super.onActivityResult(requestCode, resultCode, data)
-    //  if (resultCode == RESULT_OK && requestCode == pickImage) {
-    //    imageUri = data?.data
-    //   imageProfilAgent!!.setImageURI(imageUri)
-    //}
-    // }
 }

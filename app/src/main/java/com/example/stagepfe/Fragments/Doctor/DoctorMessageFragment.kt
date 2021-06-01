@@ -6,14 +6,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
-import com.example.stagepfe.Models.Doctors.ModelDoctorMessage
-import com.example.stagepfe.Adapters.Doctor.MyAdapterDoctorMessage
+import android.widget.TextView
+import com.example.stagepfe.Adapters.Doctor.MyAdapterShowMessageListDoctor
+import com.example.stagepfe.Dao.MessageCallback
+import com.example.stagepfe.Dao.UserCallback
+import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.R
+import com.example.stagepfe.entite.Message
+import com.example.stagepfe.entite.UserItem
+import com.google.firebase.database.DatabaseError
 
 
 class DoctorMessageFragment : Fragment() {
-    var listviewPatient: ListView? = null
-    var listPat = mutableListOf<ModelDoctorMessage>()
+    var listMessageDoctor: ListView? = null
+    var adapterMessageDoctor: MyAdapterShowMessageListDoctor? = null
+    var listDoctor = mutableListOf<Message>()
+    var emptyDoctor: TextView? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -21,20 +29,58 @@ class DoctorMessageFragment : Fragment() {
 
     ): View? {
        var view=  inflater.inflate(R.layout.fragment_doctor_message, container, false)
-        listviewPatient = view.findViewById<ListView>(R.id.listPatient)
-        listPat.add(ModelDoctorMessage("Mouadh" ,"merci docteur","12:44" ,R.drawable.logopatient))
-        listPat.add(ModelDoctorMessage("Mohamed" ,"je veut annuler mon RDV ","21:03" ,R.drawable.logopatient))
-        listPat.add(ModelDoctorMessage("Mouadh" ,"merci docteur","12:94" ,R.drawable.logopatient))
-        listPat.add(ModelDoctorMessage("Mouadh" ,"merci docteur","12:94" ,R.drawable.logopatient))
-        listPat.add(ModelDoctorMessage("Mouadh" ,"merci docteur","12:94" ,R.drawable.logopatient))
-        listPat.add(ModelDoctorMessage("Mouadh" ,"merci docteur","12:94" ,R.drawable.logopatient))
-        listPat.add(ModelDoctorMessage("Mouadh" ,"merci docteur","12:94" ,R.drawable.logopatient))
-        listPat.add(ModelDoctorMessage("Mouadh" ,"merci docteur","12:94" ,R.drawable.logopatient))
-        listPat.add(ModelDoctorMessage("Mouadh" ,"merci docteur","12:94" ,R.drawable.logopatient))
-        listviewPatient!!.adapter= MyAdapterDoctorMessage(requireContext(),R.layout.message_patients_list_for_doctor,listPat)
-
+        initView(view)
         return view
 
+    }
+
+    private fun initView(view: View) {
+        listMessageDoctor = view.findViewById<ListView>(R.id.Message__docteur)
+        emptyDoctor = view.findViewById<TextView>(R.id.aucun_Message_doctor)
+        initAdapter()
+        listMessageDoctor!!.visibility = View.VISIBLE
+
+        var userDao = UserDao()
+        userDao.retrieveCurrentDataUser(object : UserCallback {
+            override fun onSuccess(userItem: UserItem) {
+                userDao.getMessage(object : MessageCallback {
+                    override fun success(message: Message) {
+                        if (userItem.id.equals(message.sender)
+                            || message.reciever.equals(userItem.id)
+                        ) {
+
+                            var test = Message()
+                            test.message = message.message
+                            test.id = message.id
+                            test.reciever = message.reciever
+                            test.sender = message.sender
+
+                            test.timemsg = message.timemsg
+                            listDoctor.add(test)
+                            adapterMessageDoctor!!.notifyDataSetChanged()
+                            emptyDoctor!!.visibility = View.GONE
+
+                        }
+                    }
+
+                    override fun failure(error: DatabaseError) {
+                        println("mouadh $error")
+                    }
+                })
+            }
+
+            override fun failure() {
+            }
+
+        })
+
+
+        initAdapter()
+    }
+
+    private fun initAdapter() {
+        adapterMessageDoctor = MyAdapterShowMessageListDoctor(requireContext(), R.layout.message_patients_list_for_doctor, listDoctor)
+        listMessageDoctor!!.adapter = adapterMessageDoctor
     }
 
 }
