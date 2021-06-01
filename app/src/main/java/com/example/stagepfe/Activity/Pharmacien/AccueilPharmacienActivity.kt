@@ -204,10 +204,10 @@ class AccueilPharmacienActivity : AppCompatActivity() {
 //////////////////////////////////////////////////////////////////////////////////////////////////
         userDao.retrieveCurrentDataUser(object : UserCallback {
             override fun onSuccess(userItem: UserItem) {
-                val test = userItem.profilPhotos
+                val photo = userItem.profilPhotos
                 Glide
                     .with(this@AccueilPharmacienActivity)
-                    .load(userItem.profilPhotos)
+                    .load(photo)
                     .into(imageProfilPharmacien!!)
 
             }

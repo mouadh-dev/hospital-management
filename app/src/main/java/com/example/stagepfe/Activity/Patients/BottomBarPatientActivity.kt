@@ -12,6 +12,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.example.stagepfe.Activity.Authentication.AuthenticationFragmentContainerActivity
 import com.example.stagepfe.Adapters.Doctor.MyAdapterPatientListForDoctorProfil
 import com.example.stagepfe.Models.Patient.Model
@@ -57,6 +58,7 @@ class BottomBarPatientActivity : AppCompatActivity() {
     var testOnRepeatingDocorName:String= ""
     var SpecialityDoctor:String= ""
     var changeUser:ImageView? = null
+    var userDao = UserDao()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -124,8 +126,20 @@ class BottomBarPatientActivity : AppCompatActivity() {
 
         imageProfilPatient!!.setOnClickListener {
             val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
-            startActivityForResult(gallery, pickImage)
+            startActivityForResult(gallery, 1000)
         }
+        //////////////////////////////////////////////////////////////////////////////////////////////////
+        userDao.retrieveCurrentDataUser(object : UserCallback {
+            override fun onSuccess(userItem: UserItem) {
+                val photoDocteur = userItem.profilPhotos
+                Glide
+                    .with(this@BottomBarPatientActivity)
+                    .load(photoDocteur)
+                    .into(imageProfilPatient!!)
+            }
+            override fun failure() {
+            }
+        })
 //////////////////////////////////////////////////////////////////////////////////////////////////
         navigation!!.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { item ->
             when (item.itemId) {
@@ -282,13 +296,28 @@ class BottomBarPatientActivity : AppCompatActivity() {
         }
         ref.addListenerForSingleValueEvent(eventListener)
     }
-    ///////////////////////////////////////////////////////////////////////////////////////////////
+
     ///////////////////////////////////////////////////////////////////////////////////////////////
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == RESULT_OK && requestCode == pickImage) {
+        if (resultCode == RESULT_OK && requestCode == 1000) {
             imageUri = data?.data
             imageProfilPatient!!.setImageURI(imageUri)
+            imageUri = data?.data
+            imageProfilPatient!!.setImageURI(imageUri)
+
+            userDao.retrieveCurrentDataUser(object : UserCallback {
+                override fun onSuccess(userItem: UserItem) {
+                    userDao.uploadImageToFirebase(
+                        userItem.id.toString(),
+                        imageUri!!)
+                }
+
+                override fun failure() {
+                }
+            })
+
+        }else {
+            super.onActivityResult(requestCode, resultCode, data)
         }
     }
 ///////////////////////////////////////////////////////////////////////////////////////////////
