@@ -41,4 +41,6 @@ class MyAdapterMessagePatient(var mCtx:Context, var resources:Int, var items:Lis
     override fun getItemId(position: Int): Long {
         return position.toLong()
     }
+
+
 }
