@@ -70,6 +70,7 @@ class MessagePatientFragment : Fragment() {
                     var test = Message()
 //                    test.message = message.message
 //                    test.id = message.id
+
                     test.reciever = message.reciever
 //                    test.sender = message.sender
                     test.timemsg = message.timemsg
