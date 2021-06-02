@@ -16,6 +16,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 
@@ -170,7 +171,7 @@ class UserDao : IGestionUser {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                println( "signInWithEmail:failure" + error.toException())
+                println("signInWithEmail:failure" + error.toException())
             }
         })
     }
@@ -354,6 +355,7 @@ class UserDao : IGestionUser {
 
         })
     }
+
     /////////////////////////////////////////////insert Ordonance/////////////////////////////////////
     override fun insertordonance(
         idDoctor: String,
@@ -450,41 +452,42 @@ class UserDao : IGestionUser {
         val image = storageReference.child("pictures/$fileName")
         image.putFile(contentUri).addOnSuccessListener {
             image.downloadUrl.addOnSuccessListener { uri ->
-                    Log.d("tag", "onSuccess: Uploaded Image URl is $uri")
-                    userRef.child(uid).child("profilPhotos").setValue(uri.toString())
+                Log.d("tag", "onSuccess: Uploaded Image URl is $uri")
+                userRef.child(uid).child("profilPhotos").setValue(uri.toString())
 
-                }.addOnFailureListener {
-                    Log.d("tag", "onFailureMessage is $it")
-                }
+            }.addOnFailureListener {
+                Log.d("tag", "onFailureMessage is $it")
             }
+        }
     }
 
-///////////////////////////////////////Send Message/////////////////////////////////////////////////
-    fun sendMesage(message:Message){
-    message.id = messageRef.push().key.toString()
-    messageRef.child(message.id!!).setValue(message)
+    ///////////////////////////////////////Send Message/////////////////////////////////////////////////
+    fun sendMesage(message: Message) {
+        message.id = messageRef.push().key.toString()
+        messageRef.child(message.id!!).setValue(message)
 
     }
 
-    fun getMessage( messageCallback: MessageCallback){
+    fun getMessage(messageCallback: MessageCallback) {
         messageRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
 
-                    for(ds in snapshot.children){
+                    for (ds in snapshot.children) {
                         var msg = ds.getValue(Message::class.java)
-                      messageCallback.success(msg!!)
-                      }
+                        messageCallback.success(msg!!)
+                    }
                 }
             }
+
             override fun onCancelled(error: DatabaseError) {
-                Log.d("tag","mouadh  $error")
+                Log.d("tag", "mouadh  $error")
                 messageCallback.failure(error)
             }
         })
     }
-
 }
+
 
 
 

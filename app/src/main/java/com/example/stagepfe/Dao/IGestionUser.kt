@@ -6,7 +6,6 @@ interface IGestionUser{
 
 
     fun insertUser(userItem: UserItem)
-    // fun insertPhoto(profilPhoto: ProfilPhoto, userItem: UserItem,responseCallback: ResponseCallback )
     fun insertappointment(appointment: Appointment,uid: String,responseCallback: AppointmentCallback)
     fun insertReclamation(reclamation: Reclamation)
     fun insertordonance(idDoctor:String, idPatient:String, ordonance: Ordonance,userItem: UserItem,ordonanceCallback: OrdonanceCallback)

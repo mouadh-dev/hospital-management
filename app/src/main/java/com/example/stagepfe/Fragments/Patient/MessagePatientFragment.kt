@@ -18,17 +18,15 @@ import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.R
 import com.example.stagepfe.entite.Message
 import com.example.stagepfe.entite.UserItem
-import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 
 
 class MessagePatientFragment : Fragment() {
     var listMessagePatient: ListView? = null
     var adapter: MyAdapterMessagePatient? = null
     var userList = mutableListOf<String>()
-    var listMessage = mutableListOf<Message>()
+    var listMessage = mutableListOf<String>()
+    var mUser = mutableListOf<UserItem>()
     var currentId: String? = null
     var userDao = UserDao()
     var idDoctor: String? = null
@@ -49,7 +47,7 @@ class MessagePatientFragment : Fragment() {
         empty = view.findViewById<TextView>(R.id.aucun_Message)
         initAdapter()
         listMessagePatient!!.visibility = VISIBLE
-
+//
 
         userDao.retrieveCurrentDataUser(object : UserCallback {
             override fun onSuccess(userItem: UserItem) {
@@ -59,59 +57,91 @@ class MessagePatientFragment : Fragment() {
             override fun failure() {
             }
         })
-        var idcompare = ""
+
         userDao.getMessage(object : MessageCallback {
             override fun success(message: Message) {
-//                listMessage.clear()
-                if (message.sender.equals(currentId) && (message.reciever!=idcompare)) {
 
+                if (message.sender.equals(currentId)) {
                     userList.add(message.reciever.toString())
-                    idcompare = message.reciever.toString()
-                    var test = Message()
-//                    test.message = message.message
-//                    test.id = message.id
-
-                    test.reciever = message.reciever
-//                    test.sender = message.sender
-                    test.timemsg = message.timemsg
-                    listMessage.add(test)
-                    adapter!!.notifyDataSetChanged()
-                    empty!!.visibility = GONE
                 }
-                if (message.reciever.equals(currentId) && (message.sender!=idcompare)) {
-
+                if (message.reciever.equals(currentId)) {
                     userList.add(message.sender.toString())
-                    idcompare = message.sender.toString()
-                    var test = Message()
-//                    test.message = message.message
-//                    test.id = message.id
+                }
+
+//                for (idDoctor in userList){
+//                    var test = Message()
 //                    test.reciever = message.reciever
-                    test.sender = message.sender
-                    test.timemsg = message.timemsg
-                    listMessage.add(test)
-                    adapter!!.notifyDataSetChanged()
-                    empty!!.visibility = GONE
-                }
-
-                listMessagePatient!!.setOnItemClickListener { parent, view, position, id ->
-                    var item = listMessage[position]
-
-
-                    requireActivity().run {
-                        var intent =
-                            Intent(this, ChatPtientActivity::class.java)
-//                        intent.putExtra("id",item.reciever)
-                        intent.putExtra("id",userList[position] )
-                        startActivity(intent)
-                    }
-                }
-
+//                    test.timemsg = message.timemsg
+//                    listMessage.add(test)
+//                    adapter!!.notifyDataSetChanged()
+//                    empty!!.visibility = GONE
+//                }
             }
+
             override fun failure(error: DatabaseError) {
             }
         })
+        var idCompare = mutableListOf<String>()
+        userDao.populateSearch(object : UserCallback {
+            override fun onSuccess(userItem: UserItem) {
+                for (idDoctor in userList){
+                    for (compare in idCompare){
+                        if (userItem.id.equals(idDoctor) && userItem.id != compare){
+                            idCompare.add(idDoctor)
+                            listMessage.add(idDoctor)
+                            adapter!!.notifyDataSetChanged()
+                            empty!!.visibility = GONE
+                        }
+                    }
 
+
+
+                }
+            }
+
+            override fun failure() {
+            }
+        })
+
+
+        listMessagePatient!!.setOnItemClickListener { parent, view, position, id ->
+            requireActivity().run {
+                var intent =
+                    Intent(this, ChatPtientActivity::class.java)
+                println("mouadh :::: " + userList[position])
+                intent.putExtra("id", userList[position])
+                startActivity(intent)
+            }
+        }
     }
+
+//    private fun readChat() {
+//        userDao.populateSearch(object : UserCallback {
+//            override fun onSuccess(userItem: UserItem) {
+//                for(id in userList){
+//                    if (userItem.id.equals(id)){
+//                        if (mUser.size != 0){
+//                            for (user1 in mUser){
+//                                if(!userItem.id.equals(user1.id)){
+//                                    mUser.add(userItem);
+//                                }
+//                            }
+//                        }else{
+//                            mUser.add(userItem);
+//                        }
+//                    }
+//                }
+//                var test = Message()
+//                    test.reciever = message.reciever
+//                    test.timemsg = message.timemsg
+//                    listMessage.add(test)
+//                adapter!!.notifyDataSetChanged()
+//                empty!!.visibility = GONE
+//            }
+//            override fun failure() {
+//            }
+//        })
+//    }
 
 
     private fun initAdapter() {
@@ -121,3 +151,4 @@ class MessagePatientFragment : Fragment() {
 
 
 }
+

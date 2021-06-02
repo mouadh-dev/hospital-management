@@ -14,19 +14,19 @@ import com.example.stagepfe.R
 import com.example.stagepfe.entite.Message
 import com.example.stagepfe.entite.UserItem
 
-class MyAdapterMessagePatient(var mCtx:Context, var resources:Int, var items:List<Message>): ArrayAdapter<Message>(mCtx, resources, items) {
+class MyAdapterMessagePatient(var mCtx:Context, var resources:Int, var items:List<String>): ArrayAdapter<String>(mCtx, resources, items) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var layoutInflater: LayoutInflater = LayoutInflater.from(mCtx)
         var view:View = layoutInflater.inflate(resources, null)
 
-        var imageMsgPatient: ImageView = view.findViewById(R.id.Image_Message__Patient)
+        var imageMsgPatient: de.hdodenhof.circleimageview.CircleImageView = view.findViewById(R.id.Image_Message__Patient)
         var nameMessagePatient: TextView = view.findViewById(R.id.Name_Message_Patient)
 
         var messageRecievedPatient: TextView = view.findViewById(R.id.Message_Recieved_Patient)
         var timeMessagePatient: TextView = view.findViewById(R.id.Time_Message_Patient)
-        var mItemPatient: Message = items[position]
-        var id:String? = mItemPatient.reciever
+        var mItemPatient: String = items[position]
+        var id:String? = mItemPatient
         var userDao = UserDao()
         userDao.populateSearch(object : UserCallback {
             override fun onSuccess(userItem: UserItem) {
@@ -40,10 +40,10 @@ class MyAdapterMessagePatient(var mCtx:Context, var resources:Int, var items:Lis
             }
         })
 //        imageMsgPatient.setImageDrawable(mCtx.resources.getDrawable(mItemPatient.imgmsgPatient!!))
-        Glide.with(mCtx).load(mItemPatient.imgmsgPatient).into(imageMsgPatient)
+//        Glide.with(mCtx).load(mItemPatient.imgmsgPatient).into(imageMsgPatient)
 //        nameMessagePatient.text = mItemPatient.nameReciever
-        messageRecievedPatient.text = mItemPatient.message
-        timeMessagePatient.text = mItemPatient.timemsg!!.substring(0,5)
+//        messageRecievedPatient.text = mItemPatient.message
+//        timeMessagePatient.text = mItemPatient.timemsg!!.substring(0,5)
 
 
         return view
@@ -52,7 +52,7 @@ class MyAdapterMessagePatient(var mCtx:Context, var resources:Int, var items:Lis
     override fun getCount(): Int {
         return items.size
     }
-    override fun getItem(position: Int): Message {
+    override fun getItem(position: Int): String {
         return items[position]
     }
     override fun getItemId(position: Int): Long {

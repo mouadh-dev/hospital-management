@@ -86,50 +86,56 @@ class SendMessgesPatientFragment : Fragment() {
         sendMessage!!.setOnClickListener {
             val text = messageText!!.text.toString()
             val message = Message()
+
             userDao.populateSearch(object : UserCallback {
 
                 override fun onSuccess(user: UserItem) {
                     if(user.id.equals(idReciever)){
-//                    message.nameReciever = user.prenom + " " + user.nom
                     message.reciever = idReciever
+                        userDao.retrieveCurrentDataUser(object : UserCallback {
+                            @RequiresApi(Build.VERSION_CODES.O)
+                            override fun onSuccess(userItem: UserItem) {
+
+                                if (text != "") {
+
+
+                                    message.sender = userItem.id
+
+//                            message.nameSender = userItem.prenom + " " + userItem.nom
+//
+                                    message.timemsg = currentDateTime.format(DateTimeFormatter.ISO_TIME)
+                                    message.message = messageText!!.text.toString()
+                                    messageText!!.text.clear()
+                                    userDao.sendMesage(message)
+                                } else {
+                                    Toast.makeText(
+                                        requireContext(),
+                                        "vous ne pouvez pas envoyer un message vide",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            }
+
+                            override fun failure() {
+
+                            }
+
+                        })
+
                     }
                 }
 
                 override fun failure() {
                 }
             })
-                userDao.retrieveCurrentDataUser(object : UserCallback {
-                    @RequiresApi(Build.VERSION_CODES.O)
-                    override fun onSuccess(userItem: UserItem) {
 
-                        if (text != "") {
-
-
-                            message.sender = userItem.id
-
-//                            message.nameSender = userItem.prenom + " " + userItem.nom
-//
-                            message.timemsg = currentDateTime.format(DateTimeFormatter.ISO_TIME)
-                            message.message = messageText!!.text.toString()
-                            messageText!!.text.clear()
-                            userDao.sendMesage(message)
-                        } else {
-                            Toast.makeText(
-                                requireContext(),
-                                "vous ne pouvez pas envoyer un message vide",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                    }
-
-                    override fun failure() {
-
-                    }
-
-                })
 
 
         }
+
+    }
+
+    private fun sendReciver(text: String, message: Message) {
 
     }
 

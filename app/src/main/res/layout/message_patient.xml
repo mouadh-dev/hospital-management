@@ -13,7 +13,7 @@
         android:layout_margin="3dp"
         android:background="@drawable/background_list"
         android:orientation="horizontal">
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/Image_Message__Patient"
         android:layout_width="70dp"
         android:layout_height="70dp"
