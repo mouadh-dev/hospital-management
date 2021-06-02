@@ -67,15 +67,6 @@ class MessagePatientFragment : Fragment() {
                 if (message.reciever.equals(currentId)) {
                     userList.add(message.sender.toString())
                 }
-
-//                for (idDoctor in userList){
-//                    var test = Message()
-//                    test.reciever = message.reciever
-//                    test.timemsg = message.timemsg
-//                    listMessage.add(test)
-//                    adapter!!.notifyDataSetChanged()
-//                    empty!!.visibility = GONE
-//                }
             }
 
             override fun failure(error: DatabaseError) {
@@ -109,36 +100,6 @@ class MessagePatientFragment : Fragment() {
             }
         }
     }
-
-//    private fun readChat() {
-//        userDao.populateSearch(object : UserCallback {
-//            override fun onSuccess(userItem: UserItem) {
-//                for(id in userList){
-//                    if (userItem.id.equals(id)){
-//                        if (mUser.size != 0){
-//                            for (user1 in mUser){
-//                                if(!userItem.id.equals(user1.id)){
-//                                    mUser.add(userItem);
-//                                }
-//                            }
-//                        }else{
-//                            mUser.add(userItem);
-//                        }
-//                    }
-//                }
-//                var test = Message()
-//                    test.reciever = message.reciever
-//                    test.timemsg = message.timemsg
-//                    listMessage.add(test)
-//                adapter!!.notifyDataSetChanged()
-//                empty!!.visibility = GONE
-//            }
-//            override fun failure() {
-//            }
-//        })
-//    }
-
-
     private fun initAdapter() {
         adapter = MyAdapterMessagePatient(requireContext(), R.layout.message_patient, listMessage)
         listMessagePatient!!.adapter = adapter

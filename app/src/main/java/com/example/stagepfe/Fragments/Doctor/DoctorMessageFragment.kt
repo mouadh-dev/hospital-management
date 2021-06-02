@@ -22,7 +22,7 @@ import com.google.firebase.database.DatabaseError
 class DoctorMessageFragment : Fragment() {
     var listMessageDoctor: ListView? = null
     var adapterMessageDoctor: MyAdapterShowMessageListDoctor? = null
-    var listDoctor = mutableListOf<Message>()
+    var listDoctor = mutableListOf<String>()
     var emptyDoctor: TextView? = null
     var userList = mutableListOf<String>()
     var currentId: String? = null
@@ -54,60 +54,45 @@ class DoctorMessageFragment : Fragment() {
             override fun failure() {
             }
         })
-        var idcompare = ""
-
         userDao.getMessage(object : MessageCallback {
             override fun success(message: Message) {
-//                listMessage.clear()
-                if (message.sender.equals(currentId) && (message.reciever!=idcompare)) {
-
+                if (message.sender.equals(currentId)) {
                     userList.add(message.reciever.toString())
-                    idcompare = message.reciever.toString()
-                    var test = Message()
-//                    test.message = message.message
-//                    test.id = message.id
-                    test.reciever = message.reciever
-//                    test.sender = message.sender
-                    test.timemsg = message.timemsg
-                    listDoctor.add(test)
-                    adapterMessageDoctor!!.notifyDataSetChanged()
-                    emptyDoctor!!.visibility = View.GONE
                 }
-                if (message.reciever.equals(currentId) && (message.sender!=idcompare)) {
-
+                if (message.reciever.equals(currentId)) {
                     userList.add(message.sender.toString())
-                    idcompare = message.sender.toString()
-                    var test = Message()
-//                    test.message = message.message
-//                    test.id = message.id
-//                    test.reciever = message.reciever
-                    test.sender = message.sender
-                    test.timemsg = message.timemsg
-                    listDoctor.add(test)
-                    adapterMessageDoctor!!.notifyDataSetChanged()
-                    emptyDoctor!!.visibility = View.GONE
                 }
-
-                listMessageDoctor!!.setOnItemClickListener { parent, view, position, id ->
-                    var item = listDoctor[position]
-
-
-                    requireActivity().run {
-                        var intent =
-                            Intent(this, ChatPtientActivity::class.java)
-//                        intent.putExtra("id",item.reciever)
-                        intent.putExtra("id",userList[position] )
-                        startActivity(intent)
-                    }
-                }
-
             }
             override fun failure(error: DatabaseError) {
             }
         })
+        userDao.populateSearch(object : UserCallback {
+            override fun onSuccess(userItem: UserItem) {
+                var idCompare = ""
+                for(id in userList){
+                    if (userItem.id.equals(id) && idCompare != id){
+                        idCompare = userItem.id.toString()
+                        listDoctor.add(userItem.id.toString());
+                        adapterMessageDoctor!!.notifyDataSetChanged()
+                        emptyDoctor!!.visibility = View.GONE
+                    }
+                }
+            }
+
+            override fun failure() {
+            }
+        })
+        listMessageDoctor!!.setOnItemClickListener { parent, view, position, id ->
+            requireActivity().run {
+                var intent =
+                    Intent(this, ChatPtientActivity::class.java)
+                println("mouadh :::: " + listDoctor[position])
+                intent.putExtra("id", listDoctor[position])
+                startActivity(intent)
+            }
+        }
 
 
-        initAdapter()
     }
 
     private fun initAdapter() {
