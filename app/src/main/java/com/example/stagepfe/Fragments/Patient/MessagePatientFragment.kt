@@ -62,16 +62,16 @@ class MessagePatientFragment : Fragment() {
         var idcompare = ""
         userDao.getMessage(object : MessageCallback {
             override fun success(message: Message) {
-
+//                listMessage.clear()
                 if (message.sender.equals(currentId) && (message.reciever!=idcompare)) {
 
                     userList.add(message.reciever.toString())
                     idcompare = message.reciever.toString()
                     var test = Message()
-                    test.message = message.message
-                    test.id = message.id
+//                    test.message = message.message
+//                    test.id = message.id
                     test.reciever = message.reciever
-                    test.sender = message.sender
+//                    test.sender = message.sender
                     test.timemsg = message.timemsg
                     listMessage.add(test)
                     adapter!!.notifyDataSetChanged()
@@ -82,9 +82,9 @@ class MessagePatientFragment : Fragment() {
                     userList.add(message.sender.toString())
                     idcompare = message.sender.toString()
                     var test = Message()
-                    test.message = message.message
-                    test.id = message.id
-                    test.reciever = message.reciever
+//                    test.message = message.message
+//                    test.id = message.id
+//                    test.reciever = message.reciever
                     test.sender = message.sender
                     test.timemsg = message.timemsg
                     listMessage.add(test)
@@ -99,7 +99,8 @@ class MessagePatientFragment : Fragment() {
                     requireActivity().run {
                         var intent =
                             Intent(this, ChatPtientActivity::class.java)
-                        intent.putExtra("id",item.reciever )
+//                        intent.putExtra("id",item.reciever)
+                        intent.putExtra("id",userList[position] )
                         startActivity(intent)
                     }
                 }

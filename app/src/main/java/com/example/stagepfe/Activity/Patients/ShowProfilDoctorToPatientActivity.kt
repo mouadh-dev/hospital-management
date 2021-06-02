@@ -111,12 +111,10 @@ class ShowProfilDoctorToPatientActivity : AppCompatActivity() {
                                 if (id.equals(user.id)) {
                                     var msg =
                                         dialog.findViewById<TextView>(R.id.editText_message).text.toString()
-                                    if (!msg.equals("")) {
+                                    if (!msg.trim().equals("")) {
                                         message.sender = userItem.id
                                         message.reciever = id
                                         message.message = msg
-//                                        message.nameSender = userItem.prenom + " " + userItem.nom
-//                                        message.nameReciever = user.prenom + " " + user.nom
                                         message.timemsg = currentDateTime.format(DateTimeFormatter.ISO_TIME)
                                             userDao.sendMesage(message)
                                         dialog.dismiss()
