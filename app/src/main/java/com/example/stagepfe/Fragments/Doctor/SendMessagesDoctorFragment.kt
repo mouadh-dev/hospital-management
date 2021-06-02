@@ -13,10 +13,8 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.stagepfe.Activity.Doctors.ChatDoctorActivity
-import com.example.stagepfe.Activity.Patients.chat.ChatPtientActivity
+import com.example.stagepfe.Activity.Doctors.chat.ChatDoctorActivity
 import com.example.stagepfe.Adapters.Doctor.AdapterMessageTextDoctor
-import com.example.stagepfe.Adapters.Patients.AdapterMessageText
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.R

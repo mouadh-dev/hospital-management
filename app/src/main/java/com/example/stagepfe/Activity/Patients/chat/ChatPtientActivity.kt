@@ -3,8 +3,8 @@ package com.example.stagepfe.Activity.Patients.chat
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
-import android.widget.TextView
 import com.bumptech.glide.Glide
+import android.widget.TextView
 import com.example.stagepfe.Activity.Patients.ShowProfilDoctorToPatientActivity
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
@@ -22,26 +22,28 @@ class ChatPtientActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        name = findViewById(R.id.name_Reciever)
+    name = findViewById(R.id.name_Reciever)
         photo = findViewById(R.id.IVimageProfilChatPatient)
+
         var chat = SendMessgesPatientFragment()
         supportFragmentManager.beginTransaction().replace(R.id.Container_MessagesChat_Patient, chat)
             .commit()
+
 var userDao = UserDao()
         userDao.populateSearch(object : UserCallback {
             override fun onSuccess(userItem: UserItem) {
-                if (userItem.id.equals(intent.getStringExtra("id")!!)){
+                if (userItem.id.equals(intent.getStringExtra("id")!!)) {
                     name!!.text = userItem.nom + " " + userItem.prenom
-                    Glide.with(this@ChatPtientActivity).load(userItem.profilPhotos.toString()).into(photo!!)
+                    Glide.with(this@ChatPtientActivity).load(userItem.profilPhotos.toString())
+                        .into(photo!!)
                 }
             }
 
             override fun failure() {
             }
         })
-
     }
-    fun getIDReciever():String{
+            fun getIDReciever():String{
         return intent.getStringExtra("id")!!
     }
 //    fun getIDDoctor():String{
