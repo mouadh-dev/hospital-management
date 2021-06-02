@@ -13,6 +13,8 @@ import com.example.stagepfe.R
 import com.example.stagepfe.entite.UserItem
 
 class ChatPtientActivity : AppCompatActivity() {
+    var name:TextView? = null
+    var photo:ImageView? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat_ptient)
@@ -20,21 +22,28 @@ class ChatPtientActivity : AppCompatActivity() {
     }
 
     private fun initView() {
+    name = findViewById(R.id.name_Reciever)
+        photo = findViewById(R.id.IVimageProfilChatPatient)
+
         var chat = SendMessgesPatientFragment()
         supportFragmentManager.beginTransaction().replace(R.id.Container_MessagesChat_Patient, chat)
             .commit()
+
 var userDao = UserDao()
         userDao.populateSearch(object : UserCallback {
             override fun onSuccess(userItem: UserItem) {
-                if (userItem.id.equals(intent.getStringExtra("id")!!)){
+                if (userItem.id.equals(intent.getStringExtra("id")!!)) {
                     name!!.text = userItem.nom + " " + userItem.prenom
-                    Glide.with(this@ChatPtientActivity).load(userItem.profilPhotos.toString()).into(photo!!)
+                    Glide.with(this@ChatPtientActivity).load(userItem.profilPhotos.toString())
+                        .into(photo!!)
                 }
             }
 
-
+            override fun failure() {
+            }
+        })
     }
-    fun getIDReciever():String{
+            fun getIDReciever():String{
         return intent.getStringExtra("id")!!
     }
 //    fun getIDDoctor():String{
