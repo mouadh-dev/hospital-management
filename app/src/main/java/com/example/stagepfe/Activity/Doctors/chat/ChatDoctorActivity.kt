@@ -1,4 +1,4 @@
-package com.example.stagepfe.Activity.Doctors
+package com.example.stagepfe.Activity.Doctors.chat
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

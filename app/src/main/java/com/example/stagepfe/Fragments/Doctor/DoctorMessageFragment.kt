@@ -1,5 +1,6 @@
 package com.example.stagepfe.Fragments.Doctor
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
 import android.widget.TextView
+import com.example.stagepfe.Activity.Patients.chat.ChatPtientActivity
 import com.example.stagepfe.Adapters.Doctor.MyAdapterShowMessageListDoctor
 import com.example.stagepfe.Dao.MessageCallback
 import com.example.stagepfe.Dao.UserCallback
@@ -22,6 +24,10 @@ class DoctorMessageFragment : Fragment() {
     var adapterMessageDoctor: MyAdapterShowMessageListDoctor? = null
     var listDoctor = mutableListOf<Message>()
     var emptyDoctor: TextView? = null
+    var userList = mutableListOf<String>()
+    var currentId: String? = null
+    var userDao = UserDao()
+    var idDoctor: String? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -40,38 +46,64 @@ class DoctorMessageFragment : Fragment() {
         initAdapter()
         listMessageDoctor!!.visibility = View.VISIBLE
 
-        var userDao = UserDao()
         userDao.retrieveCurrentDataUser(object : UserCallback {
             override fun onSuccess(userItem: UserItem) {
-                userDao.getMessage(object : MessageCallback {
-                    override fun success(message: Message) {
-                        if (userItem.id.equals(message.sender)
-                            || message.reciever.equals(userItem.id)
-                        ) {
-
-                            var test = Message()
-                            test.message = message.message
-                            test.id = message.id
-                            test.reciever = message.reciever
-                            test.sender = message.sender
-
-                            test.timemsg = message.timemsg
-                            listDoctor.add(test)
-                            adapterMessageDoctor!!.notifyDataSetChanged()
-                            emptyDoctor!!.visibility = View.GONE
-
-                        }
-                    }
-
-                    override fun failure(error: DatabaseError) {
-                        println("mouadh $error")
-                    }
-                })
+                currentId = userItem.id
             }
 
             override fun failure() {
             }
+        })
+        var idcompare = ""
 
+        userDao.getMessage(object : MessageCallback {
+            override fun success(message: Message) {
+//                listMessage.clear()
+                if (message.sender.equals(currentId) && (message.reciever!=idcompare)) {
+
+                    userList.add(message.reciever.toString())
+                    idcompare = message.reciever.toString()
+                    var test = Message()
+//                    test.message = message.message
+//                    test.id = message.id
+                    test.reciever = message.reciever
+//                    test.sender = message.sender
+                    test.timemsg = message.timemsg
+                    listDoctor.add(test)
+                    adapterMessageDoctor!!.notifyDataSetChanged()
+                    emptyDoctor!!.visibility = View.GONE
+                }
+                if (message.reciever.equals(currentId) && (message.sender!=idcompare)) {
+
+                    userList.add(message.sender.toString())
+                    idcompare = message.sender.toString()
+                    var test = Message()
+//                    test.message = message.message
+//                    test.id = message.id
+//                    test.reciever = message.reciever
+                    test.sender = message.sender
+                    test.timemsg = message.timemsg
+                    listDoctor.add(test)
+                    adapterMessageDoctor!!.notifyDataSetChanged()
+                    emptyDoctor!!.visibility = View.GONE
+                }
+
+                listMessageDoctor!!.setOnItemClickListener { parent, view, position, id ->
+                    var item = listDoctor[position]
+
+
+                    requireActivity().run {
+                        var intent =
+                            Intent(this, ChatPtientActivity::class.java)
+//                        intent.putExtra("id",item.reciever)
+                        intent.putExtra("id",userList[position] )
+                        startActivity(intent)
+                    }
+                }
+
+            }
+            override fun failure(error: DatabaseError) {
+            }
         })
 
 
