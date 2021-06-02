@@ -451,7 +451,7 @@ class UserDao : IGestionUser {
         image.putFile(contentUri).addOnSuccessListener {
             image.downloadUrl.addOnSuccessListener { uri ->
                     Log.d("tag", "onSuccess: Uploaded Image URl is $uri")
-                    userRef.child(uid).child("profilPhotos").setValue(contentUri.toString())
+                    userRef.child(uid).child("profilPhotos").setValue(uri.toString())
 
                 }.addOnFailureListener {
                     Log.d("tag", "onFailureMessage is $it")
