@@ -26,7 +26,7 @@ class MessagePatientFragment : Fragment() {
     var adapter: MyAdapterMessagePatient? = null
     var userList = mutableListOf<String>()
     var listMessage = mutableListOf<String>()
-    var mUser = mutableListOf<UserItem>()
+
     var currentId: String? = null
     var userDao = UserDao()
     var idDoctor: String? = null
@@ -81,21 +81,16 @@ class MessagePatientFragment : Fragment() {
             override fun failure(error: DatabaseError) {
             }
         })
-        var idCompare = mutableListOf<String>()
         userDao.populateSearch(object : UserCallback {
             override fun onSuccess(userItem: UserItem) {
-                for (idDoctor in userList){
-                    for (compare in idCompare){
-                        if (userItem.id.equals(idDoctor) && userItem.id != compare){
-                            idCompare.add(idDoctor)
-                            listMessage.add(idDoctor)
-                            adapter!!.notifyDataSetChanged()
-                            empty!!.visibility = GONE
-                        }
+                var idCompare = ""
+                for(id in userList){
+                    if (userItem.id.equals(id) && idCompare != id){
+                        idCompare = userItem.id.toString()
+                        listMessage.add(userItem.id.toString());
+                        adapter!!.notifyDataSetChanged()
+                        empty!!.visibility = GONE
                     }
-
-
-
                 }
             }
 
@@ -108,8 +103,8 @@ class MessagePatientFragment : Fragment() {
             requireActivity().run {
                 var intent =
                     Intent(this, ChatPtientActivity::class.java)
-                println("mouadh :::: " + userList[position])
-                intent.putExtra("id", userList[position])
+                println("mouadh :::: " + listMessage[position])
+                intent.putExtra("id", listMessage[position])
                 startActivity(intent)
             }
         }
