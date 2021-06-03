@@ -21,6 +21,7 @@ import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.Models.Patient.Model
 import com.example.stagepfe.R
 import com.example.stagepfe.entite.MedicamentOrdonance
+import com.example.stagepfe.entite.Notification
 import com.example.stagepfe.entite.Ordonance
 import com.example.stagepfe.entite.UserItem
 import com.google.firebase.database.DataSnapshot
@@ -46,6 +47,7 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
     var userDao = UserDao()
     var user = UserItem()
     var ordonance = Ordonance()
+    var notification = Notification()
     var namesMedicament : ArrayList<String>? = null
     var quantity: TextView? = null
     var descriptionMedicament: EditText? = null
@@ -128,12 +130,15 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
                             ordonance.taken = "pas encore"
                             ordonance.color = Color.RED.toString()
                             ordonance.typeOrdonnance= "Ordonnance médicament"
-                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
                                 ordonance.dateOrdonanceSend =
                                     currentDateTime.format(DateTimeFormatter.ISO_DATE)
-                            }
                             ordonance.hourOrdonanceSend =
                                 currentDateTime.format(DateTimeFormatter.ISO_TIME)
+                            notification.dateNotification = currentDateTime.format(DateTimeFormatter.ISO_TIME)
+                            notification.dateNotification =  currentDateTime.format(DateTimeFormatter.ISO_DATE)
+                            notification.type = "Ordonnance médicament"
+                            notification.idDoctor = idDoctor
+                            notification.idPatient = idPAtient
                         }
 
                     }
@@ -154,7 +159,7 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
 
             } else {
                 filMedicament()
-                userDao.insertordonance(idDoctor!!, idPAtient!!, ordonance, user,
+                userDao.insertordonance(idDoctor!!, idPAtient!!, ordonance, user,notification,
                     object : OrdonanceCallback {
                         override fun successOrdonance(ordonance: Ordonance) {
 //                               startActivity(Intent(this@AddOrdonanceDoctorActivity,ShowInfoPatientForDoctorActivity::class.java))

@@ -11,6 +11,7 @@ import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.R
 import com.example.stagepfe.entite.Appointment
+import com.example.stagepfe.entite.Notification
 import com.example.stagepfe.entite.UserItem
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -85,38 +86,17 @@ class AddRDVToPatientActivity : AppCompatActivity() {
             appointment.FinishOrNot = "Pas encore"
             appointment.hour = hourRDV!!.text.toString()
             appointment.idPatient = idPatient
+            var notification = Notification()
+            notification.idPatient = idPatient
+            notification.type = "appointment"
+            notification.dateNotification = dateRDV!!.text.toString()
+            notification.timeNotification = hourRDV!!.text.toString()
             userdao.populateSearch(object : UserCallback {
                 override fun onSuccess(user: UserItem) {
                     if ((user.nom + " " + user.prenom).equals(nameDoctor!!.text.toString().trim())){
                         appointment.idDoctor = user.id
-                        userdao.retrieveCurrentDataUser(object : UserCallback {
-                            override fun onSuccess(userItem: UserItem) {
-                                userdao.insertappointment(appointment, userItem.id!!, object :
-                                    AppointmentCallback {
-                                    override fun successAppointment(appointment: Appointment) {
-                                        var toast = Toast.makeText(
-                                            applicationContext,
-                                            "Rendez-vous ajoute avec succès",
-                                            Toast.LENGTH_SHORT)
-                                        toast.show()
-                                        finish()
-                                    }
+                        notification.idDoctor = user.id
 
-                                    override fun failureAppointment() {
-                                        var toast = Toast.makeText(
-                                            applicationContext,
-                                            "il y a une probleme",
-                                            Toast.LENGTH_SHORT)
-                                        toast.show()
-                                    }
-
-
-                                })
-                            }
-
-                            override fun failure() {
-                            }
-                        })
                     }
                 }
 
@@ -128,7 +108,18 @@ class AddRDVToPatientActivity : AppCompatActivity() {
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////Suggestion Search//////////////////////////////////////////
-        populateSearch()
+        var userDao = UserDao()
+        userDao.populateSearch(object : UserCallback {
+            override fun onSuccess(user: UserItem) {
+                var fullName = "$user.nom $user.prenom"
+                names!!.add(fullName)
+                adapter!!.notifyDataSetChanged()
+            }
+
+            override fun failure() {
+
+            }
+        })
 
 
     }
@@ -141,38 +132,6 @@ class AddRDVToPatientActivity : AppCompatActivity() {
             names as ArrayList<String>
         )
         nameDoctor!!.setAdapter(adapter)
-
-
-    }
-
-    private fun populateSearch() {
-        val ref = FirebaseDatabase.getInstance().getReference("users")
-        val eventListener: ValueEventListener = object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
-                    for (ds in snapshot.children) {
-                        var nom = ds.child("nom").getValue(String::class.java)
-                        var prenom = ds.child("prenom").getValue(String::class.java)
-                        var number = ds.child("phonenumber").getValue(String::class.java)
-
-
-                        var fullName = "$nom $prenom"
-
-                        numberDoctor = "$number"
-                        names!!.add(fullName)
-
-//                        phonePatient!!.setText("$numero")
-                    }
-
-                    adapter!!.notifyDataSetChanged()
-                }
-            }
-            override fun onCancelled(error: DatabaseError) {
-                Log.w(ContentValues.TAG, "signInWithEmail:failure", error.toException())
-
-            }
-        }
-        ref.addListenerForSingleValueEvent(eventListener)
     }
 
 }

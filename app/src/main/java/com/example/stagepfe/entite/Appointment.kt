@@ -4,7 +4,6 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class Appointment constructor(
-
     var date: String? = "",
     var hour: String? = "",
     var dispo: String? = "",

@@ -127,7 +127,7 @@ returnIcon = findViewById(R.id.IconReturnBackMessage)
         intent.putExtra("day", day)
 
         startActivity(intent)
-        finish()
+
     }
 
 

@@ -9,6 +9,7 @@ import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.R
 import com.example.stagepfe.entite.Appointment
+import com.example.stagepfe.entite.Notification
 import com.example.stagepfe.entite.UserItem
 import com.google.firebase.auth.FirebaseAuth
 
@@ -44,7 +45,6 @@ class AddRDVToFbDoctorActivity : AppCompatActivity() {
         hourRDV = findViewById<TextView>(R.id.timerdv)
         namePatient = findViewById<AutoCompleteTextView>(R.id.Name_PatientADD_RDv)
         confirmButton = findViewById<Button>(R.id.btn_confirm_rdv)
-
         cancelButton = findViewById(R.id.Cancel_Button_rdv)
         initAdapter()
 
@@ -63,9 +63,7 @@ class AddRDVToFbDoctorActivity : AppCompatActivity() {
         day = intent.getStringExtra("day")!!.toString()
         month = intent.getStringExtra("month")!!.toString()
 
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         userdao.retrieveCurrentDataUser( object : UserCallback {
 
             override fun onSuccess(userItem: UserItem) {
@@ -79,35 +77,41 @@ class AddRDVToFbDoctorActivity : AppCompatActivity() {
 
             override fun failure() {}
         })
-///////////////////////////////////////////////////////////////////////////////////////////////////
-        userdao.populateSearch(object : UserCallback {
-            override fun onSuccess(user: UserItem) {
-                if ((user.nom + " " + user.prenom).equals(namePatient!!.text.toString().trim())){
-                    idPatient = user.id
-                }
 
-            }
-
-            override fun failure() {
-            }
-        })
-///////////////////////////////////////////////////////////////////////////////////////////////////
         confirmButton!!.setOnClickListener {
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+            userdao.populateSearch(object : UserCallback {
+                override fun onSuccess(user: UserItem) {
+                    if ((user.nom + " " + user.prenom).equals(namePatient!!.text.toString().trim())){
+                        idPatient = user.id
+                    }
+
+                }
+
+                override fun failure() {
+                }
+            })
             var appointment = Appointment()
-            var userItem = UserItem()
             appointment.idDoctor = idDoctor
             appointment.date = dateRDV!!.text.toString()
-//                    appointment.namePatient = namePatient!!.text.toString().trim()
             appointment.idPatient = idPatient
             appointment.dispo = "reserveé"
             appointment.FinishOrNot = "Pas encore"
             appointment.hour = hourRDV!!.text.toString()
+            var notification = Notification()
+            notification.idPatient = idPatient
+            notification.idDoctor = idDoctor
+            notification.type = "appointment"
+            notification.dateNotification = dateRDV!!.text.toString()
+            notification.timeNotification = hourRDV!!.text.toString()
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 
             userdao.insertappointment(
                 appointment,
-                FirebaseAuth.getInstance().uid.toString(),
+                idDoctor!!,
+                notification,
                 object : AppointmentCallback {
                     override fun successAppointment(appointment: Appointment) {
                         var toast = Toast.makeText(
@@ -116,6 +120,7 @@ class AddRDVToFbDoctorActivity : AppCompatActivity() {
                             Toast.LENGTH_SHORT
                         )
                         toast.show()
+                        finish()
                     }
 
                     override fun failureAppointment() {
@@ -126,8 +131,17 @@ class AddRDVToFbDoctorActivity : AppCompatActivity() {
                 })
 
         }
+/////////////////////////////////////////Suggestion Search//////////////////////////////////////////
+        userdao.populateSearch(object : UserCallback {
+            override fun onSuccess(userItem: UserItem) {
+                var fullName = "${userItem.nom} ${userItem.prenom}"
+                names!!.add(fullName)
+            }
 
-
+            override fun failure() {
+            }
+        })
+        adapter!!.notifyDataSetChanged()
     }
 
     private fun initAdapter() {
@@ -138,23 +152,9 @@ class AddRDVToFbDoctorActivity : AppCompatActivity() {
             names as ArrayList<String>
         )
         namePatient!!.setAdapter(adapter)
-/////////////////////////////////////////Suggestion Search//////////////////////////////////////////
 
-        userdao.populateSearch(object : UserCallback {
-            override fun onSuccess(userItem: UserItem) {
-                var idPatient = userItem.id
-                var fullName = "${userItem.nom} ${userItem.prenom}"
-                names!!.add(fullName)
-//                ids!!.add(idPatient)
-//                var id = userItem.id.toString()
 
-            }
 
-            override fun failure() {
-
-            }
-        })
-        adapter!!.notifyDataSetChanged()
 
     }
 

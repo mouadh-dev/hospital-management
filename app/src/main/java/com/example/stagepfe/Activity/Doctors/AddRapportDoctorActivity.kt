@@ -15,6 +15,7 @@ import com.example.stagepfe.Dao.ResponseCallback
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.R
+import com.example.stagepfe.entite.Notification
 import com.example.stagepfe.entite.Rapports
 import com.example.stagepfe.entite.UserItem
 import java.time.LocalDateTime
@@ -27,13 +28,16 @@ class AddRapportDoctorActivity : AppCompatActivity() {
     var userItem = UserItem()
     var userDao = UserDao()
     var rapports = Rapports()
-    var idDoctor:String? = null
-    var idPatient:String? = null
-    var nameDoctorRapport:String? = null
-    var namePatientRapport:String? = null
-    var speciality:String? =  null
+    var notification = Notification()
+    var idDoctor: String? = null
+    var idPatient: String? = null
+    var nameDoctorRapport: String? = null
+    var namePatientRapport: String? = null
+    var speciality: String? = null
+
     @RequiresApi(Build.VERSION_CODES.O)
     val currentDateTime = LocalDateTime.now()
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,7 +69,7 @@ class AddRapportDoctorActivity : AppCompatActivity() {
         userDao.populateSearch(object : UserCallback {
             override fun onSuccess(userItem: UserItem) {
                 var fullName = userItem.nom + " " + userItem.prenom
-                if (patient.equals(fullName)){
+                if (patient.equals(fullName)) {
                     idPatient = userItem.id
                 }
             }
@@ -90,37 +94,38 @@ class AddRapportDoctorActivity : AppCompatActivity() {
                 dialog.findViewById<Button>(R.id.btn_confirm).setOnClickListener {
                     dialog.dismiss()
                 }
-            }
-            else {
-//                rapports.namePatientRapport = nameDoctorRapportET!!.text.toString()
+            } else {
                 rapports.idPatientRapport = idPatient
                 rapports.textRapport = TextRapport!!.text.toString()
-//                rapports.nameDoctorRapport = nameDoctorRapport
                 rapports.idDoctorRapport = idDoctor
                 rapports.specialityDoctor = speciality
                 rapports.dateRapport = currentDateTime.format(DateTimeFormatter.ISO_DATE)
                 rapports.hourRapport = currentDateTime.format(DateTimeFormatter.ISO_TIME)
 
-                        userDao.insertRapport(rapports, userItem, idPatient!!,idDoctor!!, object : ResponseCallback {
+                notification.idDoctor = idDoctor
+                notification.idPatient = idPatient
+                notification.timeNotification = currentDateTime.format(DateTimeFormatter.ISO_TIME)
+                notification.dateNotification = currentDateTime.format(DateTimeFormatter.ISO_DATE)
+                notification.type = "rapport"
 
+                userDao.insertRapport(
+                    rapports,
+                    userItem,
+                    idPatient!!,
+                    idDoctor!!,
+                    notification,
+                    object : ResponseCallback {
+                        override fun success() {
+                            dialog()
+                        }
 
-                            override fun success() {
-                                dialog()
+                        override fun success(medicament: String) {
+                        }
 
-
-                            }
-
-                            override fun success(medicament: String) {
-
-                            }
-
-                            override fun failure() {
-
-                            }
-                        })
-
+                        override fun failure() {
+                        }
+                    })
             }
-
         }
     }
 

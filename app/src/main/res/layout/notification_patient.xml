@@ -11,15 +11,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/background_list"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:weightSum="10"
+        >
 
         <ImageView
             android:id="@+id/Notificatio_Image_Patient"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
-            android:layout_margin="20dp"
-            android:src="@drawable/date" />
+            android:layout_margin="10dp"
+            android:src="@drawable/date"
+            />
 
 
         <TextView
@@ -29,6 +32,23 @@
             android:layout_gravity="center"
             android:text="notification"
             android:textColor="@color/black"
-            android:textSize="15dp" />
+            android:textSize="15dp"
+            />
+
     </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/time_notification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00:00"
+            android:textColor="@color/black"
+            android:textSize="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp"
+            />
+    </RelativeLayout>
 </androidx.cardview.widget.CardView>
