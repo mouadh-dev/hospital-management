@@ -99,7 +99,7 @@ class AccountDoctorActivity : AppCompatActivity() {
           var patintNameInList = view.findViewById<TextView>(R.id.TVnamePatientList)
           intent.putExtra("nomPatient", patintNameInList.text.toString())
           startActivity(intent)
-          finish() // If activity no more needed in back stack
+//          finish() // If activity no more needed in back stack
 
          }
 //////////////////////////////////////////////////////////////////////////////////////////////////

@@ -17,6 +17,7 @@ import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.R
 import com.example.stagepfe.entite.AnalyseOrdonnance
+import com.example.stagepfe.entite.Notification
 
 import com.example.stagepfe.entite.Ordonance
 import com.example.stagepfe.entite.UserItem
@@ -44,6 +45,7 @@ class AddAnalyseOrdonnanceActivity : AppCompatActivity() {
     var user = UserItem()
     private var envoyerAnalyse: Button? = null
     var ordonance = Ordonance()
+    var notification = Notification()
     var idPatient:String? = null
     @RequiresApi(Build.VERSION_CODES.O)
     val currentDateTime = LocalDateTime.now()
@@ -126,20 +128,27 @@ class AddAnalyseOrdonnanceActivity : AppCompatActivity() {
                      idPAtient = userItem.id.toString()
                      println("mouadh :: " + namePatientAnaylse + " !! " + idPAtient)
                      ordonance.idDoctor = idDoctor
-//                      ordonance.nameDoctorOrd = nameDoctorAnaylse
-//                      ordonance.namepatientOrdo = namePatientAnaylse
                      ordonance.idPatient = idPAtient
                      ordonance.analyse = listMedicamentOrdonanceAnalyse
                       ordonance.taken = "pas encore"
                       ordonance.color = Color.RED.toString()
                      ordonance.typeOrdonnance= "Ordonnance analyse"
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+
+
                         ordonance.dateOrdonanceSend =
                            currentDateTime.format(DateTimeFormatter.ISO_DATE)
-                     }
+
                       ordonance.hourOrdonanceSend =
                           currentDateTime.format(DateTimeFormatter.ISO_TIME)
-                }
+
+                     notification.timeNotification = currentDateTime.format(DateTimeFormatter.ISO_TIME)
+                     notification.dateNotification =  currentDateTime.format(DateTimeFormatter.ISO_DATE)
+                     notification.type = "Ordonnance analyse"
+                     notification.idDoctor = idDoctor
+                     notification.idPatient = idPatient
+
+
+                 }
 
                 }
 
@@ -159,7 +168,7 @@ class AddAnalyseOrdonnanceActivity : AppCompatActivity() {
 
             } else {
                 filAnalyse()
-                 userDao.insertordonance(idDoctor!!, idPAtient!!, ordonance, user,
+                 userDao.insertordonance(idDoctor!!, idPAtient!!, ordonance, user,notification,
                  object : OrdonanceCallback {
                      override fun successOrdonance(ordonance: Ordonance) {
                                startActivity(Intent(this@AddAnalyseOrdonnanceActivity,ShowInfoPatientForDoctorActivity::class.java))

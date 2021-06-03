@@ -52,7 +52,7 @@ open class AccueilDoctorFragment : Fragment() {
                 intent.putExtra("keymonth", "$month")
                 intent.putExtra("keyyear", "$year")
                 startActivity(intent)
-                finish() // If activity no more needed in back stack
+//                finish() // If activity no more needed in back stack
             }
         }
 

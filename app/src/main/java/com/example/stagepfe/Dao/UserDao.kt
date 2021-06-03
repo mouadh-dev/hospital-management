@@ -27,6 +27,7 @@ class UserDao : IGestionUser {
     private val mAuth = FirebaseAuth.getInstance()
     private val userRef = FirebaseDatabase.getInstance().getReference("users")
     private val messageRef = FirebaseDatabase.getInstance().getReference("Message")
+    private val notificationRef = FirebaseDatabase.getInstance().getReference("Notification")
 
     private val medicamentRef = FirebaseDatabase.getInstance().getReference("Medicament")
     private val reclamationRef = database.getReference(BaseConstant.instance().reclamation)
@@ -144,6 +145,7 @@ class UserDao : IGestionUser {
     override fun insertappointment(
         appointment: Appointment,
         uid: String,
+        notification:Notification,
         responseCallback: AppointmentCallback
     ) {
         userRef.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -153,10 +155,9 @@ class UserDao : IGestionUser {
                 if (snapshot.exists()) {
                     for (ds in snapshot.children) {
                         var userItem = ds.getValue(UserItem::class.java)
-                        var fullNAme = userItem!!.nom + " " + userItem.prenom
-                        var idUser = userItem.id
+//                        var fullNAme = userItem!!.nom + " " + userItem.prenom
+                        var idUser = userItem!!.id
                         if (appointment.idPatient.equals(idUser)) {
-                            responseCallback.successAppointment(appointment)
                             var hour = HashMap<String, Appointment>()
                             var day = HashMap<String, HashMap<String, Appointment>>()
                             hour[appointment.hour.toString()] = appointment
@@ -165,13 +166,16 @@ class UserDao : IGestionUser {
                             userRef.child(userItem.id.toString())
                                 .child("rendezVous").child(appointment.date.toString())
                                 .child(appointment.hour.toString()).setValue(appointment)
+                            notification.id = messageRef.push().key.toString()
+                            notificationRef.child(notification.id!!).setValue(notification)
+                            responseCallback.successAppointment(appointment)
                         }
                     }
                 }
             }
 
             override fun onCancelled(error: DatabaseError) {
-                println("signInWithEmail:failure" + error.toException())
+                Log.e("tag ","insertingAppointment:failure" + error.toException())
             }
         })
     }
@@ -215,6 +219,7 @@ class UserDao : IGestionUser {
         userItem: UserItem,
         idPatientRapport: String,
         idDoctorRapport: String,
+        notification:Notification,
         responseCallback: ResponseCallback
     ) {
         userRef.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -230,6 +235,9 @@ class UserDao : IGestionUser {
                 responseCallback.success()
                 userRef.child(idPatientRapport).child("rapports").child(rapports.id!!)
                     .setValue(rapports)
+
+                notification.id = messageRef.push().key.toString()
+                notificationRef.child(notification.id!!).setValue(notification)
                 responseCallback.success()
 
             }
@@ -362,6 +370,7 @@ class UserDao : IGestionUser {
         idPatient: String,
         ordonance: Ordonance,
         userItem: UserItem,
+        notification:Notification,
         ordonanceCallback: OrdonanceCallback
     ) {
         ordonance.id = userRef.push().key
@@ -376,6 +385,8 @@ class UserDao : IGestionUser {
         userRef.child(idPatient)
             .child("ordonance").child(ordonance.id.toString())
             .setValue(ordonance)
+        notification.id = messageRef.push().key.toString()
+        notificationRef.child(notification.id!!).setValue(notification)
         ordonanceCallback.successOrdonance(ordonance)
 
     }
@@ -465,7 +476,6 @@ class UserDao : IGestionUser {
     fun sendMesage(message: Message) {
         message.id = messageRef.push().key.toString()
         messageRef.child(message.id!!).setValue(message)
-
     }
 
     fun getMessage(messageCallback: MessageCallback) {

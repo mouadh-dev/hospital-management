@@ -7,8 +7,6 @@ data class Message constructor(
     var sender: String? = "",
     var reciever: String? = "",
     var message: String? = "",
-//    var nameSender: String? = "",
-//    var nameReciever:String?= "",
     var timemsg: String? = "",
     var imgmsgPatient: Int? = null
 ) : Parcelable {
