@@ -8,13 +8,15 @@ import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.example.stagepfe.Dao.MessageCallback
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.R
 import com.example.stagepfe.entite.Message
 import com.example.stagepfe.entite.UserItem
+import com.google.firebase.database.DatabaseError
 
-class MyAdapterMessagePatient(var mCtx:Context, var resources:Int, var items:List<String>): ArrayAdapter<String>(mCtx, resources, items) {
+class MyAdapterMessagePatient(var mCtx:Context, var resources:Int, var items:List<UserItem>): ArrayAdapter<UserItem>(mCtx, resources, items) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var layoutInflater: LayoutInflater = LayoutInflater.from(mCtx)
@@ -25,20 +27,25 @@ class MyAdapterMessagePatient(var mCtx:Context, var resources:Int, var items:Lis
 
         var messageRecievedPatient: TextView = view.findViewById(R.id.Message_Recieved_Patient)
         var timeMessagePatient: TextView = view.findViewById(R.id.Time_Message_Patient)
-        var mItemPatient: String = items[position]
-        var id:String? = mItemPatient
+        var mItemPatient:  UserItem = items[position]
+
+        var id: String? = mItemPatient.id
+        nameMessagePatient.text = mItemPatient.prenom + " " + mItemPatient.nom
+        Glide.with(mCtx).load(mItemPatient.profilPhotos.toString()).into(imageMsgPatient)
         var userDao = UserDao()
-        userDao.populateSearch(object : UserCallback {
-            override fun onSuccess(userItem: UserItem) {
-                if (userItem.id.equals(id)){
-                    nameMessagePatient.text = userItem.nom + " " + userItem.prenom
-                    Glide.with(mCtx).load(userItem.profilPhotos.toString()).into(imageMsgPatient)
+        userDao.getMessage(object : MessageCallback {
+            override fun success(message: Message) {
+                if (message.reciever.equals(mItemPatient.id) || message.sender.equals(mItemPatient.id)){
+                    messageRecievedPatient.text = message.message
+                    timeMessagePatient.text = message.timemsg!!.substring(0,5)
                 }
+
             }
 
-            override fun failure() {
+            override fun failure(error: DatabaseError) {
             }
         })
+
 //        messageRecievedPatient.text = mItemPatient.message
 //        timeMessagePatient.text = mItemPatient.timemsg!!.substring(0,5)
         return view
@@ -47,7 +54,7 @@ class MyAdapterMessagePatient(var mCtx:Context, var resources:Int, var items:Lis
     override fun getCount(): Int {
         return items.size
     }
-    override fun getItem(position: Int): String {
+    override fun getItem(position: Int): UserItem {
         return items[position]
     }
     override fun getItemId(position: Int): Long {
