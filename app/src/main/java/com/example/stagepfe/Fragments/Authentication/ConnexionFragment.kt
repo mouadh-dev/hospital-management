@@ -140,14 +140,12 @@ class ConnexionFragment : Fragment(), View.OnClickListener {
 
                                 progressdialog.dismiss()
                                 requireActivity().run {
-                                    startActivity(
-                                        Intent(
-                                            this,
-                                            BottomBarPatientActivity::class.java
-                                        )
+                                    startActivity(Intent(this,BottomBarPatientActivity::class.java)
                                     )
                                     finish() // If activity no more needed in back stack
-                                }
+                                 }
+
+
 
                             } else if (userItem.role!!.containsAll(listOf("Médecin", "Patient"))) {
                                 var v = View.inflate(

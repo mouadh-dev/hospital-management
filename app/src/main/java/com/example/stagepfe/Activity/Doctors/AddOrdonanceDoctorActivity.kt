@@ -2,23 +2,18 @@ package com.example.stagepfe.Activity.Doctors
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
-import android.content.ContentValues
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isEmpty
 import com.example.stagepfe.Adapters.Doctor.MyAdapterOrdonance
-import com.example.stagepfe.Adapters.Patients.MyAdapter
 import com.example.stagepfe.Dao.OrdonanceCallback
-import com.example.stagepfe.Dao.ResponseCallback
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
-import com.example.stagepfe.Models.Patient.Model
 import com.example.stagepfe.R
 import com.example.stagepfe.entite.MedicamentOrdonance
 import com.example.stagepfe.entite.Notification
@@ -48,7 +43,7 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
     var user = UserItem()
     var ordonance = Ordonance()
     var notification = Notification()
-    var namesMedicament : ArrayList<String>? = null
+    var namesMedicament: ArrayList<String>? = null
     var quantity: TextView? = null
     var descriptionMedicament: EditText? = null
     var idDoctor: String? = null
@@ -56,6 +51,7 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
     var namePatient: String? = null
     var idPAtient: String? = null
     private var adapterMedicament: MyAdapterOrdonance? = null
+
     @RequiresApi(Build.VERSION_CODES.O)
     val currentDateTime = LocalDateTime.now()
 
@@ -121,21 +117,20 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
                         if (patient.equals(fullname)) {
                             namePatient = patient
                             idPAtient = userItem.id.toString()
-                            println("mouadh :: " + namePatient + " !! " + idPAtient)
                             ordonance.idDoctor = idDoctor
-//                            ordonance.nameDoctorOrd = nameDoctor
-//                            ordonance.namepatientOrdo = namePatient
                             ordonance.idPatient = idPAtient
                             ordonance.medicament = listMedicamentOrdonance
                             ordonance.taken = "pas encore"
                             ordonance.color = Color.RED.toString()
-                            ordonance.typeOrdonnance= "Ordonnance médicament"
-                                ordonance.dateOrdonanceSend =
-                                    currentDateTime.format(DateTimeFormatter.ISO_DATE)
+                            ordonance.typeOrdonnance = "Ordonnance médicament"
+                            ordonance.dateOrdonanceSend =
+                                currentDateTime.format(DateTimeFormatter.ISO_DATE)
                             ordonance.hourOrdonanceSend =
                                 currentDateTime.format(DateTimeFormatter.ISO_TIME)
-                            notification.dateNotification = currentDateTime.format(DateTimeFormatter.ISO_TIME)
-                            notification.dateNotification =  currentDateTime.format(DateTimeFormatter.ISO_DATE)
+                            notification.timeNotification =
+                                currentDateTime.format(DateTimeFormatter.ISO_TIME)
+                            notification.dateNotification =
+                                currentDateTime.format(DateTimeFormatter.ISO_DATE)
                             notification.type = "Ordonnance médicament"
                             notification.idDoctor = idDoctor
                             notification.idPatient = idPAtient
@@ -159,10 +154,11 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
 
             } else {
                 filMedicament()
-                userDao.insertordonance(idDoctor!!, idPAtient!!, ordonance, user,notification,
+                userDao.insertordonance(idDoctor!!, idPAtient!!, ordonance, user, notification,
                     object : OrdonanceCallback {
                         override fun successOrdonance(ordonance: Ordonance) {
 //                               startActivity(Intent(this@AddOrdonanceDoctorActivity,ShowInfoPatientForDoctorActivity::class.java))
+                            finish()
                             Toast.makeText(
                                 applicationContext,
                                 "add ordo avec success",
@@ -197,25 +193,23 @@ class AddOrdonanceDoctorActivity : AppCompatActivity() {
     }
 
     private fun MedicamenteSearch() {
-        val ref =  FirebaseDatabase.getInstance().getReference("medicament")
+        val ref = FirebaseDatabase.getInstance().getReference("medicament")
         //val eventListener: ValueEventListener = object : ValueEventListener {
-            ref.addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    if (snapshot.exists()) {
+        ref.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
 
-                            for (ds in snapshot.children) {
-                            var nomMedicament=ds.child("medicament").getValue(String::class.java)
-
-                            var names= ds.key.toString()
-                                namesMedicament!!.add(names)
-                        }
-                        adapter!!.notifyDataSetChanged()
+                    for (ds in snapshot.children) {
+                        var names = ds.key.toString()
+                        namesMedicament!!.add(names)
                     }
+                    adapter!!.notifyDataSetChanged()
                 }
+            }
 
-                override fun onCancelled(error: DatabaseError) {
-                }
-            })
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
         //ref.addListenerForSingleValueEvent(eventListener)
     }
 

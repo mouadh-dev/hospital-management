@@ -5,11 +5,11 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isEmpty
 import com.example.stagepfe.Adapters.Doctor.MyAdapterAnalyseReading
 import com.example.stagepfe.Dao.OrdonanceCallback
@@ -18,7 +18,6 @@ import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.R
 import com.example.stagepfe.entite.AnalyseOrdonnance
 import com.example.stagepfe.entite.Notification
-
 import com.example.stagepfe.entite.Ordonance
 import com.example.stagepfe.entite.UserItem
 import java.time.LocalDateTime
@@ -114,53 +113,50 @@ class AddAnalyseOrdonnanceActivity : AppCompatActivity() {
         }
         ////////////////////////////////////////////add ordonance tofirebase////////////////////////////////
          userDao.retrieveCurrentDataUser(
-          object : UserCallback {
-            override fun onSuccess(userItem: UserItem) {
-                idDoctor = userItem.id.toString()
-            nameDoctorAnaylse = userItem.prenom + " " + userItem.nom
-          userDao.populateSearch(object : UserCallback {
-             @SuppressLint("NewApi")
-              override fun onSuccess(userItem: UserItem) {
-                 var patient = intent.getStringExtra("namePatentToOrdonance")
-                 var fullname = userItem.nom + " " + userItem.prenom
-                 if (patient.equals(fullname)) {
-                     namePatientAnaylse = patient
-                     idPAtient = userItem.id.toString()
-                     println("mouadh :: " + namePatientAnaylse + " !! " + idPAtient)
-                     ordonance.idDoctor = idDoctor
-                     ordonance.idPatient = idPAtient
-                     ordonance.analyse = listMedicamentOrdonanceAnalyse
-                      ordonance.taken = "pas encore"
-                      ordonance.color = Color.RED.toString()
-                     ordonance.typeOrdonnance= "Ordonnance analyse"
+             object : UserCallback {
+                 override fun onSuccess(userItem: UserItem) {
+                     idDoctor = userItem.id.toString()
+                     nameDoctorAnaylse = userItem.prenom + " " + userItem.nom
+                     userDao.populateSearch(object : UserCallback {
+                         @SuppressLint("NewApi")
+                         override fun onSuccess(userItem: UserItem) {
+                             var patient = intent.getStringExtra("namePatentToOrdonance")
+                             var fullname = userItem.nom + " " + userItem.prenom
+                             if (patient.equals(fullname)) {
+                                 namePatientAnaylse = patient
+                                 idPAtient = userItem.id.toString()
+                                 ordonance.idDoctor = idDoctor
+                                 ordonance.idPatient = idPAtient
+                                 ordonance.analyse = listMedicamentOrdonanceAnalyse
+                                 ordonance.taken = "pas encore"
+                                 ordonance.color = Color.RED.toString()
+                                 ordonance.typeOrdonnance = "Ordonnance analyse"
+                                 ordonance.dateOrdonanceSend =
+                                     currentDateTime.format(DateTimeFormatter.ISO_DATE)
+                                 ordonance.hourOrdonanceSend =
+                                     currentDateTime.format(DateTimeFormatter.ISO_TIME)
+                                 notification.timeNotification =
+                                     currentDateTime.format(DateTimeFormatter.ISO_TIME)
+                                 notification.dateNotification =
+                                     currentDateTime.format(DateTimeFormatter.ISO_DATE)
+                                 notification.type = "Ordonnance analyse"
+                                 notification.idDoctor = idDoctor
+                                 notification.idPatient = idPatient
 
 
-                        ordonance.dateOrdonanceSend =
-                           currentDateTime.format(DateTimeFormatter.ISO_DATE)
+                             }
 
-                      ordonance.hourOrdonanceSend =
-                          currentDateTime.format(DateTimeFormatter.ISO_TIME)
+                         }
 
-                     notification.timeNotification = currentDateTime.format(DateTimeFormatter.ISO_TIME)
-                     notification.dateNotification =  currentDateTime.format(DateTimeFormatter.ISO_DATE)
-                     notification.type = "Ordonnance analyse"
-                     notification.idDoctor = idDoctor
-                     notification.idPatient = idPatient
+                         override fun failure() {
 
-
+                         }
+                     })
                  }
 
-                }
-
-              override fun failure() {
-
-                      }
-         })
-    }
-
-         override fun failure() {
-        }
-        })
+                 override fun failure() {
+                 }
+             })
         envoyerAnalyse!!.setOnClickListener {
             if (listViewOrdAnalyse!!.isEmpty()) {
            var text = "veuillez ajouter des analyses"

@@ -1,7 +1,9 @@
 package com.example.stagepfe.Activity.Doctors
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -108,18 +110,8 @@ class AccountDoctorActivity : AppCompatActivity() {
             startActivityForResult(gallery, 1000)
         }
         //////////////////////////////////////////////////////////////////////////////////////////////////
-        userDao.retrieveCurrentDataUser(object : UserCallback {
-            override fun onSuccess(userItem: UserItem) {
-                val photoPatientt = userItem.profilPhotos
-                Glide
-                    .with(this@AccountDoctorActivity)
-                    .load(photoPatientt)
-                    .into(imageProfilDoctor!!)
 
-            }
-            override fun failure() {
-            }
-        })
+
 //////////////////////////////////////////////////////////////////////////////////////////////////
         changeUser!!.setOnClickListener {
             dialog()
@@ -196,7 +188,7 @@ class AccountDoctorActivity : AppCompatActivity() {
 
                     var intent = Intent(this, DoctorProfilActivity::class.java)
                     startActivity(intent)
-                    finish()
+//                    finish()
 
                 }
 
@@ -315,5 +307,21 @@ class AccountDoctorActivity : AppCompatActivity() {
                 toast.show()
             }
         })
+    }
+
+    override fun onResume() {
+        userDao.retrieveCurrentDataUser(object : UserCallback {
+            override fun onSuccess(userItem: UserItem) {
+                val photoPatientt = userItem.profilPhotos
+                Glide
+                    .with(this@AccountDoctorActivity)
+                    .load(photoPatientt)
+                    .into(imageProfilDoctor!!)
+
+            }
+            override fun failure() {
+            }
+        })
+        super.onResume()
     }
 }

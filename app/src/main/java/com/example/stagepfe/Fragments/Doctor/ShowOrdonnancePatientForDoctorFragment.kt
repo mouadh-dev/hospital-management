@@ -72,24 +72,32 @@ class ShowOrdonnancePatientForDoctorFragment : Fragment() {
 
         userDao.retrieveCurrentDataUser(object : UserCallback {
             override fun onSuccess(userItem: UserItem) {
-                fullNameDoctor = userItem.prenom + " " + userItem.nom
-                if (userItem.ordonance != null){
-                for (entry in userItem.ordonance!!.entries) {
+                userDao.populateSearch(object : UserCallback {
+                    override fun onSuccess(user: UserItem) {
+                        if (userItem.ordonance != null) {
+                            for (entry in userItem.ordonance!!.entries) {
 
-                    var ordonance = entry.value
-                    if (myDataFromActivity == userItem.nom + " " + userItem.prenom
-//                        &&
-//                        ordonance.nameDoctorOrd!! == fullNameDoctor
-                    ) {
-                        val ordonanceList = Ordonance()
-                        fillOrdonanceList(ordonanceList, ordonance)
-                        listOrdoPatForDoctor.add(ordonanceList)
-                        adapterOrdonance!!.notifyDataSetChanged()
+                                var ordonance = entry.value
+                                if (myDataFromActivity == user.nom + " " + user.prenom
+                                    &&
+                                    ordonance.idDoctor == userItem.id
+                                ) {
+                                    val ordonanceList = Ordonance()
+                                    fillOrdonanceList(ordonanceList, ordonance)
+                                    listOrdoPatForDoctor.add(ordonanceList)
+                                    adapterOrdonance!!.notifyDataSetChanged()
 
+                                }
+                            }
+                        }
                     }
+
+                    override fun failure() {
                     }
-                }
+                })
+
             }
+
             override fun failure() {
             }
         })
@@ -211,9 +219,7 @@ class ShowOrdonnancePatientForDoctorFragment : Fragment() {
     private fun fillOrdonanceList(ordonanceList: Ordonance, ordonance: Ordonance) {
         ordonanceList.dateOrdonanceSend = ordonance.dateOrdonanceSend
         ordonanceList.hourOrdonanceSend = ordonance.hourOrdonanceSend!!.substring(0, 5)
-//        ordonanceList.nameDoctorOrd = ordonance.nameDoctorOrd
         ordonanceList.idPatient = ordonance.idPatient
-//        ordonanceList.namepatientOrdo = ordonance.namepatientOrdo
         ordonanceList.medicament = ordonance.medicament
         ordonanceList.idDoctor = ordonance.idDoctor
         ordonanceList.id = ordonance.id

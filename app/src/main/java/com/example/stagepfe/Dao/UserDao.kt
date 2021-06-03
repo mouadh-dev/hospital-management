@@ -16,7 +16,6 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import java.util.*
-import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 
@@ -493,6 +492,20 @@ class UserDao : IGestionUser {
             override fun onCancelled(error: DatabaseError) {
                 Log.d("tag", "mouadh  $error")
                 messageCallback.failure(error)
+            }
+        })
+    }
+    //////////////////////////////////////////////get Notification//////////////////////////////////
+    fun getNotification(notificationCallback: NotificationCallback){
+        notificationRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (ds in snapshot.children) {
+                    var notification = ds.getValue(Notification::class.java)
+                    notificationCallback.successNotification(notification)
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+                notificationCallback.failureNotification()
             }
         })
     }

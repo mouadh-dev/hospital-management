@@ -66,17 +66,7 @@ class AddRapportDoctorActivity : AppCompatActivity() {
             }
         })
 
-        userDao.populateSearch(object : UserCallback {
-            override fun onSuccess(userItem: UserItem) {
-                var fullName = userItem.nom + " " + userItem.prenom
-                if (patient.equals(fullName)) {
-                    idPatient = userItem.id
-                }
-            }
 
-            override fun failure() {
-            }
-        })
 
         addRapport!!.setOnClickListener {
             if (TextRapport!!.text.isEmpty()) {
@@ -95,36 +85,48 @@ class AddRapportDoctorActivity : AppCompatActivity() {
                     dialog.dismiss()
                 }
             } else {
-                rapports.idPatientRapport = idPatient
-                rapports.textRapport = TextRapport!!.text.toString()
-                rapports.idDoctorRapport = idDoctor
-                rapports.specialityDoctor = speciality
-                rapports.dateRapport = currentDateTime.format(DateTimeFormatter.ISO_DATE)
-                rapports.hourRapport = currentDateTime.format(DateTimeFormatter.ISO_TIME)
+                userDao.populateSearch(object : UserCallback {
+                    override fun onSuccess(userItem: UserItem) {
+                        var fullName = userItem.nom + " " + userItem.prenom
+                        if (patient.equals(fullName)) {
+                            idPatient = userItem.id
+                            rapports.idPatientRapport = idPatient
+                            rapports.textRapport = TextRapport!!.text.toString()
+                            rapports.idDoctorRapport = idDoctor
+                            rapports.specialityDoctor = speciality
+                            rapports.dateRapport = currentDateTime.format(DateTimeFormatter.ISO_DATE)
+                            rapports.hourRapport = currentDateTime.format(DateTimeFormatter.ISO_TIME)
 
-                notification.idDoctor = idDoctor
-                notification.idPatient = idPatient
-                notification.timeNotification = currentDateTime.format(DateTimeFormatter.ISO_TIME)
-                notification.dateNotification = currentDateTime.format(DateTimeFormatter.ISO_DATE)
-                notification.type = "rapport"
+                            notification.idDoctor = idDoctor
+                            notification.idPatient = idPatient
+                            notification.timeNotification = currentDateTime.format(DateTimeFormatter.ISO_TIME)
+                            notification.dateNotification = currentDateTime.format(DateTimeFormatter.ISO_DATE)
+                            notification.type = "rapport"
 
-                userDao.insertRapport(
-                    rapports,
-                    userItem,
-                    idPatient!!,
-                    idDoctor!!,
-                    notification,
-                    object : ResponseCallback {
-                        override fun success() {
-                            dialog()
+                            userDao.insertRapport(
+                                rapports,
+                                userItem,
+                                idPatient!!,
+                                idDoctor!!,
+                                notification,
+                                object : ResponseCallback {
+                                    override fun success() {
+                                        dialog()
+                                    }
+
+                                    override fun success(medicament: String) {
+                                    }
+
+                                    override fun failure() {
+                                    }
+                                })
                         }
+                    }
 
-                        override fun success(medicament: String) {
-                        }
+                    override fun failure() {
+                    }
+                })
 
-                        override fun failure() {
-                        }
-                    })
             }
         }
     }
