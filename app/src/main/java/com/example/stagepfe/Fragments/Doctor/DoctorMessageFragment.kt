@@ -22,7 +22,7 @@ import com.google.firebase.database.DatabaseError
 class DoctorMessageFragment : Fragment() {
     var listMessageDoctor: ListView? = null
     var adapterMessageDoctor: MyAdapterShowMessageListDoctor? = null
-    var listDoctor = mutableListOf<String>()
+    var listDoctor = mutableListOf<UserItem>()
     var emptyDoctor: TextView? = null
     var userList = mutableListOf<String>()
     var currentId: String? = null
@@ -66,13 +66,14 @@ class DoctorMessageFragment : Fragment() {
             override fun failure(error: DatabaseError) {
             }
         })
+
         userDao.populateSearch(object : UserCallback {
             override fun onSuccess(userItem: UserItem) {
                 var idCompare = ""
                 for(id in userList){
                     if (userItem.id.equals(id) && idCompare != id){
                         idCompare = userItem.id.toString()
-                        listDoctor.add(userItem.id.toString());
+                        listDoctor.add(userItem);
                         adapterMessageDoctor!!.notifyDataSetChanged()
                         emptyDoctor!!.visibility = View.GONE
                     }
@@ -82,12 +83,13 @@ class DoctorMessageFragment : Fragment() {
             override fun failure() {
             }
         })
+
         listMessageDoctor!!.setOnItemClickListener { parent, view, position, id ->
             requireActivity().run {
                 var intent =
                     Intent(this, ChatPtientActivity::class.java)
-                println("mouadh :::: " + listDoctor[position])
-                intent.putExtra("id", listDoctor[position])
+                var DoctorId = adapterMessageDoctor!!.getItem(position)
+                intent.putExtra("id", DoctorId.id)
                 startActivity(intent)
             }
         }

@@ -39,16 +39,11 @@ class MyAdapterMessagePatient(var mCtx:Context, var resources:Int, var items:Lis
             override fun failure() {
             }
         })
-//        imageMsgPatient.setImageDrawable(mCtx.resources.getDrawable(mItemPatient.imgmsgPatient!!))
-//        Glide.with(mCtx).load(mItemPatient.imgmsgPatient).into(imageMsgPatient)
-//        nameMessagePatient.text = mItemPatient.nameReciever
 //        messageRecievedPatient.text = mItemPatient.message
 //        timeMessagePatient.text = mItemPatient.timemsg!!.substring(0,5)
-
-
         return view
-
     }
+
     override fun getCount(): Int {
         return items.size
     }
@@ -58,6 +53,4 @@ class MyAdapterMessagePatient(var mCtx:Context, var resources:Int, var items:Lis
     override fun getItemId(position: Int): Long {
         return position.toLong()
     }
-
-
 }
