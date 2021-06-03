@@ -26,6 +26,7 @@ class MessagePatientFragment : Fragment() {
     var adapter: MyAdapterMessagePatient? = null
     var userList = mutableListOf<String>()
     var listMessage = mutableListOf<String>()
+    var listPatient = mutableListOf<UserItem>()
 
     var currentId: String? = null
     var userDao = UserDao()
@@ -78,7 +79,7 @@ class MessagePatientFragment : Fragment() {
                 for(id in userList){
                     if (userItem.id.equals(id) && idCompare != id){
                         idCompare = userItem.id.toString()
-                        listMessage.add(userItem.id.toString());
+                        listPatient.add(userItem);
                         adapter!!.notifyDataSetChanged()
                         empty!!.visibility = GONE
                     }
@@ -94,14 +95,14 @@ class MessagePatientFragment : Fragment() {
             requireActivity().run {
                 var intent =
                     Intent(this, ChatPtientActivity::class.java)
-                println("mouadh :::: " + listMessage[position])
-                intent.putExtra("id", listMessage[position])
+                var PatientId = adapter!!.getItem(position)
+                intent.putExtra("id", PatientId.id)
                 startActivity(intent)
             }
         }
     }
     private fun initAdapter() {
-        adapter = MyAdapterMessagePatient(requireContext(), R.layout.message_patient, listMessage)
+        adapter = MyAdapterMessagePatient(requireContext(), R.layout.message_patient, listPatient)
         listMessagePatient!!.adapter = adapter
     }
 
