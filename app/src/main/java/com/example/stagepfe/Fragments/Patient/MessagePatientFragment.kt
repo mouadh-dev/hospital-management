@@ -9,6 +9,7 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ListView
 import android.widget.TextView
+import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import com.example.stagepfe.Activity.Patients.chat.ChatPtientActivity
 import com.example.stagepfe.Adapters.Patients.MyAdapterMessagePatient
@@ -25,6 +26,7 @@ class MessagePatientFragment : Fragment() {
     var listMessagePatient: ListView? = null
     var adapter: MyAdapterMessagePatient? = null
     var userList = mutableListOf<String>()
+    var timeList = mutableListOf<String>()
     var listMessage = mutableListOf<String>()
     var listPatient = mutableListOf<UserItem>()
 
@@ -84,12 +86,13 @@ class MessagePatientFragment : Fragment() {
                         empty!!.visibility = GONE
                     }
                 }
+
+
             }
 
             override fun failure() {
             }
         })
-
 
         listMessagePatient!!.setOnItemClickListener { parent, view, position, id ->
             requireActivity().run {

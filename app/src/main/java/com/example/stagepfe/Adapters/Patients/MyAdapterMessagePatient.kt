@@ -38,6 +38,7 @@ class MyAdapterMessagePatient(var mCtx:Context, var resources:Int, var items:Lis
                 if (message.reciever.equals(mItemPatient.id) || message.sender.equals(mItemPatient.id)){
                     messageRecievedPatient.text = message.message
                     timeMessagePatient.text = message.timemsg!!.substring(0,5)
+
                 }
 
             }

@@ -6,10 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import com.example.stagepfe.Dao.UserCallback
+import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.Models.Patient.ModelRDVPatient
 import com.example.stagepfe.Models.Patient.ModelRapportPatient
 import com.example.stagepfe.R
 import com.example.stagepfe.entite.Rapports
+import com.example.stagepfe.entite.UserItem
 
 class MyAdapterRapportPatient(var mCtx: Context, var resources:Int, var items:List<Rapports>) :ArrayAdapter<Rapports>(mCtx, resources,items) {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
@@ -21,6 +24,7 @@ class MyAdapterRapportPatient(var mCtx: Context, var resources:Int, var items:Li
         var textHourRapport: TextView = view.findViewById(R.id.Hour_Rapport)
 
         var items: Rapports = items[position]
+
 //        textNameDoctor.text = items.nameDoctorRapport
         textDateRapport.text = items.dateRapport
         textHourRapport.text = items.hourRapport
