@@ -1,4 +1,4 @@
 package com.example.stagepfe.Models.Doctors
 
-class ModelNotification(var message: String, var picture:Int) {
+class ModelNotification(var message: String, var picture:Int, var timeNotificationDoctor:String) {
 }

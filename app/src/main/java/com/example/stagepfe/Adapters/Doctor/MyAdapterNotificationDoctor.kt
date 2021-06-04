@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.Models.Doctors.ModelNotification
 import com.example.stagepfe.R
 
@@ -17,11 +18,14 @@ class MyAdapterNotificationDoctor(var mCtx: Context, var resources:Int, var item
 
         var imageNotificationList: ImageView = view.findViewById(R.id.imageNottificationlist)
         var messageNotification: TextView = view.findViewById(R.id.TVmessageNotification)
+        var timeNotification: TextView = view.findViewById(R.id.time_notification_doctor)
 
 
-        var mItem: ModelNotification = items[position]
-        imageNotificationList.setImageDrawable(mCtx.resources.getDrawable(mItem.picture))
-        messageNotification.text = mItem.message
+        var items: ModelNotification = items[position]
+        var userDao = UserDao()
+        imageNotificationList.setImageDrawable(mCtx.resources.getDrawable(items.picture))
+        messageNotification.text = items.message
+        timeNotification.text = items.timeNotificationDoctor
 
         return view
     }

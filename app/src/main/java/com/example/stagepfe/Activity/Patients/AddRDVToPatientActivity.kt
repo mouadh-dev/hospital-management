@@ -105,22 +105,44 @@ class AddRDVToPatientActivity : AppCompatActivity() {
             })
 
 
-        }
+
         ////////////////////////////////////////////////////////////////////////////////////////////////////
+        userdao.insertappointment(
+            appointment,
+            idDoctor!!,
+            notification,
+            object : AppointmentCallback {
+                override fun successAppointment(appointment: Appointment) {
+                    var toast = Toast.makeText(
+                        applicationContext,
+                        "Rendez-vous ajoute avec succès",
+                        Toast.LENGTH_SHORT
+                    )
+                    toast.show()
+                    finish()
+                }
+
+                override fun failureAppointment() {
+                    Toast.makeText(this@AddRDVToPatientActivity , "something went wrong", Toast.LENGTH_SHORT).show()
+                }
+
+
+            })
+        }
+
         /////////////////////////////////////////Suggestion Search//////////////////////////////////////////
         var userDao = UserDao()
         userDao.populateSearch(object : UserCallback {
             override fun onSuccess(user: UserItem) {
                 var fullName = "$user.nom $user.prenom"
                 names!!.add(fullName)
-                adapter!!.notifyDataSetChanged()
+
             }
 
             override fun failure() {
-
             }
-        })
-
+    })
+        adapter!!.notifyDataSetChanged()
 
     }
 
