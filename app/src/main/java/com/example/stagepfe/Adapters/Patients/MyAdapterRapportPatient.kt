@@ -24,8 +24,19 @@ class MyAdapterRapportPatient(var mCtx: Context, var resources:Int, var items:Li
         var textHourRapport: TextView = view.findViewById(R.id.Hour_Rapport)
 
         var items: Rapports = items[position]
+        var userDao = UserDao()
+        userDao.populateSearch(object : UserCallback {
+            override fun onSuccess(userItem: UserItem) {
+                if (items.idDoctorRapport.equals(userItem.id)){
+                    textNameDoctor.text = userItem.nom + " " + userItem.prenom
+                }
+            }
 
-//        textNameDoctor.text = items.nameDoctorRapport
+            override fun failure() {
+            }
+        })
+
+//
         textDateRapport.text = items.dateRapport
         textHourRapport.text = items.hourRapport
         return view

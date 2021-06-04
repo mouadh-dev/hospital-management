@@ -27,7 +27,7 @@
                 android:id="@+id/Name_Doctor_Rapport"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="DR Foulen"
+                android:text=""
                 android:textColor="@color/black"
                 android:textSize="15dp" />
 
@@ -37,7 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="date de Rapport"
+                android:text=""
                 android:textColor="#949494"
                 android:textSize="15dp" />
 
@@ -46,7 +46,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="Heure Rapport"
+                android:text=""
                 android:textColor="#949494"
                 android:textSize="15dp" />
         </LinearLayout>

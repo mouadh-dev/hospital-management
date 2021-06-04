@@ -97,6 +97,7 @@ var moveBackIcon:ImageView? = null
                         var  medicament = userItem.medicament
                         var ordonance = userItem.ordonance
                         var rapport = userItem.rapports
+                        var photo = userItem.profilPhotos
                         ////
 
 
@@ -122,6 +123,7 @@ var moveBackIcon:ImageView? = null
                             user.ordonance = ordonance
                             user.rapports = rapport
                             user.groupesanguin = groupesanguin
+                            user.profilPhotos = photo
 
                                 text = "Modification terminée avec succes"
                                 dialog(text)
