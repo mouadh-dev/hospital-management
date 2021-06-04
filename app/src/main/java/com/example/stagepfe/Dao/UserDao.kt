@@ -143,7 +143,6 @@ class UserDao : IGestionUser {
     //////////////////////////////////////////Insert appointment////////////////////////////////////////
     override fun insertappointment(
         appointment: Appointment,
-        uid: String,
         notification:Notification,
         responseCallback: AppointmentCallback
     ) {

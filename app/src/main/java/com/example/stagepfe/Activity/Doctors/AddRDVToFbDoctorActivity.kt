@@ -53,8 +53,8 @@ class AddRDVToFbDoctorActivity : AppCompatActivity() {
 
 ///////////////////////////////////////////cancelButton////////////////////////////////////////////
         cancelButton!!.setOnClickListener {
-            var intent = Intent(this, AccountDoctorActivity::class.java)
-            startActivity(intent)
+//            var intent = Intent(this, AccountDoctorActivity::class.java)
+//            startActivity(intent)
             finish()
         }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -77,10 +77,23 @@ class AddRDVToFbDoctorActivity : AppCompatActivity() {
 
             override fun failure() {}
         })
-
+        var appointment = Appointment()
+        appointment.idDoctor = idDoctor
+        appointment.date = dateRDV!!.text.toString()
+        appointment.idPatient = idPatient
+        appointment.dispo = "reserveé"
+        appointment.FinishOrNot = "Pas encore"
+        appointment.hour = hourRDV!!.text.toString()
+        var notification = Notification()
+        notification.idPatient = idPatient
+        notification.idDoctor = idDoctor
+        notification.type = "appointment"
+        notification.dateNotification = dateRDV!!.text.toString()
+        notification.timeNotification = hourRDV!!.text.toString()
+///////////////////////////////////////////////////////////////////////////////////////////////////
         confirmButton!!.setOnClickListener {
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
+
             userdao.populateSearch(object : UserCallback {
                 override fun onSuccess(user: UserItem) {
                     if ((user.nom + " " + user.prenom).equals(namePatient!!.text.toString().trim())){
@@ -92,25 +105,12 @@ class AddRDVToFbDoctorActivity : AppCompatActivity() {
                 override fun failure() {
                 }
             })
-            var appointment = Appointment()
-            appointment.idDoctor = idDoctor
-            appointment.date = dateRDV!!.text.toString()
-            appointment.idPatient = idPatient
-            appointment.dispo = "reserveé"
-            appointment.FinishOrNot = "Pas encore"
-            appointment.hour = hourRDV!!.text.toString()
-            var notification = Notification()
-            notification.idPatient = idPatient
-            notification.idDoctor = idDoctor
-            notification.type = "appointment"
-            notification.dateNotification = dateRDV!!.text.toString()
-            notification.timeNotification = hourRDV!!.text.toString()
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 
             userdao.insertappointment(
                 appointment,
-                idDoctor!!,
                 notification,
                 object : AppointmentCallback {
                     override fun successAppointment(appointment: Appointment) {

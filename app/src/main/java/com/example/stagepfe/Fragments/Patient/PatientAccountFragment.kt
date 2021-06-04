@@ -39,7 +39,7 @@ private var ambulanceImage: ImageView?=null
                 var intent =
                     Intent(this, CheckRDVPatientActivity::class.java)
                 startActivity(intent)
-                finish()
+//                finish()
             }
         }
         ambulanceImage!!.setOnClickListener {

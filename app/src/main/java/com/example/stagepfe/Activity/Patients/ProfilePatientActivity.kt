@@ -40,17 +40,6 @@ class ProfilePatientActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile_patient)
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-        var user = FirebaseAuth.getInstance().currentUser
-
-        if (user != null) {
-//            var userDao = UserDao()
-//            userDao.retrieveUSerByid(user.uid)
-            var name = user.displayName
-
-        } else {
-            // No user is signed in.
-        }
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////
         initView()
 
@@ -67,13 +56,6 @@ class ProfilePatientActivity : AppCompatActivity() {
         numbrePatient = findViewById<TextView>(R.id.Number_Patient)
         birthPAtient = findViewById<TextView>(R.id.Birth_Patient)
 
-
-
-        imageProfilPatient!!.setOnClickListener {
-            val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
-            startActivityForResult(gallery, pickImage)
-
-        }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
         var userDao = UserDao()
@@ -114,11 +96,4 @@ class ProfilePatientActivity : AppCompatActivity() {
 
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == RESULT_OK && requestCode == pickImage) {
-            imageUri = data?.data
-            imageProfilPatient!!.setImageURI(imageUri)
-        }
-    }
 }

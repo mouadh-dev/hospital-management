@@ -35,6 +35,9 @@ class AddRDVToPatientActivity : AppCompatActivity() {
     var cancelButton: Button? = null
     var adapter: ArrayAdapter<String>?=null
     var names: ArrayList<String?>?=null
+    var userDao = UserDao()
+    var appointment = Appointment()
+    var notification = Notification()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,8 +56,8 @@ class AddRDVToPatientActivity : AppCompatActivity() {
         initAdapter()
         ///////////////////////////////////////////cancelButton////////////////////////////////////////////
         cancelButton!!.setOnClickListener {
-            var intent = Intent(this, BottomBarPatientActivity::class.java)
-            startActivity(intent)
+//            var intent = Intent(this, BottomBarPatientActivity::class.java)
+//            startActivity(intent)
             finish()
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -65,8 +68,7 @@ class AddRDVToPatientActivity : AppCompatActivity() {
         month = intent.getStringExtra("month")!!.toString()
 
 
-        var userdao = UserDao()
-        userdao.retrieveCurrentDataUser( object : UserCallback {
+        userDao.retrieveCurrentDataUser( object : UserCallback {
 
             override fun onSuccess(userItem: UserItem) {
                 namePatient!!.text = userItem.nom + " " + userItem.prenom
@@ -78,71 +80,69 @@ class AddRDVToPatientActivity : AppCompatActivity() {
             override fun failure() {}
         })
 
+
+
+
         ///////////////////////////////////////////confirmButton////////////////////////////////////////////
         confirmButton!!.setOnClickListener {
-            var appointment = Appointment()
+
             appointment.date = dateRDV!!.text.toString()
             appointment.dispo = "reserveé"
             appointment.FinishOrNot = "Pas encore"
             appointment.hour = hourRDV!!.text.toString()
             appointment.idPatient = idPatient
-            var notification = Notification()
             notification.idPatient = idPatient
             notification.type = "appointment"
             notification.dateNotification = dateRDV!!.text.toString()
             notification.timeNotification = hourRDV!!.text.toString()
-            userdao.populateSearch(object : UserCallback {
+            userDao.populateSearch(object : UserCallback {
                 override fun onSuccess(user: UserItem) {
                     if ((user.nom + " " + user.prenom).equals(nameDoctor!!.text.toString().trim())){
-                        appointment.idDoctor = user.id
-                        notification.idDoctor = user.id
-
+                        idDoctor = user.id
+                        appointment.idDoctor = idDoctor
+                        notification.idDoctor = idDoctor
                     }
                 }
 
                 override fun failure() {
                 }
             })
-
-
-
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        userdao.insertappointment(
-            appointment,
-            idDoctor!!,
-            notification,
-            object : AppointmentCallback {
-                override fun successAppointment(appointment: Appointment) {
-                    var toast = Toast.makeText(
-                        applicationContext,
-                        "Rendez-vous ajoute avec succès",
-                        Toast.LENGTH_SHORT
-                    )
-                    toast.show()
-                    finish()
-                }
+            userDao.insertappointment(
+                appointment,
+                notification,
+                object : AppointmentCallback {
+                    override fun successAppointment(appointment: Appointment) {
+                        var toast = Toast.makeText(
+                            this@AddRDVToPatientActivity,
+                            "Rendez-vous ajoute avec succès",
+                            Toast.LENGTH_SHORT
+                        )
+                        toast.show()
+                        finish()
+                    }
 
-                override fun failureAppointment() {
-                    Toast.makeText(this@AddRDVToPatientActivity , "something went wrong", Toast.LENGTH_SHORT).show()
-                }
+                    override fun failureAppointment() {
+                        Toast.makeText(this@AddRDVToPatientActivity , "something went wrong", Toast.LENGTH_SHORT).show()
+                    }
 
 
-            })
+                })
         }
 
         /////////////////////////////////////////Suggestion Search//////////////////////////////////////////
-        var userDao = UserDao()
         userDao.populateSearch(object : UserCallback {
-            override fun onSuccess(user: UserItem) {
-                var fullName = "$user.nom $user.prenom"
+            override fun onSuccess(userItem: UserItem) {
+                var fullName = "${userItem.nom} ${userItem.prenom}"
                 names!!.add(fullName)
-
             }
 
             override fun failure() {
             }
-    })
+        })
         adapter!!.notifyDataSetChanged()
+
+
 
     }
 

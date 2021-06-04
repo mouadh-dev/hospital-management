@@ -105,6 +105,6 @@ class CheckRDVPatientActivity : AppCompatActivity(), OnItemClickListner {
         intent.putExtra("day", day)
 
         startActivity(intent)
-        finish()
+//        finish()
     }
 }
