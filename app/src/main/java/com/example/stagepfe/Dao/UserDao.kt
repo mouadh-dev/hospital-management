@@ -39,7 +39,29 @@ class UserDao : IGestionUser {
         userItem.id = myRef.push().key.toString()
         myRef.child(userItem.id!!).setValue(userItem)
     }
+    fun supperUser(uid:String,userItem: UserItem,userCallback:UserCallback){
+        userRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                userRef.child(uid).removeValue()
 
+                userCallback.onSuccess(userItem)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
+    }
+    fun supperMessage(uid:String,userItem: UserItem,userCallback:UserCallback){
+        messageRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                messageRef.child(uid).removeValue()
+                userCallback.onSuccess(userItem)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
+    }
     /////////////////////////////////////////////////sign up////////////////////////////////////////////
     fun signUpUser(activity: Activity, userItem: UserItem, responseCallback: ResponseCallback) {
         mAuth.createUserWithEmailAndPassword(userItem.mail, userItem.password)
@@ -228,8 +250,8 @@ class UserDao : IGestionUser {
                 userItem.rapports = rapport
 
                 rapports.id = userRef.push().key
-                userRef.child(idDoctorRapport).child("rapports").child(rapports.id!!)
-                    .setValue(rapports)
+//                userRef.child(idDoctorRapport).child("rapports").child(rapports.id!!)
+//                    .setValue(rapports)
                 responseCallback.success()
                 userRef.child(idPatientRapport).child("rapports").child(rapports.id!!)
                     .setValue(rapports)

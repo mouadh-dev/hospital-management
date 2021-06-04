@@ -15,6 +15,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.example.stagepfe.Activity.Administrateur.AccueilAdministrateurActivity
 import com.example.stagepfe.Activity.AgentLabo.AccueilAgentLaboActivity
 import com.example.stagepfe.Activity.Authentication.ContainerFragmentPasswordActivity
 import com.example.stagepfe.Activity.Doctors.AccountDoctorActivity
@@ -196,6 +197,23 @@ class ConnexionFragment : Fragment(), View.OnClickListener {
                                         Intent(
                                             this,
                                             AccueilAgentLaboActivity::class.java
+                                        )
+                                    )
+                                    finish() // If activity no more needed in back stack
+                                }
+                            }else if (userItem.role!!.contains("Admin")){
+                                var v = View.inflate(
+                                    mContext,
+                                    R.layout.fragment_dialog,
+                                    null
+                                )
+
+                                progressdialog.dismiss()
+                                requireActivity().run {
+                                    startActivity(
+                                        Intent(
+                                            this,
+                                            AccueilAdministrateurActivity::class.java
                                         )
                                     )
                                     finish() // If activity no more needed in back stack

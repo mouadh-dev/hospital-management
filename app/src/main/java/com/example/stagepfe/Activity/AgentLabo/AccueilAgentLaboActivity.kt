@@ -212,19 +212,7 @@ class AccueilAgentLaboActivity : AppCompatActivity() {
 
 
         //////////////////////////////////////////////////////////////////////////////////////////////////
-        userDao.retrieveCurrentDataUser(object : UserCallback {
-            override fun onSuccess(userItem: UserItem) {
-                val PhotoAgent = userItem.profilPhotos
-                Glide
-                    .with(this@AccueilAgentLaboActivity)
-                    .load(PhotoAgent)
-                    .into(imageProfilAgent!!)
 
-            }
-
-            override fun failure() {
-            }
-        })
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
           imageProfilAgent!!.setOnClickListener {
@@ -319,4 +307,20 @@ class AccueilAgentLaboActivity : AppCompatActivity() {
         return ordonanceToChange.idPatient
     }
 
+    override fun onResume() {
+        userDao.retrieveCurrentDataUser(object : UserCallback {
+            override fun onSuccess(userItem: UserItem) {
+                val PhotoAgent = userItem.profilPhotos
+                Glide
+                    .with(this@AccueilAgentLaboActivity)
+                    .load(PhotoAgent)
+                    .into(imageProfilAgent!!)
+
+            }
+
+            override fun failure() {
+            }
+        })
+        super.onResume()
+    }
 }
