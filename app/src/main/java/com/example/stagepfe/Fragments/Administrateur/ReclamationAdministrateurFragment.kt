@@ -17,7 +17,7 @@ class ReclamationAdministrateurFragment : Fragment() {
 
     var listviewReclamation: ListView? = null
     var listReclamation = mutableListOf<ModelReclamationAdministrateur>()
-
+    var reclamationAdapter: MyAdapterReclamationAdministrateur? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -30,10 +30,12 @@ class ReclamationAdministrateurFragment : Fragment() {
 
     private fun initView(view: View) {
         listviewReclamation =view.findViewById<ListView>(R.id.listRéclamationAdministrateur)
-        listReclamation.add(ModelReclamationAdministrateur("Mohamed","l'assanceur du bloc A est en panne","15:29",R.drawable.logopatient))
-        listReclamation.add(ModelReclamationAdministrateur("Mohamed","l'assanceur du bloc A est en panne","15:29",R.drawable.logopatient))
-        listReclamation.add(ModelReclamationAdministrateur("Mohamed","l'assanceur du bloc A est en panne","15:29",R.drawable.logopatient))
-        listviewReclamation!!.adapter = MyAdapterReclamationAdministrateur(requireContext(), R.layout.list_reclamation_administrateur, listReclamation)
+    initAdpater()
+    }
+
+    private fun initAdpater() {
+        reclamationAdapter = MyAdapterReclamationAdministrateur(requireContext(), R.layout.list_reclamation_administrateur, listReclamation)
+        listviewReclamation!!.adapter =reclamationAdapter
     }
 
 

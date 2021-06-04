@@ -142,8 +142,6 @@ class AddRDVToPatientActivity : AppCompatActivity() {
         })
         adapter!!.notifyDataSetChanged()
 
-
-
     }
 
     private fun initAdapter() {

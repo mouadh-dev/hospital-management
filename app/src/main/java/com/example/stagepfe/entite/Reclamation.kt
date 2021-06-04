@@ -6,10 +6,16 @@ import android.os.Parcelable
 data class Reclamation(
     var fullName: String? = "",
     var phoneNumber: String? = "",
+    var idReclameur:String? = "",
     var id:String? = "",
-    var description:String? = ""
+    var description:String? = "",
+    var timeReclamation:String? = "",
+    var dateReclamation:String? = ""
 ):Parcelable {
     constructor(parcel: Parcel) : this(
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
@@ -20,8 +26,11 @@ data class Reclamation(
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(fullName)
         parcel.writeString(phoneNumber)
+        parcel.writeString(idReclameur)
         parcel.writeString(id)
         parcel.writeString(description)
+        parcel.writeString(timeReclamation)
+        parcel.writeString(dateReclamation)
     }
 
     override fun describeContents(): Int {
@@ -37,4 +46,6 @@ data class Reclamation(
             return arrayOfNulls(size)
         }
     }
+
+
 }
