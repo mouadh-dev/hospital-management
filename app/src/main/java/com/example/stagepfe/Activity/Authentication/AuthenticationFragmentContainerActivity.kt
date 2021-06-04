@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.example.stagepfe.Activity.Administrateur.AccueilAdministrateurActivity
 import com.example.stagepfe.Activity.AgentLabo.AccueilAgentLaboActivity
 import com.example.stagepfe.Activity.Doctors.AccountDoctorActivity
 import com.example.stagepfe.Fragments.Authentication.ConnexionFragment
@@ -82,6 +83,13 @@ class AuthenticationFragmentContainerActivity : AppCompatActivity() {
                                 startActivity(intent)
                                 finish()
 //                                progressdialog.dismiss()
+                            }else{
+                                var intent = Intent(
+                                    this@AuthenticationFragmentContainerActivity,
+                                    AccueilAdministrateurActivity::class.java
+                                )
+                                startActivity(intent)
+                                finish()
                             }
                         progressdialog.dismiss()
                     }

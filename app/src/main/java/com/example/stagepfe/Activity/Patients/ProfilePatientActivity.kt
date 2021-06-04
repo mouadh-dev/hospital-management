@@ -3,7 +3,6 @@ package com.example.stagepfe.Activity.Patients
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -18,7 +17,6 @@ import com.example.stagepfe.Fragments.Patient.RendezVousPatientFragment
 import com.example.stagepfe.R
 import com.example.stagepfe.entite.UserItem
 import com.google.android.material.tabs.TabLayout
-import com.google.firebase.auth.FirebaseAuth
 
 
 class ProfilePatientActivity : AppCompatActivity() {
@@ -32,8 +30,6 @@ class ProfilePatientActivity : AppCompatActivity() {
     var birthPAtient: TextView? = null
     private val pickImage = 100
     private var imageUri: Uri? = null
-
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -90,8 +86,6 @@ class ProfilePatientActivity : AppCompatActivity() {
             var intent = Intent(this, UpdateProfilePatientActivity::class.java)
             startActivity(intent)
         }
-
-
     }
 
 
