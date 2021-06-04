@@ -128,18 +128,7 @@ class BottomBarPatientActivity : AppCompatActivity() {
             val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
             startActivityForResult(gallery, 1000)
         }
-        //////////////////////////////////////////////////////////////////////////////////////////////////
-        userDao.retrieveCurrentDataUser(object : UserCallback {
-            override fun onSuccess(userItem: UserItem) {
-                val photoDocteur = userItem.profilPhotos
-                Glide
-                    .with(this@BottomBarPatientActivity)
-                    .load(photoDocteur)
-                    .into(imageProfilPatient!!)
-            }
-            override fun failure() {
-            }
-        })
+
 //////////////////////////////////////////////////////////////////////////////////////////////////
         navigation!!.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { item ->
             when (item.itemId) {
@@ -315,11 +304,25 @@ class BottomBarPatientActivity : AppCompatActivity() {
                 override fun failure() {
                 }
             })
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
         }else {
             super.onActivityResult(requestCode, resultCode, data)
         }
     }
-///////////////////////////////////////////////////////////////////////////////////////////////
 
+    override fun onResume() {
+        userDao.retrieveCurrentDataUser(object : UserCallback {
+            override fun onSuccess(userItem: UserItem) {
+                val photoDocteur = userItem.profilPhotos
+                Glide
+                    .with(this@BottomBarPatientActivity)
+                    .load(photoDocteur)
+                    .into(imageProfilPatient!!)
+            }
+            override fun failure() {
+            }
+        })
+        super.onResume()
+    }
 }

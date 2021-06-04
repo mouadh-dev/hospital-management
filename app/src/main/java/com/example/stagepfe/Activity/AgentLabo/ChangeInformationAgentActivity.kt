@@ -87,6 +87,7 @@ class ChangeInformationAgentActivity : AppCompatActivity() {
                 var  medicament = userItem.medicament
                 var ordonance = userItem.ordonance
                 var rapport = userItem.rapports
+                var photo = userItem.profilPhotos
                 ////
 
 
@@ -111,6 +112,7 @@ class ChangeInformationAgentActivity : AppCompatActivity() {
                     user.ordonance = ordonance
                     user.rapports = rapport
                     user.groupesanguin = groupesanguin
+                    user.profilPhotos = photo
 
                     text = "Modification terminée avec succes"
                     dialog(text)

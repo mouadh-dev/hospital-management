@@ -27,7 +27,7 @@
                 android:id="@+id/Name_Ordonance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ordonance 1"
+                android:text=""
                 android:textColor="@color/black"
                 android:textSize="15dp" />
 
@@ -36,7 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="Ordonance"
+                android:text=""
                 android:textColor="@color/black"
                 android:textSize="15dp" />
 
@@ -50,7 +50,7 @@
                 android:id="@+id/Date_Ordonance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="date d'Ordonanca"
+                android:text=""
                 android:textColor="#949494"
                 android:textSize="15dp" />
 
@@ -59,7 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                android:text="Heure Ordonance"
+                android:text=""
                 android:textColor="#949494"
                 android:textSize="15dp" />
         </LinearLayout>
