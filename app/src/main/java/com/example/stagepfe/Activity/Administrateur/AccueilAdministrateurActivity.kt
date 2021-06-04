@@ -1,20 +1,23 @@
 package com.example.stagepfe.Activity.Administrateur
 
+import android.app.AlertDialog
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.View
-import android.widget.LinearLayout
-import com.example.stagepfe.Activity.Doctors.DoctorProfilActivity
+import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
+import com.example.stagepfe.Activity.Authentication.AuthenticationFragmentContainerActivity
+import com.example.stagepfe.Dao.UserCallback
+import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.Fragments.Administrateur.AccueilAdministrateurFragment
 import com.example.stagepfe.Fragments.Administrateur.DemandesAdministrateurBlankFragment
 import com.example.stagepfe.Fragments.Administrateur.ReclamationAdministrateurFragment
 import com.example.stagepfe.Fragments.Administrateur.UtlisitaeursAdministrateurFragment
-import com.example.stagepfe.Fragments.Doctor.AccueilDoctorFragment
-import com.example.stagepfe.Fragments.Doctor.DoctorMessageFragment
-import com.example.stagepfe.Fragments.Doctor.DoctorNotificationFragment
-import com.example.stagepfe.Fragments.Doctor.DoctorReclamationFragment
 import com.example.stagepfe.R
+import com.example.stagepfe.entite.UserItem
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class AccueilAdministrateurActivity : AppCompatActivity() {
@@ -24,6 +27,11 @@ class AccueilAdministrateurActivity : AppCompatActivity() {
     var homeAdministrateur: LinearLayout? = null
     var demandesAdministrateur: LinearLayout? = null
     var utlisateurAdministrateur: LinearLayout? = null
+    var userDao = UserDao()
+    var imageProfilAdmin:ImageView? = null
+    private var imageUri: Uri? = null
+    var nameAdmin:TextView? = null
+    var changeUser:ImageView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,11 +40,14 @@ class AccueilAdministrateurActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        navigationAdministrateur=findViewById(R.id.bottom_nav_Administrateur)
+        navigationAdministrateur = findViewById(R.id.bottom_nav_Administrateur)
         reclamationAdministrateur = findViewById(R.id.reclamationAdministrateurLayout)
         homeAdministrateur = findViewById(R.id.AccueilAdministrateurLayout)
         demandesAdministrateur = findViewById(R.id.DemandesAdministrateurLayout)
         utlisateurAdministrateur = findViewById(R.id.UtlisateurLayout)
+        imageProfilAdmin = findViewById(R.id.IVimageProfilAdmin)
+        nameAdmin = findViewById(R.id.admin_Name)
+        changeUser = findViewById(R.id.change_user_admin)
 
         navigationAdministrateur!!.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { item ->
             when (item.itemId) {
@@ -63,7 +74,8 @@ class AccueilAdministrateurActivity : AppCompatActivity() {
 
                     var DemandesAdministrateur = DemandesAdministrateurBlankFragment()
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.ContainerFragmentAdministrateur, DemandesAdministrateur).commit()
+                        .replace(R.id.ContainerFragmentAdministrateur, DemandesAdministrateur)
+                        .commit()
 
 
 
@@ -79,7 +91,8 @@ class AccueilAdministrateurActivity : AppCompatActivity() {
 
                     var UtlisatursAdministrateur = UtlisitaeursAdministrateurFragment()
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.ContainerFragmentAdministrateur, UtlisatursAdministrateur).commit()
+                        .replace(R.id.ContainerFragmentAdministrateur, UtlisatursAdministrateur)
+                        .commit()
 
 
                     return@OnNavigationItemSelectedListener true
@@ -101,5 +114,96 @@ class AccueilAdministrateurActivity : AppCompatActivity() {
             }
             true
         })
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+        imageProfilAdmin!!.setOnClickListener {
+            val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+            startActivityForResult(gallery, 1000)
         }
+        /////////////
+        userDao.retrieveCurrentDataUser(object : UserCallback {
+            override fun onSuccess(userItem: UserItem) {
+                nameAdmin!!.text = userItem.nom + " " + userItem.prenom
+            }
+
+            override fun failure() {
+            }
+        })
+        /////////////////
+        changeUser!!.setOnClickListener {
+            dialog()
+        }
+    }
+
+    private fun dialog() {
+        var v = View.inflate(this, R.layout.dialogchangeuser, null)
+        var builder = AlertDialog.Builder(this)
+        builder.setView(v)
+
+        var dialog = builder.create()
+        dialog.show()
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.findViewById<TextView>(R.id.sign_out_tv).setOnClickListener {
+            signout()
+        }
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == RESULT_OK && requestCode == 1000) {
+            imageUri = data?.data
+            imageProfilAdmin!!.setImageURI(imageUri)
+            imageUri = data?.data
+            imageProfilAdmin!!.setImageURI(imageUri)
+
+            userDao.retrieveCurrentDataUser(object : UserCallback {
+                override fun onSuccess(userItem: UserItem) {
+                    userDao.uploadImageToFirebase(
+                        userItem.id.toString(),
+                        imageUri!!)
+                }
+
+                override fun failure() {
+                }
+            })
+
+        }else {
+            super.onActivityResult(requestCode, resultCode, data)
+        }
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    private fun signout() {
+        var userDao = UserDao()
+        userDao.signOut(UserItem(),object : UserCallback {
+            override fun onSuccess(userItem: UserItem) {
+
+                var intent = Intent(this@AccueilAdministrateurActivity,
+                    AuthenticationFragmentContainerActivity::class.java)
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)//makesure user cant go back
+                startActivity(intent)
+                finish()
+            }
+
+            override fun failure() {
+                var toast= Toast.makeText(this@AccueilAdministrateurActivity,"probleme", Toast.LENGTH_SHORT)
+                toast.show()
+            }
+        })
+    }
+
+    override fun onResume() {
+        userDao.retrieveCurrentDataUser(object : UserCallback {
+            override fun onSuccess(userItem: UserItem) {
+                val photoPatientt = userItem.profilPhotos
+                Glide
+                    .with(this@AccueilAdministrateurActivity)
+                    .load(photoPatientt)
+                    .into(imageProfilAdmin!!)
+
+            }
+            override fun failure() {
+            }
+        })
+        super.onResume()
+    }
 }

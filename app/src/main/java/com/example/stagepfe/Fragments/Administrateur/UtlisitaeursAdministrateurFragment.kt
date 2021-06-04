@@ -8,15 +8,20 @@ import android.view.ViewGroup
 import android.widget.ListView
 import com.example.stagepfe.Adapters.Administrateur.MyAdapterReclamationAdministrateur
 import com.example.stagepfe.Adapters.Administrateur.MyAdapterUtlisateurAdministrateur
+import com.example.stagepfe.Dao.UserCallback
+import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.Models.Administrateur.ModelReclamationAdministrateur
 import com.example.stagepfe.Models.Administrateur.ModelUtilisateursAdministrateur
 import com.example.stagepfe.R
+import com.example.stagepfe.entite.UserItem
 
 
 class UtlisitaeursAdministrateurFragment : Fragment() {
 
     var listviewUtilisateur: ListView? = null
-    var listUtilisateur = mutableListOf<ModelUtilisateursAdministrateur>()
+    var listUtilisateur = mutableListOf<UserItem>()
+    var adapterUsers: MyAdapterUtlisateurAdministrateur? = null
+    var userDao = UserDao()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -29,11 +34,26 @@ class UtlisitaeursAdministrateurFragment : Fragment() {
 
     private fun initView(view: View) {
         listviewUtilisateur =view.findViewById<ListView>(R.id.ListUtilisateursAdministrateur)
-        listUtilisateur.add(ModelUtilisateursAdministrateur("Mohamed Rouahi","",R.drawable.logopatient))
-        listUtilisateur.add(ModelUtilisateursAdministrateur("Mohamed Rouahi","Dentiste",R.drawable.logopatient))
-        listviewUtilisateur!!.adapter = MyAdapterUtlisateurAdministrateur(requireContext(), R.layout.utilisateur_list_administrateur, listUtilisateur)
+        initAdapter()
+        userDao.populateSearch(object : UserCallback {
+            override fun onSuccess(userItem: UserItem) {
+                if (!(userItem.role!!.contains("Admin"))){
+                    listUtilisateur.add(userItem)
+                    adapterUsers!!.notifyDataSetChanged()
+                }
+
+            }
+
+            override fun failure() {
+            }
+        })
 
 
+    }
+
+    private fun initAdapter() {
+        adapterUsers = MyAdapterUtlisateurAdministrateur(requireContext(), R.layout.utilisateur_list_administrateur, listUtilisateur)
+        listviewUtilisateur!!.adapter = adapterUsers
     }
 
 
