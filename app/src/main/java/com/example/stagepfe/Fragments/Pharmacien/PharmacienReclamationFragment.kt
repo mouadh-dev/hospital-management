@@ -2,6 +2,7 @@ package com.example.stagepfe.Fragments.Pharmacien
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import com.example.stagepfe.Activity.AgentLabo.AccueilAgentLaboActivity
 import com.example.stagepfe.Activity.Pharmacien.AccueilPharmacienActivity
 import com.example.stagepfe.Dao.UserCallback
@@ -18,6 +20,8 @@ import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.R
 import com.example.stagepfe.entite.Reclamation
 import com.example.stagepfe.entite.UserItem
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 
 class PharmacienReclamationFragment : Fragment() {
@@ -25,10 +29,15 @@ class PharmacienReclamationFragment : Fragment() {
     private var phoneNumberReclamationPharmacienET: EditText? = null
     private var descriptionReclamationPharmacienET: EditText? = null
     private var sendButtonPharmacien: Button? = null
+    private var idReclameur: String?= null
     var userDao = UserDao()
     var reclamation = Reclamation()
     var userItem = UserItem()
+    @RequiresApi(Build.VERSION_CODES.O)
+    val currentDateTime = LocalDateTime.now()
 
+
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,6 +48,7 @@ class PharmacienReclamationFragment : Fragment() {
         return  view
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun initView(view: View) {
 
         fullNameReclamationPharmacienET = view.findViewById(R.id.ReclamationFullNamePharmacien)
@@ -53,6 +63,7 @@ class PharmacienReclamationFragment : Fragment() {
             override fun onSuccess(userItem: UserItem) {
                 fullNameReclamationPharmacienET!!.setText(userItem.prenom + " " + userItem.nom)
                 phoneNumberReclamationPharmacienET!!.setText(userItem.phonenumber)
+                idReclameur = userItem.id.toString()
             }
 
             override fun failure() {
@@ -99,6 +110,9 @@ class PharmacienReclamationFragment : Fragment() {
                         reclamation.fullName = fullNameReclamationPharmacienET!!.text.toString()
                         reclamation.description = descriptionReclamationPharmacienET!!.text.toString()
                         reclamation.phoneNumber = phoneNumberReclamationPharmacienET!!.text.toString()
+                        reclamation.idReclameur = idReclameur
+                        reclamation.timeReclamation = currentDateTime.format(DateTimeFormatter.ISO_TIME)
+                        reclamation.dateReclamation = currentDateTime.format(DateTimeFormatter.ISO_DATE)
                         userDao.insertReclamation(reclamation)
                         requireActivity().run {
                             var intent = Intent(this,AccueilPharmacienActivity::class.java)
