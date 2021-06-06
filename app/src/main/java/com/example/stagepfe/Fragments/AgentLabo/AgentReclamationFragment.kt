@@ -105,8 +105,6 @@ class AgentReclamationFragment : Fragment() {
                         dialog.dismiss()
 
 
-
-                        reclamation.fullName = fullNameReclamationAgentET!!.text.toString()
                         reclamation.description = descriptionReclamationAgentET!!.text.toString()
                         reclamation.phoneNumber = phoneNumberReclamationAgentET!!.text.toString()
                         reclamation.idReclameur = idReclameur

@@ -47,12 +47,7 @@ class UtlisitaeursAdministrateurFragment : Fragment() {
             override fun failure() {
             }
         })
-//        for (userpos in 0..listUtilisateur.size){
-//            adapterUsers!!.getView(
-//                userpos,
-//                view.findViewById(R.id.SupprimerButtom),
-//                R.layout.utilisateur_list_administrateur)
-//        }
+
 
 
     }

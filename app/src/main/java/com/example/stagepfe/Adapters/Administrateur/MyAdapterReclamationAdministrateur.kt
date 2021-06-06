@@ -7,26 +7,46 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
+import com.example.stagepfe.Dao.UserCallback
+import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.Models.Administrateur.ModelReclamationAdministrateur
 import com.example.stagepfe.Models.Doctors.ModelDoctorMessage
 import com.example.stagepfe.R
+import com.example.stagepfe.entite.Reclamation
+import com.example.stagepfe.entite.UserItem
 
-class MyAdapterReclamationAdministrateur(var mCtx: Context, var resources:Int, var items:List<ModelReclamationAdministrateur>): ArrayAdapter<ModelReclamationAdministrateur>(mCtx, resources, items) {
+class MyAdapterReclamationAdministrateur(var mCtx: Context, var resources:Int, var items:List<Reclamation>): ArrayAdapter<Reclamation>(mCtx, resources, items) {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var layoutInflater: LayoutInflater = LayoutInflater.from(mCtx)
         var view: View = layoutInflater.inflate(resources, null)
 
-        var imageListRec: ImageView = view.findViewById(R.id.IVpatientImageList_reclamation)
+        var imageListRec: de.hdodenhof.circleimageview.CircleImageView = view.findViewById(R.id.IVpatientImageList_reclamation)
         var namePatientRec: TextView = view.findViewById(R.id.TVnamePatientList_recalamtion)
         var tempsMessagerRec: TextView = view.findViewById(R.id.TvtimeMessageReclamation)
         var messagePatientRec: TextView = view.findViewById(R.id.TVmessageReclamation)
+        var dateReclamation: TextView = view.findViewById(R.id.TvdateMessageReclamation)
 
-        var mItem: ModelReclamationAdministrateur= items[position]
-        imageListRec.setImageDrawable(mCtx.resources.getDrawable(mItem.picRec))
-        namePatientRec.text = mItem.nomRec
-        tempsMessagerRec.text = mItem.messageRec
-        messagePatientRec.text = mItem.tempsRec
+        var mItem: Reclamation= items[position]
+//        imageListRec.setImageDrawable(mCtx.resources.getDrawable(mItem.picRec))
+        var userDao = UserDao()
+        userDao.populateSearch(object : UserCallback {
+            override fun onSuccess(userItem: UserItem) {
+                if (userItem.id.equals(mItem.idReclameur)){
+                    namePatientRec.text = userItem.nom + " " + userItem.prenom
+                    Glide.with(mCtx)
+                        .load(userItem.profilPhotos)
+                        .into(imageListRec)
+                }
+            }
 
+            override fun failure() {
+            }
+        })
+
+        tempsMessagerRec.text = mItem.timeReclamation!!.substring(0,5)
+        messagePatientRec.text = mItem.description
+        dateReclamation.text = mItem.dateReclamation
         return view
     }
 }

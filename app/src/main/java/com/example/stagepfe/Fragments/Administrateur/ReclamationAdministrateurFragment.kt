@@ -1,5 +1,6 @@
 package com.example.stagepfe.Fragments.Administrateur
 
+import android.graphics.ColorSpace
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,22 +8,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
 import com.example.stagepfe.Adapters.Administrateur.MyAdapterReclamationAdministrateur
-import com.example.stagepfe.Adapters.Doctor.MyAdapterNotificationDoctor
-import com.example.stagepfe.Dao.UserCallback
+import com.example.stagepfe.Adapters.Patients.adapterSendMessage
+import com.example.stagepfe.Dao.ReclamationCallback
 import com.example.stagepfe.Dao.UserDao
-import com.example.stagepfe.Models.Administrateur.ModelReclamationAdministrateur
-import com.example.stagepfe.Models.Doctors.ModelNotification
 import com.example.stagepfe.R
-import com.example.stagepfe.entite.UserItem
+import com.example.stagepfe.entite.Reclamation
 
 
 class ReclamationAdministrateurFragment : Fragment() {
 
     var listviewReclamation: ListView? = null
-    var listReclamation = mutableListOf<ModelReclamationAdministrateur>()
+    var listReclamation = mutableListOf<Reclamation>()
     var reclamationAdapter: MyAdapterReclamationAdministrateur? = null
     var userDao = UserDao()
-    var currentUser: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,16 +35,16 @@ class ReclamationAdministrateurFragment : Fragment() {
     private fun initView(view: View) {
         listviewReclamation =view.findViewById<ListView>(R.id.listRéclamationAdministrateur)
     initAdpater()
-        userDao.retrieveCurrentDataUser(object :UserCallback{
-            override fun onSuccess(userItem: UserItem) {
-                currentUser = userItem.id
+        userDao.getReclamation(object : ReclamationCallback {
+            override fun success(reclamation: Reclamation) {
+                listReclamation.add(reclamation)
+                reclamationAdapter!!.notifyDataSetChanged()
             }
 
             override fun failure() {
-
             }
-
         })
+
     }
 
     private fun initAdpater() {

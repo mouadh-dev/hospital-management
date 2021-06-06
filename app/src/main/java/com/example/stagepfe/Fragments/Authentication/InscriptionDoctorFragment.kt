@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
 import com.example.stagepfe.Dao.ResponseCallback
+import com.example.stagepfe.Dao.SignUpCallback
 import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.R
 import com.example.stagepfe.entite.UserItem
@@ -107,11 +108,7 @@ class InscriptionDoctorFragment : Fragment() {
                     progressdialog.setCancelable(false)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-                    userDao.signUpUser(requireActivity(), user, object : ResponseCallback {
-                        override fun success(medicament: String) {
-
-                        }
-
+                    userDao.signUpUser(requireActivity(), user, object : SignUpCallback {
                         override fun success() {
                             progressdialog.dismiss()
 
@@ -141,7 +138,7 @@ class InscriptionDoctorFragment : Fragment() {
                                 }
                         }
 
-                        override fun failure() {
+                        override fun failure(error:String) {
                             progressdialog.dismiss()
                             var v = android.view.View.inflate(
                                 mContext,
@@ -155,7 +152,7 @@ class InscriptionDoctorFragment : Fragment() {
                             dialog.show()
                             dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
                             dialog.findViewById<TextView>(R.id.TitleDialog).text =
-                                "il y a une faute réessayez"
+                                error
                             dialog.findViewById<TextView>(R.id.msgdialog).visibility = View.GONE
 
                             dialog.findViewById<Button>(R.id.btn_confirm)

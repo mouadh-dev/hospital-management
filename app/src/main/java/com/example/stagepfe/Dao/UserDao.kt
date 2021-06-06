@@ -32,8 +32,6 @@ class UserDao : IGestionUser {
     private val reclamationRef = database.getReference(BaseConstant.instance().reclamation)
     private val storageReference = FirebaseStorage.getInstance().reference
 
-//  private val rapportRef = database.getReference(BaseConstant.instance().rapport).child(uid).child("rapports")
-
     ////////////////////////////////////////////////Insert user/////////////////////////////////////////
     override fun insertUser(userItem: UserItem) {
         userItem.id = myRef.push().key.toString()
@@ -62,8 +60,39 @@ class UserDao : IGestionUser {
             }
         })
     }
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+    fun retrieveNotification(notificationCallback: NotificationCallback) {
+        notificationRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+
+                    for (ds in snapshot.children) {
+                        var notif = ds.getValue(Notification::class.java)
+                        notificationCallback.successNotification(notif!!)
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            notificationCallback.failureNotification()
+            }
+        })
+    }
+
+    fun supperNotification(uid:String,userItem: UserItem,userCallback:UserCallback){
+        notificationRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                notificationRef.child(uid).removeValue()
+                userCallback.onSuccess(userItem)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
+    }
     /////////////////////////////////////////////////sign up////////////////////////////////////////////
-    fun signUpUser(activity: Activity, userItem: UserItem, responseCallback: ResponseCallback) {
+    fun signUpUser(activity: Activity, userItem: UserItem, signUpCallback: SignUpCallback) {
         mAuth.createUserWithEmailAndPassword(userItem.mail, userItem.password)
             .addOnCompleteListener(activity, object : OnCompleteListener<AuthResult?> {
                 override fun onComplete(task: Task<AuthResult?>) {
@@ -72,16 +101,16 @@ class UserDao : IGestionUser {
                         Log.d("FragmentActivity", "createUserWithEmail:success")
                         userItem.id = mAuth!!.getCurrentUser().uid
                         myRef.child(userItem.id!!).setValue(userItem)
-                        responseCallback.success()
+                        signUpCallback.success()
 
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w(
                             "FragmentActivity",
                             "createUserWithEmail:failure",
-                            task.getException()
+                            task.exception
                         )
-                        responseCallback.failure()
+                        signUpCallback.failure(task.exception.toString().substring(65))
 
                     }
 
@@ -226,6 +255,37 @@ class UserDao : IGestionUser {
             }
         })
     }
+
+
+    fun supprAppointment(date:String,hour:String,idDoc:String,idPat:String,responseCallback: AppointmentCallback) {
+        userRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    for (ds in snapshot.children) {
+                        var userItem = ds.getValue(UserItem::class.java)
+                        if (userItem!!.rendezVous != null) {
+                            var map = userItem.rendezVous
+                            for (entry in map!!.entries) {
+                                for (test in entry.value) {
+                                    var appointment = test.value
+                                    userRef.child(idDoc).child("rendezVous").child(date).child(hour).removeValue()
+                                    userRef.child(idPat).child("rendezVous").child(date).child(hour).removeValue()
+
+
+                                    responseCallback.successAppointment(appointment)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                responseCallback.failureAppointment()
+            }
+        })
+    }
+
 
     //////////////////////////////////////////insertReclamation/////////////////////////////////////////
     override fun insertReclamation(reclamation: Reclamation) {
@@ -527,6 +587,36 @@ class UserDao : IGestionUser {
             }
             override fun onCancelled(error: DatabaseError) {
                 notificationCallback.failureNotification()
+            }
+        })
+    }
+    ///////////////////////////////////////////////get reclamation//////////////////////////////////
+    fun getReclamation(reclamationCallback: ReclamationCallback) {
+        reclamationRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+
+                    for (ds in snapshot.children) {
+                        var reclamation = ds.getValue(Reclamation::class.java)
+                        reclamationCallback.success(reclamation!!)
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                reclamationCallback.failure()
+            }
+        })
+    }
+
+    fun supprReclamation(uid:String,reclamationCallback: ReclamationCallback) {
+        reclamationRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+               reclamationRef.child(uid).removeValue()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                reclamationCallback.failure()
             }
         })
     }

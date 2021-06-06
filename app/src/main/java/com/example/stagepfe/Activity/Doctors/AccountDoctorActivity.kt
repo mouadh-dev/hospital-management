@@ -47,7 +47,6 @@ class AccountDoctorActivity : AppCompatActivity() {
     var messageDoctor: LinearLayout? = null
     var notificationDoctor: LinearLayout? = null
     var txtSearch: AutoCompleteTextView? =null
-    private val pickImage = 100
     private var imageUri: Uri? = null
     var imageProfilDoctor: ImageView? = null
     var changeUser:ImageView? = null

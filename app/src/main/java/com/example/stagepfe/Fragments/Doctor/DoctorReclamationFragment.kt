@@ -111,7 +111,6 @@ class DoctorReclamationFragment : Fragment() {
 
 
 
-                        reclamation.fullName = fullNameReclamationET!!.text.toString()
                         reclamation.description = descriptionReclamationET!!.text.toString()
                         reclamation.phoneNumber = phoneNumberReclamationET!!.text.toString()
                         reclamation.idReclameur = idReclameur

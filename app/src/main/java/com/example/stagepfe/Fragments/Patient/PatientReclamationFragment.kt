@@ -112,7 +112,6 @@ class PatientReclamationFragment : Fragment() {
                     .setOnClickListener {
                         dialog.dismiss()
 
-                        reclamation.fullName = namePatientET!!.text.toString()
                         reclamation.description = descriptionReclamationET!!.text.toString()
                         reclamation.phoneNumber = phonePatientET!!.text.toString()
                         reclamation.idReclameur = idReclameur

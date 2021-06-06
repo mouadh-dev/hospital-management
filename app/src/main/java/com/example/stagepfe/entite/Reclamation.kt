@@ -4,7 +4,6 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class Reclamation(
-    var fullName: String? = "",
     var phoneNumber: String? = "",
     var idReclameur:String? = "",
     var id:String? = "",
@@ -18,13 +17,11 @@ data class Reclamation(
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
-        parcel.readString(),
         parcel.readString()
     ) {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(fullName)
         parcel.writeString(phoneNumber)
         parcel.writeString(idReclameur)
         parcel.writeString(id)
