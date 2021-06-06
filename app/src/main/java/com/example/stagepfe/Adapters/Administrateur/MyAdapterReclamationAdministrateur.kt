@@ -13,6 +13,7 @@ import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.Models.Administrateur.ModelReclamationAdministrateur
 import com.example.stagepfe.Models.Doctors.ModelDoctorMessage
 import com.example.stagepfe.R
+import com.example.stagepfe.entite.MedicamentOrdonance
 import com.example.stagepfe.entite.Reclamation
 import com.example.stagepfe.entite.UserItem
 
@@ -48,5 +49,17 @@ class MyAdapterReclamationAdministrateur(var mCtx: Context, var resources:Int, v
         messagePatientRec.text = mItem.description
         dateReclamation.text = mItem.dateReclamation
         return view
+    }
+    override fun getCount(): Int {
+        return items.size
+    }
+
+    override fun getItem(position: Int): Reclamation? {
+        return items[position]
+    }
+
+
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
     }
 }

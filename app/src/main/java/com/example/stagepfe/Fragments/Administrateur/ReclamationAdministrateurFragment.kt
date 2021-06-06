@@ -39,11 +39,19 @@ class ReclamationAdministrateurFragment : Fragment() {
             override fun success(reclamation: Reclamation) {
                 listReclamation.add(reclamation)
                 reclamationAdapter!!.notifyDataSetChanged()
+                listReclamation.sortWith(Comparator { o1, o2 -> o1.timeReclamation!!.compareTo(o2.timeReclamation!!) })
+                System.currentTimeMillis()
             }
 
             override fun failure() {
             }
         })
+//        for (pos in 0..listReclamation.size){
+//            var test = reclamationAdapter!!.getItem(pos)
+//
+//        }
+        listReclamation.sortWith(Comparator { o1, o2 -> o1.timeReclamation!!.compareTo(o2.timeReclamation!!) })
+        System.currentTimeMillis()
 
     }
 
