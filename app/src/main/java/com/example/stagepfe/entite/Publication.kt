@@ -4,7 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class Publication constructor(
-    var idPublication: String? = "",
+    var id: String? = "",
     var idsenderPublication: String? = "",
     var textPublication: String?= "",
     var datePublication: String? = "",
@@ -20,7 +20,7 @@ data class Publication constructor(
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(idPublication)
+        parcel.writeString(id)
         parcel.writeString(idsenderPublication)
         parcel.writeString(textPublication)
         parcel.writeString(datePublication)
