@@ -50,8 +50,8 @@ class ReclamationAdministrateurFragment : Fragment() {
 //            var test = reclamationAdapter!!.getItem(pos)
 //
 //        }
-        listReclamation.sortWith(Comparator { o1, o2 -> o1.timeReclamation!!.compareTo(o2.timeReclamation!!) })
-        System.currentTimeMillis()
+//        listReclamation.sortWith(Comparator { o1, o2 -> o1.timeReclamation!!.compareTo(o2.timeReclamation!!) })
+//        System.currentTimeMillis()
 
     }
 

@@ -25,7 +25,8 @@ data class UserItem constructor(
    var rendezVous: HashMap<String, HashMap<String, Appointment>>?=null,
     var ordonance: HashMap<String,Ordonance>? = null,
     var profilPhotos: String? = null,
-var rapports: HashMap<String,Rapports>? = null
+var rapports: HashMap<String,Rapports>? = null,
+    var demande:String? = null
 
 
 ) : Parcelable {

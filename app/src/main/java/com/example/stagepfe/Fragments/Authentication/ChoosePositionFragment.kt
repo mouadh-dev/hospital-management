@@ -174,7 +174,6 @@ class ChoosePositionFragment : Fragment() {
     }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //***************************************navigation***********************************************
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////Labo//////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -203,9 +202,10 @@ class ChoosePositionFragment : Fragment() {
 
             if (role == "Labo") {
                 var mRole = ArrayList<String>()
-                mRole.add(spinner!!.selectedItem.toString())
+//                mRole.add(spinner!!.selectedItem.toString())
                 mRole.add("Patient")
                 user.role = mRole
+                user.demande = spinner!!.selectedItem.toString()
             }
             user.matricule = matricule!!.text.toString()
             user.numCIN = cin!!.text.toString()
@@ -315,9 +315,10 @@ class ChoosePositionFragment : Fragment() {
 ///////////////////////////////////////////////////////////////////////////////////////////////////
             if (role == "Pharmacien") {
                 var mRole = ArrayList<String>()
-                mRole.add(spinner!!.selectedItem.toString())
+//                mRole.add(spinner!!.selectedItem.toString())
                 mRole.add("Patient")
                 user.role = mRole
+                user.demande = spinner!!.selectedItem.toString()
             }
             user.matricule = matricule!!.text.toString()
             user.numCIN = cin!!.text.toString()
@@ -471,9 +472,10 @@ class ChoosePositionFragment : Fragment() {
 
             if (role == "Médecin") {
                 var mRole = ArrayList<String>()
-                mRole.add(spinner!!.selectedItem.toString())
+//                mRole.add(spinner!!.selectedItem.toString())
                 mRole.add("Patient")
                 user.role = mRole
+                user.demande = spinner!!.selectedItem.toString()
             }
             user.matricule = matricule!!.text.toString()
             user.numCIN = cin!!.text.toString()

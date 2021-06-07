@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ListView
+import android.widget.Toast
 import com.example.stagepfe.Adapters.Administrateur.MyAdapterReclamationAdministrateur
 import com.example.stagepfe.Adapters.Administrateur.MyAdapterUtlisateurAdministrateur
 import com.example.stagepfe.Dao.UserCallback
@@ -47,6 +49,15 @@ class UtlisitaeursAdministrateurFragment : Fragment() {
             override fun failure() {
             }
         })
+//
+//        for (pos in 0 until adapterUsers!!.count) {
+//            adapterUsers!!.getItem(pos)
+//            var view = adapterUsers!!.getView(pos,view.findViewById(R.id.SupprimerButtom),listviewUtilisateur!!)
+//            view.findViewById<Button>(R.id.SupprimerButtom).setOnClickListener {
+//                var toast= Toast.makeText(requireContext(),"test",Toast.LENGTH_SHORT)
+//                toast.show()
+//            }
+//        }
 
 
 

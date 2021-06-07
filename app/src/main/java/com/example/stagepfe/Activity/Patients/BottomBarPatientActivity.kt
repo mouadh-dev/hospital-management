@@ -314,11 +314,12 @@ class BottomBarPatientActivity : AppCompatActivity() {
     override fun onResume() {
         userDao.retrieveCurrentDataUser(object : UserCallback {
             override fun onSuccess(userItem: UserItem) {
-                val photoDocteur = userItem.profilPhotos
-                Glide
-                    .with(this@BottomBarPatientActivity)
-                    .load(photoDocteur)
-                    .into(imageProfilPatient!!)
+                if(userItem.profilPhotos != null) {
+                    Glide
+                        .with(this@BottomBarPatientActivity)
+                        .load(userItem.profilPhotos)
+                        .into(imageProfilPatient!!)
+                }
             }
             override fun failure() {
             }

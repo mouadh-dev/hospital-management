@@ -31,7 +31,9 @@ class MyAdapterMessagePatient(var mCtx:Context, var resources:Int, var items:Lis
 
         var id: String? = mItemPatient.id
         nameMessagePatient.text = mItemPatient.prenom + " " + mItemPatient.nom
-        Glide.with(mCtx).load(mItemPatient.profilPhotos.toString()).into(imageMsgPatient)
+        if (mItemPatient.profilPhotos != null) {
+            Glide.with(mCtx).load(mItemPatient.profilPhotos.toString()).into(imageMsgPatient)
+        }
         var userDao = UserDao()
         userDao.getMessage(object : MessageCallback {
             override fun success(message: Message) {

@@ -311,12 +311,12 @@ class AccountDoctorActivity : AppCompatActivity() {
     override fun onResume() {
         userDao.retrieveCurrentDataUser(object : UserCallback {
             override fun onSuccess(userItem: UserItem) {
-                val photoPatientt = userItem.profilPhotos
-                Glide
-                    .with(this@AccountDoctorActivity)
-                    .load(photoPatientt)
-                    .into(imageProfilDoctor!!)
-
+                if(userItem.profilPhotos != null) {
+                    Glide
+                        .with(this@AccountDoctorActivity)
+                        .load(userItem.profilPhotos)
+                        .into(imageProfilDoctor!!)
+                }
             }
             override fun failure() {
             }

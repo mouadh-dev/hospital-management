@@ -7,13 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
 import com.example.stagepfe.Activity.AgentLabo.AccueilAgentLaboActivity
-import com.example.stagepfe.Activity.Pharmacien.AccueilPharmacienActivity
 import com.example.stagepfe.Adapters.AgentLabo.MyAdapterAnalyses
-import com.example.stagepfe.Adapters.Pharmacien.MyAdapterNewOrdonnancePharmacien
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.Models.AgentLabo.ModelAnalyses
-import com.example.stagepfe.Models.Pharmacien.ModelNewOrdonnancePharmacien
 import com.example.stagepfe.R
 import com.example.stagepfe.entite.UserItem
 
@@ -41,7 +38,7 @@ class AgentAccueilFragment : Fragment() {
 
         val activity: AccueilAgentLaboActivity? =
             requireActivity() as AccueilAgentLaboActivity?
-        val myDataFromActivity: String? = activity!!.getMyDataAgentLabo()
+        val myDataFromActivity: String? = activity!!.getMyDataAgentlabo()
 
         var userDao = UserDao()
 

@@ -201,19 +201,7 @@ class AccueilPharmacienActivity : AppCompatActivity() {
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
-        userDao.retrieveCurrentDataUser(object : UserCallback {
-            override fun onSuccess(userItem: UserItem) {
-                val photo = userItem.profilPhotos
-                Glide
-                    .with(this@AccueilPharmacienActivity)
-                    .load(photo)
-                    .into(imageProfilPharmacien!!)
 
-            }
-
-            override fun failure() {
-            }
-        })
 //////////////////////////////////////////////////////////////////////////////////////////////////
         imageProfilPharmacien!!.setOnClickListener {
             val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
@@ -308,5 +296,20 @@ class AccueilPharmacienActivity : AppCompatActivity() {
         })
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////
+    override fun onResume() {
+        userDao.retrieveCurrentDataUser(object : UserCallback {
+            override fun onSuccess(userItem: UserItem) {
+                if(userItem.profilPhotos != null) {
+                    Glide
+                        .with(this@AccueilPharmacienActivity)
+                        .load(userItem.profilPhotos)
+                        .into(imageProfilPharmacien!!)
+                }
+            }
+            override fun failure() {
+            }
+        })
+        super.onResume()
+    }
     ///////////////////////////////////////////////////////////////////////////////////////////////
 }

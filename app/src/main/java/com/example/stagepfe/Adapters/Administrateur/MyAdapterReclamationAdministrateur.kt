@@ -35,9 +35,12 @@ class MyAdapterReclamationAdministrateur(var mCtx: Context, var resources:Int, v
             override fun onSuccess(userItem: UserItem) {
                 if (userItem.id.equals(mItem.idReclameur)){
                     namePatientRec.text = userItem.nom + " " + userItem.prenom
-                    Glide.with(mCtx)
-                        .load(userItem.profilPhotos)
-                        .into(imageListRec)
+                    if (userItem.profilPhotos != null){
+                        Glide.with(mCtx)
+                            .load(userItem.profilPhotos)
+                            .into(imageListRec)
+                    }
+
                 }
             }
 

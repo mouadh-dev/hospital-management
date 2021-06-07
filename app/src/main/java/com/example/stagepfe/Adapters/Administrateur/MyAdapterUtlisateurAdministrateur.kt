@@ -34,10 +34,12 @@ class MyAdapterUtlisateurAdministrateur(
         var userDao = UserDao()
         userDao.retrieveCurrentDataUser(object : UserCallback {
             override fun onSuccess(userItem: UserItem) {
-                Glide
-                    .with(mCtx)
-                    .load(userItem.profilPhotos)
-                    .into(imageList)
+                if (userItem.profilPhotos != null) {
+                    Glide
+                        .with(mCtx)
+                        .load(userItem.profilPhotos)
+                        .into(imageList)
+                }
             }
 
             override fun failure() {
@@ -230,5 +232,14 @@ class MyAdapterUtlisateurAdministrateur(
 
         }
         return view
+    }
+    override fun getCount(): Int {
+        return items.size
+    }
+    override fun getItem(position: Int): UserItem {
+        return items[position]
+    }
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
     }
 }

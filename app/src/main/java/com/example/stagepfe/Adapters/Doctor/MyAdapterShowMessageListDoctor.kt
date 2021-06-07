@@ -34,7 +34,9 @@ class MyAdapterShowMessageListDoctor(
         var mItemDoctor: UserItem = items[position]
         var id: String? = mItemDoctor.id
         nameMessagePatient.text = mItemDoctor.prenom + " " + mItemDoctor.nom
-        Glide.with(mCtx).load(mItemDoctor.profilPhotos.toString()).into(imageMsgDoctor)
+        if (mItemDoctor.profilPhotos != null) {
+            Glide.with(mCtx).load(mItemDoctor.profilPhotos.toString()).into(imageMsgDoctor)
+        }
         var userDao = UserDao()
         userDao.getMessage(object : MessageCallback {
             override fun success(message: Message) {

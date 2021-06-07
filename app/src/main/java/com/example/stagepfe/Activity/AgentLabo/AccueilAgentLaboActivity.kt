@@ -303,19 +303,19 @@ class AccueilAgentLaboActivity : AppCompatActivity() {
 
 
 
-    fun getMyDataAgentLabo(): String? {
+    fun getMyDataAgentlabo(): String? {
         return ordonanceToChange.idPatient
     }
 
     override fun onResume() {
         userDao.retrieveCurrentDataUser(object : UserCallback {
             override fun onSuccess(userItem: UserItem) {
-                val PhotoAgent = userItem.profilPhotos
-                Glide
-                    .with(this@AccueilAgentLaboActivity)
-                    .load(PhotoAgent)
-                    .into(imageProfilAgent!!)
-
+                if(userItem.profilPhotos != null) {
+                    Glide
+                        .with(this@AccueilAgentLaboActivity)
+                        .load(userItem.profilPhotos)
+                        .into(imageProfilAgent!!)
+                }
             }
 
             override fun failure() {

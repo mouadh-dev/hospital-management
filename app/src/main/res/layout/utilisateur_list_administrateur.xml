@@ -25,6 +25,7 @@
         android:src="@drawable/doctor_ic"
         android:layout_margin="10dp"/>
     <LinearLayout
+        android:id="@+id/lin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -60,6 +61,7 @@
             android:text="Desactiver"
             android:textColor="@color/white"
             android:textSize="10dp"
+            android:visibility="gone"
             />
             <Button
                 android:layout_marginTop="10dp"

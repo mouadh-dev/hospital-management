@@ -13,7 +13,7 @@ import com.example.stagepfe.Activity.Authentication.AuthenticationFragmentContai
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.Fragments.Administrateur.AccueilAdministrateurFragment
-import com.example.stagepfe.Fragments.Administrateur.DemandesAdministrateurBlankFragment
+import com.example.stagepfe.Fragments.Administrateur.AddUserAdmin
 import com.example.stagepfe.Fragments.Administrateur.ReclamationAdministrateurFragment
 import com.example.stagepfe.Fragments.Administrateur.UtlisitaeursAdministrateurFragment
 import com.example.stagepfe.R
@@ -72,7 +72,7 @@ class AccueilAdministrateurActivity : AppCompatActivity() {
                     demandesAdministrateur!!.visibility = View.VISIBLE
 
 
-                    var DemandesAdministrateur = DemandesAdministrateurBlankFragment()
+                    var DemandesAdministrateur = AddUserAdmin()
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.ContainerFragmentAdministrateur, DemandesAdministrateur)
                         .commit()
@@ -194,12 +194,12 @@ class AccueilAdministrateurActivity : AppCompatActivity() {
     override fun onResume() {
         userDao.retrieveCurrentDataUser(object : UserCallback {
             override fun onSuccess(userItem: UserItem) {
-                val photoPatientt = userItem.profilPhotos
-                Glide
-                    .with(this@AccueilAdministrateurActivity)
-                    .load(photoPatientt)
-                    .into(imageProfilAdmin!!)
-
+                if(userItem.profilPhotos != null) {
+                    Glide
+                        .with(this@AccueilAdministrateurActivity)
+                        .load(userItem.profilPhotos)
+                        .into(imageProfilAdmin!!)
+                }
             }
             override fun failure() {
             }

@@ -620,6 +620,9 @@ class UserDao : IGestionUser {
             }
         })
     }
+    fun addRole(uid: String,role:ArrayList<String>?,userCallback: UserCallback){
+        userRef.child(uid).child("role").setValue(role)
+    }
 }
 
 
