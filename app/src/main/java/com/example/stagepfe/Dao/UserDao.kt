@@ -635,11 +635,27 @@ class UserDao : IGestionUser {
         })
 
     }
-///////////////////////////////////////////////////////////////////////////////////////////////////
-fun sendPost(publication: Publication) {
+///////////////////////////////////////////Post send and get////////////////////////////////////////
+    fun sendPost(publication: Publication) {
     publication.id = publicationRef.push().key.toString()
     publicationRef.child(publication.id!!).setValue(publication)
 }
+    fun getPost(postCallback: PostCallback){
+        publicationRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (ds in snapshot.children){
+                    var pub = ds.getValue(Publication::class.java)
+                    if (pub != null) {
+                        postCallback.successPost(pub)
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                postCallback.failurePost()
+            }
+        })
+    }
 }
 
 
