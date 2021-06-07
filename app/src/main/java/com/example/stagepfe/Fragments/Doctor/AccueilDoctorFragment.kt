@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ListView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.graphics.toColor
@@ -16,6 +17,9 @@ import androidx.fragment.app.Fragment
 import com.example.stagepfe.Activity.Doctors.AccountDoctorActivity
 import com.example.stagepfe.Activity.Doctors.CheckRDVActivity
 import com.example.stagepfe.Activity.Doctors.DoctorProfilActivity
+import com.example.stagepfe.Adapters.Administrateur.NewUsersAdapterAdmin
+import com.example.stagepfe.Adapters.Doctor.MyAdapterPostDoctorclass
+import com.example.stagepfe.Dao.PostCallback
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.R
@@ -34,6 +38,10 @@ open class AccueilDoctorFragment : Fragment() {
     var postButton: Button? = null
     var postText:EditText? = null
     var userDao = UserDao()
+    var adapterPost :MyAdapterPostDoctorclass? = null
+    var listViewPost:ListView? = null
+    var listPost = ArrayList<Publication>()
+
     @RequiresApi(Build.VERSION_CODES.O)
     val currentDateTime: LocalDateTime = LocalDateTime.now()
     override fun onCreateView(
@@ -53,6 +61,8 @@ open class AccueilDoctorFragment : Fragment() {
         timeLine = view.findViewById(R.id.time_line)
         postButton = view.findViewById(R.id.Post_button)
         postText = view.findViewById(R.id.post_text)
+        listViewPost = view.findViewById(R.id.list_publication_doctor)
+        initAdapter()
 
 
 
@@ -98,6 +108,21 @@ open class AccueilDoctorFragment : Fragment() {
 
         }
 
+        userDao.getPost(object : PostCallback {
+            override fun successPost(publication: Publication) {
+                listPost.add(publication)
+                adapterPost!!.notifyDataSetChanged()
+            }
+
+            override fun failurePost() {
+            }
+        })
+
+    }
+
+    private fun initAdapter() {
+        adapterPost = MyAdapterPostDoctorclass(requireContext(),R.layout.list_publication_doctor,listPost)
+        listViewPost!!.adapter = adapterPost
     }
 
 
