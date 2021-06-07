@@ -18,7 +18,7 @@ import com.example.stagepfe.entite.Reclamation
 class ReclamationAdministrateurFragment : Fragment() {
 
     var listviewReclamation: ListView? = null
-    var listReclamation = mutableListOf<Reclamation>()
+    var listReclamation = ArrayList<Reclamation>()
     var reclamationAdapter: MyAdapterReclamationAdministrateur? = null
     var userDao = UserDao()
 
@@ -38,18 +38,16 @@ class ReclamationAdministrateurFragment : Fragment() {
         userDao.getReclamation(object : ReclamationCallback {
             override fun success(reclamation: Reclamation) {
                 listReclamation.add(reclamation)
-                reclamationAdapter!!.notifyDataSetChanged()
                 listReclamation.sortWith(Comparator { o1, o2 -> o1.timeReclamation!!.compareTo(o2.timeReclamation!!) })
                 System.currentTimeMillis()
+                reclamationAdapter!!.notifyDataSetChanged()
+
             }
 
             override fun failure() {
             }
         })
-//        for (pos in 0..listReclamation.size){
-//            var test = reclamationAdapter!!.getItem(pos)
-//
-//        }
+
 //        listReclamation.sortWith(Comparator { o1, o2 -> o1.timeReclamation!!.compareTo(o2.timeReclamation!!) })
 //        System.currentTimeMillis()
 

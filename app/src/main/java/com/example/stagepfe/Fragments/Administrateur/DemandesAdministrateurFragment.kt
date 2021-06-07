@@ -16,7 +16,7 @@ import com.example.stagepfe.entite.UserItem
 
 class AddUserAdmin : Fragment() {
     var listViewUsers: ListView? = null
-    var listUsers = mutableListOf<UserItem>()
+    var listUsers = ArrayList<UserItem>()
     var userDao = UserDao()
     var adapterNewUser:NewUsersAdapterAdmin? = null
 
@@ -41,7 +41,7 @@ class AddUserAdmin : Fragment() {
 
         userDao.populateSearch(object : UserCallback {
             override fun onSuccess(userItem: UserItem) {
-                if (userItem.demande != null){
+                if (userItem.demande != null && userItem.role!!.contains("Patient")){
                     listUsers.add(userItem)
                     adapterNewUser!!.notifyDataSetChanged()
                 }

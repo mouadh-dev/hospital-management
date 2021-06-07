@@ -68,7 +68,7 @@
                             android:layout_height="25dp"
                             android:layout_marginLeft="20dp"
                             android:background="@drawable/button_style_smaller_gris"
-                            android:text="Refuser"
+                            android:text="Rejeter"
                             android:textColor="@color/white"
                             android:textSize="10dp"
                             />

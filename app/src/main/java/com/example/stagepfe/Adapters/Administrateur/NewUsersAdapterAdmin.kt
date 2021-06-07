@@ -1,5 +1,6 @@
 package com.example.stagepfe.Adapters.Administrateur
 
+import android.app.AlertDialog
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +15,7 @@ import com.example.stagepfe.entite.*
 class NewUsersAdapterAdmin (
     var mCtx: Context,
     var resources: Int,
-    var items: List<UserItem>
+    var items: ArrayList<UserItem>
 ): ArrayAdapter<UserItem>(mCtx, resources, items) {
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
             var layoutInflater: LayoutInflater = LayoutInflater.from(mCtx)
@@ -49,26 +50,86 @@ class NewUsersAdapterAdmin (
                 }
             })
             acceptButton.setOnClickListener {
-                userDao.populateSearch(object : UserCallback {
-                    override fun onSuccess(userItem: UserItem) {
-                        if (userItem.id.equals(mItem.id)) {
-                            mItem.role!!.add(mItem.demande!!)
-                            userDao.addRole(mItem.id!!, mItem.role!!, object : UserCallback {
-                                override fun onSuccess(userItem: UserItem) {
+                var v = View.inflate(mCtx, R.layout.fragment_dialog, null)
+                var builder = AlertDialog.Builder(mCtx)
+                builder.setView(v)
 
-                                }
+                var dialog = builder.create()
+                dialog.show()
+                dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+                dialog.findViewById<TextView>(R.id.TitleDialog).visibility = View.GONE
+                dialog.findViewById<TextView>(R.id.msgdialog).visibility = View.GONE
+                dialog.findViewById<TextView>(R.id.TextRapportView).visibility = View.VISIBLE
+                dialog.findViewById<EditText>(R.id.TextRapport).visibility = View.GONE
+                dialog.findViewById<ImageView>(R.id.CheckDialog).visibility = View.GONE
+                dialog.findViewById<TextView>(R.id.TextRapportView)
+                    .setText("Voulez vous vraiment accepter cette utilisateur ?")
+                dialog.findViewById<Button>(R.id.btn_confirm).setText("Oui")
+                dialog.findViewById<Button>(R.id.btn_confirm).setOnClickListener {
+                    dialog.dismiss()
+                    userDao.populateSearch(object : UserCallback {
+                        override fun onSuccess(userItem: UserItem) {
+                            if (userItem.id.equals(mItem.id)) {
+                                if (mItem.demande != null) {
+                                    mItem.role!!.add(mItem.demande!!)
+                                    userDao.addRole(mItem.id!!, mItem.role!!)
+                                    userDao.supprDemande(mItem.id!!, object : UserCallback {
+                                        override fun onSuccess(userItem: UserItem) {
+                                            items.remove(mItem)
+                                        }
 
-                                override fun failure() {
+                                        override fun failure() {
+                                        }
+                                    })
                                 }
-                            })
+                            }
                         }
-                    }
 
-                    override fun failure() {
-                    }
-                })
+                        override fun failure() {
+                        }
+                    })
+                }
 //                var toast = Toast.makeText(mCtx,"test", Toast.LENGTH_SHORT)
 //                toast.show()
+            }
+            declineButton.setOnClickListener {
+                var v = View.inflate(mCtx, R.layout.fragment_dialog, null)
+                var builder = AlertDialog.Builder(mCtx)
+                builder.setView(v)
+
+                var dialog = builder.create()
+                dialog.show()
+                dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+                dialog.findViewById<TextView>(R.id.TitleDialog).visibility = View.GONE
+                dialog.findViewById<TextView>(R.id.msgdialog).visibility = View.GONE
+                dialog.findViewById<TextView>(R.id.TextRapportView).visibility = View.VISIBLE
+                dialog.findViewById<EditText>(R.id.TextRapport).visibility = View.GONE
+                dialog.findViewById<ImageView>(R.id.CheckDialog).visibility = View.GONE
+                dialog.findViewById<TextView>(R.id.TextRapportView)
+                    .setText("Voulez vous vraiment rejeter cette utilisateur ?")
+                dialog.findViewById<Button>(R.id.btn_confirm).setText("Oui")
+                dialog.findViewById<Button>(R.id.btn_confirm).setOnClickListener {
+                    dialog.dismiss()
+                    userDao.populateSearch(object : UserCallback {
+                        override fun onSuccess(userItem: UserItem) {
+                            if (userItem.id.equals(mItem.id)) {
+                                if (mItem.demande != null) {
+                                    userDao.supprDemande(mItem.id!!, object : UserCallback {
+                                        override fun onSuccess(userItem: UserItem) {
+                                            items.remove(mItem)
+                                        }
+
+                                        override fun failure() {
+                                        }
+                                    })
+                                }
+                            }
+                        }
+
+                        override fun failure() {
+                        }
+                    })
+                }
             }
 
 
