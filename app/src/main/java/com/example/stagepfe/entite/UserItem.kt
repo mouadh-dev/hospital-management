@@ -30,6 +30,7 @@ var rapports: HashMap<String,Rapports>? = null,
 
 
 ) : Parcelable {
+
     constructor(parcel: Parcel) : this(
         parcel.readString(),
         parcel.readString(),
@@ -52,8 +53,23 @@ var rapports: HashMap<String,Rapports>? = null,
         TODO("rendezVous"),
         TODO("ordonance"),
         parcel.readString(),
-        TODO("rapports")
+        TODO("rapports"),
+        parcel.readString()
     ) {
+    }
+
+    override fun hashCode(): Int {
+        return id?.hashCode() ?: 0
+    }
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as UserItem
+
+        if (id != other.id) return false
+
+        return true
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -75,25 +91,11 @@ var rapports: HashMap<String,Rapports>? = null,
         parcel.writeString(bio)
         parcel.writeString(id)
         parcel.writeString(profilPhotos)
+        parcel.writeString(demande)
     }
 
     override fun describeContents(): Int {
         return 0
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as UserItem
-
-        if (id != other.id) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        return id?.hashCode() ?: 0
     }
 
     companion object CREATOR : Parcelable.Creator<UserItem> {
@@ -105,8 +107,5 @@ var rapports: HashMap<String,Rapports>? = null,
             return arrayOfNulls(size)
         }
     }
-
-
-
 }
 
