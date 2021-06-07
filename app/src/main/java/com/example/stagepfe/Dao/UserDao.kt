@@ -27,6 +27,7 @@ class UserDao : IGestionUser {
     private val userRef = FirebaseDatabase.getInstance().getReference("users")
     private val messageRef = FirebaseDatabase.getInstance().getReference("Message")
     private val notificationRef = FirebaseDatabase.getInstance().getReference("Notification")
+    private val publicationRef = FirebaseDatabase.getInstance().getReference("Post")
 
     private val medicamentRef = FirebaseDatabase.getInstance().getReference("Medicament")
     private val reclamationRef = database.getReference(BaseConstant.instance().reclamation)
@@ -620,9 +621,25 @@ class UserDao : IGestionUser {
             }
         })
     }
-    fun addRole(uid: String,role:ArrayList<String>?,userCallback: UserCallback){
-        userRef.child(uid).child("role").setValue(role)
+    fun addRole(uid: String,role:ArrayList<String>?){
+                userRef.child(uid).child("role").setValue(role)
     }
+    fun supprDemande(uid:String,userCallback: UserCallback){
+        userRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                userRef.child(uid).child("demande").removeValue()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
+
+    }
+///////////////////////////////////////////////////////////////////////////////////////////////////
+fun sendPost(publication: Publication) {
+    publication.id = publicationRef.push().key.toString()
+    publicationRef.child(publication.id!!).setValue(publication)
+}
 }
 
 

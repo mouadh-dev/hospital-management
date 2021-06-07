@@ -17,7 +17,7 @@ import com.example.stagepfe.entite.MedicamentOrdonance
 import com.example.stagepfe.entite.Reclamation
 import com.example.stagepfe.entite.UserItem
 
-class MyAdapterReclamationAdministrateur(var mCtx: Context, var resources:Int, var items:List<Reclamation>): ArrayAdapter<Reclamation>(mCtx, resources, items) {
+class MyAdapterReclamationAdministrateur(var mCtx: Context, var resources:Int, var items:ArrayList<Reclamation>): ArrayAdapter<Reclamation>(mCtx, resources, items) {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var layoutInflater: LayoutInflater = LayoutInflater.from(mCtx)
         var view: View = layoutInflater.inflate(resources, null)
@@ -51,6 +51,8 @@ class MyAdapterReclamationAdministrateur(var mCtx: Context, var resources:Int, v
         tempsMessagerRec.text = mItem.timeReclamation!!.substring(0,5)
         messagePatientRec.text = mItem.description
         dateReclamation.text = mItem.dateReclamation
+//        items.sortWith(Comparator { o1, o2 -> o1.timeReclamation!!.compareTo(o2.timeReclamation!!) })
+        System.currentTimeMillis()
         return view
     }
     override fun getCount(): Int {
