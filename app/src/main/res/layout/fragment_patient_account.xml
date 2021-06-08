@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,15 +12,13 @@
     <LinearLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
-
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="100dp">
+            android:layout_marginTop="50dp">
 
 
             <RelativeLayout
@@ -62,7 +61,6 @@
                 />
 
         </RelativeLayout>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -105,8 +103,6 @@
                 android:background="@drawable/white_rectangle"
                 android:elevation="4dp"
                 android:orientation="vertical"
-                android:text="The Awesome Sliding Up Panel"
-
                 >
 
                 <ImageView
@@ -137,16 +133,16 @@
             android:textStyle="bold"
             android:textSize="20dp"
             android:textColor="@color/black"/>
-        <ListView
-            android:id="@+id/list_publication_patient"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            />
-
 
     </LinearLayout>
-</androidx.core.widget.NestedScrollView>
+    <ListView
+        android:id="@+id/list_publication_patient"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/container"
+        />
+</RelativeLayout >
 
 
 

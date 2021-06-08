@@ -1,6 +1,5 @@
 package com.example.stagepfe.Fragments.Administrateur
 
-import android.graphics.ColorSpace
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
 import com.example.stagepfe.Adapters.Administrateur.MyAdapterReclamationAdministrateur
-import com.example.stagepfe.Adapters.Patients.adapterSendMessage
 import com.example.stagepfe.Dao.ReclamationCallback
 import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.R

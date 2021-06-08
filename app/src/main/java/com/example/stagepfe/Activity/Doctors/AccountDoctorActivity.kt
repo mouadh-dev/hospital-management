@@ -204,13 +204,11 @@ class AccountDoctorActivity : AppCompatActivity() {
         }
         populateSearch()
     }
-
     private fun initAdapter() {
         adapterListPatientforDoctorAccueil=MyAdapterListPatientForDoctors(
             this@AccountDoctorActivity, R.layout.list_patient_for_doctor, listPatientForDoctor)
         listviewPatientForDoctor!!.adapter =adapterListPatientforDoctorAccueil
     }
-
     private fun dialog() {
         var v = View.inflate(this, R.layout.dialogchangeuser, null)
         var builder = AlertDialog.Builder(this)

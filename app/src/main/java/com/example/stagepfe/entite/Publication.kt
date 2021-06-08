@@ -8,9 +8,11 @@ data class Publication constructor(
     var idsenderPublication: String? = "",
     var textPublication: String?= "",
     var datePublication: String? = "",
-    var heurePublication: String? = ""
+    var heurePublication: String? = "",
+    var imagePublication:String? = ""
 ): Parcelable {
     constructor(parcel: Parcel) : this(
+        parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
@@ -25,6 +27,7 @@ data class Publication constructor(
         parcel.writeString(textPublication)
         parcel.writeString(datePublication)
         parcel.writeString(heurePublication)
+        parcel.writeString(imagePublication)
     }
 
     override fun describeContents(): Int {
@@ -40,4 +43,5 @@ data class Publication constructor(
             return arrayOfNulls(size)
         }
     }
+
 }

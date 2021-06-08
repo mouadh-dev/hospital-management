@@ -552,6 +552,20 @@ class UserDao : IGestionUser {
             }
         }
     }
+    fun uploadImagePostToFirebase(contentUri: Uri,imageCallback: ImageCallback) {
+        val fileName = UUID.randomUUID().toString() + ".jpg"
+        val image = storageReference.child("posts/$fileName")
+        image.putFile(contentUri).addOnSuccessListener {
+            image.downloadUrl.addOnSuccessListener { uri ->
+                Log.d("tag", "onSuccess: Uploaded Image URl is $uri")
+//                publicationRef.child(uid).child("imagePublication").setValue(uri.toString())
+                imageCallback.success(uri)
+
+            }.addOnFailureListener {
+                Log.d("tag", "onFailureMessage is $it")
+            }
+        }
+    }
 
     ///////////////////////////////////////Send Message/////////////////////////////////////////////////
     fun sendMesage(message: Message) {
