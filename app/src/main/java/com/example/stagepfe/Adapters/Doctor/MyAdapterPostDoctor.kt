@@ -4,8 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
@@ -42,7 +40,7 @@ class MyAdapterPostDoctor(var mCtx: Context, var resources: Int, var items: List
         var userDao = UserDao()
         userDao.populateSearch(object : UserCallback {
             override fun onSuccess(userItem: UserItem) {
-                if (userItem.id.equals(mItem.idsenderPublication)) {
+                if (userItem.id.equals(mItem.idUser)) {
                     namePost.text = userItem.nom + " " + userItem.prenom
                     Glide.with(mCtx)
                         .load(userItem.profilPhotos)
@@ -56,90 +54,90 @@ class MyAdapterPostDoctor(var mCtx: Context, var resources: Int, var items: List
         datePost.text = mItem.datePublication
         hourPost.text = mItem.heurePublication!!.substring(0, 5)
         textPost.text = mItem.textPublication
-        userDao.getPost(object : PostCallback {
-            override fun successPost(publication: Publication) {
-                if (mItem.id.equals(publication.id)) {
-                    if (publication.imagePublication != "") {
-                        imageToPost.visibility = VISIBLE
-                        Glide.with(mCtx)
-                            .load(publication.imagePublication)
-                            .into(imageToPost)
-                    } else {
-                        imageToPost.visibility = GONE
-                    }
-
-                }
-            }
-
-            override fun failurePost() {
-            }
-        })
+//        userDao.getPost(object : PostCallback {
+//            override fun successPost(publication: LikePost) {
+////                if (mItem.id.equals(publication.id)) {
+////                    if (publication.imagePublication != null) {
+////                        imageToPost.visibility = VISIBLE
+////                        Glide.with(mCtx)
+////                            .load(publication.imagePublication)
+////                            .into(imageToPost)
+////                    } else {
+////                        imageToPost.visibility = GONE
+////                    }
+////
+////                }
+//            }
+//
+//            override fun failurePost() {
+//            }
+//        })
         likeImage.tag = R.drawable.like_ic
-        likeImage.setOnClickListener {
-            if (likeImage.tag == R.drawable.like_ic) {
-                likeImage.tag = R.drawable.red_like_ic
-                likeImage.setImageResource(R.drawable.red_like_ic)
-                userDao.retrieveCurrentDataUser(object : UserCallback {
-                    override fun onSuccess(userItem: UserItem) {
-                        var likee = LikePost()
-                        likee.idLiker = userItem.id
-                        likee.idtaker = mItem.idsenderPublication
-                        likee.idPost = mItem.id
-                        userDao.sendLike(likee)
-                    }
+//        likeImage.setOnClickListener {
+//            if (likeImage.tag == R.drawable.like_ic) {
+//                likeImage.tag = R.drawable.red_like_ic
+//                likeImage.setImageResource(R.drawable.red_like_ic)
+//                userDao.retrieveCurrentDataUser(object : UserCallback {
+//                    override fun onSuccess(userItem: UserItem) {
+//                        var likee = LikePost()
+//                        likee.idLiker = userItem.id
+//                        likee.idtaker = mItem.idsenderPublication
+//                        likee.idPost = mItem.id
+//                        userDao.sendLike(likee)
+//                    }
+//
+//                    override fun failure() {
+//                    }
+//                })
+//            } else {
+//                likeImage.tag = R.drawable.like_ic
+//                likeImage.setImageResource(R.drawable.like_ic)
+//                userDao.getLike(object : LikeCallback {
+//                    override fun successLike(likePost: LikePost) {
+//                        if (mItem.id.equals(likePost.idPost)){
+//                            removeLike(likePost.id!!)
+//
+//                        }
+//                    }
+//
+//                    override fun failureLike() {
+//                    }
+//                })
+//
+//
+//
+//            }
+//
+//        }
 
-                    override fun failure() {
-                    }
-                })
-            } else {
-                likeImage.tag = R.drawable.like_ic
-                likeImage.setImageResource(R.drawable.like_ic)
-                userDao.getLike(object : LikeCallback {
-                    override fun successLike(likePost: LikePost) {
-                        if (mItem.id.equals(likePost.idPost)){
-                            removeLike(likePost.id!!)
-
-                        }
-                    }
-
-                    override fun failureLike() {
-                    }
-                })
-
-
-
-            }
-
-        }
-
-        userDao.getLike(object : LikeCallback {
-            override fun successLike(likePost: LikePost) {
-                if (mItem.id.equals(likePost.idPost)){
-                    likeImage.tag = R.drawable.red_like_ic
-                    likeImage.setImageResource(R.drawable.red_like_ic)
-                    var number = 0
-                    number+=1
-                    likeNumber.text = "$number"
-                }
-
-
-            }
-
-            override fun failureLike() {
-            }
-        })
+//        userDao.getLike(object : LikeCallback {
+//            override fun successLike(likePost: LikePost) {
+//                if (mItem.id.equals(likePost.idPost)){
+//                    likeImage.tag = R.drawable.red_like_ic
+//                    likeImage.setImageResource(R.drawable.red_like_ic)
+//                    var number = 0
+//                    number+=1
+//                    likeNumber.text = "$number"
+//                }
+//
+//
+//            }
+//
+//            override fun failureLike() {
+//            }
+//        })
 
             return view
     }
 
     private fun removeLike(id: String) {
         var userDao = UserDao()
-        userDao.removeLike(id, object : LikeCallback {
-            override fun successLike(likePost: LikePost) {
-            }
-
-            override fun failureLike() {
-            }
-        })
+//        userDao.removeLike(object : LikeCallback {
+//            override fun successLike(likePost: LikePost) {
+//            }
+//
+//            override fun failureLike() {
+//            }
+//        })
     }
 }

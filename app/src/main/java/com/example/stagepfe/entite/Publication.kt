@@ -4,12 +4,13 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class Publication constructor(
-    var id: String? = "",
-    var idsenderPublication: String? = "",
+    var idUser: String? = "",
     var textPublication: String?= "",
     var datePublication: String? = "",
     var heurePublication: String? = "",
-    var imagePublication:String? = ""
+    var imagePublication:String? = "",
+    var likes:ArrayList<LikePost>? = ArrayList(),
+    var comments:ArrayList<Comment>? = ArrayList()
 ): Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),
@@ -17,13 +18,13 @@ data class Publication constructor(
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
-        parcel.readString()
+        TODO("likes"),
+        TODO("comments")
     ) {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(id)
-        parcel.writeString(idsenderPublication)
+        parcel.writeString(idUser)
         parcel.writeString(textPublication)
         parcel.writeString(datePublication)
         parcel.writeString(heurePublication)
@@ -43,5 +44,6 @@ data class Publication constructor(
             return arrayOfNulls(size)
         }
     }
+
 
 }

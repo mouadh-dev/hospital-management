@@ -4,24 +4,13 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class LikePost constructor(
-    var idLiker:String? = "",
-    var idtaker:String? = "",
-    var id:String? = "",
-    var idPost:String ? = ""
+    var idLiker:String? = ""
 ) : Parcelable {
-    constructor(parcel: Parcel) : this(
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString()
-    ) {
+    constructor(parcel: Parcel) : this(parcel.readString()) {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(idLiker)
-        parcel.writeString(idtaker)
-        parcel.writeString(id)
-        parcel.writeString(idPost)
     }
 
     override fun describeContents(): Int {

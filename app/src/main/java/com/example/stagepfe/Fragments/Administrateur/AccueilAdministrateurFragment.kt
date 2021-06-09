@@ -16,15 +16,12 @@ import android.widget.ListView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.example.stagepfe.Adapters.Administrateur.MyAdapterPostAdmin
-import com.example.stagepfe.Adapters.Doctor.MyAdapterPostDoctor
 import com.example.stagepfe.Dao.PostCallback
-import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.R
+import com.example.stagepfe.entite.LikePost
 import com.example.stagepfe.entite.Publication
-import com.example.stagepfe.entite.UserItem
 import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import java.util.ArrayList
 
 
@@ -64,43 +61,43 @@ class AccueilAdministrateurFragment : Fragment() {
         }
 
         postButtonAdmin!!.setOnClickListener {
-            userDao.retrieveCurrentDataUser(object : UserCallback {
-                @RequiresApi(Build.VERSION_CODES.O)
-                override fun onSuccess(userItem: UserItem) {
-                    if (postTextAdmin!!.text.isEmpty()) {
-                        postButtonAdmin!!.isClickable = false
-                    } else {
-                        postButtonAdmin!!.isClickable = true
-                        var post = Publication()
-                        post.datePublication = currentDateTime.format(DateTimeFormatter.ISO_DATE)
-                        post.heurePublication = currentDateTime.format(DateTimeFormatter.ISO_TIME)
-                        post.idsenderPublication = userItem.id
-                        post.textPublication = postTextAdmin!!.text.toString().trim()
-
-                        userDao.sendPost(post)
-                        postTextAdmin!!.text.clear()
-                        imageToPostAdmin!!.visibility = View.GONE
-                    }
-
-
-                }
-
-                override fun failure() {
-                }
-            })
+//            userDao.retrieveCurrentDataUser(object : UserCallback {
+//                @RequiresApi(Build.VERSION_CODES.O)
+//                override fun onSuccess(userItem: UserItem) {
+//                    if (postTextAdmin!!.text.isEmpty()) {
+//                        postButtonAdmin!!.isClickable = false
+//                    } else {
+//                        postButtonAdmin!!.isClickable = true
+//                        var post = Publication()
+//                        post.datePublication = currentDateTime.format(DateTimeFormatter.ISO_DATE)
+//                        post.heurePublication = currentDateTime.format(DateTimeFormatter.ISO_TIME)
+//                        post.idsenderPublication = userItem.id
+//                        post.textPublication = postTextAdmin!!.text.toString().trim()
+//                        var data = Intent()
+//                        userDao.sendPost(data.data!!,post)
+//                        postTextAdmin!!.text.clear()
+//                        imageToPostAdmin!!.visibility = View.GONE
+//                    }
+//
+//
+//                }
+//
+//                override fun failure() {
+//                }
+//            })
 
         }
 
         adapterPostAdmin!!.clear()
-        userDao.getPost(object : PostCallback {
-            override fun successPost(publication: Publication) {
-                listPostAdmin.add(publication)
-                adapterPostAdmin!!.notifyDataSetChanged()
-            }
-
-            override fun failurePost() {
-            }
-        })
+//        userDao.getPost(object : PostCallback {
+//            override fun successPost(publication: LikePost) {
+//                listPostAdmin.add(publication)
+//                adapterPostAdmin!!.notifyDataSetChanged()
+//            }
+//
+//            override fun failurePost() {
+//            }
+//        })
 
     }
 

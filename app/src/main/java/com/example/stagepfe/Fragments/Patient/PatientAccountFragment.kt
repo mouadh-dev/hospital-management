@@ -8,20 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ListView
-import android.widget.ScrollView
-import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
-import com.example.stagepfe.Activity.Authentication.AuthenticationFragmentContainerActivity
-import com.example.stagepfe.Activity.Patients.AddRDVToPatientActivity
 import com.example.stagepfe.Activity.Patients.CheckRDVPatientActivity
-import com.example.stagepfe.Activity.Patients.ProfilePatientActivity
-import com.example.stagepfe.Adapters.Administrateur.MyAdapterPostAdmin
 import com.example.stagepfe.Adapters.Patients.MyAdapterPostPatient
 import com.example.stagepfe.Dao.PostCallback
 import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.R
+import com.example.stagepfe.entite.LikePost
 import com.example.stagepfe.entite.Publication
-import com.sothree.slidinguppanel.ScrollableViewHelper
 import java.util.ArrayList
 
 class PatientAccountFragment : Fragment() {
@@ -61,15 +55,15 @@ private var ambulanceImage: ImageView?=null
             startActivity(dialIntent)
         }
         adapterPostPatient!!.clear()
-        userDao.getPost(object : PostCallback {
-            override fun successPost(publication: Publication) {
-                listPostPatient.add(publication)
-                adapterPostPatient!!.notifyDataSetChanged()
-            }
-
-            override fun failurePost() {
-            }
-        })
+//        userDao.getPost(object : PostCallback {
+//            override fun successPost(publication: LikePost) {
+//                listPostPatient.add(publication)
+//                adapterPostPatient!!.notifyDataSetChanged()
+//            }
+//
+//            override fun failurePost() {
+//            }
+//        })
 
     }
 

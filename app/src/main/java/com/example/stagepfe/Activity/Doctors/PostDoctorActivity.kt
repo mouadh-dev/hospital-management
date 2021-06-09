@@ -7,6 +7,7 @@ import com.example.stagepfe.Adapters.Doctor.MyAdapterPostDoctor
 import com.example.stagepfe.Dao.PostCallback
 import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.R
+import com.example.stagepfe.entite.LikePost
 import com.example.stagepfe.entite.Publication
 import java.util.ArrayList
 
@@ -27,16 +28,16 @@ class PostDoctorActivity : AppCompatActivity() {
 
 
         adapterPost!!.clear()
-        userDao.getPost(object : PostCallback {
-            override fun successPost(publication: Publication) {
-                listPost.add(publication)
-                adapterPost!!.notifyDataSetChanged()
-
-            }
-
-            override fun failurePost() {
-            }
-        })
+//        userDao.getPost(object : PostCallback {
+//            override fun successPost(publication: LikePost) {
+//                listPost.add(publication)
+//                adapterPost!!.notifyDataSetChanged()
+//
+//            }
+//
+//            override fun failurePost() {
+//            }
+//        })
     }
 
     private fun initAdapter() {

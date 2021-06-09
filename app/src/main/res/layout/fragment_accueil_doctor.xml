@@ -97,13 +97,14 @@
          android:textColor="@color/black"/>
 
      <LinearLayout
-         android:id="@+id/make_below"
+         android:id="@+id/item_posts_doctor"
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
          android:layout_margin="3dp"
          android:background="@color/white"
          android:orientation="vertical"
          android:layout_marginTop="20dp"
+         android:visibility="gone"
          >
          <LinearLayout
              android:layout_width="match_parent"
@@ -140,7 +141,7 @@
                  android:layout_marginTop="10dp"
                  android:layout_below="@+id/Name_post_Docteur"
                  android:textSize="10sp"
-                 />
+                 tools:ignore="SmallSp" />
 
 
          </RelativeLayout>
@@ -155,8 +156,8 @@
                  android:layout_width="wrap_content"
                  android:layout_height="wrap_content"
                  android:orientation="vertical"
-                 android:layout_alignParentRight="true"
-                 android:layout_marginRight="15dp"
+                 android:layout_alignParentEnd="true"
+                 android:layout_marginEnd="15dp"
                  >
                  <TextView
                      android:id="@+id/Time_post_Docteur"
@@ -229,7 +230,7 @@
      </LinearLayout>
      <RelativeLayout
          android:layout_width="match_parent"
-         android:layout_height="50dp"
+         android:layout_height="30dp"
          android:layout_marginHorizontal="20dp"
          android:layout_marginVertical="50dp"
          android:background="@drawable/vector_background"
@@ -241,9 +242,9 @@
              android:layout_height="wrap_content"
              android:text="Voir les nouveaute"
              android:textColor="@color/black"
-             android:textSize="20sp"
+             android:textSize="10sp"
              android:layout_centerInParent="true"
-             />
+             tools:ignore="SmallSp" />
      </RelativeLayout>
 
     </LinearLayout>

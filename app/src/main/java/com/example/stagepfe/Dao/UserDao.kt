@@ -10,10 +10,7 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import java.util.*
 import kotlin.collections.HashMap
@@ -39,7 +36,8 @@ class UserDao : IGestionUser {
         userItem.id = myRef.push().key.toString()
         myRef.child(userItem.id!!).setValue(userItem)
     }
-    fun supperUser(uid:String,userItem: UserItem,userCallback:UserCallback){
+
+    fun supperUser(uid: String, userItem: UserItem, userCallback: UserCallback) {
         userRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 userRef.child(uid).removeValue()
@@ -51,7 +49,8 @@ class UserDao : IGestionUser {
             }
         })
     }
-    fun supperMessage(uid:String,userItem: UserItem,userCallback:UserCallback){
+
+    fun supperMessage(uid: String, userItem: UserItem, userCallback: UserCallback) {
         messageRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 messageRef.child(uid).removeValue()
@@ -77,12 +76,12 @@ class UserDao : IGestionUser {
             }
 
             override fun onCancelled(error: DatabaseError) {
-            notificationCallback.failureNotification()
+                notificationCallback.failureNotification()
             }
         })
     }
 
-    fun supperNotification(uid:String,userItem: UserItem,userCallback:UserCallback){
+    fun supperNotification(uid: String, userItem: UserItem, userCallback: UserCallback) {
         notificationRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 notificationRef.child(uid).removeValue()
@@ -93,6 +92,7 @@ class UserDao : IGestionUser {
             }
         })
     }
+
     /////////////////////////////////////////////////sign up////////////////////////////////////////////
     fun signUpUser(activity: Activity, userItem: UserItem, signUpCallback: SignUpCallback) {
         mAuth.createUserWithEmailAndPassword(userItem.mail, userItem.password)
@@ -196,7 +196,7 @@ class UserDao : IGestionUser {
     //////////////////////////////////////////Insert appointment////////////////////////////////////////
     override fun insertappointment(
         appointment: Appointment,
-        notification:Notification,
+        notification: Notification,
         responseCallback: AppointmentCallback
     ) {
         userRef.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -226,7 +226,7 @@ class UserDao : IGestionUser {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Log.e("tag ","insertingAppointment:failure" + error.toException())
+                Log.e("tag ", "insertingAppointment:failure" + error.toException())
             }
         })
     }
@@ -259,7 +259,13 @@ class UserDao : IGestionUser {
     }
 
 
-    fun supprAppointment(date:String,hour:String,idDoc:String,idPat:String,responseCallback: AppointmentCallback) {
+    fun supprAppointment(
+        date: String,
+        hour: String,
+        idDoc: String,
+        idPat: String,
+        responseCallback: AppointmentCallback
+    ) {
         userRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
@@ -270,8 +276,10 @@ class UserDao : IGestionUser {
                             for (entry in map!!.entries) {
                                 for (test in entry.value) {
                                     var appointment = test.value
-                                    userRef.child(idDoc).child("rendezVous").child(date).child(hour).removeValue()
-                                    userRef.child(idPat).child("rendezVous").child(date).child(hour).removeValue()
+                                    userRef.child(idDoc).child("rendezVous").child(date).child(hour)
+                                        .removeValue()
+                                    userRef.child(idPat).child("rendezVous").child(date).child(hour)
+                                        .removeValue()
 
 
                                     responseCallback.successAppointment(appointment)
@@ -301,7 +309,7 @@ class UserDao : IGestionUser {
         userItem: UserItem,
         idPatientRapport: String,
         idDoctorRapport: String,
-        notification:Notification,
+        notification: Notification,
         responseCallback: ResponseCallback
     ) {
         userRef.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -452,7 +460,7 @@ class UserDao : IGestionUser {
         idPatient: String,
         ordonance: Ordonance,
         userItem: UserItem,
-        notification:Notification,
+        notification: Notification,
         ordonanceCallback: OrdonanceCallback
     ) {
         ordonance.id = userRef.push().key
@@ -553,20 +561,7 @@ class UserDao : IGestionUser {
             }
         }
     }
-    fun uploadImagePostToFirebase(contentUri: Uri,imageCallback: ImageCallback) {
-        val fileName = UUID.randomUUID().toString() + ".jpg"
-        val image = storageReference.child("posts/$fileName")
-        image.putFile(contentUri).addOnSuccessListener {
-            image.downloadUrl.addOnSuccessListener { uri ->
-                Log.d("tag", "onSuccess: Uploaded Image URl is $uri")
-//                publicationRef.child(uid).child("imagePublication").setValue(uri.toString())
-                imageCallback.success(uri)
 
-            }.addOnFailureListener {
-                Log.d("tag", "onFailureMessage is $it")
-            }
-        }
-    }
 
     ///////////////////////////////////////Send Message/////////////////////////////////////////////////
     fun sendMesage(message: Message) {
@@ -592,8 +587,9 @@ class UserDao : IGestionUser {
             }
         })
     }
+
     //////////////////////////////////////////////get Notification//////////////////////////////////
-    fun getNotification(notificationCallback: NotificationCallback){
+    fun getNotification(notificationCallback: NotificationCallback) {
         notificationRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (ds in snapshot.children) {
@@ -601,11 +597,13 @@ class UserDao : IGestionUser {
                     notificationCallback.successNotification(notification)
                 }
             }
+
             override fun onCancelled(error: DatabaseError) {
                 notificationCallback.failureNotification()
             }
         })
     }
+
     ///////////////////////////////////////////////get reclamation//////////////////////////////////
     fun getReclamation(reclamationCallback: ReclamationCallback) {
         reclamationRef.addValueEventListener(object : ValueEventListener {
@@ -625,10 +623,10 @@ class UserDao : IGestionUser {
         })
     }
 
-    fun supprReclamation(uid:String,reclamationCallback: ReclamationCallback) {
+    fun supprReclamation(uid: String, reclamationCallback: ReclamationCallback) {
         reclamationRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-               reclamationRef.child(uid).removeValue()
+                reclamationRef.child(uid).removeValue()
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -636,10 +634,12 @@ class UserDao : IGestionUser {
             }
         })
     }
-    fun addRole(uid: String,role:ArrayList<String>?){
-                userRef.child(uid).child("role").setValue(role)
+
+    fun addRole(uid: String, role: ArrayList<String>?) {
+        userRef.child(uid).child("role").setValue(role)
     }
-    fun supprDemande(uid:String,userCallback: UserCallback){
+
+    fun supprDemande(uid: String, userCallback: UserCallback) {
         userRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 userRef.child(uid).child("demande").removeValue()
@@ -650,18 +650,42 @@ class UserDao : IGestionUser {
         })
 
     }
-///////////////////////////////////////////Post send and get////////////////////////////////////////
-    fun sendPost(publication: Publication) {
-    publication.id = publicationRef.push().key.toString()
-    publicationRef.child(publication.id!!).setValue(publication)
-}
-    fun getPost(postCallback: PostCallback){
+
+    ///////////////////////////////////////////Post send and get////////////////////////////////////////
+    fun sendPost(
+//        contentUri: Uri,
+        publication: Publication) {
+        publicationRef.child(publication.idUser!!).setValue(publication)
+//        uploadImagePostToFirebase(publication.idUser!!, contentUri)
+    }
+
+    private fun uploadImagePostToFirebase(id: String, contentUri: Uri) {
+
+        val fileName = UUID.randomUUID().toString() + ".jpg"
+        val image = storageReference.child("posts/$fileName")
+        image.putFile(contentUri).addOnSuccessListener {
+            image.downloadUrl.addOnSuccessListener { uri ->
+                Log.d("tag", "onSuccess: Uploaded Image URl is $uri")
+                publicationRef.child(id).child("imagePublication").setValue(uri.toString())
+
+
+            }.addOnFailureListener {
+                Log.d("tag", "onFailureMessage is $it")
+            }
+        }
+    }
+
+    fun getPost(postCallback: PostCallback) {
         publicationRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                for (ds in snapshot.children){
+                for (ds in snapshot.children) {
                     var pub = ds.getValue(Publication::class.java)
+
                     if (pub != null) {
-                        postCallback.successPost(pub)
+                        for (likes in pub.likes!!){
+                            postCallback.successPost(likes,pub)
+                        }
+
                     }
                 }
             }
@@ -671,18 +695,19 @@ class UserDao : IGestionUser {
             }
         })
     }
-//////////////////////////////////////////send like////////////////////////////////////////////////
-fun sendLike(likePost: LikePost) {
-    likePost.id = likeRef.push().key.toString()
-    likeRef.child(likePost.id!!).setValue(likePost)
-}
-    fun getLike(likeCallback: LikeCallback){
+
+    //////////////////////////////////////////send like////////////////////////////////////////////////
+    fun sendLike(uid:String,likePost: LikePost) {
+        publicationRef.child(uid).child("likes").setValue(likePost)
+    }
+
+    fun getLike(likeCallback: LikeCallback) {
         likeRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                for (ds in snapshot.children){
+                for (ds in snapshot.children) {
                     var like = ds.getValue(LikePost::class.java)
                     if (like != null) {
-                       likeCallback.successLike(like)
+                        likeCallback.successLike(like)
                     }
                 }
             }
@@ -692,17 +717,32 @@ fun sendLike(likePost: LikePost) {
             }
         })
     }
-    fun removeLike(uid:String,likeCallback: LikeCallback){
-        likeRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                likeRef.child(uid).removeValue()
-            }
 
-            override fun onCancelled(error: DatabaseError) {
-
-            }
-        })
-    }
+//    fun removeLike(uid:String,likeCallback: LikeCallback) {
+//        publicationRef.addChildEventListener(object : ChildEventListener {
+//            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+//
+//            }
+//
+//            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+//
+//            }
+//
+//            override fun onChildRemoved(snapshot: DataSnapshot) {
+//                val like = snapshot.getValue(LikePost::class.java)
+//                publicationRef.child(uid).child("likes").child(like!!.idLiker!!).setValue(likePost)
+//                likeRef.removeValue()
+//                likeCallback.successLike(like)
+//            }
+//
+//            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
+//            }
+//
+//            override fun onCancelled(error: DatabaseError) {
+//
+//            }
+//        })
+//    }
 }
 
 
