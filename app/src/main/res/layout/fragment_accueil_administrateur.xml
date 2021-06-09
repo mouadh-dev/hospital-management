@@ -3,12 +3,63 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/rectangle_account"
     tools:context=".Fragments.Administrateur.AccueilAdministrateurFragment">
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:weightSum="10">
+        <EditText
+            android:id="@+id/post_text_administrateur"
+            android:layout_width="250dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/edit_text_style"
+            android:textColor="@color/black"
+            android:layout_marginTop="20dp"
+            android:padding="8dp"
+            android:layout_weight="5"
+            android:textSize="10dp"
+            />
+        <ImageView
+            android:id="@+id/image_post_administrateur"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/photo_ic"
+            android:layout_weight="3"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"/>
+        <Button
+            android:id="@+id/Post_button_administrateur"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/button_style_smaller"
+            android:text="Publier"
+            android:textColor="@color/white"
+            android:textSize="15dp"
+            android:layout_weight="2"
+            />
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/image_to_post_admin"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/blue" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
