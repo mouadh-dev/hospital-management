@@ -127,7 +127,7 @@ class AccueilAgentLaboActivity : AppCompatActivity() {
                     )
                     listView!!.adapter = adapterAnalyse
                     adapterAnalyse!!.notifyDataSetChanged()
-                    listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE)
+                    listView.choiceMode = ListView.CHOICE_MODE_MULTIPLE
                     listView.setOnItemClickListener { parent, view, position, id ->
 
 

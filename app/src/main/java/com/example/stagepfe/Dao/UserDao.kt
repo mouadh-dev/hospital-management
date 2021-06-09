@@ -28,6 +28,7 @@ class UserDao : IGestionUser {
     private val messageRef = FirebaseDatabase.getInstance().getReference("Message")
     private val notificationRef = FirebaseDatabase.getInstance().getReference("Notification")
     private val publicationRef = FirebaseDatabase.getInstance().getReference("Post")
+    private val likeRef = FirebaseDatabase.getInstance().getReference("Like")
 
     private val medicamentRef = FirebaseDatabase.getInstance().getReference("Medicament")
     private val reclamationRef = database.getReference(BaseConstant.instance().reclamation)
@@ -667,6 +668,38 @@ class UserDao : IGestionUser {
 
             override fun onCancelled(error: DatabaseError) {
                 postCallback.failurePost()
+            }
+        })
+    }
+//////////////////////////////////////////send like////////////////////////////////////////////////
+fun sendLike(likePost: LikePost) {
+    likePost.id = likeRef.push().key.toString()
+    likeRef.child(likePost.id!!).setValue(likePost)
+}
+    fun getLike(likeCallback: LikeCallback){
+        likeRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (ds in snapshot.children){
+                    var like = ds.getValue(LikePost::class.java)
+                    if (like != null) {
+                       likeCallback.successLike(like)
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                likeCallback.failureLike()
+            }
+        })
+    }
+    fun removeLike(uid:String,likeCallback: LikeCallback){
+        likeRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                likeRef.child(uid).removeValue()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
             }
         })
     }
