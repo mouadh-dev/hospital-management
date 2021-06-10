@@ -104,7 +104,7 @@ class ConnexionFragment : Fragment(), View.OnClickListener {
                 dialog.show()
                 dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
                 dialog.findViewById<TextView>(R.id.TitleDialog)
-                    .setText("Email ou adresse n'est pas correcte")
+                    .setText("Email ou adresse incorrecte")
                 dialog.findViewById<TextView>(R.id.msgdialog).visibility = View.GONE
                 dialog.findViewById<Button>(R.id.btn_confirm)
                     .setOnClickListener {

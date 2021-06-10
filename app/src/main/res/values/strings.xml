@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">stage pfe</string>
+    <string name="app_name">ActiveHealth</string>
     <string-array name="User_Position">
         <item>Choisir</item>
         <item>Médecin</item>

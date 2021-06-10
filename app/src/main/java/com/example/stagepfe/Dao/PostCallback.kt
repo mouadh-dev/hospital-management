@@ -5,6 +5,6 @@ import com.example.stagepfe.entite.Publication
 
 
 interface PostCallback {
-    fun successPost(likes: LikePost,publication: Publication)
+    fun successPost(publication: Publication)
     fun failurePost()
 }

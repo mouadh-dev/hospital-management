@@ -28,16 +28,16 @@ class PostDoctorActivity : AppCompatActivity() {
 
 
         adapterPost!!.clear()
-//        userDao.getPost(object : PostCallback {
-//            override fun successPost(publication: LikePost) {
-//                listPost.add(publication)
-//                adapterPost!!.notifyDataSetChanged()
-//
-//            }
-//
-//            override fun failurePost() {
-//            }
-//        })
+        userDao.getPost(object : PostCallback {
+            override fun successPost(publication: Publication) {
+                listPost.add(publication)
+                adapterPost!!.notifyDataSetChanged()
+
+            }
+
+            override fun failurePost() {
+            }
+        })
     }
 
     private fun initAdapter() {

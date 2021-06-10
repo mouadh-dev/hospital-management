@@ -655,7 +655,8 @@ class UserDao : IGestionUser {
     fun sendPost(
 //        contentUri: Uri,
         publication: Publication) {
-        publicationRef.child(publication.idUser!!).setValue(publication)
+        publication.id = publicationRef.child(publication.idUser!!).push().key.toString()
+        publicationRef.child(publication.idUser!!).child(publication.id!!).setValue(publication)
 //        uploadImagePostToFirebase(publication.idUser!!, contentUri)
     }
 
@@ -681,12 +682,12 @@ class UserDao : IGestionUser {
                 for (ds in snapshot.children) {
                     var pub = ds.getValue(Publication::class.java)
 
-                    if (pub != null) {
-                        for (likes in pub.likes!!){
-                            postCallback.successPost(likes,pub)
-                        }
-
-                    }
+//                    if (pub != null) {
+//                        for (likes in pub.likes!!){
+                            postCallback.successPost(pub!!)
+//                        }
+//
+//                    }
                 }
             }
 

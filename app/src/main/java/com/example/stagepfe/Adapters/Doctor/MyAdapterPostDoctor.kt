@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
@@ -54,24 +55,24 @@ class MyAdapterPostDoctor(var mCtx: Context, var resources: Int, var items: List
         datePost.text = mItem.datePublication
         hourPost.text = mItem.heurePublication!!.substring(0, 5)
         textPost.text = mItem.textPublication
-//        userDao.getPost(object : PostCallback {
-//            override fun successPost(publication: LikePost) {
-////                if (mItem.id.equals(publication.id)) {
-////                    if (publication.imagePublication != null) {
-////                        imageToPost.visibility = VISIBLE
-////                        Glide.with(mCtx)
-////                            .load(publication.imagePublication)
-////                            .into(imageToPost)
-////                    } else {
-////                        imageToPost.visibility = GONE
-////                    }
-////
-////                }
-//            }
-//
-//            override fun failurePost() {
-//            }
-//        })
+        userDao.getPost(object : PostCallback {
+            override fun successPost(publication: Publication) {
+                if (mItem.id.equals(publication.id)) {
+//                    if (publication.imagePublication != null) {
+                        imageToPost.visibility = VISIBLE
+                        Glide.with(mCtx)
+                            .load("https://firebasestorage.googleapis.com/v0/b/stage-pfe-d3eeb.appspot.com/o/pictures%2F8b9f0b4a-0d2c-4b67-9e7b-cd640a4ba8d6.jpg?alt=media&token=930d159c-a04c-48b7-94c1-d1293c32bd6f")
+                            .into(imageToPost)
+//                    } else {
+//                        imageToPost.visibility = GONE
+//                    }
+
+                }
+            }
+
+            override fun failurePost() {
+            }
+        })
         likeImage.tag = R.drawable.like_ic
 //        likeImage.setOnClickListener {
 //            if (likeImage.tag == R.drawable.like_ic) {

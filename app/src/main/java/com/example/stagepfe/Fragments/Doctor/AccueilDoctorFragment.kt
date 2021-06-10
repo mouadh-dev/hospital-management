@@ -94,9 +94,9 @@ open class AccueilDoctorFragment : Fragment() {
 
 
         userDao.getPost(object : PostCallback {
-            override fun successPost(likes: LikePost, publication: Publication) {
+            override fun successPost(publication: Publication) {
                 linearLayout!!.visibility = VISIBLE
-                listUser!!.add(likes.idLiker!!)
+//                listUser!!.add(likes.idLiker!!)
                 userDao.populateSearch(object : UserCallback {
                     @SuppressLint("SetTextI18n")
                     override fun onSuccess(userItem: UserItem) {
@@ -117,51 +117,19 @@ open class AccueilDoctorFragment : Fragment() {
                 hourPost!!.text = publication.heurePublication!!.substring(0, 5)
                 datePost!!.text = publication.datePublication
                 idPoster = publication.idUser
-                if (publication.imagePublication != "") {
-                    Glide.with(requireContext()).load(publication.imagePublication)
+//                if (publication.imagePublication != "") {
+                    Glide.with(requireContext()).load(" https://firebasestorage.googleapis.com/v0/b/stage-pfe-d3eeb.appspot.com/o/pictures%2F8b9f0b4a-0d2c-4b67-9e7b-cd640a4ba8d6.jpg?alt=media&token=930d159c-a04c-48b7-94c1-d1293c32bd6f")
                         .into(imageShown!!)
                     imageToPost!!.visibility = VISIBLE
-                } else {
-                    imageToPost!!.visibility = GONE
-                }
+//                } else {
+//                    imageToPost!!.visibility = GONE
+//                }
                 likeImage!!.tag = R.drawable.like_ic
                 likeImage!!.setOnClickListener {
-                    userDao.retrieveCurrentDataUser(object : UserCallback {
-                        override fun onSuccess(user: UserItem) {
-                            if (!(listUser!!.contains(user))) {
-                                likeImage!!.setImageResource(R.drawable.red_like_ic)
-                                var likee = LikePost()
-                                likee.idLiker = user.id
-                                userDao.sendLike(publication.idUser!!, likee)
-//                            } else {
-//                                likeImage!!.setImageResource(R.drawable.like_ic)
-//                                removeLike(user.id!!)
-                            }
 
-                        }
-
-                        override fun failure() {
-                        }
-                    })
                 }
 
-//                userDao.getLike(object : LikeCallback {
-//                    override fun successLike(likePost: LikePost) {
-//                        if (idPoster.equals(likePost.idPost)) {
-//                            likeImage!!.tag = R.drawable.red_like_ic
-//                            likeImage!!.setImageResource(R.drawable.red_like_ic)
-//                            var number = 0
-//                            number += 1
-//                            likeText!!.text = "$number"
-//                        }
-//
-//
-//                    }
-//
-//                    override fun failureLike() {
-//                    }
-//                })
-                likeText!!.text = listUser!!.size.toString()
+
             }
 
             override fun failurePost() {
@@ -178,6 +146,7 @@ open class AccueilDoctorFragment : Fragment() {
                     post.datePublication = currentDateTime.format(DateTimeFormatter.ISO_DATE)
                     post.heurePublication = currentDateTime.format(DateTimeFormatter.ISO_TIME)
                     post.idUser = userItem.id
+                    post.imagePublication = imageUri.toString()
                     post.textPublication = postText!!.text.toString().trim()
                     userDao.sendPost(post)
                     postText!!.text.clear()
@@ -193,7 +162,7 @@ open class AccueilDoctorFragment : Fragment() {
         imagePost!!.setOnClickListener {
             val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
             startActivityForResult(gallery, 1000)
-
+            imageUri = MediaStore.Images.Media.INTERNAL_CONTENT_URI
         }
 ///////////////////////////////////////////////////////////////////////////////////////////////////
         goToPost!!.setOnClickListener {
@@ -240,15 +209,7 @@ open class AccueilDoctorFragment : Fragment() {
 
     }
 
-    private fun removeLike(id: String) {
-//        userDao.removeLike(object : LikeCallback {
-//            override fun successLike(likePost: LikePost) {
-//            }
-//
-//            override fun failureLike() {
-//            }
-//        })
-    }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == AppCompatActivity.RESULT_OK && requestCode == 1000) {

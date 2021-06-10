@@ -61,7 +61,7 @@ class NotificationPatintFragment : Fragment() {
                                 list.add(
                                     ModelNotificationPatient(
                                         R.drawable.ordonance,
-                                        "Vous avez un nouveau Ordonnance médicament",
+                                        "Vous avez une nouvelle Ordonnance médicament",
                                         notification.timeNotification!!.substring(1, 5)
                                     )
                                 )
@@ -70,7 +70,7 @@ class NotificationPatintFragment : Fragment() {
                                 list.add(
                                     ModelNotificationPatient(
                                         R.drawable.logoanalyse,
-                                        "Vous avez un nouveau ordonnance analyse",
+                                        "Vous avez une nouvelle ordonnance analyse",
                                         notification.timeNotification!!.substring(1, 5)
                                     )
                                 )

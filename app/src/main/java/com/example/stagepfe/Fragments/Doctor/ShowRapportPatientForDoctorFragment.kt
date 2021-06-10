@@ -1,5 +1,6 @@
 package com.example.stagepfe.Fragments.Doctor
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
@@ -57,6 +58,7 @@ class ShowRapportPatientForDoctorFragment : Fragment() {
 //        val inflater = menuInflater
 //        inflater.inflate(R.menu.menu_main, menu)
 //    }
+    @SuppressLint("CutPasteId")
     private fun initView(view: View) {
         addRapport = view.findViewById(R.id.Add_Rapport)
         listviewRapport = view.findViewById<ListView>(R.id.showRapportPatForDoctorr)
@@ -72,40 +74,47 @@ class ShowRapportPatientForDoctorFragment : Fragment() {
 
         userDao.retrieveCurrentDataUser(object : UserCallback {
             override fun onSuccess(userItem: UserItem) {
-                fullNameDoctor = userItem.prenom + " " + userItem.nom
+                userDao.populateSearch(object : UserCallback {
+                    override fun onSuccess(user: UserItem) {
+                        if (user.rapports != null){
+                            for (entry in user.rapports!!.entries){
+                                var rapport = entry.value
+                                if (myDataFromActivity == user.nom + " " + user.prenom
+                                    &&
+                                    rapport.idDoctorRapport == userItem.id
+                                ){
+                                    var rapportList = Rapports()
+                                    rapportList.hourRapport = rapport.hourRapport!!.substring(0, 5)
+                                    rapportList.dateRapport = rapport.dateRapport
+                                    rapportList.textRapport = rapport.textRapport
+                                    rapportList.id = rapport.id
+                                    rapportList.idPatientRapport = rapport.idPatientRapport
+                                    rapportList.idDoctorRapport = rapport.idDoctorRapport
+                                    rapportList.specialityDoctor = rapport.specialityDoctor
+                                    listRapport.add(rapportList)
 
-                userDao.getRapport(object : RapportCallback {
-                    override fun success(rapport: Rapports) {
-
-//                        nameDoctorRapport = rapport.nameDoctorRapport
-                        spcialityDoctorRapport = rapport.specialityDoctor
-                        if (
-                            rapport.idDoctorRapport.equals(userItem.id) &&
-//                            myDataFromActivity.equals(rapport.namePatientRapport) &&
-                            (rapport.hourRapport + " " + rapport.hourRapport) != fullDate) {
-
-                            fullDate = rapport.hourRapport + " " + rapport.hourRapport
-                            var rapportList = Rapports()
-                            rapportList.hourRapport = rapport.hourRapport!!.substring(0,5)
-                            rapportList.dateRapport = rapport.dateRapport
-                            rapportList.textRapport = rapport.textRapport
-                            rapportList.id = rapport.id
-                            rapportList.idPatientRapport = rapport.idPatientRapport
-                            rapportList.idDoctorRapport = rapport.idDoctorRapport
-
-                            rapportList.specialityDoctor = rapport.specialityDoctor
-                            listRapport.add(rapportList)
-
-                            adapterRapport!!.notifyDataSetChanged()
-
-
+                                    adapterRapport!!.notifyDataSetChanged()
+                                }
+                            }
                         }
-
                     }
 
                     override fun failure() {
                     }
                 })
+//                userDao.getRapport(object : RapportCallback {
+//                    override fun success(rapport: Rapports) {
+//                        if (rapport.idDoctorRapport.equals(userItem.id) &&
+//                            (rapport.dateRapport + " " + rapport.hourRapport) != fullDate
+//                        ) {
+//                            fullDate = rapport.dateRapport + " " + rapport.hourRapport
+//                        }
+//
+//                    }
+//
+//                    override fun failure() {
+//                    }
+//                })
 
             }
 
@@ -114,11 +123,11 @@ class ShowRapportPatientForDoctorFragment : Fragment() {
         })
 
 
-    listviewRapport!!.setOnItemLongClickListener { parent, view, position, id ->
-        var rapportadapter: Rapports? = adapterRapport!!.getItemAt(position)
-
-        true
-    }
+//    listviewRapport!!.setOnItemLongClickListener { parent, view, position, id ->
+//        var rapportadapter: Rapports? = adapterRapport!!.getItemAt(position)
+//
+//        true
+//    }
 
 
 
@@ -136,6 +145,7 @@ class ShowRapportPatientForDoctorFragment : Fragment() {
             dialog.findViewById<TextView>(R.id.msgdialog).visibility = View.GONE
             dialog.findViewById<EditText>(R.id.TextRapport).visibility = View.VISIBLE
             dialog.findViewById<ImageView>(R.id.CheckDialog).visibility = View.GONE
+            dialog.findViewById<Button>(R.id.btn_Delete_rapport).visibility = View.VISIBLE
             dialog.findViewById<Button>(R.id.btn_Delete_rapport).visibility = View.VISIBLE
 
             var rapportadapter: Rapports? = adapterRapport!!.getItemAt(position)
