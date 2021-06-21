@@ -1,5 +1,6 @@
 package com.example.stagepfe.Fragments.Authentication
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
@@ -55,6 +56,7 @@ class ConnexionFragment : Fragment(), View.OnClickListener {
 
     }
 
+    @SuppressLint("SetTextI18n")
     private fun init(view: View) {
         forgotPassWord = view.findViewById<TextView>(R.id.Motdepasseoubliee)
         inscriptionButton = view.findViewById<Button>(R.id.InscriptionButton)
@@ -103,8 +105,7 @@ class ConnexionFragment : Fragment(), View.OnClickListener {
                 var dialog = builder.create()
                 dialog.show()
                 dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-                dialog.findViewById<TextView>(R.id.TitleDialog)
-                    .setText("Email ou adresse incorrecte")
+                dialog.findViewById<TextView>(R.id.TitleDialog).text = "Email ou mot de passe incorrect"
                 dialog.findViewById<TextView>(R.id.msgdialog).visibility = View.GONE
                 dialog.findViewById<Button>(R.id.btn_confirm)
                     .setOnClickListener {
@@ -239,7 +240,7 @@ class ConnexionFragment : Fragment(), View.OnClickListener {
                             dialog.show()
                             dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
                             dialog.findViewById<TextView>(R.id.TitleDialog)
-                                .setText("Email ou adresse n'est pas correcte")
+                                .setText("Email ou mot de passe est icorrecte")
                             dialog.findViewById<TextView>(R.id.msgdialog).visibility = View.GONE
                             dialog.findViewById<Button>(R.id.btn_confirm)
                                 .setOnClickListener {
