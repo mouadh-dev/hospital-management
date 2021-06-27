@@ -20,12 +20,10 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.stagepfe.Activity.Doctors.CheckRDVActivity
 import com.example.stagepfe.Activity.Doctors.PostDoctorActivity
-import com.example.stagepfe.Dao.LikeCallback
 import com.example.stagepfe.Dao.PostCallback
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.R
-import com.example.stagepfe.entite.LikePost
 import com.example.stagepfe.entite.Publication
 import com.example.stagepfe.entite.UserItem
 import com.github.badoualy.datepicker.DatePickerTimeline
@@ -45,7 +43,7 @@ open class AccueilDoctorFragment : Fragment() {
     var imageUri: Uri? = null
 
     //    lateinit var test:Uri
-    var imageToPost: ImageView? = null
+    var imageInPost: ImageView? = null
     var imageUserPost: ImageView? = null
     var nameUserPost: TextView? = null
     var textUserPost: TextView? = null
@@ -79,7 +77,7 @@ open class AccueilDoctorFragment : Fragment() {
         postButton = view.findViewById(R.id.Post_button)
         postText = view.findViewById(R.id.post_text)
         imagePost = view.findViewById(R.id.image_post)
-        imageToPost = view.findViewById(R.id.image_topost_dr)
+        imageInPost = view.findViewById(R.id.image_topost_dr)
         goToPost = view.findViewById(R.id.go_to_posts)
         imageUserPost = view.findViewById(R.id.Image_post__Docteur)
         nameUserPost = view.findViewById(R.id.Name_post_Docteur)
@@ -96,45 +94,37 @@ open class AccueilDoctorFragment : Fragment() {
         userDao.getPost(object : PostCallback {
             override fun successPost(publication: Publication) {
                 linearLayout!!.visibility = VISIBLE
-//                listUser!!.add(likes.idLiker!!)
                 userDao.populateSearch(object : UserCallback {
                     @SuppressLint("SetTextI18n")
                     override fun onSuccess(userItem: UserItem) {
                         if (publication.idUser.equals(userItem.id)) {
                             Glide.with(requireContext()).load(publication.imagePublication)
-                                .into(imageToPost!!)
+                                .into(imageInPost!!)
                             nameUserPost!!.text = userItem.nom + " " + userItem.prenom
                         }
-
                     }
-
                     override fun failure() {
                     }
                 })
-
-///////////////////////////////////////like///////////////////////////////////////////////////////
                 textUserPost!!.text = publication.textPublication
                 hourPost!!.text = publication.heurePublication!!.substring(0, 5)
                 datePost!!.text = publication.datePublication
-                idPoster = publication.idUser
-//                if (publication.imagePublication != "") {
-                    Glide.with(requireContext()).load(" https://firebasestorage.googleapis.com/v0/b/stage-pfe-d3eeb.appspot.com/o/pictures%2F8b9f0b4a-0d2c-4b67-9e7b-cd640a4ba8d6.jpg?alt=media&token=930d159c-a04c-48b7-94c1-d1293c32bd6f")
-                        .into(imageShown!!)
-                    imageToPost!!.visibility = VISIBLE
-//                } else {
-//                    imageToPost!!.visibility = GONE
-//                }
-                likeImage!!.tag = R.drawable.like_ic
-                likeImage!!.setOnClickListener {
-
+                if (publication.imagePublication != "null") {
+                    Glide.with(requireContext()).load(publication.imagePublication )
+                        .into(imageInPost!!)
+                    imageInPost!!.visibility = VISIBLE
+                } else {
+                    imageInPost!!.visibility = GONE
                 }
-
-
             }
 
             override fun failurePost() {
             }
         })
+
+        likeImage!!.setOnClickListener {
+
+        }
 
 
 
@@ -205,11 +195,7 @@ open class AccueilDoctorFragment : Fragment() {
             }
         })
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-
-
     }
-
-
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == AppCompatActivity.RESULT_OK && requestCode == 1000) {
@@ -222,7 +208,5 @@ open class AccueilDoctorFragment : Fragment() {
             super.onActivityResult(requestCode, resultCode, data)
         }
     }
-
-
 }
 

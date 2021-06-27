@@ -660,7 +660,7 @@ class UserDao : IGestionUser {
 //        uploadImagePostToFirebase(publication.idUser!!, contentUri)
     }
 
-    private fun uploadImagePostToFirebase(id: String, contentUri: Uri) {
+    private fun uploadImagePostToFirebase(id: String, contentUri: Uri)  {
 
         val fileName = UUID.randomUUID().toString() + ".jpg"
         val image = storageReference.child("posts/$fileName")
@@ -680,14 +680,10 @@ class UserDao : IGestionUser {
         publicationRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (ds in snapshot.children) {
-                    var pub = ds.getValue(Publication::class.java)
-
-//                    if (pub != null) {
-//                        for (likes in pub.likes!!){
-                            postCallback.successPost(pub!!)
-//                        }
-//
-//                    }
+                    for (post in ds.children) {
+                        var pub = post.getValue(Publication::class.java)
+                        postCallback.successPost(pub!!)
+                    }
                 }
             }
 
