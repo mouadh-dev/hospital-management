@@ -20,12 +20,10 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.stagepfe.Activity.Doctors.CheckRDVActivity
 import com.example.stagepfe.Activity.Doctors.PostDoctorActivity
-import com.example.stagepfe.Dao.LikeCallback
 import com.example.stagepfe.Dao.PostCallback
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.R
-import com.example.stagepfe.entite.LikePost
 import com.example.stagepfe.entite.Publication
 import com.example.stagepfe.entite.UserItem
 import com.github.badoualy.datepicker.DatePickerTimeline
@@ -60,6 +58,7 @@ open class AccueilDoctorFragment : Fragment() {
     var linearLayout: LinearLayout? = null
     var listUser: ArrayList<String>? = null
     var like: ArrayList<String>? = null
+    var post = Publication()
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -96,13 +95,15 @@ open class AccueilDoctorFragment : Fragment() {
 
         userDao.getPost(object : PostCallback {
             override fun successPost(publication: Publication) {
+
                 linearLayout!!.visibility = VISIBLE
                 userDao.populateSearch(object : UserCallback {
                     @SuppressLint("SetTextI18n")
                     override fun onSuccess(userItem: UserItem) {
                         if (publication.idUser.equals(userItem.id)) {
-                            Glide.with(requireContext()).load(publication.imagePublication)
-                                .into(imageInPost!!)
+                            Glide.with(requireContext())
+                                .load(userItem.profilPhotos)
+                                .into(imageUserPost!!)
                             nameUserPost!!.text = userItem.nom + " " + userItem.prenom
                         }
                     }
@@ -110,8 +111,11 @@ open class AccueilDoctorFragment : Fragment() {
                     override fun failure() {
                     }
                 })
+                Glide.with(requireContext())
+                    .load(publication.imagePublication)
+                    .into(imageInPost!!)
                 textUserPost!!.text = publication.textPublication
-                hourPost!!.text = publication.heurePublication!!.substring(0, 5)
+                hourPost!!.text = publication.heurePublication
                 datePost!!.text = publication.datePublication
                 if (publication.imagePublication != "null") {
                     Glide.with(requireContext()).load(publication.imagePublication)
@@ -120,33 +124,46 @@ open class AccueilDoctorFragment : Fragment() {
                 } else {
                     imageInPost!!.visibility = GONE
                 }
-                likeImage!!.setOnClickListener {
-                    userDao.retrieveCurrentDataUser(object : UserCallback {
-                        override fun onSuccess(userItem: UserItem) {
-//                           for (likes in publication.likes!!){
-//                               if (likes != userItem.id && likes != null){
-                                   publication.likes!!.add(userItem.id!!)
-                                   userDao.sendLike(userItem.id!!, publication, publication.likes)
-                                   likeImage!!.setImageResource(R.drawable.red_like_ic)
-//                               }else{
-//                                   likeImage!!.setImageResource(R.drawable.like_ic)
-//                               }
-//                           }
+//
 
-                        }
-
-                        override fun failure() {
-                        }
-                    })
-
-                }
             }
 
             override fun failurePost() {
             }
         })
 
+        likeImage!!.setOnClickListener {
+            userDao.getPost(object : PostCallback {
+                override fun successPost(publication: Publication) {
 
+                    userDao.retrieveCurrentDataUser(object : UserCallback {
+                        override fun onSuccess(userItem: UserItem) {
+                            for (likes in publication.likes!!) {
+                                like!!.add(likes)
+                                if (likes != userItem.id) {
+                                    like!!.add(userItem.id!!)
+                                    likeImage!!.setImageResource(R.drawable.red_like_ic)
+                                    userDao.sendLike(publication.idUser!!,publication,like)
+                                } else {
+                                    likeImage!!.setImageResource(R.drawable.like_ic)
+
+                                }
+                            }
+
+                        }
+
+                        override fun failure() {
+                        }
+                    })
+                }
+
+                override fun failurePost() {
+
+                }
+            })
+
+
+        }
 
 
 

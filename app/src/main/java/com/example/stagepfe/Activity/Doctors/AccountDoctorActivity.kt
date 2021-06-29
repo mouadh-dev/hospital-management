@@ -243,7 +243,6 @@ class AccountDoctorActivity : AppCompatActivity() {
                         var test2 = "$role"
                         names.add(test)
                         names.add(test2)
-//                        names.add(p)
                     }
                     val adapter: ArrayAdapter<*> = ArrayAdapter<String>(
                         this@AccountDoctorActivity,
@@ -284,7 +283,7 @@ class AccountDoctorActivity : AppCompatActivity() {
 
                 var intent = Intent(this@AccountDoctorActivity,
                     AuthenticationFragmentContainerActivity::class.java)
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)//makesure user cant go back
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK//makesure user cant go back
                 startActivity(intent)
                 finish()
             }

@@ -7,15 +7,9 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
-import com.bumptech.glide.Glide
-import com.example.stagepfe.Dao.LikeCallback
-import com.example.stagepfe.Dao.PostCallback
-import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.R
-import com.example.stagepfe.entite.LikePost
 import com.example.stagepfe.entite.Publication
-import com.example.stagepfe.entite.UserItem
 
 class MyAdapterPostPatient(var mCtx: Context, var resources:Int, var items:List<Publication>): ArrayAdapter<Publication>(mCtx, resources, items)  {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {

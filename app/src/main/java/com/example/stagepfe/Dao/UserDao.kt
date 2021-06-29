@@ -230,7 +230,6 @@ class UserDao : IGestionUser {
                 if (snapshot.exists()) {
                     for (ds in snapshot.children) {
                         var userItem = ds.getValue(UserItem::class.java)
-//                        var fullNAme = userItem!!.nom + " " + userItem.prenom
                         var idUser = userItem!!.id
                         if (appointment.idPatient.equals(idUser)) {
                             var hour = HashMap<String, Appointment>()

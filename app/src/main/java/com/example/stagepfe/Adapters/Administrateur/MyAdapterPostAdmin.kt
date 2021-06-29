@@ -9,12 +9,9 @@ import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
-import com.example.stagepfe.Dao.LikeCallback
-import com.example.stagepfe.Dao.PostCallback
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.R
-import com.example.stagepfe.entite.LikePost
 import com.example.stagepfe.entite.Publication
 import com.example.stagepfe.entite.UserItem
 

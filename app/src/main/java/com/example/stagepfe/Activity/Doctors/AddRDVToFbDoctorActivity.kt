@@ -25,7 +25,7 @@ class AddRDVToFbDoctorActivity : AppCompatActivity() {
     var confirmButton: TextView? = null
     var namePatient: AutoCompleteTextView? = null
     var idPatient: String? = null
-    var idDoctor: String? = null
+//    var idDoctor: String? = null
     var cancelButton: Button? = null
     var adapter: ArrayAdapter<String>?=null
     var names: ArrayList<String?>?=null
@@ -63,7 +63,7 @@ class AddRDVToFbDoctorActivity : AppCompatActivity() {
         day = intent.getStringExtra("day")!!.toString()
         month = intent.getStringExtra("month")!!.toString()
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
         userdao.retrieveCurrentDataUser( object : UserCallback {
 
             override fun onSuccess(userItem: UserItem) {
@@ -71,44 +71,38 @@ class AddRDVToFbDoctorActivity : AppCompatActivity() {
                 speciality!!.text = userItem.speciality
                 dateRDV!!.text = "$day-$month-$year"
                 hourRDV!!.text = time
-                idDoctor = userItem.id
-
             }
 
             override fun failure() {}
         })
-        var appointment = Appointment()
-        appointment.idDoctor = idDoctor
-        appointment.date = dateRDV!!.text.toString()
-        appointment.idPatient = idPatient
-        appointment.dispo = "reserveé"
-        appointment.FinishOrNot = "Pas encore"
-        appointment.hour = hourRDV!!.text.toString()
-        var notification = Notification()
-        notification.idPatient = idPatient
-        notification.idDoctor = idDoctor
-        notification.type = "appointment"
-        notification.dateNotification = dateRDV!!.text.toString()
-        notification.timeNotification = hourRDV!!.text.toString()
 ///////////////////////////////////////////////////////////////////////////////////////////////////
         confirmButton!!.setOnClickListener {
-
-
             userdao.populateSearch(object : UserCallback {
                 override fun onSuccess(user: UserItem) {
-                    if ((user.nom + " " + user.prenom).equals(namePatient!!.text.toString().trim())){
+                    if ((user.nom + " " + user.prenom) == namePatient!!.text.toString().trim()){
                         idPatient = user.id
                     }
-
                 }
 
                 override fun failure() {
                 }
             })
 
+
+            var appointment = Appointment()
+            appointment.idDoctor = userdao.getCurrentUserId()
+            appointment.date = dateRDV!!.text.toString()
+            appointment.idPatient = idPatient
+            appointment.dispo = "reserveé"
+            appointment.FinishOrNot = "Pas encore"
+            appointment.hour = hourRDV!!.text.toString()
+            var notification = Notification()
+            notification.idPatient = idPatient
+            notification.idDoctor = userdao.getCurrentUserId()
+            notification.type = "appointment"
+            notification.dateNotification = dateRDV!!.text.toString()
+            notification.timeNotification = hourRDV!!.text.toString()
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-
-
             userdao.insertappointment(
                 appointment,
                 notification,
@@ -124,7 +118,6 @@ class AddRDVToFbDoctorActivity : AppCompatActivity() {
                     }
 
                     override fun failureAppointment() {
-                        Toast.makeText(this@AddRDVToFbDoctorActivity, "something went wrong", Toast.LENGTH_SHORT).show()
                     }
 
 
