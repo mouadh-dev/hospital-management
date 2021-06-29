@@ -20,10 +20,12 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.stagepfe.Activity.Doctors.CheckRDVActivity
 import com.example.stagepfe.Activity.Doctors.PostDoctorActivity
+import com.example.stagepfe.Dao.LikeCallback
 import com.example.stagepfe.Dao.PostCallback
 import com.example.stagepfe.Dao.UserCallback
 import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.R
+import com.example.stagepfe.entite.LikePost
 import com.example.stagepfe.entite.Publication
 import com.example.stagepfe.entite.UserItem
 import com.github.badoualy.datepicker.DatePickerTimeline
@@ -57,6 +59,7 @@ open class AccueilDoctorFragment : Fragment() {
     var imageShown: ImageView? = null
     var linearLayout: LinearLayout? = null
     var listUser: ArrayList<String>? = null
+    var like: ArrayList<String>? = null
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -103,6 +106,7 @@ open class AccueilDoctorFragment : Fragment() {
                             nameUserPost!!.text = userItem.nom + " " + userItem.prenom
                         }
                     }
+
                     override fun failure() {
                     }
                 })
@@ -110,11 +114,31 @@ open class AccueilDoctorFragment : Fragment() {
                 hourPost!!.text = publication.heurePublication!!.substring(0, 5)
                 datePost!!.text = publication.datePublication
                 if (publication.imagePublication != "null") {
-                    Glide.with(requireContext()).load(publication.imagePublication )
+                    Glide.with(requireContext()).load(publication.imagePublication)
                         .into(imageInPost!!)
                     imageInPost!!.visibility = VISIBLE
                 } else {
                     imageInPost!!.visibility = GONE
+                }
+                likeImage!!.setOnClickListener {
+                    userDao.retrieveCurrentDataUser(object : UserCallback {
+                        override fun onSuccess(userItem: UserItem) {
+//                           for (likes in publication.likes!!){
+//                               if (likes != userItem.id && likes != null){
+                                   publication.likes!!.add(userItem.id!!)
+                                   userDao.sendLike(userItem.id!!, publication, publication.likes)
+                                   likeImage!!.setImageResource(R.drawable.red_like_ic)
+//                               }else{
+//                                   likeImage!!.setImageResource(R.drawable.like_ic)
+//                               }
+//                           }
+
+                        }
+
+                        override fun failure() {
+                        }
+                    })
+
                 }
             }
 
@@ -122,9 +146,7 @@ open class AccueilDoctorFragment : Fragment() {
             }
         })
 
-        likeImage!!.setOnClickListener {
 
-        }
 
 
 

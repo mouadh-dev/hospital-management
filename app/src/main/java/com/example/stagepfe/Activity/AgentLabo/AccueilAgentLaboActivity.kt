@@ -56,21 +56,15 @@ class AccueilAgentLaboActivity : AppCompatActivity() {
     var userDao = UserDao()
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
           //profile photo
             if (requestCode == 1000) {
                 imageUri = data?.data
-                imageProfilAgent!!.setImageURI(imageUri)
+//                imageProfilAgent!!.setImageURI(imageUri)
 
-                userDao.retrieveCurrentDataUser(object : UserCallback {
-                    override fun onSuccess(userItem: UserItem) {
-                        userDao.uploadImageToFirebase(
-                            userItem.id.toString(),
-                            imageUri!!)
-                    }
-
-                    override fun failure() {
-                    }
-                })
+                userDao.uploadImageToFirebase(
+                    userDao.getCurrentUserId(),
+                    imageUri!!)
 
 
             }
@@ -137,29 +131,21 @@ class AccueilAgentLaboActivity : AppCompatActivity() {
 
                         var text = ""
                         for (i in 0 until adapterAnalyse!!.count) {
-                            var view = adapterAnalyse!!.getView(
-                                i,
-                                findViewById<LinearLayout>(R.id.checkBox_Agent),
-                                listView!!
-                            )
-                            val analyse: AnalyseOrdonnance = listAnalyse.get(i)
+                            val analyse: AnalyseOrdonnance = listAnalyse[i]
                             if (!analyse.isSelectedAnalyse!!) {
                                 val analyse: AnalyseOrdonnance =
                                     adapterAnalyse!!.getItem(i) as AnalyseOrdonnance
                                 text += analyse.descriptionAnalyse + "\n"
-//                                nonCheck += medicament.nameMedicament + "\n" + medicament.quantity + " " + "fois par jours" + "\n" + medicament.description + "\n"
                             }
 
                         }
 
                         ordonanceToChange.color = Color.GREEN.toString()
                         ordonanceToChange.taken = "termineé"
-//                        ordonanceToChange.namepatientOrdo = ordonance.namepatientOrdo
                         ordonanceToChange.medicament = ordonance.medicament
                         ordonanceToChange.id = ordonance.id
                         ordonanceToChange.idDoctor = ordonance.idDoctor
                         ordonanceToChange.idPatient = ordonance.idPatient
-//                        ordonanceToChange.nameDoctorOrd = ordonance.nameDoctorOrd
                         ordonanceToChange.hourOrdonanceSend = ordonance.hourOrdonanceSend
                         ordonanceToChange.dateOrdonanceSend = ordonance.dateOrdonanceSend
                         ordonanceToChange.analyse = ordonance.analyse
@@ -181,15 +167,13 @@ class AccueilAgentLaboActivity : AppCompatActivity() {
                                 }
 
                             })
-                        text = ""
                         dialog.dismiss()
                     }
                     dialog.setOnDismissListener {
                         listAnalyse.clear()
                     }
                 }
-            } else {
-                super.onActivityResult(requestCode, resultCode, data)
+
             }
         }
     }

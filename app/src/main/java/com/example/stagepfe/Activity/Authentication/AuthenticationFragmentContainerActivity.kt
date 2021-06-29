@@ -63,8 +63,10 @@ class AuthenticationFragmentContainerActivity : AppCompatActivity() {
                                         this@AuthenticationFragmentContainerActivity,
                                         AccountDoctorActivity::class.java
                                     )
-                                    startActivity(intent)
-                                    finish()
+
+                                startActivity(intent)
+                                this@AuthenticationFragmentContainerActivity.finish()
+
 //                                progressdialog.dismiss()
 
                                 }else if (userItem.role!!.containsAll(listOf("Labo","Patient"))){

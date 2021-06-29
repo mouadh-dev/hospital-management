@@ -288,26 +288,13 @@ class BottomBarPatientActivity : AppCompatActivity() {
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK && requestCode == 1000) {
             imageUri = data?.data
-            imageProfilPatient!!.setImageURI(imageUri)
-            imageUri = data?.data
-            imageProfilPatient!!.setImageURI(imageUri)
-
-            userDao.retrieveCurrentDataUser(object : UserCallback {
-                override fun onSuccess(userItem: UserItem) {
-                    userDao.uploadImageToFirebase(
-                        userItem.id.toString(),
-                        imageUri!!)
-                }
-
-                override fun failure() {
-                }
-            })
-//////////////////////////////////////////////////////////////////////////////////////////////////
-
-        }else {
-            super.onActivityResult(requestCode, resultCode, data)
+//            imageProfilPatient!!.setImageURI(imageUri)
+            userDao.uploadImageToFirebase(
+                userDao.getCurrentUserId(),
+                imageUri!!)
         }
     }
 

@@ -27,6 +27,7 @@ import com.example.stagepfe.Models.Doctors.ModelPatientList
 import com.example.stagepfe.R
 import com.example.stagepfe.entite.UserItem
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.nightonke.boommenu.BoomButtons.BoomButton
 import com.nightonke.boommenu.BoomButtons.HamButton
@@ -264,25 +265,14 @@ class AccountDoctorActivity : AppCompatActivity() {
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
         if (resultCode == RESULT_OK && requestCode == 1000) {
             imageUri = data?.data
-            imageProfilDoctor!!.setImageURI(imageUri)
-            imageUri = data?.data
-            imageProfilDoctor!!.setImageURI(imageUri)
 
-            userDao.retrieveCurrentDataUser(object : UserCallback {
-                override fun onSuccess(userItem: UserItem) {
-                    userDao.uploadImageToFirebase(
-                        userItem.id.toString(),
-                        imageUri!!)
-                }
-
-                override fun failure() {
-                }
-            })
-
-        }else {
-            super.onActivityResult(requestCode, resultCode, data)
+            userDao.uploadImageToFirebase(
+                userDao.getCurrentUserId(),
+                imageUri!!)
         }
     }
 
@@ -307,7 +297,7 @@ class AccountDoctorActivity : AppCompatActivity() {
     }
 
     override fun onResume() {
-        userDao.retrieveCurrentDataUser(object : UserCallback {
+        userDao.getUserByUidEventListener(object : UserCallback {
             override fun onSuccess(userItem: UserItem) {
                 if(userItem.profilPhotos != null) {
                     Glide

@@ -149,25 +149,14 @@ class AccueilAdministrateurActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK && requestCode == 1000) {
             imageUri = data?.data
-            imageProfilAdmin!!.setImageURI(imageUri)
-            imageUri = data?.data
-            imageProfilAdmin!!.setImageURI(imageUri)
+           // imageProfilAdmin!!.setImageURI(imageUri)
 
-            userDao.retrieveCurrentDataUser(object : UserCallback {
-                override fun onSuccess(userItem: UserItem) {
-                    userDao.uploadImageToFirebase(
-                        userItem.id.toString(),
-                        imageUri!!)
-                }
-
-                override fun failure() {
-                }
-            })
-
-        }else {
-            super.onActivityResult(requestCode, resultCode, data)
+            userDao.uploadImageToFirebase(
+                userDao.getCurrentUserId(),
+                imageUri!!)
         }
     }
 

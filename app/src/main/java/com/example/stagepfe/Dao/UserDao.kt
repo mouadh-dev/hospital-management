@@ -36,6 +36,9 @@ class UserDao : IGestionUser {
         userItem.id = myRef.push().key.toString()
         myRef.child(userItem.id!!).setValue(userItem)
     }
+    fun getCurrentUserId():String{
+        return  FirebaseAuth.getInstance().uid.toString()
+    }
 
     fun supperUser(uid: String, userItem: UserItem, userCallback: UserCallback) {
         userRef.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -160,6 +163,26 @@ class UserDao : IGestionUser {
     ///////////////////////////////////////////////get user by id///////////////////////////////////////
     fun getUserByUid(uid: String, responseCallback: UserCallback) {
         var jLoginDatabase = database.reference.child("users").child(uid)
+        jLoginDatabase.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                var userItem = dataSnapshot.getValue(UserItem::class.java)
+                if (userItem != null) {
+                    responseCallback.onSuccess(userItem)
+                }
+
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.w(TAG, "signInWithEmail:failure", error.toException())
+                responseCallback.failure()
+            }
+
+        })
+    }
+
+    fun getUserByUidEventListener( responseCallback: UserCallback) {
+        var jLoginDatabase = database.reference.child("users").child(getCurrentUserId())
         jLoginDatabase.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 var userItem = dataSnapshot.getValue(UserItem::class.java)
@@ -177,6 +200,7 @@ class UserDao : IGestionUser {
 
         })
     }
+
     //////////////////////////////////////////////////forgotPassword////////////////////////////////
 
     //////////////////////////////////////////////////retrieve data user////////////////////////////////
@@ -694,25 +718,8 @@ class UserDao : IGestionUser {
     }
 
     //////////////////////////////////////////send like////////////////////////////////////////////////
-    fun sendLike(uid:String,likePost: LikePost) {
-        publicationRef.child(uid).child("likes").setValue(likePost)
-    }
-
-    fun getLike(likeCallback: LikeCallback) {
-        likeRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                for (ds in snapshot.children) {
-                    var like = ds.getValue(LikePost::class.java)
-                    if (like != null) {
-                        likeCallback.successLike(like)
-                    }
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                likeCallback.failureLike()
-            }
-        })
+    fun sendLike(uid:String,publication: Publication, like: ArrayList<String>?) {
+        publicationRef.child(uid).child(publication.id!!).child("likes").setValue(like)
     }
 
 //    fun removeLike(uid:String,likeCallback: LikeCallback) {
