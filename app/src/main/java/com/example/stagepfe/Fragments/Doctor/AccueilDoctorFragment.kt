@@ -124,7 +124,6 @@ open class AccueilDoctorFragment : Fragment() {
                 } else {
                     imageInPost!!.visibility = GONE
                 }
-//
 
             }
 
