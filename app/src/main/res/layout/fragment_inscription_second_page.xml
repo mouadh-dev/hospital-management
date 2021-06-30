@@ -165,7 +165,8 @@
                 android:layout_height="20dp"
                 android:layout_marginLeft="200dp"
                 android:layout_marginTop="12dp"
-                android:src="@drawable/triangle" />
+                android:src="@drawable/triangle"
+                />
 
             <Spinner
                 android:id="@+id/InscriptionBloodSecondPage"
@@ -175,11 +176,11 @@
                 android:layout_gravity="center"
                 android:background="@drawable/spinner_style"
                 android:entries="@array/Group_Sanguin"
-                android:paddingLeft="20dp"
-                android:paddingRight="10dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="10dp"
                 android:popupBackground="@color/white"
                 android:spinnerMode="dropdown"
-                android:textSize="15dp"
+                android:textSize="15sp"
                 android:theme="@style/Spinner"
                 />
         </RelativeLayout>
