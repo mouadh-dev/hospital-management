@@ -10,7 +10,7 @@ data class Publication constructor(
     var datePublication: String? = "",
     var heurePublication: String? = "",
     var imagePublication:String? = "",
-    var likes:ArrayList<String>? = ArrayList(),
+    var likes:ArrayList<LikePost>? = ArrayList(),
     var comments:ArrayList<Comment>? = ArrayList()
 ): Parcelable {
     constructor(parcel: Parcel) : this(

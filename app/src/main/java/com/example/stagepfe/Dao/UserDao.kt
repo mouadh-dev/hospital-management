@@ -717,35 +717,36 @@ class UserDao : IGestionUser {
     }
 
     //////////////////////////////////////////send like////////////////////////////////////////////////
-    fun sendLike(uid:String,publication: Publication, like: ArrayList<String>?) {
+    fun sendLike(uid:String,publication: Publication, like: LikePost) {
         publicationRef.child(uid).child(publication.id!!).child("likes").setValue(like)
     }
+    fun removeLike(uid:String,publication: Publication) {
+        publicationRef.child(uid).child(publication.id!!).child("likes").child(getCurrentUserId()).removeValue()
+    }
 
-//    fun removeLike(uid:String,likeCallback: LikeCallback) {
-//        publicationRef.addChildEventListener(object : ChildEventListener {
-//            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-//
-//            }
-//
-//            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-//
-//            }
-//
-//            override fun onChildRemoved(snapshot: DataSnapshot) {
-//                val like = snapshot.getValue(LikePost::class.java)
-//                publicationRef.child(uid).child("likes").child(like!!.idLiker!!).setValue(likePost)
-//                likeRef.removeValue()
-//                likeCallback.successLike(like)
-//            }
-//
-//            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
-//            }
-//
-//            override fun onCancelled(error: DatabaseError) {
-//
-//            }
-//        })
-//    }
+
+    fun removeLike(uid:String,likeCallback: LikeCallback) {
+        publicationRef.addChildEventListener(object : ChildEventListener {
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+
+            }
+
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+
+            }
+
+            override fun onChildRemoved(snapshot: DataSnapshot) {
+
+            }
+
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        })
+    }
 }
 
 

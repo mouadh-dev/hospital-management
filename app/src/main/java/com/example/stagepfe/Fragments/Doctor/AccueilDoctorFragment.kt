@@ -28,6 +28,7 @@ import com.example.stagepfe.entite.Publication
 import com.example.stagepfe.entite.UserItem
 import com.github.badoualy.datepicker.DatePickerTimeline
 import com.github.badoualy.datepicker.MonthView.DateLabelAdapter
+import com.google.firebase.ktx.Firebase
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -58,7 +59,7 @@ open class AccueilDoctorFragment : Fragment() {
     var linearLayout: LinearLayout? = null
     var listUser: ArrayList<String>? = null
     var like: ArrayList<String>? = null
-    var post = Publication()
+    var post:Publication?=null
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -70,6 +71,7 @@ open class AccueilDoctorFragment : Fragment() {
         // Inflate the layout for this fragment
         var view = inflater.inflate(R.layout.fragment_accueil_doctor, container, false)
         initView(view)
+        post = Publication()
         return view
     }
 
@@ -114,6 +116,8 @@ open class AccueilDoctorFragment : Fragment() {
                 Glide.with(requireContext())
                     .load(publication.imagePublication)
                     .into(imageInPost!!)
+                post= publication
+
                 textUserPost!!.text = publication.textPublication
                 hourPost!!.text = publication.heurePublication
                 datePost!!.text = publication.datePublication
@@ -132,7 +136,13 @@ open class AccueilDoctorFragment : Fragment() {
         })
 
         likeImage!!.setOnClickListener {
+            if (post?.likes!=null){
+                if (post!!.likes!!.contains(userDao.getCurrentUserId())){
+
+                }
+            }
             userDao.getPost(object : PostCallback {
+
                 override fun successPost(publication: Publication) {
 
                     userDao.retrieveCurrentDataUser(object : UserCallback {
