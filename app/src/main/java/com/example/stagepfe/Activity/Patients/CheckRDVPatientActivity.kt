@@ -10,8 +10,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.stagepfe.Adapters.Patients.MyAdapterAddRDVPatient.OnItemClickListner
 import com.example.stagepfe.Adapters.Patients.MyAdapterAddRDVPatient
+import com.example.stagepfe.Dao.AppointmentCallback
+import com.example.stagepfe.Dao.UserDao
 import com.example.stagepfe.Models.Patient.ModelAddRDVPatient
 import com.example.stagepfe.R
+import com.example.stagepfe.entite.Appointment
 import com.github.badoualy.datepicker.DatePickerTimeline
 import com.github.badoualy.datepicker.MonthView
 import java.util.*
@@ -24,6 +27,7 @@ class CheckRDVPatientActivity : AppCompatActivity(), OnItemClickListner {
     var year: Int = 0
     var month: Int = 0
     var day: Int = 0
+    var userDao = UserDao()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_check_r_d_v_patient)
@@ -65,9 +69,20 @@ class CheckRDVPatientActivity : AppCompatActivity(), OnItemClickListner {
 
     private fun listOfTime() {
         //Recycler View
+        val dataList: MutableList<ModelAddRDVPatient> = ArrayList()
         val recyclerView: RecyclerView = findViewById(R.id.recycler_viewPatient) as RecyclerView
         //Data
-        val dataList: MutableList<ModelAddRDVPatient> = ArrayList()
+//        userDao.getAppointment(object : AppointmentCallback{
+//            override fun successAppointment(appointment: Appointment) {
+//                if (appointment.hour!!.equals())
+//            }
+//
+//            override fun failureAppointment() {
+//
+//            }
+//
+//        })
+
         dataList.add(ModelAddRDVPatient(R.drawable.itemone,"08:00","vide"))
         dataList.add(ModelAddRDVPatient(R.drawable.itemone,"08:30","vide"))
         dataList.add(ModelAddRDVPatient(R.drawable.itemone,"09:00","vide"))

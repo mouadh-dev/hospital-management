@@ -148,11 +148,11 @@ open class AccueilDoctorFragment : Fragment() {
                     userDao.retrieveCurrentDataUser(object : UserCallback {
                         override fun onSuccess(userItem: UserItem) {
                             for (likes in publication.likes!!) {
-                                like!!.add(likes)
-                                if (likes != userItem.id) {
+                                like!!.add(likes.toString())
+                                if (likes.toString() != userItem.id) {
                                     like!!.add(userItem.id!!)
                                     likeImage!!.setImageResource(R.drawable.red_like_ic)
-                                    userDao.sendLike(publication.idUser!!,publication,like)
+                                    userDao.sendLike(publication.idUser!!,publication,likes)
                                 } else {
                                     likeImage!!.setImageResource(R.drawable.like_ic)
 
